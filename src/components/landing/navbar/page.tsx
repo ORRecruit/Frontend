@@ -2,43 +2,6 @@ import React from "react";
 
 const page = () => {
   return (
-    // <div className="h-24 bg-white">
-    //   <nav className="w-9/12	 mx-auto h-full flex justify-between items-center">
-    //     <div className="flex justify-between items-center w-5/12">
-    //       <div>
-    //         <a href="#">
-    //           <img src="/ORR-logo.svg" alt="" />
-    //         </a>
-    //       </div>
-    //       <div className="w-9/12 flex items-between">
-    //         <a className="w-3/12" href="#">
-    //           Jobs
-    //         </a>
-    //         <a className="w-3/12" href="#">
-    //           Recruiters
-    //         </a>
-    //         <a className="w-3/12" href="#">
-    //           Blog
-    //         </a>
-    //         <a className="w-3/12" href="#">
-    //           About
-    //         </a>
-    //       </div>
-    //     </div>
-    //     <div>
-    //       <a href="#">Log In</a>
-    //       <a href="#" className="ml-3.5">
-    //         <button
-    //           type="button"
-    //           className="text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none bg-orange-600	"
-    //         >
-    //           Get Started
-    //         </button>
-    //       </a>
-    //     </div>
-    //   </nav>
-    // </div>
-
     <nav className="bg-white h-24 lg:w-4/5 mx-auto">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 lg:">
         <a
