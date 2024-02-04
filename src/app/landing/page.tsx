@@ -4,6 +4,7 @@ import HeroSection from "./../../components/landing/heroSection/page";
 import Service from "./../../components/landing/services/page";
 import Footer from "./../../components/landing/footer/page";
 import About from "./../../components/landing/about/page";
+import Jobs from "./../../components/landing/jobs/page";
 
 const page = () => {
   return (
@@ -11,6 +12,7 @@ const page = () => {
       <Navbar />
       <HeroSection />
       <Service />
+      <Jobs />
       <About />
       <Footer />
     </div>

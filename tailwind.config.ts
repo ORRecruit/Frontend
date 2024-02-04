@@ -21,6 +21,9 @@ const config: Config = {
       height: {
         footer: "460px",
       },
+      width: {
+        "w-24": "24%",
+      },
     },
   },
   plugins: [],
