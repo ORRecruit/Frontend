@@ -5,6 +5,7 @@ import Service from "./../../components/landing/services/page";
 import Footer from "./../../components/landing/footer/page";
 import About from "./../../components/landing/about/page";
 import Jobs from "./../../components/landing/jobs/page";
+import FAQs from "./../../components/landing/faqs/page";
 
 const page = () => {
   return (
@@ -14,6 +15,7 @@ const page = () => {
       <Service />
       <Jobs />
       <About />
+      <FAQs />
       <Footer />
     </div>
   );

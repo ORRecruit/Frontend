@@ -17,12 +17,18 @@ const config: Config = {
         "bg-service": "#FAFAFA",
         footer: "#F3F5F7",
         about: "#1D2939",
+        "light-gray": "#F3F5F7",
       },
       height: {
         footer: "460px",
       },
       width: {
         "w-24": "24%",
+        "w-38": "38%",
+      },
+      textColor: {
+        "primary-color": "#FF6800",
+        "text-gray": "#788596",
       },
     },
   },
