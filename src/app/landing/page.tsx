@@ -7,6 +7,7 @@ import About from "./../../components/landing/about/page";
 import Jobs from "./../../components/landing/jobs/page";
 import FAQs from "./../../components/landing/faqs/page";
 import Assessments from "./../../components/landing/assessments/page";
+import ContactUs from "./../../components/landing/contactUs/contactUs";
 
 const page = () => {
   return (
@@ -17,6 +18,7 @@ const page = () => {
       <Assessments />
       <Jobs />
       <About />
+      <ContactUs />
       <FAQs />
       <Footer />
     </div>
