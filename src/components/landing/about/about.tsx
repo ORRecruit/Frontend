@@ -4,7 +4,7 @@ interface aboutInterface {
   backgroundImage: string;
 }
 
-const page: React.FC<aboutInterface> = ({ height, backgroundImage }) => {
+const about: React.FC<aboutInterface> = ({ height, backgroundImage }) => {
   const divStyle = {
     height: height || "full", // Replace 'defaultHeight' with your default value
     backgroundImage: `url(${backgroundImage})`,
@@ -45,4 +45,4 @@ const page: React.FC<aboutInterface> = ({ height, backgroundImage }) => {
   );
 };
 
-export default page;
+export default about;

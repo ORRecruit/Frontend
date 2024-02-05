@@ -1,6 +1,6 @@
 import React from "react";
 
-const page = () => {
+const faqs = () => {
   const array = [1, 2, 3];
   return (
     <>
@@ -69,4 +69,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default faqs;

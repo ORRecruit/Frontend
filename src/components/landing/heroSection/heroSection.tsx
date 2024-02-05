@@ -8,7 +8,7 @@ interface heroSectionInterface {
   showIconImages: any;
 }
 
-const page: React.FC<heroSectionInterface> = ({
+const heroSection: React.FC<heroSectionInterface> = ({
   heading,
   paragraph,
   videoImageSrc,
@@ -74,4 +74,4 @@ const page: React.FC<heroSectionInterface> = ({
   );
 };
 
-export default page;
+export default heroSection;

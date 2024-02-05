@@ -1,6 +1,6 @@
 import React from "react";
 
-export const page = () => {
+export const footer = () => {
   return (
     <div className="bg-footer h-footer w-full">
       <div className="w-4/5 mx-auto h-full flex flex-col justify-center items-center xl:w-4/6">
@@ -26,4 +26,4 @@ export const page = () => {
   );
 };
 
-export default page;
+export default footer;

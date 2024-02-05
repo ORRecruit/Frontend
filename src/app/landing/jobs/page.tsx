@@ -1,10 +1,10 @@
 import React from "react";
 import Navbar from "../../../components/landing/navbar/page";
-import HeroSection from "../../../components/landing/heroSection/page";
+import HeroSection from "../../../components/landing/heroSection/heroSection";
 import StatsComponent from "./statsComponent/statsComponent";
-import Assessments from "../../../components/landing/assessments/page";
-import Footer from "../../../components/landing/footer/page";
-import About from "../../../components/landing/about/page";
+import Assessments from "../../../components/landing/assessments/assessments";
+import Footer from "../../../components/landing/footer/footer";
+import About from "../../../components/landing/about/about";
 
 const page = () => {
   return (

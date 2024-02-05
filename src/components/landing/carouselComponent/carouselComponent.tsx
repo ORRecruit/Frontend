@@ -16,7 +16,7 @@ const carouselData = [
   },
 ];
 
-const page = () => {
+const carouselComponent = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const goToPrevious = () => {
@@ -72,4 +72,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default carouselComponent;

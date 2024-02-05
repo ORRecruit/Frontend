@@ -9,7 +9,7 @@ interface AssessmentInterface {
   img2: any;
 }
 
-const page: React.FC<AssessmentInterface> = ({
+const assessments: React.FC<AssessmentInterface> = ({
   heading1,
   paragraph1,
   img1,
@@ -91,4 +91,4 @@ const page: React.FC<AssessmentInterface> = ({
   );
 };
 
-export default page;
+export default assessments;
