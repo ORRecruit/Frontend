@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../../../components/landing/navbar/page";
 import HeroSection from "../../../components/landing/heroSection/page";
+import StatsComponent from "./statsComponent/statsComponent";
 
 const page = () => {
   return (
@@ -13,6 +14,7 @@ const page = () => {
         iconImages={[]}
         showIconImages="false"
       />
+      <StatsComponent />
     </>
   );
 };
