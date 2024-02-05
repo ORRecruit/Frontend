@@ -32,7 +32,19 @@ const page = () => {
         showIconImages="true"
       />
       <Service />
-      <Assessments />
+      <Assessments
+        heading1={`Dynamic Skill Assessment`}
+        paragraph1={`Utilize our AI-driven skill assessment tools to gain insights
+                into your strengths and areas for growth. Our platform provides
+                personalized suggestions for skill development, helping you stay
+                competitive and ready for new challenges.`}
+        img1={`/assessment-img.svg`}
+        heading2={`Application Tracker`}
+        paragraph2={`With our real-time application tracking system, you’ll always
+                know the status of your job applications. Get instant updates
+                and feedback, so you’re never left wondering where you stand.`}
+        img2={`/tracher-img.svg`}
+      />
       <Jobs />
       <CarouselComponent />
       <ContactUs />

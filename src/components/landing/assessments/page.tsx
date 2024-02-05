@@ -1,18 +1,31 @@
 import React from "react";
 
-const page = () => {
+interface AssessmentInterface {
+  heading1: any;
+  paragraph1: any;
+  img1: any;
+  heading2: any;
+  paragraph2: any;
+  img2: any;
+}
+
+const page: React.FC<AssessmentInterface> = ({
+  heading1,
+  paragraph1,
+  img1,
+  heading2,
+  paragraph2,
+  img2,
+}) => {
   return (
     <>
       <div className="w-full mx-auto py-14 mt-20">
         <div className="w-4/5 mx-auto 2xl:w-3/4">
           <div className="flex justify-between items-center">
             <div className="w-1/2 xl:w-w-58">
-              <h1 className="text-4xl font-bold">Dynamic Skill Assessment</h1>
+              <h1 className="text-4xl font-bold">{heading1}</h1>
               <p className="font-base font-normal my-3 w-11/12 text-text-gray xl:my-5 2xl:my-6">
-                Utilize our AI-driven skill assessment tools to gain insights
-                into your strengths and areas for growth. Our platform provides
-                personalized suggestions for skill development, helping you stay
-                competitive and ready for new challenges.
+                {paragraph1}
               </p>
               <button
                 type="button"
@@ -37,19 +50,17 @@ const page = () => {
               </button>
             </div>
             <div className="w-1/2 xl:w-2/5">
-              <img src="/assessment-img.svg" alt="" />
+              <img src={img1} alt="" />
             </div>
           </div>
           <div className="flex justify-between items-center">
             <div className="w-1/2 xl:w-2/5">
-              <img src="/tracher-img.svg" alt="" />
+              <img src={img2} alt="" />
             </div>
             <div className="w-1/2 xl:w-w-58">
-              <h1 className="text-4xl font-bold">Application Tracker</h1>
+              <h1 className="text-4xl font-bold">{heading2}</h1>
               <p className="font-base font-normal my-3 w-11/12 text-text-gray xl:my-5 2xl:my-6">
-                With our real-time application tracking system, you’ll always
-                know the status of your job applications. Get instant updates
-                and feedback, so you’re never left wondering where you stand.
+                {paragraph2}
               </p>
               <button
                 type="button"
