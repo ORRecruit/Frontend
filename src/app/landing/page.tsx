@@ -8,6 +8,7 @@ import Jobs from "./../../components/landing/jobs/page";
 import FAQs from "./../../components/landing/faqs/page";
 import Assessments from "./../../components/landing/assessments/page";
 import ContactUs from "./../../components/landing/contactUs/contactUs";
+import CarouselComponent from "../../components/landing/carouselComponent/page";
 
 const page = () => {
   return (
@@ -17,9 +18,10 @@ const page = () => {
       <Service />
       <Assessments />
       <Jobs />
-      <About />
+      <CarouselComponent />
       <ContactUs />
       <FAQs />
+      <About />
       <Footer />
     </div>
   );
