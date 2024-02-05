@@ -1,20 +1,27 @@
 import React from "react";
 
-const page = () => {
+interface heroSectionInterface {
+  heading: any;
+  paragraph: any;
+  videoImageSrc: any;
+  iconImages: any[];
+  showIconImages: any;
+}
+
+const page: React.FC<heroSectionInterface> = ({
+  heading,
+  paragraph,
+  videoImageSrc,
+  iconImages = [],
+  showIconImages,
+}) => {
   return (
     <>
       <div className="xl:w-10/12 xl:mx-auto 2xl:w-8/12	lg:mx-auto mt-20 lg:w-4/5">
         <div className="flex justify-between xl:flex xl:justify-between">
           <div className="2xl:w-6/12 flex flex-col justify-around xl:w-7/12	lg:w-5/12		">
-            <h1 className="text-6xl font-bold">
-              Revolutionize Your Remote Hiring
-            </h1>
-            <p>
-              Empower your business with our AI-driven platform, specifically
-              designed for the dynamic world of remote work. Connect with
-              exceptional talent, streamline your recruitment process, and build
-              a successful remote team effortlessly.
-            </p>
+            <h1 className="text-6xl font-bold">{heading}</h1>
+            <p className="text-text-gray">{paragraph}</p>
             <div className="flex direction-col">
               <input
                 type="text"
@@ -51,18 +58,18 @@ const page = () => {
             </div>
           </div>
           <div className="2xl:w-5/12 xl:w-3/6 lg:w-3/6	">
-            <img src="/demo-video.svg" alt="" />
+            <img src={videoImageSrc} alt="" />
           </div>
         </div>
         <div></div>
       </div>
-      <div className="flex justify-between mt-28 xl:w-9-12 2xl:w-8/12 lg:mx-auto xl:w-10/12 lg:w-4/5">
-        <img src="/hero-icon1.svg" alt="" />
-        <img src="/hero-icon2.svg" alt="" />
-        <img src="/hero-icon3.svg" alt="" />
-        <img src="/hero-icon4.svg" alt="" />
-        <img src="/hero-icon5.svg" alt="" />
-      </div>
+      {showIconImages && (
+        <div className="flex justify-between mt-28 xl:w-9-12 2xl:w-8/12 lg:mx-auto xl:w-10/12 lg:w-4/5">
+          {iconImages.map((src, index) => (
+            <img key={index} src={src} alt="" />
+          ))}
+        </div>
+      )}
     </>
   );
 };

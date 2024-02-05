@@ -11,10 +11,26 @@ import ContactUs from "./../../components/landing/contactUs/contactUs";
 import CarouselComponent from "../../components/landing/carouselComponent/page";
 
 const page = () => {
+  const iconImages = [
+    "/hero-icon1.svg",
+    "/hero-icon2.svg",
+    "/hero-icon3.svg",
+    "/hero-icon4.svg",
+    "/hero-icon5.svg",
+  ];
   return (
     <div>
       <Navbar />
-      <HeroSection />
+      <HeroSection
+        heading={"Revolutionize Your Remote Hiring"}
+        paragraph={`Empower your business with our AI-driven platform, specifically
+              designed for the dynamic world of remote work. Connect with
+              exceptional talent, streamline your recruitment process, and build
+              a successful remote team effortlessly.`}
+        videoImageSrc={`/demo-video.svg`}
+        iconImages={iconImages}
+        showIconImages="true"
+      />
       <Service />
       <Assessments />
       <Jobs />
