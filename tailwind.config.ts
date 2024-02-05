@@ -31,6 +31,7 @@ const config: Config = {
       textColor: {
         "primary-color": "#FF6800",
         "text-gray": "#788596",
+        "text-purple": "#87207D",
       },
     },
   },

@@ -10,7 +10,7 @@ export const page = () => {
           point AI based precise recruitment process. It’s tailored to modern Ai
           needs.{" "}
         </p>
-        <div className="w-1/2 flex justify-between my-3 text-base	font-normal">
+        <div className="lg:w-1/2 flex justify-between my-3 text-base	font-normal w-full">
           <a href="#">Jobs</a>
           <a href="#">Recruiters</a>
           <a href="#">Talent</a>

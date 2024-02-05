@@ -20,8 +20,8 @@ const BlogGrid: React.FC<blogGridInterface> = ({ articles }) => {
   const totalPages = Math.ceil(articles.length / articlesPerPage);
 
   return (
-    <div>
-      <div className="grid grid-cols-3 gap-4">
+    <div className="w-10/12	mx-auto">
+      <div className="grid grid-cols-3 gap-4 mr">
         {currentArticles.map((article: any, index: any) => (
           <div key={index} className="border rounded-lg p-4">
             <img
