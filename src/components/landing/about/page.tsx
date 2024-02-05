@@ -1,8 +1,16 @@
 import React from "react";
+interface aboutInterface {
+  height: string;
+  backgroundImage: string;
+}
 
-const page = () => {
+const page: React.FC<aboutInterface> = ({ height, backgroundImage }) => {
+  const divStyle = {
+    height: height || "full", // Replace 'defaultHeight' with your default value
+    backgroundImage: `url(${backgroundImage})`,
+  };
   return (
-    <div className="bg-about h-footer w-full">
+    <div style={divStyle} className="bg-about w-full">
       <div className="w-4/6 mx-auto h-full flex flex-col justify-center items-center xl:w-2/5">
         <p className="text-4xl	font-bold text-white my-3">
           Get started with ORR

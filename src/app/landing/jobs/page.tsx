@@ -34,7 +34,7 @@ const page = () => {
         paragraph2={`No more endless scrolling through irrelevant job listings. Our AI analyzes your profile and preferences to bring you job opportunities that genuinely fit your skills and career aspirations. Realize your worth in a marketplace that values your unique capabilities.`}
         img2={`/assessment-page-img4.svg`}
       />
-      <About />
+      <About height="473px" backgroundImage="" />
       <Footer />
     </>
   );

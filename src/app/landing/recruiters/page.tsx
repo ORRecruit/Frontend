@@ -34,7 +34,7 @@ const page = () => {
         paragraph2={`Access detailed analytics and reports to understand the effectiveness of your job postings and recruitment strategies. Use these insights to refine your approach and continually improve your talent acquisition process.`}
         img2={`/assessment-page-img4.svg`}
       />
-      <About />
+      <About height="473px" backgroundImage="" />
       <Footer />
     </>
   );

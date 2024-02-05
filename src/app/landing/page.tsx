@@ -49,7 +49,7 @@ const page = () => {
       <CarouselComponent />
       <ContactUs />
       <FAQs />
-      <About />
+      <About height="473px" backgroundImage="" />
       <Footer />
     </div>
   );
