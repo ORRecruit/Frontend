@@ -3,6 +3,8 @@ import Navbar from "../../../components/landing/navbar/page";
 import HeroSection from "../../../components/landing/heroSection/page";
 import StatsComponent from "./statsComponent/statsComponent";
 import Assessments from "../../../components/landing/assessments/page";
+import Footer from "../../../components/landing/footer/page";
+import About from "../../../components/landing/about/page";
 
 const page = () => {
   return (
@@ -32,6 +34,8 @@ const page = () => {
         paragraph2={`No more endless scrolling through irrelevant job listings. Our AI analyzes your profile and preferences to bring you job opportunities that genuinely fit your skills and career aspirations. Realize your worth in a marketplace that values your unique capabilities.`}
         img2={`/assessment-page-img4.svg`}
       />
+      <About />
+      <Footer />
     </>
   );
 };
