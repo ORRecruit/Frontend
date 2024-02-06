@@ -1,6 +1,6 @@
 import React from "react";
 
-const page = () => {
+const navbar = () => {
   return (
     <nav className="bg-white h-24 lg:w-4/5 mx-auto">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 lg:">
@@ -90,4 +90,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default navbar;

@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../../../components/landing/navbar/page";
+import Navbar from "../../../components/landing/navbar/navbar";
 import BlogHeader from "./blogHeader/blogHeader";
 import BlogGrid from "./blogGrid/blogGrid";
 import About from "../../../components/landing/about/about";

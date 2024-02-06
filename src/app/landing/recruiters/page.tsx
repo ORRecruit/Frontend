@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../../../components/landing/navbar/page";
+import Navbar from "../../../components/landing/navbar/navbar";
 import HeroSection from "../../../components/landing/heroSection/heroSection";
 import StatsComponent from "../jobs/statsComponent/statsComponent";
 import Assessments from "../../../components/landing/assessments/assessments";
