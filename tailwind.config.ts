@@ -32,6 +32,7 @@ const config: Config = {
         "primary-color": "#FF6800",
         "text-gray": "#788596",
         "text-purple": "#87207D",
+        "purple-artist": "#87207D",
       },
     },
   },
