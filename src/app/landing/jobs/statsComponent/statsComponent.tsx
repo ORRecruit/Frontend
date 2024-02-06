@@ -8,16 +8,25 @@ const stats = [
 
 const StatsComponent = () => {
   return (
-    <div className="flex justify-center items-center space-x-10 py-4 bg-light-gray h-80">
-      <div className="2xl:w-4/12 xl:w-4/12 lg:w-4/12 flex justify-between items-center">
-        {stats.map((stat, index) => (
-          <div key={index} className="text-center">
-            <p className="text-4xl font-bold">{stat.count}</p>
-            <p className="text-xl text-text-gray">{stat.label}</p>
-          </div>
-        ))}
+    <section className="bg-light-gray">
+      <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
+        <dl className="grid max-w-screen-md gap-8 mx-auto text-gray-900 sm:grid-cols-3 dark:text-white">
+          {stats.map((stat, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center justify-center"
+            >
+              <dt className="mb-2 text-3xl md:text-4xl font-extrabold text-black">
+                {stat.count}
+              </dt>
+              <dd className="font-light text-gray-500 dark:text-gray-400">
+                {stat.label}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
-    </div>
+    </section>
   );
 };
 
