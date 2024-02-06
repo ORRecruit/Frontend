@@ -1,7 +1,7 @@
 import React from "react";
 import JobCard from "./jobCard/jobCard";
 
-const page = () => {
+const features = () => {
   const paragraphs: string[] = [
     "Highlight your company’s remote culture and specific hiring needs.",
     "Craft detailed remote job descriptions with our user-friendly tools.",
@@ -56,4 +56,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default features;

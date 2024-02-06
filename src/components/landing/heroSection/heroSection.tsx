@@ -70,23 +70,9 @@ const heroSection: React.FC<heroSectionInterface> = ({
                     </svg>
                   </button>
                 </div>
-                <div className="flex justify-center items-center divide-x divide-gray-200 lg:justify-start">
-                  <div className="flex items-center pl-5 text-sm text-gray-900 dark:text-white">
-                    <svg
-                      className="mr-2 w-4 h-4"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path>
-                      <path
-                        fill-rule="evenodd"
-                        d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                    No Credit Card Required
-                  </div>
+                <div className="mt-4 hidden lg:flex">
+                  <img src="/credit-card.svg" alt="" />
+                  <p className="ml-2">Free Demo</p>
                 </div>
               </form>
             </div>

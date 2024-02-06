@@ -13,7 +13,7 @@ const faqs = () => {
               Here are some frequently asked questions to us
             </p>
           </div>
-          <div className="flex justify-between items-center">
+          <div className="sm:block lg:flex lg:justify-between lg:items-center">
             <div className="lg:w-w-38 2xl:w-3/12">
               {array.map((item: any) => (
                 <div className="pl-4 bg-light-gray py-2 my-2 rounded-lg 2xl:my-4">
