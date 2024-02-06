@@ -6,7 +6,7 @@ const blogDetailsText = () => {
     <>
       <div className="w-11/12 mx-auto mb-4 2xl:mb-20 xl:w-4/5 2xl:w-4/6">
         <div>
-          <h1 className="text-4xl font-bold">Header 1</h1>
+          <h1 className="text-4xl font-bold mb-4">Header 1</h1>
           <p className="text-lg">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
             ullamcorper mattis lorem non. Ultrices praesent amet ipsum justo
@@ -14,8 +14,8 @@ const blogDetailsText = () => {
             purus. Non massa enim vitae duis mattis. Vel in ultricies vel
             fringilla.
           </p>
-          <div className="w-11/12 ml-8 py-4 my-4 border-l-4 border-x-fuchsia-800 pl-4">
-            <p className="text-2xl font-semibold">
+          <div className="w-11/12 ml-8 py-4 my-12 border-l-4 border-x-fuchsia-800 pl-8">
+            <p className="text-2xl font-semibold mb-4">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
               ullamcorper mattis lorem non. Ultrices praesent amet ipsum justo
               massa. Eu dolor aliquet risus gravida nunc at feugiat consequat
@@ -82,7 +82,7 @@ const blogDetailsText = () => {
           </p>
 
           <ul className="space-y-1 list-disc list-inside">
-            <li className="pl-5 relative">
+            <li className="pl-5 relative py-2">
               Fraud detection: A bank or an e-commerce application needs to
               capture fraud and block a fraudulent transaction the moment it
               happens. It is quite irrelevant for a system to detect a
@@ -90,28 +90,28 @@ const blogDetailsText = () => {
               streaming, fraudulent or suspicious transactions are either
               blocked or flagged the moment they occur.
             </li>
-            <li className="pl-5 relative">
+            <li className="pl-5 relative py-2">
               Healthcare: With data streaming, you can monitor your patients in
               real time and also alert staff to any changes in their condition.
               Also, wearing devices such as smart watches can monitor your vital
               organs in real time and alert you if there is any change in
               condition.
             </li>
-            <li className="pl-5 relative">
+            <li className="pl-5 relative py-2">
               Logistics: With data streaming, users can monitor their goods and
               shipments in real time. This can also drive them to make informed
               decisions about the best routes to take, inventory management, and
               so on.This can help forecast accurate estimated time of arrival of
               goods and boost customer satisfaction.
             </li>
-            <li className="pl-5 relative">
+            <li className="pl-5 relative py-2">
               From these examples, you can see that the importance of data
               streaming in the modern era cannot be overemphasized. Data
               streaming is important in the health industry, finance industry,
               electronics industry, retail, construction, and logistics
               industry, amongst others.
             </li>
-            <li className="pl-5 relative">
+            <li className="pl-5 relative py-2">
               Since data streaming is paramount for organizations, it is very
               important for data engineers to make use of data streaming tools
               that ensure low latency and high throughput. In this article, you

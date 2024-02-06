@@ -52,7 +52,7 @@ const navbar = () => {
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0">
             <li>
               <a
-                href="#"
+                href="/landing/jobs"
                 className="block py-2 px-3 md:p-0 text-black rounded"
                 aria-current="page"
               >
@@ -61,7 +61,7 @@ const navbar = () => {
             </li>
             <li>
               <a
-                href="#"
+                href="/landing/recruiters"
                 className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent dark:text-black dark:hover:bg-gray-700 dark:hover:text-black md:dark:hover:bg-transparent dark:border-gray-700"
               >
                 Recruiters
@@ -69,7 +69,7 @@ const navbar = () => {
             </li>
             <li>
               <a
-                href="#"
+                href="/landing/blogs"
                 className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 d:dark:hover:text-blue-500 dark:text-black dark:hover:bg-gray-700 dark:hover:text-black md:dark:hover:bg-transparent dark:border-gray-700"
               >
                 Blog

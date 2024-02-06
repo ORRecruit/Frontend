@@ -29,7 +29,7 @@ const BlogGrid: React.FC<blogGridInterface> = ({ articles }) => {
                 key={index}
                 className="max-w-sm bg-white border border-gray-200 rounded-lg shadow"
               >
-                <a href="#">
+                <a href="/landing/blogs/blogDetails">
                   <img
                     className="rounded-t-lg w-full"
                     src="/blog-grid-img.svg"
