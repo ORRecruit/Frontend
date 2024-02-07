@@ -59,11 +59,15 @@ const Navbar = () => {
           } items-center justify-between w-full md:flex md:w-auto md:order-1 lg:absolute lg:left-1/4`}
           id="navbar-cta"
         >
-          <ul className="flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+          <ul className="w-full flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
             <li>
               <a
                 href="/landing/jobs"
-                className="block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0"
+                className={`${
+                  isMenuOpen
+                    ? "hover:bg-orange-600 hover:text-white hover:w-full"
+                    : ""
+                } block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0`}
                 aria-current="page"
               >
                 Jobs
@@ -72,7 +76,11 @@ const Navbar = () => {
             <li>
               <a
                 href="/landing/recruiters"
-                className="block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0"
+                className={`${
+                  isMenuOpen
+                    ? "hover:bg-orange-600 hover:text-white hover:w-full"
+                    : ""
+                } block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0`}
               >
                 Recruiters
               </a>
@@ -80,7 +88,11 @@ const Navbar = () => {
             <li>
               <a
                 href="/landing/blogs"
-                className="block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0"
+                className={`${
+                  isMenuOpen
+                    ? "hover:bg-orange-600 hover:text-white hover:w-full"
+                    : ""
+                } block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0`}
               >
                 Blog
               </a>
@@ -88,7 +100,11 @@ const Navbar = () => {
             <li>
               <a
                 href="/landing/about"
-                className="block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0"
+                className={`${
+                  isMenuOpen
+                    ? "hover:bg-orange-600 hover:text-white hover:w-full"
+                    : ""
+                } block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0`}
               >
                 About
               </a>
