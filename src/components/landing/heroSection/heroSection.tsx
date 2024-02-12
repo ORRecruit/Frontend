@@ -1,3 +1,5 @@
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface heroSectionInterface {
@@ -71,31 +73,36 @@ const heroSection: React.FC<heroSectionInterface> = ({
                   </button>
                 </div>
                 <div className="mt-4 hidden lg:flex">
-                  <img src="/credit-card.svg" alt="" />
+                  <Image width={20} height={20} src="/credit-card.svg" alt="" />
                   <p className="ml-2">Free Demo</p>
                 </div>
               </form>
             </div>
             <div className="col-span-6">
-              <img src={videoImageSrc} alt="hero section image" />
+              <Image
+                width={600}
+                height={600}
+                src={videoImageSrc}
+                alt="hero section image"
+              />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-8 mx-auto max-w-screen-xl text-gray-500 sm:gap-12 md:grid-cols-3 lg:grid-cols-6 dark:text-gray-400">
-            <a href="#" className="flex justify-center">
-              <img src={iconImages[0]} alt="" />
-            </a>
-            <a href="#" className="flex justify-center">
-              <img src={iconImages[1]} alt="" />
-            </a>
-            <a href="#" className="flex justify-center">
-              <img src={iconImages[2]} alt="" />
-            </a>
-            <a href="#" className="flex justify-center">
-              <img src={iconImages[3]} alt="" />
-            </a>
-            <a href="#" className="flex justify-center">
-              <img src={iconImages[4]} alt="" />
-            </a>
+            <Link href="#" className="flex justify-center">
+              <Image width={120} height={150} src={iconImages[0]} alt="" />
+            </Link>
+            <Link href="#" className="flex justify-center">
+              <Image width={120} height={150} src={iconImages[1]} alt="" />
+            </Link>
+            <Link href="#" className="flex justify-center">
+              <Image width={120} height={150} src={iconImages[2]} alt="" />
+            </Link>
+            <Link href="#" className="flex justify-center">
+              <Image width={120} height={150} src={iconImages[3]} alt="" />
+            </Link>
+            <Link href="#" className="flex justify-center">
+              <Image width={120} height={120} src={iconImages[4]} alt="" />
+            </Link>
           </div>
         </div>
       </section>

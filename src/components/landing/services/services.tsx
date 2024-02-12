@@ -1,7 +1,7 @@
 import React from "react";
-import ServiceCard from "./service-card/page";
+import ServiceCard from "./service-card/serviceCard";
 
-const page = () => {
+const Services = () => {
   const paragraphs: string[] = [
     "We keep Flowbite, secure, and free of spam and abuse so that this can be the platform where developers come together to create.",
     "Our Flowbite Security Lab is a world-class security R&D team. We inspire and enable the community to secure open source.",
@@ -46,4 +46,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Services;

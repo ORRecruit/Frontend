@@ -1,5 +1,7 @@
 "use client";
+import Link from "next/link";
 import React, { useState } from "react";
+import Image from "next/image";
 
 const articlesPerPage = 12;
 const totalArticles = 36;
@@ -29,22 +31,24 @@ const BlogGrid: React.FC<blogGridInterface> = ({ articles }) => {
                 key={index}
                 className="max-w-sm bg-white border border-gray-200 rounded-lg shadow"
               >
-                <a href="/landing/blogs/blogDetails">
-                  <img
+                <Link href="/blogs/blogDetails">
+                  <Image
+                    width={500}
+                    height={500}
                     className="rounded-t-lg w-full"
                     src="/blog-grid-img.svg"
                     alt=""
                   />
-                </a>
+                </Link>
                 <div className="p-5">
                   <p className="text-xs mb-2 text-purple-artist rounded-lg w-max px-4 bg-light-gray">
                     Artist
                   </p>
-                  <a href="#">
+                  <Link href="#">
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                       Our first office
                     </h5>
-                  </a>
+                  </Link>
                   <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                     Over the past year, Volosoft has undergone many changes!
                     After months of preparation and some hard work, we moved to
@@ -52,7 +56,12 @@ const BlogGrid: React.FC<blogGridInterface> = ({ articles }) => {
                   </p>
                   <div className="flex items-center mb-8">
                     <div className="mr-4">
-                      <img src="/avatar-each-blog.svg" alt="" />
+                      <Image
+                        width={40}
+                        height={40}
+                        src="/avatar-each-blog.svg"
+                        alt=""
+                      />
                     </div>
                     <div>
                       <p className="text-sm">Bonnie Green</p>

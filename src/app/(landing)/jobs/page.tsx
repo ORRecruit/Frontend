@@ -1,12 +1,19 @@
 import React from "react";
 import Navbar from "../../../components/landing/navbar/navbar";
 import HeroSection from "../../../components/landing/heroSection/heroSection";
-import StatsComponent from "./statsComponent/statsComponent";
+import StatsComponent from "../../../components/landing/jobs/statsComponent/statsComponent";
 import Assessments from "../../../components/landing/assessments/assessments";
 import Footer from "../../../components/landing/footer/footer";
 import About from "../../../components/landing/about/about";
 
 const page = () => {
+  const iconImages = [
+    "/hero-icon1.svg",
+    "/hero-icon2.svg",
+    "/hero-icon3.svg",
+    "/hero-icon4.svg",
+    "/hero-icon5.svg",
+  ];
   return (
     <>
       <Navbar />
@@ -14,7 +21,7 @@ const page = () => {
         heading={"Craft Your Professional Story"}
         paragraph={`Experience a guided process that helps you create a resume reflecting your true professional self.`}
         videoImageSrc={`/hero-section-img-job.svg`}
-        iconImages={[]}
+        iconImages={iconImages}
         showIconImages="false"
       />
       <StatsComponent />

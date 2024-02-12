@@ -12,7 +12,7 @@ const about: React.FC<aboutInterface> = ({ height, backgroundImage }) => {
   return (
     <div style={divStyle} className="bg-about w-full">
       <div className="w-4/6 mx-auto h-full flex flex-col justify-center items-center xl:w-2/5">
-        <p className="text-3xl font-bold text-white my-3">
+        <p className="text-3xl font-bold text-white my-3 text-center">
           Get started with ORR
         </p>
         <p className="text-gray-500 text-lg font-normal text-center my-3">
@@ -21,7 +21,7 @@ const about: React.FC<aboutInterface> = ({ height, backgroundImage }) => {
         </p>
         <button
           type="button"
-          className="ml-4 w-3/12 flex justify-between items-center text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600 my-3 xl:w-1/5"
+          className="w-[135px] ml-4 w-3/12 flex justify-between items-center text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600 my-3 xl:w-1/5"
         >
           Get started
           <svg

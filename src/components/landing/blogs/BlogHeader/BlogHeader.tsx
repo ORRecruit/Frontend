@@ -1,5 +1,6 @@
 // components/BlogHeader.tsx
 import React from "react";
+import Image from "next/image";
 
 const BlogHeader = () => {
   return (
@@ -10,11 +11,17 @@ const BlogHeader = () => {
         capital can unlock long-term value and drive economic growth.
       </p>
       <div className="flex border text-center border-gray-300 rounded overflow-hidden">
-        <img className="pl-4" src="/search-icon.svg" alt="" />
+        <Image
+          width={40}
+          height={40}
+          className="pl-4"
+          src="/search-icon.svg"
+          alt=""
+        />
         <input
           type="text"
           placeholder="Search Blogs"
-          className="px-4 py-2 w-80"
+          className="px-4 py-2 w-80 outline-none"
         />
       </div>
     </div>

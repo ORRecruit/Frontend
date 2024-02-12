@@ -1,14 +1,14 @@
 import React from "react";
 import Navbar from "../../components/landing/navbar/navbar";
 import HeroSection from "../../components/landing/heroSection/heroSection";
-import Service from "./../../components/landing/services/page";
+import Service from "./../../components/landing/services/services";
 import Footer from "../../components/landing/footer/footer";
 import About from "../../components/landing/about/about";
-import Jobs from "./../../components/landing/jobs/page";
 import FAQs from "../../components/landing/faqs/faqs";
 import Assessments from "../../components/landing/assessments/assessments";
 import ContactUs from "./../../components/landing/contactUs/contactUs";
 import CarouselComponent from "../../components/landing/carouselComponent/carouselComponent";
+import Features from "@/components/landing/jobs/features";
 
 const page = () => {
   const iconImages = [
@@ -45,7 +45,8 @@ const page = () => {
                 and feedback, so you’re never left wondering where you stand.`}
         img2={`/tracher-img.svg`}
       />
-      <Jobs />
+      {/* <Jobs /> */}
+      <Features />
       <CarouselComponent />
       <ContactUs />
       <FAQs />

@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 const contactUs = () => {
   return (
@@ -7,7 +8,13 @@ const contactUs = () => {
         <div className="w-4/5 mx-auto 2xl:w-3/4">
           <div className="relative bg-white">
             <div className="absolute inset-0">
-              <img className="rounded-lg" src="/contactUs-bgImg.svg" alt="" />
+              <Image
+                width={1800}
+                height={1800}
+                className="rounded-lg"
+                src="/contactUs-bgImg.svg"
+                alt=""
+              />
               <div className="absolute inset-0 rounded-lg shadow-lg" />
             </div>
             <div className="relative max-w-3xl mx-auto py-24 px-6 sm:px-6 lg:px-8">
@@ -15,7 +22,7 @@ const contactUs = () => {
                 <h2 className="text-2xl font-bold text-center text-white">
                   Contact Us
                 </h2>
-                <p className="mt-4 text-center text-text-gray">
+                <p className="mt-[45px] sm:mt-[100px] md:mt-4 text-center text-text-gray">
                   We use an agile approach to test assumptions and connect with
                   the needs of your audience early and often.
                 </p>

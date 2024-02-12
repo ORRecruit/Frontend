@@ -1,4 +1,6 @@
 "use client";
+import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 
 const Navbar = () => {
@@ -11,16 +13,22 @@ const Navbar = () => {
   return (
     <nav className="bg-white h-24 lg:w-4/5 mx-auto">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 lg:">
-        <a
+        <Link
           href="https://flowbite.com/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img src="/ORR-logo.svg" className="h-8" alt="Flowbite Logo" />
-        </a>
+          <Image
+            width={50}
+            height={50}
+            src="/ORR-logo.svg"
+            className="h-8"
+            alt="Flowbite Logo"
+          />
+        </Link>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse lg:relative">
-          <a href="#" className="md:mr-4">
+          <Link href="#" className="md:mr-4">
             Login
-          </a>
+          </Link>
           <button
             type="button"
             className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600"
@@ -61,8 +69,8 @@ const Navbar = () => {
         >
           <ul className="w-full flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
             <li>
-              <a
-                href="/landing/jobs"
+              <Link
+                href="/jobs"
                 className={`${
                   isMenuOpen
                     ? "hover:bg-orange-600 hover:text-white hover:w-full"
@@ -71,11 +79,11 @@ const Navbar = () => {
                 aria-current="page"
               >
                 Jobs
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/landing/recruiters"
+              <Link
+                href="/recruiters"
                 className={`${
                   isMenuOpen
                     ? "hover:bg-orange-600 hover:text-white hover:w-full"
@@ -83,11 +91,11 @@ const Navbar = () => {
                 } block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0`}
               >
                 Recruiters
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/landing/blogs"
+              <Link
+                href="/blogs"
                 className={`${
                   isMenuOpen
                     ? "hover:bg-orange-600 hover:text-white hover:w-full"
@@ -95,11 +103,11 @@ const Navbar = () => {
                 } block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0`}
               >
                 Blog
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/landing/about"
+              <Link
+                href="/about"
                 className={`${
                   isMenuOpen
                     ? "hover:bg-orange-600 hover:text-white hover:w-full"
@@ -107,7 +115,7 @@ const Navbar = () => {
                 } block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0`}
               >
                 About
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

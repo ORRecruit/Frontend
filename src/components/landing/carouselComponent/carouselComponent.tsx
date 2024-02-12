@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Image from "next/image";
 
 const carouselData = [
   {
@@ -47,7 +48,9 @@ const carouselComponent = () => {
       </button>
 
       <div>
-        <img
+        <Image
+          height={500}
+          width={500}
           src={carouselData[activeIndex].image}
           alt="Carousel"
           className="w-full h-auto mb-8"

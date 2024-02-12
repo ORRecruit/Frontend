@@ -1,9 +1,9 @@
 import React from "react";
 import Navbar from "../../../components/landing/navbar/navbar";
-import BlogHeader from "./blogHeader/blogHeader";
-import BlogGrid from "./blogGrid/blogGrid";
 import About from "../../../components/landing/about/about";
 import Footer from "../../../components/landing/footer/footer";
+import BlogGrid from "@/components/landing/blogs/BlogGrid/BlogGrid";
+import BlogHeader from "@/components/landing/blogs/BlogHeader/BlogHeader";
 
 const page = () => {
   const articles = [
