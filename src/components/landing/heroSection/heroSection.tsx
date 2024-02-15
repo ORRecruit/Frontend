@@ -87,23 +87,25 @@ const heroSection: React.FC<heroSectionInterface> = ({
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-8 mx-auto max-w-screen-xl text-gray-500 sm:gap-12 md:grid-cols-3 lg:grid-cols-6 dark:text-gray-400">
-            <Link href="#" className="flex justify-center">
-              <Image width={120} height={150} src={iconImages[0]} alt="" />
-            </Link>
-            <Link href="#" className="flex justify-center">
-              <Image width={120} height={150} src={iconImages[1]} alt="" />
-            </Link>
-            <Link href="#" className="flex justify-center">
-              <Image width={120} height={150} src={iconImages[2]} alt="" />
-            </Link>
-            <Link href="#" className="flex justify-center">
-              <Image width={120} height={150} src={iconImages[3]} alt="" />
-            </Link>
-            <Link href="#" className="flex justify-center">
-              <Image width={120} height={120} src={iconImages[4]} alt="" />
-            </Link>
-          </div>
+          {showIconImages && (
+            <div className="grid grid-cols-2 gap-8 mx-auto max-w-screen-xl text-gray-500 sm:gap-12 md:grid-cols-3 lg:grid-cols-6 dark:text-gray-400">
+              <Link href="#" className="flex justify-center">
+                <Image width={120} height={150} src={iconImages[0]} alt="" />
+              </Link>
+              <Link href="#" className="flex justify-center">
+                <Image width={120} height={150} src={iconImages[1]} alt="" />
+              </Link>
+              <Link href="#" className="flex justify-center">
+                <Image width={120} height={150} src={iconImages[2]} alt="" />
+              </Link>
+              <Link href="#" className="flex justify-center">
+                <Image width={120} height={150} src={iconImages[3]} alt="" />
+              </Link>
+              <Link href="#" className="flex justify-center">
+                <Image width={120} height={120} src={iconImages[4]} alt="" />
+              </Link>
+            </div>
+          )}
         </div>
       </section>
     </>

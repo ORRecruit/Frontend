@@ -22,7 +22,7 @@ const Services = () => {
   ];
   return (
     <>
-      <div className="w-full mx-auto bg-bg-service py-28 mt-20">
+      <div className="w-[95%] mx-auto bg-bg-service py-28 mt-20">
         <div className="w-4/5 mx-auto 2xl:w-9/12	">
           <div className="mb-12">
             <p className="text-3xl	font-bold mb-2">Services</p>

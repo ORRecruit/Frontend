@@ -70,6 +70,19 @@ const Navbar = () => {
           <ul className="w-full flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
             <li>
               <Link
+                href="/"
+                className={`${
+                  isMenuOpen
+                    ? "hover:bg-orange-600 hover:text-white hover:w-full"
+                    : ""
+                } block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0`}
+                aria-current="page"
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/jobs"
                 className={`${
                   isMenuOpen
@@ -103,18 +116,6 @@ const Navbar = () => {
                 } block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0`}
               >
                 Blog
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/about"
-                className={`${
-                  isMenuOpen
-                    ? "hover:bg-orange-600 hover:text-white hover:w-full"
-                    : ""
-                } block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0`}
-              >
-                About
               </Link>
             </li>
           </ul>

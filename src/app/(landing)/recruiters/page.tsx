@@ -1,12 +1,19 @@
 import React from "react";
 import Navbar from "../../../components/landing/navbar/navbar";
 import HeroSection from "../../../components/landing/heroSection/heroSection";
-import StatsComponent from "../jobs/statsComponent/statsComponent";
 import Assessments from "../../../components/landing/assessments/assessments";
 import Footer from "../../../components/landing/footer/footer";
 import About from "../../../components/landing/about/about";
+import StatsComponent from "@/components/landing/jobs/statsComponent/statsComponent";
 
 const page = () => {
+  const iconImages = [
+    "/hero-icon1.svg",
+    "/hero-icon2.svg",
+    "/hero-icon3.svg",
+    "/hero-icon4.svg",
+    "/hero-icon5.svg",
+  ];
   return (
     <>
       <Navbar />
@@ -14,7 +21,7 @@ const page = () => {
         heading={"Recruit With Precision "}
         paragraph={`Create job listings that our AI system comprehensively analyzes, ensuring they reach the most suitable candidates. `}
         videoImageSrc={`/hero-section-img-job.svg`}
-        iconImages={[]}
+        iconImages={iconImages}
         showIconImages="false"
       />
       <StatsComponent />
