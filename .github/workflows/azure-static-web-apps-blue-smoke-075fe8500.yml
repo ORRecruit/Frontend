@@ -1,7 +1,13 @@
 name: Build and deploy
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - master
 
 jobs:
   build:
