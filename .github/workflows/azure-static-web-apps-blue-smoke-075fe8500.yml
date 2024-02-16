@@ -31,7 +31,7 @@ jobs:
           mv .next build/standalone/.next
           # Move the public directory to the build/standalone directory
           mv public build/standalone/public
-        working-directory: ./Frontend # Set this to the root of your Next.js application
+        working-directory: Frontend # Set this to the root of your Next.js application
 
       - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
