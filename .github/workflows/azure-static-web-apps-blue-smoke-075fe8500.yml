@@ -27,9 +27,9 @@ jobs:
         run: |
           npm install --force
           npm run build
-          mv .next build/standalone/.next
-          mv public build/standalone/public
-        working-directory: ./Frontend
+          mv ../../.next ./build/standalone/.next
+          mv ../../public ./build/standalone/public
+        working-directory: ./src
 
       - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
@@ -38,4 +38,4 @@ jobs:
           app-name: "teamshousepre"
           slot-name: "Production"
           publish-profile: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLUE_SMOKE_075FE8500  }}
-          package: ./Frontend/build/standalone
+          package: ./src/build/standalone
