@@ -8,6 +8,7 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - master
+
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
@@ -19,27 +20,35 @@ jobs:
           submodules: true
           lfs: false
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Cache node modules
+        uses: actions/cache@v2
         with:
           node-version: "18.18.0" # Now specifying Node.js version 20
           cache: "yarn" # Optionally cache dependencies for faster builds
 
-      - name: Check Node.js version
-        run: node -v
+      - name: Cache Next.js build
+        uses: actions/cache@v2
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-next-${{ hashFiles('**/*.js', '**/*.css') }}
+          restore-keys: |
+            ${{ runner.os }}-next-
 
-      - name: Install Dependencies
-        run: yarn install
+      - name: Disable Next.js telemetry
+        run: npx next telemetry disable
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Build the project
-        run: yarn build
+        run: npm run build
 
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLUE_SMOKE_075FE8500 }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for GitHub integrations (i.e., PR comments)
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           app_location: "/" # App sounpm rce code path
           api_location: "" # Api source code path - optional
