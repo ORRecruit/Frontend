@@ -27,8 +27,8 @@ jobs:
         run: |
           npm install --force
           npm run build
-          mv ../../.next ./build/standalone/.next
-          mv ../../public ./build/standalone/public
+          mv .next ./build/standalone/.next
+          mv ./public ./build/standalone/public
         working-directory: ./src
 
       - name: "Deploy to Azure Web App"
