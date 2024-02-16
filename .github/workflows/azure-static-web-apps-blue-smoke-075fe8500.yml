@@ -27,9 +27,11 @@ jobs:
         run: |
           npm install --force
           npm run build
-          mv ../next ./build/standalone/.next
-          mv ./public ./build/standalone/public
-        working-directory: ./src
+          # Move the .next directory to the build/standalone directory
+          mv .next build/standalone/.next
+          # Move the public directory to the build/standalone directory
+          mv public build/standalone/public
+        working-directory: ./Frontend # Set this to the root of your Next.js application
 
       - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
@@ -38,4 +40,4 @@ jobs:
           app-name: "teamshousepre"
           slot-name: "Production"
           publish-profile: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLUE_SMOKE_075FE8500  }}
-          package: ./src/build/standalone
+          package: ./Frontend/build/standalone
