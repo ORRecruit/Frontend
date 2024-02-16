@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.17.0' # Specify the Node.js version
+          node-version: '18.18.0' # Specify the Node.js version
           cache: 'yarn' # Optionally cache dependencies for faster builds
       - name: Build And Deploy
         id: builddeploy
