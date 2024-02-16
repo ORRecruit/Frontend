@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18.17.1" # Specify the Node.js version
+          node-version: "18.0.0" # Specify the Node.js version
 
       - name: Check Node.js version
         run: node -v
