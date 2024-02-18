@@ -18,13 +18,13 @@ const faqs = () => {
               {array.map((item: any) => (
                 <div className="pl-4 bg-light-gray py-2 my-2 rounded-lg 2xl:my-4">
                   <h3 className="text-base font-normal">
-                    How often do you refresh your database?
+                    What is ORR's mission?
                   </h3>
                   <p className="text-text-gray">Web developer at Google</p>
                 </div>
               ))}
               <div className="flex items-center text-primary-color">
-                <p className="mr-2">View other 20 testimonials</p>
+                <p className="mr-2">Contact our team to learn more</p>
                 <svg
                   className="rtl:rotate-180 w-3.5 h-3.5 ms-2 text-base font-medium"
                   aria-hidden="true"
@@ -51,12 +51,7 @@ const faqs = () => {
                   Remote recruit is a company that uses AI to find talent and match with the right talent
                 </p>
                 <p>
-                  There is absolutely no doubt in my mind that without Flowbite,
-                  I would not have been able to make the jump to Ueno, a digital
-                  agency I started in 2014. The work I got through Flowbite made
-                  it possible for me to have something to build on. We now have
-                  about 45 people on our team, a lot of whom we found and
-                  recruited through Flowbite.
+                  We understand the challenges of finding the right remote talent, which is why we've developed a sophisticated matching algorithm that connects recruiters with top-notch candidates effortlessly. Say goodbye to endless searching and let our AI technology streamline your recruitment process.
                 </p>
               </div>
             </div>
