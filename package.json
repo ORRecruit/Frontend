@@ -9,10 +9,10 @@
     "lint": "next lint"
   },
   "engines": {
-    "node": "18.18.0"
+    "node": "20.11.0"
   },
   "dependencies": {
-    "next": "13",
+    "next": "14",
     "react": "^18",
     "react-dom": "^18"
   },
