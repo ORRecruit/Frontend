@@ -18,7 +18,7 @@ const page = () => {
     <>
       <Navbar />
       <HeroSection
-        heading={"Craft Your Professional Story"}
+        heading={"Match with top Canadian Firms"}
         paragraph={`Experience a guided process that helps you create a resume reflecting your true professional self.`}
         videoImageSrc={`/hero-section-img-job.svg`}
         iconImages={iconImages}
@@ -26,7 +26,7 @@ const page = () => {
       />
       <StatsComponent />
       <Assessments
-        heading1={`Dynamic Skill Assessment`}
+        heading1={`Hire Quality Talent using AI`}
         paragraph1={`Utilize our AI-driven skill assessment tools to gain insights into your strengths and areas for growth. Our platform provides personalized suggestions for skill development, helping you stay competitive and ready for new challenges.`}
         img1={`/assessment-page-img1.svg`}
         heading2={`Application Tracker`}
@@ -34,7 +34,7 @@ const page = () => {
         img2={`/assessment-page-img2.svg`}
       />
       <Assessments
-        heading1={`Dynamic Skill Assessment`}
+        heading1={`Hire Quality Talent using AI`}
         paragraph1={`Join our community of like-minded professionals. Participate in discussions, share experiences, and gain insights from others who have navigated the job-seeking journey. At ORR, you're not just finding a job; you're joining a community.`}
         img1={`/assessment-page-img3.svg`}
         heading2={`Smart Job Matching`}

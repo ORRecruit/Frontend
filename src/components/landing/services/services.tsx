@@ -2,17 +2,16 @@ import React from "react";
 import ServiceCard from "./service-card/serviceCard";
 
 const Services = () => {
-  const paragraphs: string[] = [
-    "We keep Flowbite, secure, and free of spam and abuse so that this can be the platform where developers come together to create.",
-    "Our Flowbite Security Lab is a world-class security R&D team. We inspire and enable the community to secure open source.",
-    "We embody the shift toward investments in safe and secure software design practices with our world-class front-end products.",
-    "It's easy to customize and style Flowbite. Tweak the look and feel of your UI with CSS/Less, and add major features with HTML.",
-  ];
+  const paragraphs: string[] = ["" +
+  "We've developed a sophisticated matching algorithm that connects recruiters with top-notch candidates in real time using AI",
+    "Our platform is rigorously monitored to prevent spam and abuse, ensuring a positive and trustworthy experience for recruiters and candidates alike.",
+    "Designed with simplicity and efficiency in mind, our dashboard provides recruiters with the tools they need to  hire remote talent quickly",
+    "Our platform offers seamless onboarding, allowing you to customize and setup onboarding for candidates with just a few clicks at scale"]
   const titles: string[] = [
-    "AI Remote Matching",
-    "Finding Criteria",
-    "Recruiters Dashboard",
-    "Onboarding",
+    "AI Powered Matching",
+    "Available Talent Pool",
+    "Smart Dashboards",
+    "Custom Onboarding",
   ];
   const icons: string[] = [
     "/service-icon1.svg",

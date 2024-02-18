@@ -4,7 +4,7 @@ import Image from "next/image";
 const contactUs = () => {
   return (
     <>
-      <div className="w-full mx-auto py-14 mt-20">
+      <div className="w-full mx-auto py-14 mt-20" id="contactPageId">
         <div className="w-4/5 mx-auto 2xl:w-3/4">
           <div className="relative bg-white">
             <div className="absolute inset-0">
@@ -23,8 +23,7 @@ const contactUs = () => {
                   Contact Us
                 </h2>
                 <p className="mt-[45px] sm:mt-[100px] md:mt-4 text-center text-text-gray">
-                  We use an agile approach to test assumptions and connect with
-                  the needs of your audience early and often.
+                  Do you have questions? Talk to our team today by dropping a message below
                 </p>
                 <form className="mt-8 space-y-6 bg-white shadow-lg rounded-lg p-8">
                   <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
@@ -97,7 +96,7 @@ const contactUs = () => {
                     <div className="flex items-start">
                       <p className="text-sm text-gray-500">
                         By submitting this form, you confirm that you have read
-                        and agree to Flowbite's Terms of Service and Privacy
+                        and agree to ORR's Terms of Service and Privacy
                         Statement
                       </p>
                     </div>

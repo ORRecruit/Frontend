@@ -5,15 +5,15 @@ import Image from "next/image";
 const carouselData = [
   {
     image: "/carousel-img.svg",
-    text: `"Flowbite is just awesome. It contains tons of predesigned components and pages starting from login screen to complex dashboard. Perfect choice for your next SaaS application."`,
+    text: `"ORR is an amazing concept, we cant wait for their launch and to use the product"`,
   },
   {
     image: "/carousel-img.svg",
-    text: `"Flowbite is just awesome. It contains tons of predesigned components and pages starting from login screen to complex dashboard. Perfect choice for your next SaaS application."`,
+    text: `"The ORR founders showed us their concept and we are hooked already!"`,
   },
   {
     image: "/carousel-img.svg",
-    text: `"Flowbite is just awesome. It contains tons of predesigned components and pages starting from login screen to complex dashboard. Perfect choice for your next SaaS application."`,
+    text: `"Our team is tired of old ATS solutions and we are looking for an new alternative"`,
   },
 ];
 

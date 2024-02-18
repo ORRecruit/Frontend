@@ -6,13 +6,13 @@ const features = () => {
     "Highlight your company’s remote culture and specific hiring needs.",
     "Craft detailed remote job descriptions with our user-friendly tools.",
     "Receive a curated list of top candidates best suited for remote work.",
-    "Review profiles, initiate conversations, and manage remote interviews all through our platform.",
+    "Review profiles, initiate conversations, and manage interviews in one place",
   ];
   const titles: string[] = [
     "Create Your Employer Profile",
     "Post Remote Job Listings",
-    "AI-Enhanced Matches",
-    "Efficient Candidate Engagement",
+    "Find Matching Talent",
+    "Schedule Interviews",
   ];
   return (
     <>

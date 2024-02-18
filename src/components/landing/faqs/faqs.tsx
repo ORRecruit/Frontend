@@ -18,7 +18,7 @@ const faqs = () => {
               {array.map((item: any) => (
                 <div className="pl-4 bg-light-gray py-2 my-2 rounded-lg 2xl:my-4">
                   <h3 className="text-base font-normal">
-                    How can I upgrade to recruiter pro?
+                    How often do you refresh your database?
                   </h3>
                   <p className="text-text-gray">Web developer at Google</p>
                 </div>
@@ -44,13 +44,11 @@ const faqs = () => {
             </div>
             <div className="lg:w-3/5">
               <h1 className="text-xl font-semibold mb-2">
-                How can I upgrade to recruiter pro?
+                How is Remote Recruit Different from other firms?
               </h1>
               <div className="text-xl font-normal text-text-gray">
                 <p>
-                  Flowbite is just awesome. It contains tons of predesigned
-                  components and pages starting from login screen to complex
-                  dashboard. Perfect choice for your next SaaS application.
+                  Remote recruit is a company that uses AI to find talent and match with the right talent
                 </p>
                 <p>
                   There is absolutely no doubt in my mind that without Flowbite,

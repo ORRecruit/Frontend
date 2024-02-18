@@ -92,7 +92,7 @@ const Navbar = () => {
                 } block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0`}
                 aria-current="page"
               >
-                Jobs
+                Candidates
               </Link>
             </li>
             <li>

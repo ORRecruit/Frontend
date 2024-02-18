@@ -23,23 +23,20 @@ const page = () => {
       <Navbar />
       <HeroSection
         heading={"Revolutionize Your Remote Hiring"}
-        paragraph={`Empower your business with our AI-driven platform, specifically
-              designed for the dynamic world of remote work. Connect with
-              exceptional talent, streamline your recruitment process, and build
-              a successful remote team effortlessly.`}
+        paragraph={`Elevate your hiring process with our AI-powered platform tailored for remote work. Connect seamlessly with top talent, streamline recruitment, and effortlessly build your dream remote team.`}
         videoImageSrc={`/demo-video.svg`}
         iconImages={iconImages}
         showIconImages="true"
       />
       <Service />
       <Assessments
-        heading1={`Dynamic Skill Assessment`}
+        heading1={`Find Quality Talent Using AI Powered ATS`}
         paragraph1={`Utilize our AI-driven skill assessment tools to gain insights
                 into your strengths and areas for growth. Our platform provides
                 personalized suggestions for skill development, helping you stay
                 competitive and ready for new challenges.`}
         img1={`/assessment-img.svg`}
-        heading2={`Application Tracker`}
+        heading2={`Track Applications From A Single Dashboard`}
         paragraph2={`With our real-time application tracking system, you’ll always
                 know the status of your job applications. Get instant updates
                 and feedback, so you’re never left wondering where you stand.`}
