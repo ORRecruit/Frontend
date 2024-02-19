@@ -47,7 +47,6 @@ const page = () => {
                 and feedback, so you’re never left wondering where you stand.`}
         img2={`/tracher-img.svg`}
       />
-      {/* <Jobs /> */}
       <Features />
       <CarouselComponent />
       <div id="contactUs">

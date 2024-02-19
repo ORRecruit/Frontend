@@ -1,5 +1,6 @@
 import React from "react";
 import JobCard from "./jobCard/jobCard";
+import Link from "next/link";
 
 const features = () => {
   const paragraphs: string[] = [
@@ -29,27 +30,29 @@ const features = () => {
               <JobCard paragraphText={paragraph} title={titles[index]} />
             ))}
           </div>
-          <button
-            type="button"
-            className="ml-4 w-40 h-14 flex justify-between items-center text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600 my-3"
-          >
-            Get started
-            <svg
-              className="rtl:rotate-180 w-3.5 h-3.5 ms-2 text-base font-medium"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 10"
+          <Link href="#contactUs">
+            <button
+              type="button"
+              className="ml-4 w-40 h-14 flex justify-between items-center text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600 my-3"
             >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 5h12m0 0L9 1m4 4L9 9"
-              />
-            </svg>
-          </button>
+              Get started
+              <svg
+                className="rtl:rotate-180 w-3.5 h-3.5 ms-2 text-base font-medium"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 10"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M1 5h12m0 0L9 1m4 4L9 9"
+                />
+              </svg>
+            </button>
+          </Link>
         </div>
       </div>
     </>

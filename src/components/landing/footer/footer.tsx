@@ -5,7 +5,7 @@ import React from "react";
 export const footer = () => {
   return (
     <>
-      <footer className="my-8">
+      <footer className="py-8 bg-about text-white">
         <div className="p-4 py-6 mx-auto max-w-screen-xl md:p-8 lg:-10">
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
             <div className="col-span-2">
@@ -117,7 +117,7 @@ export const footer = () => {
                 </li>
                 <li className="mb-4">
                   <Link href="#" className="hover:underline">
-                    Brand Center
+                    Services
                   </Link>
                 </li>
                 <li className="mb-4">
@@ -129,12 +129,12 @@ export const footer = () => {
             </div>
             <div className="lg:mx-auto">
               <h2 className="mb-6 text-sm font-semibold uppercase">
-                Help center
+                Social Media
               </h2>
               <ul className="text-gray-500 dark:text-gray-400">
                 <li className="mb-4">
                   <Link href="#" className="hover:underline">
-                    Discord Server
+                    Instagram
                   </Link>
                 </li>
                 <li className="mb-4">
@@ -149,52 +149,59 @@ export const footer = () => {
                 </li>
                 <li className="mb-4">
                   <Link href="#" className="hover:underline">
-                    Contact Us
+                    Outlook
                   </Link>
                 </li>
               </ul>
             </div>
             <div className="lg:mx-auto">
-              <h2 className="mb-6 text-sm font-semibold uppercase">Legal</h2>
+              <h2 className="mb-6 text-sm font-semibold uppercase">Company</h2>
               <ul className="text-gray-500 dark:text-gray-400">
                 <li className="mb-4">
-                  <Link href="#" className="hover:underline">
-                    Privacy Policy
+                  <Link href="#" className=" hover:underline">
+                    About
                   </Link>
                 </li>
                 <li className="mb-4">
                   <Link href="#" className="hover:underline">
-                    Licensing
+                    Careers
                   </Link>
                 </li>
                 <li className="mb-4">
                   <Link href="#" className="hover:underline">
-                    Terms
+                    Services
+                  </Link>
+                </li>
+                <li className="mb-4">
+                  <Link href="#" className="hover:underline">
+                    Blog
                   </Link>
                 </li>
               </ul>
             </div>
             <div className="lg:mx-auto">
-              <h2 className="mb-6 text-sm font-semibold uppercase">Download</h2>
+              <h2 className="mb-6 text-sm font-semibold uppercase">
+                Social Media
+              </h2>
               <ul className="text-gray-500 dark:text-gray-400">
                 <li className="mb-4">
                   <Link href="#" className="hover:underline">
-                    iOS
+                    Instagram
                   </Link>
                 </li>
                 <li className="mb-4">
                   <Link href="#" className="hover:underline">
-                    Android
+                    Twitter
                   </Link>
                 </li>
                 <li className="mb-4">
                   <Link href="#" className="hover:underline">
-                    Windows
+                    Facebook
                   </Link>
                 </li>
                 <li className="mb-4">
                   <Link href="#" className="hover:underline">
-                    MacOS
+                    Outlook
                   </Link>
                 </li>
               </ul>

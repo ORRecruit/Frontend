@@ -23,13 +23,13 @@ const Services = () => {
   ];
   return (
     <>
-      <div className="w-[95%] mx-auto bg-bg-service py-28 mt-20">
+      <div className="w-[95%] mx-auto bg-bg-service py-28">
         <div className="w-4/5 mx-auto 2xl:w-9/12	">
           <div className="mb-12">
             <p className="text-3xl	font-bold mb-2">Why Us</p>
-            <p className="w-4/5	text-xl font-normal">
-              ORR eliminates the traditional matchmaking and is a gateway to
-              modern AI-Enhanced Remote Matching.
+            <p className="w-4/5 lg:w-[60%]	text-xl font-normal">
+              Online Remote Recruiting eliminates the traditional matchmaking
+              and is a gateway to modern AI-Enhanced Remote Matching.
             </p>
           </div>
           <div className="flex flex-wrap	justify-between">

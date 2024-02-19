@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 interface aboutInterface {
   height: string;
@@ -10,9 +11,9 @@ const about: React.FC<aboutInterface> = ({ height, backgroundImage }) => {
     backgroundImage: `url(${backgroundImage})`,
   };
   return (
-    <div style={divStyle} className="bg-about w-full">
+    <div style={divStyle} className="w-full bg-white">
       <div className="w-4/6 mx-auto h-full flex flex-col justify-center items-center xl:w-2/5">
-        <p className="text-3xl font-bold text-white my-3 text-center">
+        <p className="text-3xl font-bold my-3 text-center text-black">
           Get started with Online Remote Recruiting
         </p>
         <p className="text-gray-500 text-lg font-normal text-center my-3">
@@ -23,7 +24,7 @@ const about: React.FC<aboutInterface> = ({ height, backgroundImage }) => {
           type="button"
           className="w-[135px] ml-4 w-3/12 flex justify-between items-center text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600 my-3 xl:w-1/5"
         >
-          Get started
+          <Link href="#contactUs">Get started</Link>
           <svg
             className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
             aria-hidden="true"
