@@ -16,7 +16,7 @@ const faqs = () => {
           <div className="sm:block lg:flex lg:justify-between lg:items-center">
             <div className="lg:w-w-38 2xl:w-3/12">
               {array.map((item: any) => (
-                <div className="pl-4 bg-light-gray py-2 my-2 rounded-lg 2xl:my-4">
+                <div className="pl-4 bg-light-gray py-2 my-2 rounded-lg 2xl:my-4 hover:cursor-pointer">
                   <h3 className="text-base font-normal">
                     What is ORR's mission?
                   </h3>
@@ -48,10 +48,15 @@ const faqs = () => {
               </h1>
               <div className="text-xl font-normal text-text-gray">
                 <p>
-                  Remote recruit is a company that uses AI to find talent and match with the right talent
+                  Remote recruit is a company that uses AI to find talent and
+                  match with the right talent
                 </p>
                 <p>
-                  We understand the challenges of finding the right remote talent, which is why we've developed a sophisticated matching algorithm that connects recruiters with top-notch candidates effortlessly. Say goodbye to endless searching and let our AI technology streamline your recruitment process.
+                  We understand the challenges of finding the right remote
+                  talent, which is why we've developed a sophisticated matching
+                  algorithm that connects recruiters with top-notch candidates
+                  effortlessly. Say goodbye to endless searching and let our AI
+                  technology streamline your recruitment process.
                 </p>
               </div>
             </div>

@@ -8,11 +8,11 @@ const carouselData = [
     text: `"ORR is an amazing concept, we cant wait for their launch and to use the product"`,
   },
   {
-    image: "/carousel-img.svg",
+    image: "/carousel-img2.avif",
     text: `"The ORR founders showed us their concept and we are hooked already!"`,
   },
   {
-    image: "/carousel-img.svg",
+    image: "/carousel-img3.avif",
     text: `"Our team is tired of old ATS solutions and we are looking for an new alternative"`,
   },
 ];
@@ -53,7 +53,7 @@ const carouselComponent = () => {
           width={500}
           src={carouselData[activeIndex].image}
           alt="Carousel"
-          className="w-full h-auto mb-8"
+          className="w-full h-auto mb-8 w-[200px] h-[200px] object-cover rounded-[50%]"
         />
       </div>
       <p className="text-center text-2xl font-semibold px-4 lg:w-3/5 2xl:w-2/4">

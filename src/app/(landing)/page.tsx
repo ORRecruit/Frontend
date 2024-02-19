@@ -9,6 +9,7 @@ import Assessments from "../../components/landing/assessments/assessments";
 import ContactUs from "./../../components/landing/contactUs/contactUs";
 import CarouselComponent from "../../components/landing/carouselComponent/carouselComponent";
 import Features from "@/components/landing/jobs/features";
+import CompanyServices from "@/components/landing/companyServices/companyServices";
 
 const page = () => {
   const iconImages = [
@@ -20,18 +21,19 @@ const page = () => {
   ];
   return (
     <div>
-        <div className="flex justify-center bg-blue-300 h-12 text-center text-blue-950 text-sm items-center">Our
-            website is under maintenance. Please check back in a few hours.
-        </div>
-        <Navbar/>
-        <HeroSection
-            heading={"Revolutionize Your Remote Hiring"}
-            paragraph={`Elevate your hiring process with our AI-powered platform tailored for remote work. Connect seamlessly with top talent, streamline recruitment, and effortlessly build your dream remote team.`}
+      <div className="flex justify-center bg-blue-300 h-12 text-center text-blue-950 text-sm items-center">
+        Our website is under maintenance. Please check back later.
+      </div>
+      <Navbar />
+      <HeroSection
+        heading={"Revolutionize Your Remote Hiring"}
+        paragraph={`Elevate your hiring process with our AI-powered platform tailored for remote work. Connect seamlessly with top talent, streamline recruitment, and effortlessly build your dream remote team.`}
         videoImageSrc={`/demo-video.svg`}
         iconImages={iconImages}
         showIconImages="true"
       />
       <Service />
+      <CompanyServices />
       <Assessments
         heading1={`Find Quality Talent Using AI Powered ATS`}
         paragraph1={`Utilize our AI-driven skill assessment tools to gain insights
@@ -39,7 +41,7 @@ const page = () => {
                 personalized suggestions for skill development, helping you stay
                 competitive and ready for new challenges.`}
         img1={`/assessment-img.svg`}
-        heading2={`Track Applications From A Single Dashboard`}
+        heading2={`Track Applications From a Single Dashboard`}
         paragraph2={`With our real-time application tracking system, you’ll always
                 know the status of your job applications. Get instant updates
                 and feedback, so you’re never left wondering where you stand.`}
@@ -48,7 +50,9 @@ const page = () => {
       {/* <Jobs /> */}
       <Features />
       <CarouselComponent />
-      <ContactUs />
+      <div id="contactUs">
+        <ContactUs />
+      </div>
       <FAQs />
       <About height="473px" backgroundImage="" />
       <Footer />

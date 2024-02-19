@@ -72,10 +72,10 @@ const heroSection: React.FC<heroSectionInterface> = ({
                     </svg>
                   </button>
                 </div>
-                <div className="mt-4 hidden lg:flex">
+                {/* <div className="mt-4 hidden lg:flex">
                   <Image width={20} height={20} src="/credit-card.svg" alt="" />
                   <p className="ml-2">Free Demo</p>
-                </div>
+                </div> */}
               </form>
             </div>
             <div className="col-span-6">
@@ -87,7 +87,7 @@ const heroSection: React.FC<heroSectionInterface> = ({
               />
             </div>
           </div>
-          {showIconImages && (
+          {/* {showIconImages && (
             <div className="grid grid-cols-2 gap-8 mx-auto max-w-screen-xl text-gray-500 sm:gap-12 md:grid-cols-3 lg:grid-cols-6 dark:text-gray-400">
               <Link href="#" className="flex justify-center">
                 <Image width={120} height={150} src={iconImages[0]} alt="" />
@@ -105,7 +105,7 @@ const heroSection: React.FC<heroSectionInterface> = ({
                 <Image width={120} height={120} src={iconImages[4]} alt="" />
               </Link>
             </div>
-          )}
+          )} */}
         </div>
       </section>
     </>
