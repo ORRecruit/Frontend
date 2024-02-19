@@ -20,10 +20,13 @@ const page = () => {
   ];
   return (
     <div>
-      <Navbar />
-      <HeroSection
-        heading={"Revolutionize Your Remote Hiring"}
-        paragraph={`Elevate your hiring process with our AI-powered platform tailored for remote work. Connect seamlessly with top talent, streamline recruitment, and effortlessly build your dream remote team.`}
+        <div className="flex justify-center bg-blue-300 h-12 text-center text-blue-950 text-sm items-center">Our
+            website is under maintenance. Please check back in a few hours.
+        </div>
+        <Navbar/>
+        <HeroSection
+            heading={"Revolutionize Your Remote Hiring"}
+            paragraph={`Elevate your hiring process with our AI-powered platform tailored for remote work. Connect seamlessly with top talent, streamline recruitment, and effortlessly build your dream remote team.`}
         videoImageSrc={`/demo-video.svg`}
         iconImages={iconImages}
         showIconImages="true"
