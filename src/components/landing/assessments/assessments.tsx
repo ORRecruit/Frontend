@@ -32,8 +32,8 @@ const assessments: React.FC<AssessmentInterface> = ({
               {paragraph1}
             </p>
             <Link
-              href="#"
-              className="inline-flex items-center text-white bg-color-blue focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              href="#contactUs"
+              className="bg-orange-600 inline-flex items-center text-white bg-color-blue focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
               Get started
               <svg
@@ -60,8 +60,8 @@ const assessments: React.FC<AssessmentInterface> = ({
               {paragraph2}
             </p>
             <Link
-              href="#"
-              className="inline-flex items-center text-white bg-color-blue focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              href="#contactUs"
+              className="bg-orange-600 inline-flex items-center text-white bg-color-blue focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
               Get started
               <svg

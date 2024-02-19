@@ -49,11 +49,11 @@ const carouselComponent = () => {
 
       <div>
         <Image
-          height={500}
-          width={500}
+          height={50}
+          width={50}
           src={carouselData[activeIndex].image}
           alt="Carousel"
-          className="w-full h-auto mb-8"
+          className="w-full h-auto mb-8 w-[200px] h-[200px] object-cover rounded-[50%]"
         />
       </div>
       <p className="text-center text-2xl font-semibold px-4 lg:w-3/5 2xl:w-2/4">

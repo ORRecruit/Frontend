@@ -27,14 +27,14 @@ const Navbar = () => {
           />
         </Link>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse lg:relative">
-          <Link href="#" className="md:mr-4">
+          {/* <Link href="#" className="md:mr-4">
             Login
-          </Link>
+          </Link> */}
           <button
             type="button"
             className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600"
           >
-            Get started
+            <Link href="#contactUs">Get started</Link>
           </button>
           <button
             data-collapse-toggle="navbar-cta"

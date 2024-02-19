@@ -20,8 +20,8 @@ const heroSection: React.FC<heroSectionInterface> = ({
   return (
     <>
       <section className="bg-white">
-        <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
-          <div className="grid gap-8 items-center mb-8 lg:mb-24 lg:gap-12 lg:grid-cols-12">
+        <div className="py-8 px-4 mx-auto max-w-screen-xl lg:pt-16 lg:pb-0">
+          <div className="grid gap-8 items-center mb-8 lg:gap-12 lg:grid-cols-12">
             <div className="col-span-6 text-center sm:mb-6 lg:text-left lg:mb-0">
               <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl">
                 {heading}
@@ -53,29 +53,31 @@ const heroSection: React.FC<heroSectionInterface> = ({
                       id="email"
                     />
                   </div>
-                  <button
-                    type="submit"
-                    className="w-full sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
-                  >
-                    Get Started
-                    <svg
-                      className="ml-2 -mr-1 w-5 h-5"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
+                  <Link href="#contactUs" scroll={true}>
+                    <button
+                      type="submit"
+                      className="w-full sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
                     >
-                      <path
-                        fillRule="evenodd"
-                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      ></path>
-                    </svg>
-                  </button>
+                      Get Started
+                      <svg
+                        className="ml-2 -mr-1 w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        ></path>
+                      </svg>
+                    </button>
+                  </Link>
                 </div>
-                <div className="mt-4 hidden lg:flex">
+                {/* <div className="mt-4 hidden lg:flex">
                   <Image width={20} height={20} src="/credit-card.svg" alt="" />
                   <p className="ml-2">Free Demo</p>
-                </div>
+                </div> */}
               </form>
             </div>
             <div className="col-span-6">
@@ -87,7 +89,7 @@ const heroSection: React.FC<heroSectionInterface> = ({
               />
             </div>
           </div>
-          {showIconImages && (
+          {/* {showIconImages && (
             <div className="grid grid-cols-2 gap-8 mx-auto max-w-screen-xl text-gray-500 sm:gap-12 md:grid-cols-3 lg:grid-cols-6 dark:text-gray-400">
               <Link href="#" className="flex justify-center">
                 <Image width={120} height={150} src={iconImages[0]} alt="" />
@@ -105,7 +107,7 @@ const heroSection: React.FC<heroSectionInterface> = ({
                 <Image width={120} height={120} src={iconImages[4]} alt="" />
               </Link>
             </div>
-          )}
+          )} */}
         </div>
       </section>
     </>
