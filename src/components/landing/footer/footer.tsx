@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+// comment only for build successful
 
 export const footer = () => {
   return (
