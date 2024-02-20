@@ -8,11 +8,11 @@ const carouselData = [
     text: `"ORR is an amazing concept, we cant wait for their launch and to use the product"`,
   },
   {
-    image: "/carousel-img.svg",
+    image: "/carousel-img2.avif",
     text: `"The ORR founders showed us their concept and we are hooked already!"`,
   },
   {
-    image: "/carousel-img.svg",
+    image: "/carousel-img3.avif",
     text: `"Our team is tired of old ATS solutions and we are looking for an new alternative"`,
   },
 ];
@@ -33,7 +33,7 @@ const carouselComponent = () => {
   };
 
   return (
-    <div className="relative mx-auto flex flex-col items-center justify-center space-y-4 lg:w-4/5 lg:mt-8 xl:mt-20 2xl:w-2/3">
+    <div className="relative mx-auto flex flex-col items-center justify-end space-y-4 lg:w-4/5 lg:mt-8 xl:mt-20 2xl:w-2/3  h-[350px] bottom-12">
       <button
         onClick={goToPrevious}
         className="absolute text-primary-color left-0 z-10 p-4 focus:outline-none"
@@ -47,13 +47,12 @@ const carouselComponent = () => {
         <span className="text-2xl">&#x3e;</span>
       </button>
 
-      <div>
+      <div className="w-[200px] h-[200px] absolute top-4 ">
         <Image
-          height={50}
-          width={50}
+          fill
           src={carouselData[activeIndex].image}
           alt="Carousel"
-          className="w-full h-auto mb-8 w-[200px] h-[200px] object-cover rounded-[50%]"
+          className="w-full h-auto mb-8 object-cover rounded-[50%] "
         />
       </div>
       <p className="text-center text-2xl font-semibold px-4 lg:w-3/5 2xl:w-2/4">

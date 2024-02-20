@@ -19,6 +19,7 @@ const config: Config = {
         about: "#1D2939",
         "light-gray": "#F3F5F7",
         "color-blue": "#1A56DB",
+        "primary-orange": "#FF6800",
       },
       height: {
         footer: "460px",

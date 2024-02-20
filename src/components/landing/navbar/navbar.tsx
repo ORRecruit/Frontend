@@ -15,7 +15,7 @@ const Navbar = () => {
     <nav className="bg-white h-24 lg:w-4/5 mx-auto">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 lg:">
         <Link
-          href="https://flowbite.com/"
+          href="#"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <Image
@@ -27,9 +27,6 @@ const Navbar = () => {
           />
         </Link>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse lg:relative">
-          {/* <Link href="#" className="md:mr-4">
-            Login
-          </Link> */}
           <button
             type="button"
             className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600"

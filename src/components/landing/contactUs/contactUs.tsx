@@ -23,7 +23,8 @@ const contactUs = () => {
                   Contact Us
                 </h2>
                 <p className="mt-[45px] sm:mt-[100px] md:mt-4 text-center text-text-gray">
-                  Do you have questions? Talk to our team today by dropping a message below
+                  Do you have questions? Talk to our team today by dropping a
+                  message below
                 </p>
                 <form className="mt-8 space-y-6 bg-white shadow-lg rounded-lg p-8">
                   <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
@@ -102,7 +103,7 @@ const contactUs = () => {
                     </div>
                     <button
                       type="submit"
-                      className="mt-2 h-10 mt-6 w-full bg-orange-600 inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto"
+                      className="mt-2 h-10 mt-6 w-full bg-orange-600 inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto"
                     >
                       Send message
                     </button>
