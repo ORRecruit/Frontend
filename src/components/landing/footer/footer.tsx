@@ -28,6 +28,10 @@ export const footer = () => {
                 its on point AI based precise recruitment process. It’s tailored
                 to modern Ai needs.
               </p>
+              <p className="my-4 font-light text-gray-500 dark:text-gray-400">
+                Online Remote Recruiting | 19 Thorne Street, Suite 110,
+                Cambridge, Ontario Canada N1R 1S3
+              </p>
               <ul className="flex mt-5 space-x-6">
                 <li>
                   <Link
@@ -107,23 +111,23 @@ export const footer = () => {
               <h2 className="mb-6 text-sm font-semibold uppercase">Company</h2>
               <ul className="text-gray-500 dark:text-gray-400">
                 <li className="mb-4">
-                  <Link href="#" className=" hover:underline">
-                    About
+                  <Link href="/jobs" className=" hover:underline">
+                    Candidates
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link href="#" className="hover:underline">
-                    Careers
+                  <Link href="/recruiters" className="hover:underline">
+                    Recruiters
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link href="#" className="hover:underline">
-                    Services
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link href="#" className="hover:underline">
+                  <Link href="/blogs" className="hover:underline">
                     Blog
+                  </Link>
+                </li>
+                <li className="mb-4">
+                  <Link href="#contactUs" className="hover:underline">
+                    ContactUs
                   </Link>
                 </li>
               </ul>
@@ -134,69 +138,26 @@ export const footer = () => {
               </h2>
               <ul className="text-gray-500 dark:text-gray-400">
                 <li className="mb-4">
-                  <Link href="#" className="hover:underline">
+                  <Link
+                    href="https://www.instagram.com/online_remote_recruiting_/.linkedin.com/company/97847002/"
+                    className="hover:underline"
+                  >
                     Instagram
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link href="#" className="hover:underline">
-                    Twitter
+                  <Link
+                    href="https://www.linkedin.com/company/97847002/"
+                    className="hover:underline"
+                  >
+                    LinkedIn
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link href="#" className="hover:underline">
-                    Facebook
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link href="#" className="hover:underline">
-                    Outlook
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div className="lg:mx-auto">
-              <h2 className="mb-6 text-sm font-semibold uppercase">Company</h2>
-              <ul className="text-gray-500 dark:text-gray-400">
-                <li className="mb-4">
-                  <Link href="#" className=" hover:underline">
-                    About
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link href="#" className="hover:underline">
-                    Careers
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link href="#" className="hover:underline">
-                    Services
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link href="#" className="hover:underline">
-                    Blog
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div className="lg:mx-auto">
-              <h2 className="mb-6 text-sm font-semibold uppercase">
-                Social Media
-              </h2>
-              <ul className="text-gray-500 dark:text-gray-400">
-                <li className="mb-4">
-                  <Link href="#" className="hover:underline">
-                    Instagram
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link href="#" className="hover:underline">
-                    Twitter
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link href="#" className="hover:underline">
+                  <Link
+                    href="https://www.facebook.com/profile.php?id=61552907145902&sk"
+                    className="hover:underline"
+                  >
                     Facebook
                   </Link>
                 </li>
@@ -209,7 +170,7 @@ export const footer = () => {
             </div>
           </div>
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"></hr>
-          <span className="block text-sm text-center text-gray-500 dark:text-gray-400">
+          <span className="block text-sm text-start text-gray-500 dark:text-gray-400">
             © 2024{" "}
             <a href="#" className="hover:underline">
               Online Remote Recruiting
