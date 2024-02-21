@@ -24,11 +24,6 @@ export const footer = () => {
                 Online Remote Recruiting
               </Link>
               <p className="my-4 font-light text-gray-500 dark:text-gray-400">
-                Recruiters with 50k+ Talented individuals. Online Remote
-                Recruiting thrives on its on point AI based precise recruitment
-                process. It’s tailored to modern Ai needs.
-              </p>
-              <p className="my-4 font-light text-gray-500 dark:text-gray-400">
                 Online Remote Recruiting | 19 Thorne Street, Suite 110,
                 Cambridge, Ontario Canada N1R 1S3
               </p>
