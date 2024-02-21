@@ -35,7 +35,7 @@ const page = () => {
       />
       <Assessments
         heading1={`Hire Quality Talent using AI`}
-        paragraph1={`Join our community of like-minded professionals. Participate in discussions, share experiences, and gain insights from others who have navigated the job-seeking journey. At ORR, you're not just finding a job; you're joining a community.`}
+        paragraph1={`Join our community of like-minded professionals. Participate in discussions, share experiences, and gain insights from others who have navigated the job-seeking journey. At Online Remote Recruiting, you're not just finding a job; you're joining a community.`}
         img1={`/assessment-page-img3.svg`}
         heading2={`Smart Job Matching`}
         paragraph2={`No more endless scrolling through irrelevant job listings. Our AI analyzes your profile and preferences to bring you job opportunities that genuinely fit your skills and career aspirations. Realize your worth in a marketplace that values your unique capabilities.`}

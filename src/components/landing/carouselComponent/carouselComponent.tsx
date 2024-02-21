@@ -5,11 +5,11 @@ import Image from "next/image";
 const carouselData = [
   {
     image: "/carousel-img.svg",
-    text: `"ORR is an amazing concept, we cant wait for their launch and to use the product"`,
+    text: `"Online Remote Recruiting is an amazing concept, we cant wait for their launch and to use the product"`,
   },
   {
     image: "/carousel-img2.avif",
-    text: `"The ORR founders showed us their concept and we are hooked already!"`,
+    text: `"The Online Remote Recruiting founders showed us their concept and we are hooked already!"`,
   },
   {
     image: "/carousel-img3.avif",

@@ -97,8 +97,8 @@ const contactUs = () => {
                     <div className="flex items-start">
                       <p className="text-sm text-gray-500">
                         By submitting this form, you confirm that you have read
-                        and agree to ORR's Terms of Service and Privacy
-                        Statement
+                        and agree to Online Remote Recruiting's Terms of Service
+                        and Privacy Statement
                       </p>
                     </div>
                     <button

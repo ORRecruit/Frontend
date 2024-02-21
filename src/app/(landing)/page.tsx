@@ -48,7 +48,6 @@ const page = () => {
         img2={`/tracher-img.svg`}
       />
       <Features />
-      <CarouselComponent />
       <div id="contactUs">
         <ContactUs />
       </div>

@@ -24,11 +24,6 @@ export const footer = () => {
                 Online Remote Recruiting
               </Link>
               <p className="my-4 font-light text-gray-500 dark:text-gray-400">
-                4k+ Recruiters with 50k+ Talented individuals. ORR thrives on
-                its on point AI based precise recruitment process. It’s tailored
-                to modern Ai needs.
-              </p>
-              <p className="my-4 font-light text-gray-500 dark:text-gray-400">
                 Online Remote Recruiting | 19 Thorne Street, Suite 110,
                 Cambridge, Ontario Canada N1R 1S3
               </p>
@@ -162,7 +157,10 @@ export const footer = () => {
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link href="#" className="hover:underline">
+                  <Link
+                    href="info@onlineremoterecruit.com"
+                    className="hover:underline"
+                  >
                     Outlook
                   </Link>
                 </li>
