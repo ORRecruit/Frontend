@@ -1,7 +1,14 @@
+import Navbar from "@/components/landing/navbar/navbar";
+import Signup from "@/app/dashboard/auth/signup/page";
 import React from "react";
 
 const page = () => {
-  return <div>dashboard main page</div>;
+  return (
+    <>
+      <Navbar />
+      <Signup />
+    </>
+  );
 };
 
 export default page;
