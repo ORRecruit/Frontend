@@ -15,7 +15,7 @@ const faqs = () => {
     {
       question: "How Online Remote Recruiting's different from others?",
       answer:
-        "Remote recruit is a company that uses AI to find talent and match with the right talent We understand the challenges of finding the right remote talent, which is why we've developed a sophisticated matching algorithm that connects recruiters with top-notch candidates effortlessly. Say goodbye to endless searching and let our AI technology streamline your recruitment process.",
+        "Online Remote Recruiting is job recruiting platform that uses AI to find talent and match with the right talent We understand the challenges of finding the right remote talent, which is why we've developed a sophisticated matching algorithm that connects recruiters with top-notch candidates effortlessly. Say goodbye to endless searching and let our AI technology streamline your recruitment process.",
     },
     {
       question: "What does Online Remote Recruiting do?",
@@ -88,7 +88,7 @@ const faqs = () => {
                     aria-labelledby={`accordion-flush-heading-${index}`}
                   >
                     <div className="py-5 border-b border-gray-200 dark:border-gray-700">
-                      <p className="mb-2 text-gray-500 dark:text-gray-400 lg:text-lg">
+                      <p className="mb-2 text-gray-500 dark:text-gray-400 lg:text-lg text-justify">
                         {item.answer}
                       </p>
                     </div>

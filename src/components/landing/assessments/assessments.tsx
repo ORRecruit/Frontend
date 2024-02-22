@@ -28,7 +28,7 @@ const assessments: React.FC<AssessmentInterface> = ({
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-black">
               {heading1}
             </h2>
-            <p className="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400">
+            <p className="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400 text-justify">
               {paragraph1}
             </p>
             <Link
@@ -56,7 +56,7 @@ const assessments: React.FC<AssessmentInterface> = ({
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-black">
               {heading2}
             </h2>
-            <p className="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400">
+            <p className="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400 text-justify">
               {paragraph2}
             </p>
             <Link
