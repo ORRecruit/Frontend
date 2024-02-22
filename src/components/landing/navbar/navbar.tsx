@@ -21,7 +21,7 @@ const Navbar = () => {
           <Image
             width={50}
             height={50}
-            src="/ORR-logo.svg"
+            src="/final-logo.svg"
             className="h-8"
             alt="Flowbite Logo"
           />

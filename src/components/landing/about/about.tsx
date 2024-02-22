@@ -17,14 +17,17 @@ const about: React.FC<aboutInterface> = ({ height, backgroundImage }) => {
           Get started with Online Remote Recruiting
         </p>
         <p className="text-gray-500 text-lg font-normal text-center my-3">
-          Find your perfect talent waiting to meet you and show you what they
-          have got from thousands miles away
+          Our platform offers a diverse pool of candidates across various
+          industries, enabling you to find the perfect match for your team's
+          needs.
         </p>
         <button
           type="button"
-          className="w-[135px] ml-4 w-3/12 flex justify-between items-center text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600 my-3 xl:w-1/5"
+          className="h-[45px] w-[160px] ml-4 w-3/12 flex justify-between items-center text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600 my-3 xl:w-[160px]"
         >
-          <Link href="#contactUs">Get started</Link>
+          <Link href="#contactUs" className="text-base">
+            Get started
+          </Link>
           <svg
             className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
             aria-hidden="true"
