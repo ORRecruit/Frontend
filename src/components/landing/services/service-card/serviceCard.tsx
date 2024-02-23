@@ -20,7 +20,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           {title}
         </h5>
       </Link>
-      <p className="mb-3 font-normal text-base text-justify">{paragraphText}</p>
+      <p className="mb-3 font-normal text-base">{paragraphText}</p>
     </div>
   );
 };

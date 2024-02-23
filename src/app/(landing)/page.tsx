@@ -7,9 +7,9 @@ import About from "../../components/landing/about/about";
 import FAQs from "../../components/landing/faqs/faqs";
 import Assessments from "../../components/landing/assessments/assessments";
 import ContactUs from "./../../components/landing/contactUs/contactUs";
-import CarouselComponent from "../../components/landing/carouselComponent/carouselComponent";
 import Features from "@/components/landing/jobs/features";
 import CompanyServices from "@/components/landing/companyServices/companyServices";
+import Cookie from "@/components/landing/cookie/cookie";
 
 const page = () => {
   const iconImages = [
@@ -24,6 +24,7 @@ const page = () => {
       <div className="flex justify-center bg-blue-300 h-12 text-center text-blue-950 text-sm items-center">
         Our website is under maintenance. Please check back later.
       </div>
+      <Cookie />
       <Navbar />
       <HeroSection
         heading={"Revolutionize Your Remote Hiring"}
