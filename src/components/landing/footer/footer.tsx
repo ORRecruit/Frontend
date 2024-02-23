@@ -26,7 +26,7 @@ export const footer = () => {
               <div className="flex">
                 <Link
                   href="https://www.facebook.com/profile.php?id=61554351726300"
-                  className="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400 mt-[20px] mr-[10px]"
+                  className="text-gray-300 hover:text-gray-500 dark:hover:text-white dark:text-gray-400 mt-[20px] mr-[10px]"
                 >
                   <svg
                     className="w-5 h-5"
@@ -41,7 +41,7 @@ export const footer = () => {
                     />
                   </svg>
                 </Link>
-                <p className="my-4 font-light text-gray-500 dark:text-gray-400 mb-0">
+                <p className="my-4 font-light text-gray-300 dark:text-gray-400 mb-0">
                   Online Remote Recruiting | 19 Thorne Street, Suite 110,
                   Cambridge, Ontario Canada N1R 1S3
                 </p>
@@ -49,7 +49,7 @@ export const footer = () => {
               <div className="flex">
                 <Link
                   href="https://www.facebook.com/profile.php?id=61554351726300"
-                  className="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400 mt-[20px] mr-[10px]"
+                  className="text-gray-300 hover:text-gray-500 dark:hover:text-white dark:text-gray-400 mt-[20px] mr-[10px]"
                 >
                   <svg
                     className="w-5 h-5"
@@ -64,7 +64,7 @@ export const footer = () => {
                     />
                   </svg>
                 </Link>
-                <p className="my-4 font-light text-gray-500 dark:text-gray-400">
+                <p className="text-gray-300 my-4 font-light dark:text-gray-400">
                   info@onlineremoterecruit.com
                 </p>
               </div>
@@ -72,7 +72,7 @@ export const footer = () => {
                 <li>
                   <Link
                     href="https://www.facebook.com/profile.php?id=61554351726300"
-                    className="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400"
+                    className="text-gray-300 hover:text-gray-500 dark:hover:text-white dark:text-gray-400"
                   >
                     <svg
                       className="w-5 h-5"
@@ -91,7 +91,7 @@ export const footer = () => {
                 <li>
                   <Link
                     href="https://www.instagram.com/online_remote_recruiting_/"
-                    className="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400"
+                    className="text-gray-300 hover:text-gray-500 dark:hover:text-white dark:text-gray-400"
                   >
                     <svg
                       className="w-5 h-5"
@@ -110,7 +110,7 @@ export const footer = () => {
                 <li>
                   <Link
                     href="https://www.linkedin.com/company/97847002/"
-                    className="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400"
+                    className="text-gray-300 hover:text-gray-500 dark:hover:text-white dark:text-gray-400"
                   >
                     <svg
                       className="w-5 h-5"
@@ -125,7 +125,7 @@ export const footer = () => {
                 <li>
                   <Link
                     href="https://twitter.com/OnlineRemoteR"
-                    className="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400"
+                    className="text-gray-300 hover:text-gray-500 dark:hover:text-white dark:text-gray-400"
                   >
                     <svg
                       className="w-5 h-5"
@@ -145,7 +145,7 @@ export const footer = () => {
             </div>
             {/* <div className="lg:mx-auto">
               <h2 className="mb-6 text-sm font-semibold uppercase">Company</h2>
-              <ul className="text-gray-500 dark:text-gray-400">
+              <ul className="text-gray-300 dark:text-gray-400">
                 <li className="mb-4">
                   <Link href="/jobs" className=" hover:underline">
                     Candidates
@@ -170,7 +170,7 @@ export const footer = () => {
             </div> */}
           </div>
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"></hr>
-          <span className="block text-sm text-start text-gray-500 dark:text-gray-400">
+          <span className="block text-sm text-start text-gray-300 dark:text-gray-400">
             © 2024{" "}
             <a href="#" className="hover:underline">
               Online Remote Recruiting

@@ -22,7 +22,7 @@ const Navbar = () => {
             width={50}
             height={50}
             src="/final-logo.svg"
-            className="h-8"
+            className="h-[100px] w-[100px]"
             alt="Flowbite Logo"
           />
         </Link>
