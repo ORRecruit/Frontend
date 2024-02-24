@@ -21,8 +21,8 @@ const Navbar = () => {
           <Image
             width={50}
             height={50}
-            src="/final-logo.svg"
-            className="h-[100px] w-[100px]"
+            src="/logo-online-remote.svg"
+            className="h-[60px] w-[60px] lg:h-[70px] lg:w-[70px] xl:h-[90px] xl:w-[90px] 2xl:h-[100px] 2xl:w-[100px]"
             alt="Flowbite Logo"
           />
         </Link>
@@ -65,7 +65,7 @@ const Navbar = () => {
           } items-center justify-between w-full md:flex md:w-auto md:order-1 lg:absolute lg:left-1/4`}
           id="navbar-cta"
         >
-          <ul className="w-full flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+          <ul className="w-full flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium xl:text-base 2xl:text-lg">
             <li>
               <Link
                 href="/"
