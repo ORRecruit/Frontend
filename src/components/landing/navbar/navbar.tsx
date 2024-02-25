@@ -12,20 +12,29 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white h-24 lg:w-4/5 mx-auto">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 lg:">
-        <Link
-          href="#"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
-        >
+    <nav className="bg-white h-24 lg:w-[100%] mx-auto 2xl:mb-10 xl:mb-6">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        {/* <Link href="#" className="flex items-center border border-red-400">
           <Image
             width={50}
             height={50}
-            src="/logo-online-remote.svg"
-            className="h-[60px] w-[60px] lg:h-[70px] lg:w-[70px] xl:h-[90px] xl:w-[90px] 2xl:h-[100px] 2xl:w-[100px]"
+            src="/logo-orr-my-side.svg"
+            className="h-[60px] w-[60px] lg:h-[80p7] lg:w-[70px] xl:h-[100p9 xl:w-[90px]"
             alt="Flowbite Logo"
           />
-        </Link>
+        </Link> */}
+        <div>
+          <a
+            href="https://flowbite.com"
+            className="w-[90px] h-[50px] md:w-[100px] md:h-[60px] lg:w-[100px] lg:h-[60px] xl:w-[110px] xl:h-[70px]"
+          >
+            <img
+              src="/logo-orr-my-side.svg"
+              className="w-[90px] h-[50px] md:w-[100px] md:h-[60px] lg:w-[100px] lg:h-[60px] xl:w-[110px] xl:h-[70px]"
+              alt="Flowbite Logo"
+            />
+          </a>
+        </div>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse lg:relative">
           <button
             type="button"
@@ -65,7 +74,7 @@ const Navbar = () => {
           } items-center justify-between w-full md:flex md:w-auto md:order-1 lg:absolute lg:left-1/4`}
           id="navbar-cta"
         >
-          <ul className="w-full flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium xl:text-base 2xl:text-lg">
+          <ul className="w-full flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium xl:text-base">
             <li>
               <Link
                 href="/"
