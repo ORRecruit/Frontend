@@ -10,7 +10,7 @@ export const footer = () => {
         <div className="p-4 py-6 mx-auto max-w-screen-xl md:p-8 lg:-10">
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
             <div className="col-span-2">
-              <Link
+              {/* <Link
                 href="#"
                 className="flex items-center mb-2 text-2xl font-semibold sm:mb-0"
               >
@@ -22,7 +22,20 @@ export const footer = () => {
                   className="mr-4"
                 ></Image>
                 Online Remote Recruiting
-              </Link>
+              </Link> */}
+              <div className="flex items-center text-3xl font-semibold sm:mb-0 md:w-[500px]">
+                <a
+                  href="https://flowbite.com"
+                  className="w-[90px] h-[50px] xl:w-[100px] xl:h-[60px] flex items-center mb-2 text-bas"
+                >
+                  <img
+                    src="/logo-orr-my-side.svg"
+                    className="w-[90px] h-[50px] xl:w-[100px] xl:h-[60px]"
+                    alt="Flowbite Logo"
+                  />
+                </a>
+                <span className="md:ml-[10px]">Online Remote Recruiting</span>
+              </div>
               <div className="flex">
                 <Link
                   href="https://www.facebook.com/profile.php?id=61554351726300"
