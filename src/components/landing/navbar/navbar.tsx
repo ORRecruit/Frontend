@@ -71,7 +71,7 @@ const Navbar = () => {
             isMenuOpen
               ? "flex flex-col bg-gray-200 z-10 rounded-xl mt-2.5 text-white"
               : "hidden"
-          } items-center justify-between w-full md:flex md:w-auto md:order-1 lg:absolute lg:left-1/4`}
+          } items-center justify-between w-full md:flex md:w-auto md:order-1 lg:absolute lg:left-1/4 2xl:pl-[75px]`}
           id="navbar-cta"
         >
           <ul className="w-full flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium xl:text-base">
