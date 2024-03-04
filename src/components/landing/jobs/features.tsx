@@ -4,14 +4,14 @@ import Link from "next/link";
 
 const features = () => {
   const paragraphs: string[] = [
-    "Highlight your company’s remote culture and specific hiring needs.",
-    "Craft detailed remote job descriptions with our user-friendly tools.",
-    "Receive a curated list of top candidates best suited for remote work.",
+    "Highlight your company’s culture and specific hiring needs.",
+    "Craft detailed job descriptions with our user-friendly tools.",
+    "Receive a curated list of top candidates best suited for work.",
     "Review profiles, initiate conversations, and manage interviews in one place",
   ];
   const titles: string[] = [
     "Create Your Employer Profile",
-    "Post Remote Job Listings",
+    "Post The Job Listings",
     "Find Matching Talent",
     "Schedule Interviews",
   ];
@@ -22,7 +22,7 @@ const features = () => {
           <div className="mb-12">
             <p className="text-3xl	font-bold mb-2">How it Works</p>
             <p className="w-4/5	text-xl font-normal">
-              Seamlessly Navigate Your Remote Hiring Journey:
+              Seamlessly Navigate To Your Hiring Journey:
             </p>
           </div>
           <div className="flex flex-wrap justify-between">
@@ -35,7 +35,7 @@ const features = () => {
               type="button"
               className="ml-4 w-40 h-12 flex justify-between items-center text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-base px-4 py-2 text-center bg-orange-600 my-3"
             >
-              Get started
+              Start Hiring
               <svg
                 className="rtl:rotate-180 w-3.5 h-3.5 ms-2 text-base font-medium"
                 aria-hidden="true"

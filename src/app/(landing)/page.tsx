@@ -27,8 +27,8 @@ const page = () => {
       <Cookie />
       <Navbar />
       <HeroSection
-        heading={"Revolutionize Your Remote Hiring"}
-        paragraph={`Elevate your hiring process with our AI-powered platform tailored for remote work. Connect seamlessly with top talent, streamline recruitment, and effortlessly build your dream remote team.`}
+        heading={"Revolutionize Your Hiring"}
+        paragraph={`Elevate your hiring process with our AI-powered platform tailored for work. Connect seamlessly with top talent, streamline recruitment, and effortlessly build your dream team.`}
         videoImageSrc={`/demo-video.svg`}
         iconImages={iconImages}
         showIconImages="true"

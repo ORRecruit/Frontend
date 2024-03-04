@@ -15,7 +15,7 @@ const faqs = () => {
     {
       question: "How Online Remote Recruiting's different from others?",
       answer:
-        "Online Remote Recruiting is job recruiting platform that uses AI to find talent and match with the right talent We understand the challenges of finding the right remote talent, which is why we've developed a sophisticated matching algorithm that connects recruiters with top-notch candidates effortlessly. Say goodbye to endless searching and let our AI technology streamline your recruitment process.",
+        "Online Remote Recruiting is job recruiting platform that uses AI to find talent and match with the right talent We understand the challenges of finding the right talent, which is why we've developed a sophisticated matching algorithm that connects recruiters with top-notch candidates effortlessly. Say goodbye to endless searching and let our AI technology streamline your recruitment process.",
     },
     {
       question: "What does Online Remote Recruiting do?",
