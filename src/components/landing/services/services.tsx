@@ -6,7 +6,7 @@ const Services = () => {
     "" +
       "We've developed a sophisticated matching algorithm that connects recruiters with top-notch candidates in real time using AI",
     "Our platform is rigorously monitored to prevent spam and abuse, ensuring a positive and trustworthy experience for recruiters and candidates alike.",
-    "Designed with simplicity and efficiency in mind, our dashboard provides recruiters with the tools they need to  hire remote talent quickly",
+    "Designed with simplicity and efficiency in mind, our dashboard provides recruiters with the tools they need to  hire talent quickly",
     "Our platform offers seamless onboarding, allowing you to customize and setup onboarding for candidates with just a few clicks at scale",
   ];
   const titles: string[] = [
@@ -30,7 +30,7 @@ const Services = () => {
             <div className="w-4/5 lg:w-[100%]	text-xl font-normal text-center lg:w-[100%] flex justify-center items-center lg:my-[20px]">
               <p className="lg:w-[60%] text-center text-gray-500 sm:text-xl dark:text-gray-400 lg:my-4">
                 Online Remote Recruiting eliminates the traditional matchmaking
-                and is a gateway to modern AI-Enhanced Remote Matching.
+                and is a gateway to modern AI-Enhanced Matching.
               </p>
             </div>
           </div>

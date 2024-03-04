@@ -20,13 +20,13 @@ const page = () => {
     <>
       <Navbar />
       <HeroSection
-        heading={"Find your Dream Remote Job Today!"}
+        heading={"Find your Dream Job Today!"}
         paragraph={`Experience a guided process that helps you land a job that propels your career forward.`}
         videoImageSrc={`/tracher-img.svg`}
         iconImages={iconImages}
         showIconImages="false"
       />
-        <Features />
+      <Features />
       {/*<StatsComponent />*/}
       <Assessments
         heading1={`Find jobs that match your career tragetory`}
@@ -36,7 +36,7 @@ const page = () => {
         paragraph2={`With our real-time application tracking system, you’ll always know the status of your job applications. Get instant updates and feedback, so you’re never left wondering where you stand.`}
         img2={`/assessment-page-img2.svg`}
       />
-        <ContactUs />
+      <ContactUs />
       <About height="473px" backgroundImage="" />
       <Footer />
     </>

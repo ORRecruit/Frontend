@@ -18,7 +18,7 @@ const page = () => {
     <>
       <Navbar />
       <HeroSection
-        heading={"Hire Remotely From Anywhere"}
+        heading={"Hire Here From Anywhere"}
         paragraph={`Create job listings that our AI system comprehensively analyzes, ensuring they reach the most suitable candidates. `}
         videoImageSrc={`/hero-section-img-job.svg`}
         iconImages={iconImages}

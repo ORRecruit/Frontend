@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Online Remote Recruit",
-  description: "Hire Remote talent using AI",
+  description: "Hire talent using AI",
 };
 
 export default function RootLayout({
