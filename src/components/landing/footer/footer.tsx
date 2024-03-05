@@ -11,22 +11,15 @@ export const footer = () => {
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
             <div className="col-span-2">
               <div className="flex items-center text-3xl font-semibold sm:mb-0 md:w-[500px]">
-                <a
-                  href="https://onlineremoterecruit.com"
-                  className="w-[90px] h-[50px] xl:w-[100px] xl:h-[60px] flex items-center mb-2 text-bas"
-                >
-                  <img
-                      src="/finallogoORR.svg"
-                      className="w-20 h-20 sm:w-40 sm:h-40 md:w-60 md:h-60 lg:w-70 lg:h-70 xl:w-75 xl:h-75"
-                      alt="Flowbite Logo"
-                  />
+                <a href="https://onlineremoterecruit.com" className="flex items-center mb-4">
+                  <Image src="/finallogoORR.svg" width={75} height={75} alt="Flowbite Logo" className="h-auto"/>
+                  <span className="ml-4 text-xl md:text-3xl">Online Remote Recruiting</span>
                 </a>
-                <span className="ml-4 mt-8 align-middle content-center text-center">Online Remote Recruiting</span>
-              </div>
+                </div>
               <div className="flex">
                 <Link
-                  href="https://www.facebook.com/profile.php?id=61554351726300"
-                  className="text-gray-300 hover:text-gray-500 dark:hover:text-white dark:text-gray-400 mt-[20px] mr-[10px]"
+                    href="https://www.facebook.com/profile.php?id=61554351726300"
+                    className="text-gray-300 hover:text-gray-500 dark:hover:text-white dark:text-gray-400 mt-[20px] mr-[10px]"
                 >
                   <svg
                     className="w-5 h-5"
