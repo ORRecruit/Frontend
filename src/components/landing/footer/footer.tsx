@@ -16,12 +16,12 @@ export const footer = () => {
                   className="w-[90px] h-[50px] xl:w-[100px] xl:h-[60px] flex items-center mb-2 text-bas"
                 >
                   <img
-                    src="/final-logo-orr.png"
-                    className="w-[70px] h-[4px] xl:w-[75px] xl:h-[70px]"
-                    alt="Flowbite Logo"
+                      src="/finallogoORR.svg"
+                      className="w-20 h-20 sm:w-40 sm:h-40 md:w-60 md:h-60 lg:w-70 lg:h-70 xl:w-75 xl:h-75"
+                      alt="Flowbite Logo"
                   />
                 </a>
-                <span className="">Online Remote Recruiting</span>
+                <span className="ml-4 mt-8 align-middle content-center text-center">Online Remote Recruiting</span>
               </div>
               <div className="flex">
                 <Link
