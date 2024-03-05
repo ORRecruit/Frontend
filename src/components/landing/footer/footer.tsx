@@ -12,12 +12,12 @@ export const footer = () => {
             <div className="col-span-2">
               <div className="flex items-center text-3xl font-semibold sm:mb-0 md:w-[500px]">
                 <a
-                  href="https://flowbite.com"
+                  href="https://onlineremoterecruit.com"
                   className="w-[90px] h-[50px] xl:w-[100px] xl:h-[60px] flex items-center mb-2 text-bas"
                 >
                   <img
                     src="/final-logo-orr.png"
-                    className="w-[70px] h-[4px] xl:w-[80px] xl:h-[50px]"
+                    className="w-[70px] h-[4px] xl:w-[60px] xl:h-[50px]"
                     alt="Flowbite Logo"
                   />
                 </a>

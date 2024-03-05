@@ -25,7 +25,7 @@ const Navbar = () => {
         </Link> */}
         <div>
           <a
-            href="https://flowbite.com"
+            href="https://onlineremoterecruit.com"
             className="w-[90px] h-[50px] md:w-[100px] md:h-[60px] lg:w-[100px] lg:h-[60px] xl:w-[110px] xl:h-[70px]"
           >
             <img
