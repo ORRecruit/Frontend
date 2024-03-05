@@ -37,6 +37,7 @@ const Services = () => {
           <div className="flex flex-wrap	justify-between">
             {paragraphs.map((paragraph, index) => (
               <ServiceCard
+                key={index}
                 paragraphText={paragraph}
                 title={titles[index]}
                 iconUrl={icons[index]}
