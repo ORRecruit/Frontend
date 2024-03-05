@@ -17,7 +17,7 @@ export const footer = () => {
                 >
                   <img
                     src="/final-logo-orr.png"
-                    className="w-[70px] h-[4px] xl:w-[60px] xl:h-[50px]"
+                    className="w-[70px] h-[4px] xl:w-[75px] xl:h-[70px]"
                     alt="Flowbite Logo"
                   />
                 </a>

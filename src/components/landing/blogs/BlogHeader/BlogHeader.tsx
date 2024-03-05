@@ -7,7 +7,7 @@ const BlogHeader = () => {
     <div className="flex flex-col items-center py-12">
       <h1 className="text-6xl font-bold mb-4">Blog</h1>
       <p className="text-xl text-text-gray text-center mb-6 max-w-prose">
-        Here at flowbite we focus on markets where technology, innovation, and
+        Here at Online Remote Recruiting we focus on markets where technology, innovation, and
         capital can unlock long-term value and drive economic growth.
       </p>
       <div className="flex border text-center border-gray-300 rounded overflow-hidden">
