@@ -46,6 +46,14 @@ const page = () => {
       author: "shan",
       date: "any date",
     },
+    {
+      image: "/blog-no6.png",
+      title: "Job Search 101",
+      description:
+        "Ready to take your job search to the next level? Partner with Online Remote Recruiting and gain access to exclusive job opportunities and strategic insights to accelerate your career growth",
+      author: "shan",
+      date: "any date",
+    },
   ];
   return (
     <>
