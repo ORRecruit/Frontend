@@ -63,8 +63,8 @@ const BlogDetailsHeader = () => {
                 <p className="mx-auto mb-6 max-w-xl font-light text-gray-500 lg:mx-0 xl:mb-8 md:text-lg xl:text-xl dark:text-gray-400">
                   {blogDetails[blogNo - 1].description}
                 </p>
-                <p className="text-xs text-text-gray pb-8">February 17, 2009</p>
-                <p className="text-base text-text-purple">‘Jeffrey Richman’</p>
+                <p className="text-xs text-text-gray pb-8">August 15, 2021</p>
+                <p className="text-base text-text-purple">‘Boonie Green’</p>
               </div>
               <div className="col-span-6 shadow-2xl rounded-xl overflow-hidden">
                 <Image
