@@ -1,9 +1,7 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
-// navbar component
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -14,15 +12,6 @@ const Navbar = () => {
   return (
     <nav className="bg-white h-24 lg:w-[100%] mx-auto 2xl:mb-10 xl:mb-6">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        {/* <Link href="#" className="flex items-center border border-red-400">
-          <Image
-            width={50}
-            height={50}
-            src="/logo-orr-my-side.svg"
-            className="h-[60px] w-[60px] lg:h-[80p7] lg:w-[70px] xl:h-[100p9 xl:w-[90px]"
-            alt="Flowbite Logo"
-          />
-        </Link> */}
         <div>
           <a
             href="https://onlineremoterecruit.com"

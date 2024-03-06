@@ -69,12 +69,12 @@ const BlogGrid: React.FC<blogGridInterface> = ({ articles }) => {
                       <Image
                         width={40}
                         height={40}
-                        src="/avatar-each-blog.svg"
+                        src="/finallogoORR.svg"
                         alt=""
                       />
                     </div>
                     <div>
-                      <p className="text-sm">Bonnie Green</p>
+                      <p className="text-sm">Online Remote Recruiting</p>
                       <p className="text-sm	text-text-gray">
                         Aug 15, 2021 · 16 min read
                       </p>

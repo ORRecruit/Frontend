@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-// comment only for build successful
 
 export const footer = () => {
   return (
@@ -11,15 +10,26 @@ export const footer = () => {
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
             <div className="col-span-2">
               <div className="flex items-center text-3xl font-semibold sm:mb-0 md:w-[500px]">
-                <a href="https://onlineremoterecruit.com" className="flex items-center mb-4">
-                  <Image src="/finallogoORR.svg" width={75} height={75} alt="Flowbite Logo" className="h-auto"/>
-                  <span className="ml-4 text-xl md:text-3xl">Online Remote Recruiting</span>
+                <a
+                  href="https://onlineremoterecruit.com"
+                  className="flex items-center mb-4"
+                >
+                  <Image
+                    src="/finallogoORR.svg"
+                    width={75}
+                    height={75}
+                    alt="Flowbite Logo"
+                    className="h-auto"
+                  />
+                  <span className="ml-4 text-xl md:text-3xl">
+                    Online Remote Recruiting
+                  </span>
                 </a>
-                </div>
+              </div>
               <div className="flex">
                 <Link
-                    href="https://www.facebook.com/profile.php?id=61554351726300"
-                    className="text-gray-300 hover:text-gray-500 dark:hover:text-white dark:text-gray-400 mt-[20px] mr-[10px]"
+                  href="https://www.facebook.com/profile.php?id=61554351726300"
+                  className="text-gray-300 hover:text-gray-500 dark:hover:text-white dark:text-gray-400 mt-[20px] mr-[10px]"
                 >
                   <svg
                     className="w-5 h-5"
@@ -136,31 +146,6 @@ export const footer = () => {
                 </li>
               </ul>
             </div>
-            {/* <div className="lg:mx-auto">
-              <h2 className="mb-6 text-sm font-semibold uppercase">Company</h2>
-              <ul className="text-gray-300 dark:text-gray-400">
-                <li className="mb-4">
-                  <Link href="/jobs" className=" hover:underline">
-                    Candidates
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link href="/recruiters" className="hover:underline">
-                    Recruiters
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link href="/blogs" className="hover:underline">
-                    Blog
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link href="#contactUs" className="hover:underline">
-                    ContactUs
-                  </Link>
-                </li>
-              </ul>
-            </div> */}
           </div>
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"></hr>
           <span className="block text-sm text-start text-gray-300 dark:text-gray-400">
