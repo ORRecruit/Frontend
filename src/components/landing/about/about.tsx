@@ -23,7 +23,7 @@ const about: React.FC<aboutInterface> = ({ height, backgroundImage }) => {
         </p>
         <button
           type="button"
-          className="h-[45px] w-[160px] ml-4 w-3/12 flex justify-between items-center text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600 my-3 xl:w-[160px]"
+          className="h-[40px] w-[160px] ml-4 w-3/12 flex justify-between items-center text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600 my-3 xl:w-[160px]"
         >
           <Link href="#contactUs" className="text-base">
             Get started
