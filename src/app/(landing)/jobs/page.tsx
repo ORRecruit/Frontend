@@ -1,11 +1,9 @@
 import React from "react";
 import Navbar from "../../../components/landing/navbar/navbar";
 import HeroSection from "../../../components/landing/heroSection/heroSection";
-import StatsComponent from "../../../components/landing/jobs/statsComponent/statsComponent";
 import Assessments from "../../../components/landing/assessments/assessments";
 import Footer from "../../../components/landing/footer/footer";
 import About from "../../../components/landing/about/about";
-import Features from "@/components/landing/jobs/features";
 import ContactUs from "@/components/landing/contactUs/contactUs";
 
 const page = () => {
@@ -26,8 +24,6 @@ const page = () => {
         iconImages={iconImages}
         showIconImages="false"
       />
-      <Features />
-      {/*<StatsComponent />*/}
       <Assessments
         heading1={`Find jobs that match your career tragetory`}
         paragraph1={`Utilize our AI-driven skill assessment tools to gain insights into your strengths and areas for growth. Our platform provides personalized suggestions for skill development, helping you stay competitive and ready for new challenges.`}
