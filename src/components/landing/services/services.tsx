@@ -27,14 +27,14 @@ const Services = () => {
         <div className="w-4/5 mx-auto 2xl:w-9/12	">
           <div className="mb-12">
             <p className="text-3xl	font-bold mb-2 text-center">Why Us</p>
-            <div className="w-4/5 lg:w-[100%]	text-xl font-normal text-center lg:w-[100%] flex justify-center items-center lg:my-[20px]">
-              <p className="lg:w-[60%] text-center text-gray-500 sm:text-xl dark:text-gray-400 lg:my-4">
+            <div className="text-xl font-normal text-center lg:w-[100%] flex justify-center items-center lg:my-[20px]">
+              <p className="lg:w-[100%] text-center text-gray-500 sm:text-xl dark:text-gray-400 lg:my-4">
                 Online Remote Recruiting eliminates the traditional matchmaking
                 and is a gateway to modern AI-Enhanced Matching.
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap	justify-between">
+          <div className="flex flex-wrap justify-between">
             {paragraphs.map((paragraph, index) => (
               <ServiceCard
                 key={index}

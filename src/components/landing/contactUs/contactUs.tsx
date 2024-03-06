@@ -5,7 +5,7 @@ const contactUs = () => {
   return (
     <>
       <div className="w-full mx-auto py-14 mt-20" id="contactPageId">
-        <div className="w-4/5 mx-auto 2xl:w-3/4">
+        <div className="w-[94%] mx-auto 2xl:w-3/4">
           <div className="relative bg-white">
             <div className="absolute inset-0">
               <Image

@@ -13,7 +13,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   iconUrl,
 }) => {
   return (
-    <div className="max-w-sm p-6 rounded-lg shadow lg:w-[50%] xl:w-[23%]	2xl:w-[22%]">
+    <div className="max-w-sm mb-[20px] p-6 rounded-lg shadow lg:w-[50%] xl:w-[23%]	2xl:w-[22%]">
       <Image width={50} height={50} className="mb-4" src={iconUrl} alt="" />
       <Link href="#">
         <h5 className="mb-2 text-2xl font-semibold text-black font-sm lg:my-[20px]">

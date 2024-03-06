@@ -23,7 +23,13 @@ const assessments: React.FC<AssessmentInterface> = ({
     <>
       <section className="bg-white">
         <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
-          <Image width={1000} height={1000} src={img1} alt="image-1" />
+          <Image
+            className="mt-[20px]"
+            width={1000}
+            height={1000}
+            src={img1}
+            alt="image-1"
+          />
           <div className="mt-4 md:mt-0">
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-black">
               {heading1}
@@ -78,7 +84,13 @@ const assessments: React.FC<AssessmentInterface> = ({
               </svg>
             </Link>
           </div>
-          <Image width={1000} height={1000} src={img2} alt="image-2" />
+          <Image
+            className="mt-[20px]"
+            width={1000}
+            height={1000}
+            src={img2}
+            alt="image-2"
+          />
         </div>
       </section>
     </>
