@@ -4,87 +4,24 @@ import Link from "next/link";
 
 const page = () => {
   return (
-    <>
-      <section className="h-screen flex justify-center items-center">
+    <div className="h-screen flex justify-center items-center">
+      <section className="">
         <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-20 lg:py-16 lg:grid-cols-12">
           <div className="w-full p-6 mx-auto bg-white sm:max-w-xl lg:col-span-6 sm:p-8">
             <h1 className="mb-2 text-2xl font-bold leading-tight tracking-tight text-gray-900 text-black">
-              Create your Account
+              Welcome Back
             </h1>
             <p className="text-sm font-light text-gray-500 dark:text-gray-300">
-              Already have an account?
+              Don’t have an account?
               <Link
                 href="#"
                 className="font-medium text-primary-600 hover:underline text-primary-color sm:ml-2"
               >
-                Login here
+                Sign Up
               </Link>
               .
             </p>
             <form className="mt-4 space-y-6 sm:mt-6" action="#">
-              <div className="grid gap-6 sm:grid-cols-2">
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Your email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="name@company.com"
-                    required={true}
-                  />
-                </div>
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    name="full-name"
-                    id="full-name"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="e.g. Bonnie Green"
-                    required={true}
-                  />
-                </div>
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-                    Country
-                  </label>
-                  <select
-                    id="countries"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  >
-                    <option>Choose a country</option>
-                    <option value="US">United States</option>
-                    <option value="CA">Canada</option>
-                    <option value="FR">France</option>
-                    <option value="DE">Germany</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="••••••••"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required={true}
-                  />
-                </div>
-              </div>
-              <div className="flex items-center">
-                <div className="w-full h-0.5 bg-gray-200"></div>
-                <div className="px-5 text-center text-gray-500 dark:text-gray-400">
-                  or
-                </div>
-                <div className="w-full h-0.5 bg-gray-200"></div>
-              </div>
               <div className="space-y-3">
                 <Link
                   href="#"
@@ -157,38 +94,42 @@ const page = () => {
                   Sign up with Apple
                 </Link>
               </div>
-              <div className="space-y-3">
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="terms"
-                      aria-describedby="terms"
-                      type="checkbox"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                      required={true}
-                    />
-                  </div>
-                  <div className="ml-3 text-sm">
-                    <label className="font-light text-gray-500 dark:text-gray-300">
-                      By signing up, you are creating a Sendinblue account, and
-                      you agree to Sendinblue's
-                      <Link
-                        className="font-medium text-primary-600 dark:text-primary-500 hover:underline"
-                        href="#"
-                      >
-                        Terms of Use
-                      </Link>{" "}
-                      and{" "}
-                      <Link
-                        className="font-medium text-primary-600 dark:text-primary-500 hover:underline"
-                        href="#"
-                      >
-                        Privacy Policy
-                      </Link>
-                      .
-                    </label>
-                  </div>
+              <div className="flex items-center">
+                <div className="w-full h-0.5 bg-gray-200"></div>
+                <div className="px-5 text-center text-gray-500 dark:text-gray-400">
+                  or
                 </div>
+                <div className="w-full h-0.5 bg-gray-200"></div>
+              </div>
+              <div className="grid gap-6 sm:grid-cols-2">
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="name@example.com"
+                    required={true}
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="••••••••"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required={true}
+                  />
+                </div>
+              </div>
+              <div className="space-y-3 flex justify-between items-center">
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <input
@@ -201,16 +142,19 @@ const page = () => {
                   </div>
                   <div className="ml-3 text-sm">
                     <label className="font-light text-gray-500 dark:text-gray-300">
-                      Email me about product updates and resources.
+                      Remember me
                     </label>
                   </div>
+                </div>
+                <div className="text-[14px] m-0 text-primary-color">
+                  Forgot Password?
                 </div>
               </div>
               <button
                 type="submit"
                 className="w-full bg-primary-orange focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white"
               >
-                Create an account
+                Sign in
               </button>
             </form>
           </div>
@@ -225,7 +169,7 @@ const page = () => {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 
