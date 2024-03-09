@@ -14,6 +14,8 @@ const BlogDetailsHeader = () => {
       title: "Why Companies Are Turning to Recruitment Agencies",
       description:
         "Online Remote Recruiting offer a solution to all challenges by providing access to a vast network of qualified expertise in sourcing recruitment processes.",
+      date: "February 23, 2024",
+      author: "Online Remote Recruiting",
     },
     {
       id: 2,
@@ -21,6 +23,8 @@ const BlogDetailsHeader = () => {
         "Why Small Businesses Should Prioritize Recruitment Agency Partnerships",
       description:
         "Online Remote Recruiting offers tailored solutions and expertise to empower small businesses in their quest for top talent.",
+      date: "February 19, 2024",
+      author: "Online Remote Recruiting",
     },
     {
       id: 3,
@@ -28,12 +32,16 @@ const BlogDetailsHeader = () => {
         "Strategic Recruitment Partnerships: A Game-Changer for Growing Businesses",
       description:
         "Strategic recruitment partnerships involve forming collaborative relationships with external agencies or firms specializing in talent acquisition.",
+      date: "February 6, 2024",
+      author: "Online Remote Recruiting",
     },
     {
       id: 4,
       title: "Navigating Career Transitions: A Guide for Job Seekers",
       description:
         "Job seekers often grapple with fear & uncertainty during career transitions. Essential to acknowledge emotions & develop coping strategies to navigate them effectively.",
+      date: "March 4, 2024",
+      author: "Online Remote Recruiting",
     },
     {
       id: 5,
@@ -41,12 +49,16 @@ const BlogDetailsHeader = () => {
         "The Impact of AI on Recruitment: Navigating Employer Pain Points and Solutions",
       description:
         "AI-driven recruitment platforms offer cost-effective solutions by automating repetitive tasks and reducing reliance on expensive external agencies.",
+      date: "March 1, 2024",
+      author: "Online Remote Recruiting",
     },
     {
       id: 6,
       title: "Job Search 101: Essential Tips for Landing Your Dream Job",
       description:
         "Ensure your LinkedIn profile is complete, up-to-date, and showcases your professional achievements and experiences.",
+      date: "February 9, 2024",
+      author: "Online Remote Recruiting",
     },
   ];
 
@@ -63,8 +75,12 @@ const BlogDetailsHeader = () => {
                 <p className="mx-auto mb-6 max-w-xl font-light text-gray-500 lg:mx-0 xl:mb-8 md:text-lg xl:text-xl dark:text-gray-400">
                   {blogDetails[blogNo - 1].description}
                 </p>
-                <p className="text-xs text-text-gray pb-8">August 15, 2021</p>
-                <p className="text-base text-text-purple">‘Boonie Green’</p>
+                <p className="text-xs text-text-gray pb-8">
+                  {blogDetails[blogNo - 1].date}
+                </p>
+                <p className="text-base text-text-purple">
+                  {blogDetails[blogNo - 1].author}
+                </p>
               </div>
               <div className="col-span-6 shadow-2xl rounded-xl overflow-hidden">
                 <Image
