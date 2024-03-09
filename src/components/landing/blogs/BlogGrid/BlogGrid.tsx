@@ -76,7 +76,7 @@ const BlogGrid: React.FC<blogGridInterface> = ({ articles }) => {
                     <div>
                       <p className="text-sm">Online Remote Recruiting</p>
                       <p className="text-sm	text-text-gray">
-                        Aug 15, 2021 · 16 min read
+                        {item.date} · 16 min read
                       </p>
                     </div>
                   </div>
