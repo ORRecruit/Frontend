@@ -21,9 +21,9 @@ const page = () => {
   ];
   return (
     <div>
-      <div className="flex justify-center bg-blue-300 h-12 text-center text-blue-950 text-sm items-center">
+      {/* <div className="flex justify-center bg-blue-300 h-12 text-center text-blue-950 text-sm items-center">
         Our website is under maintenance. Please check back later.
-      </div>
+      </div> */}
       <Cookie />
       <Navbar />
       <HeroSection
