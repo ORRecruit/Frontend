@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
 const page = () => {
@@ -9,42 +8,42 @@ const page = () => {
         <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-20 lg:py-16 lg:grid-cols-12">
           <div className="w-full p-6 mx-auto bg-white sm:max-w-xl lg:col-span-6 sm:p-8">
             <h1 className="mb-2 text-4xl font-bold leading-tight tracking-tight text-gray-900 text-black font-sans">
-              Experience
+              Education
             </h1>
             <p className="text-sm font-light text-gray-500 dark:text-gray-300">
-              Please add your most recent and relevant experiences
+              Tell us about your most recent qualification.
             </p>
             <form className="mt-4" action="#">
               <div className="grid gap-6">
                 <div className="grid sm:grid-cols-2">
                   <div className="w-[96%]">
                     <label className="block text-sm font-medium text-gray-900 dark:text-gray-400 mb-2">
-                      Company
+                      Degree
                     </label>
                     <select
                       id="countries"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
-                      <option>ABC Company</option>
-                      <option value="US">DEF Company</option>
-                      <option value="CA">GHI Company</option>
-                      <option value="FR">JKL Company</option>
-                      <option value="DE">MNO Company</option>
+                      <option>Matric</option>
+                      <option value="US">Intermediate</option>
+                      <option value="CA">BS - Bachlors</option>
+                      <option value="FR">MS - Masters</option>
+                      <option value="DE">PhD - Doctorate</option>
                     </select>
                   </div>
                   <div className="w-[96%]">
                     <label className="block text-sm font-medium text-gray-900 dark:text-gray-400 mb-2">
-                      Role
+                      School
                     </label>
                     <select
                       id="countries"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
-                      <option>Software Engineer</option>
-                      <option value="US">Doctor</option>
-                      <option value="CA">AI Engineer</option>
-                      <option value="FR">Database Manager</option>
-                      <option value="DE">CTO</option>
+                      <option>Any School</option>
+                      <option value="US">Any School</option>
+                      <option value="CA">Any School</option>
+                      <option value="FR">Any School</option>
+                      <option value="DE">Any School</option>
                     </select>
                   </div>
                 </div>
