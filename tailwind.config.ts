@@ -21,6 +21,7 @@ const config: Config = {
         "light-gray": "#F3F5F7",
         "color-blue": "#1A56DB",
         "primary-orange": "#FF6800",
+        dashboard: "#F3F5F7",
       },
       height: {
         footer: "460px",
