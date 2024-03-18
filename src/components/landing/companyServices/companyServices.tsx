@@ -125,12 +125,13 @@ const companyServices = () => {
                 </svg>
               </div>
               <h3 className="mb-2 text-xl font-bold mb-[10px]">
-                Employer Branding And Recruitment Marketing
+                Robust Candidate Screening
               </h3>
               <p className="text-gray-500 dark:text-gray-400 text-justify">
-                Employer Branding and Recruitment Marketing are strategic tools
-                used by organizations to enhance their image as a great place to
-                work and to attract top talent.
+                Our screening process is rigorous and comprehensive,
+                encompassing precise resume alignment and thorough supervisory
+                reference verifications to ensure only the most qualified
+                candidates progress.
               </p>
             </div>
             <div>
