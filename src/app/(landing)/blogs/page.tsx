@@ -54,6 +54,30 @@ const page = () => {
       author: "shan",
       date: "February 9, 2024",
     },
+    {
+      image: "/blog-no7.png",
+      title: "Tips for Job Seekers",
+      description:
+        "By defining your unique value proposition, optimizing online presence, creating high-quality content, engaging with your audience, seeking feedback, build powerful personal brand that sets you apart from the competition.",
+      author: "shan",
+      date: "March 16, 2024",
+    },
+    {
+      image: "/blog-no8.png",
+      title: "Streamlining Success",
+      description:
+        "Ready to streamline your onboarding experience and elevate employee success? Partner with us and embark on a journey towards optimized efficiency and lasting impact.",
+      author: "shan",
+      date: "March 7, 2024",
+    },
+    {
+      image: "/blog-no9.png",
+      title: "Partnering with Experts",
+      description:
+        "Partnering with recruitment experts offers numerous benefits for businesses seeking to streamline their hiring processes, access top talent, and gain a competitive edge in the marketplace.",
+      author: "shan",
+      date: "March 13, 2024",
+    },
   ];
   return (
     <>
