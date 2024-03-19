@@ -60,6 +60,31 @@ const BlogDetailsHeader = () => {
       date: "February 9, 2024",
       author: "Online Remote Recruiting",
     },
+    {
+      id: 7,
+      title: "Building a Personal Brand: Tips for Job Seekers",
+      description:
+        "At Online Remote Recruiting, we understand the importance of personal branding in the job search process.",
+      date: "March 16, 2024",
+      author: "Online Remote Recruiting",
+    },
+    {
+      id: 8,
+      title:
+        "Streamlining Success: Why Partnering Ensures Efficient Onboarding",
+      description:
+        "As businesses continue to evolve, the strategic alignment of talent acquisition & onboarding remains cornerstone of sustainable growth..",
+      date: "March 7, 2024",
+      author: "Online Remote Recruiting",
+    },
+    {
+      id: 9,
+      title: "The Benefits of Partnering with Recruitment Experts",
+      description:
+        "From specialized expertise and cost efficiency to scalability and long-term support, the advantages are clear.",
+      date: "March 13, 2024",
+      author: "Online Remote Recruiting",
+    },
   ];
 
   return (
