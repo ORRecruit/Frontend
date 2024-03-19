@@ -10,6 +10,7 @@ import ContactUs from "./../../components/landing/contactUs/contactUs";
 import Features from "@/components/landing/jobs/features";
 import CompanyServices from "@/components/landing/companyServices/companyServices";
 import Cookie from "@/components/landing/cookie/cookie";
+import ORRTeam from "@/components/landing/orrTeam/orrTeam";
 
 const page = () => {
   const iconImages = [
@@ -53,6 +54,7 @@ const page = () => {
         <ContactUs />
       </div>
       <FAQs />
+      <ORRTeam />
       <About height="473px" backgroundImage="" />
       <Footer />
     </div>
