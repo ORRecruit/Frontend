@@ -10,7 +10,7 @@ export const footer = () => {
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
             <div className="col-span-2">
               <div className="flex items-center text-3xl font-semibold sm:mb-0 md:w-[500px]">
-                <a
+                <Link
                   href="https://onlineremoterecruit.com"
                   className="flex items-center mb-4"
                 >
@@ -24,7 +24,7 @@ export const footer = () => {
                   <span className="ml-4 text-xl md:text-3xl">
                     Online Remote Recruiting
                   </span>
-                </a>
+                </Link>
               </div>
               <div className="flex">
                 <Link
@@ -150,9 +150,9 @@ export const footer = () => {
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"></hr>
           <span className="block text-sm text-start text-gray-300 dark:text-gray-400">
             © 2024{" "}
-            <a href="#" className="hover:underline">
+            <Link href="#" className="hover:underline">
               Online Remote Recruiting
-            </a>
+            </Link>
             . All Rights Reserved.
           </span>
         </div>

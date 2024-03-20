@@ -29,17 +29,25 @@ const page = () => {
         heading1={`Smart Candidate Matching`}
         paragraph1={`Our advanced AI algorithms sift through countless profiles to find candidates who not only match the job requirements but also align with your company culture and values. Experience a new level of efficiency in finding the perfect match for your team.`}
         img1={`/assessment-page-img1.svg`}
+        buttonText1={`Find Your Match`}
+        href1={`/jobs#contactUsJobs`}
         heading2={`Resume and Skill Analysis`}
         paragraph2={`Go beyond the resume with our AI-driven analysis. Understand candidate strengths, potential, and how they align with the role and your organization. Make informed decisions based on comprehensive data.`}
         img2={`/assessment-page-img2.svg`}
+        buttonText2={`Analyze Potential`}
+        href2={`/jobs#contactUsJobs`}
       />
       <Assessments
         heading1={`Candidate Engagement Tools`}
         paragraph1={` Utilize our communication tools to reach out to potential candidates, schedule interviews, and manage responses. Our platform ensures you stay connected with top talent throughout the recruitment process.`}
         img1={`/assessment-page-img3.svg`}
+        buttonText1={`Engage Talent`}
+        href1={`/jobs#contactUsJobs`}
         heading2={`Analytics and Reporting`}
         paragraph2={`Access detailed analytics and reports to understand the effectiveness of your job postings and recruitment strategies. Use these insights to refine your approach and continually improve your talent acquisition process.`}
         img2={`/assessment-page-img4.svg`}
+        buttonText2={`Optimize Recruitment`}
+        href2={`/jobs#contactUsJobs`}
       />
       <About height="473px" backgroundImage="" />
       <Footer />

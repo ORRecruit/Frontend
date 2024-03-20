@@ -6,18 +6,26 @@ interface AssessmentInterface {
   heading1: any;
   paragraph1: any;
   img1: any;
+  buttonText1: any;
+  href1: any;
   heading2: any;
   paragraph2: any;
   img2: any;
+  buttonText2: any;
+  href2: any;
 }
 
 const assessments: React.FC<AssessmentInterface> = ({
   heading1,
   paragraph1,
   img1,
+  buttonText1,
+  href1,
   heading2,
   paragraph2,
   img2,
+  buttonText2,
+  href2,
 }) => {
   return (
     <>
@@ -38,10 +46,10 @@ const assessments: React.FC<AssessmentInterface> = ({
               {paragraph1}
             </p>
             <Link
-              href="/recruiters"
+              href={href1}
               className="bg-orange-600 inline-flex items-center text-white bg-color-blue focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
-              Discover Talent
+              {buttonText1}
               <svg
                 className="ml-2 -mr-1 w-5 h-5"
                 fill="currentColor"
@@ -66,10 +74,10 @@ const assessments: React.FC<AssessmentInterface> = ({
               {paragraph2}
             </p>
             <Link
-              href="/recruiters"
+              href={href2}
               className="bg-orange-600 inline-flex items-center text-white bg-color-blue focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
-              Discover Talent
+              {buttonText2}
               <svg
                 className="ml-2 -mr-1 w-5 h-5"
                 fill="currentColor"
