@@ -23,6 +23,7 @@ const page = () => {
         videoImageSrc={`/hero-section-img-job.svg`}
         iconImages={iconImages}
         showIconImages="false"
+        href={"/jobs#contactUs"}
       />
       <StatsComponent />
       <Assessments

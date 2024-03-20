@@ -8,6 +8,7 @@ interface heroSectionInterface {
   videoImageSrc: any;
   iconImages: any[];
   showIconImages: any;
+  href: any;
 }
 
 const heroSection: React.FC<heroSectionInterface> = ({
@@ -16,6 +17,7 @@ const heroSection: React.FC<heroSectionInterface> = ({
   videoImageSrc,
   iconImages = [],
   showIconImages,
+  href,
 }) => {
   return (
     <>
@@ -53,7 +55,7 @@ const heroSection: React.FC<heroSectionInterface> = ({
                       id="email"
                     />
                   </div>
-                  <Link href="#contactUs" scroll={true}>
+                  <Link href={href} scroll={true}>
                     <button
                       type="submit"
                       className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"

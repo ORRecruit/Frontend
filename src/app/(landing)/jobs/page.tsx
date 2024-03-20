@@ -23,18 +23,19 @@ const page = () => {
         videoImageSrc={`/tracher-img.svg`}
         iconImages={iconImages}
         showIconImages="false"
+        href={"/recruiters"}
       />
       <Assessments
         heading1={`Find jobs that match your career tragetory`}
         paragraph1={`Utilize our AI-driven skill assessment tools to gain insights into your strengths and areas for growth. Our platform provides personalized suggestions for skill development, helping you stay competitive and ready for new challenges.`}
         img1={`/assessment-img.svg`}
         buttonText1={`Explore Opportunities`}
-        href1={`#contactUsJobs`}
+        href1={`/recruiters`}
         heading2={`Shortlist jobs using keywords and smart guides`}
         paragraph2={`With our real-time application tracking system, you’ll always know the status of your job applications. Get instant updates and feedback, so you’re never left wondering where you stand.`}
         img2={`/assessment-page-img2.svg`}
         buttonText2={`Track Progress`}
-        href2={`#contactUsJobs`}
+        href2={`/recruiters`}
       />
       <div id="contactUsJobs">
         <ContactUs />
