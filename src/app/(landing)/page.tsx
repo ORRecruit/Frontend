@@ -33,6 +33,7 @@ const page = () => {
         videoImageSrc={`/demo-video.svg`}
         iconImages={iconImages}
         showIconImages="true"
+        href={"#contactUs"}
       />
       <Service />
       <CompanyServices />
