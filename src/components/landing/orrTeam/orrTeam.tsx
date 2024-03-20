@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const orrTeam = () => {
@@ -17,7 +18,7 @@ const orrTeam = () => {
             opportunities to deliver outstanding service experiences rapidly.
           </p>
           <div className="mt-4">
-            <a
+            <Link
               href="#"
               title=""
               className="text-white bg-primary-700 justify-center hover:bg-primary-800 inline-flex items-center  focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
@@ -39,7 +40,7 @@ const orrTeam = () => {
                   d="M17 8l4 4m0 0l-4 4m4-4H3"
                 ></path>
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
 

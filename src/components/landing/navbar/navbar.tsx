@@ -13,7 +13,7 @@ const Navbar = () => {
     <nav className="bg-white h-24 lg:w-[100%] mx-auto 2xl:mb-10 xl:mb-6">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <div>
-          <a
+          <Link
             href="https://onlineremoterecruit.com"
             className="w-[90px] h-[50px] md:w-[100px] md:h-[60px] lg:w-[100px] lg:h-[60px] xl:w-[110px] xl:h-[70px]"
           >
@@ -22,7 +22,7 @@ const Navbar = () => {
               className="w-[90px] h-[50px] md:w-[100px] md:h-[60px] lg:w-[100px] lg:h-[60px] xl:w-[110px] xl:h-[70px]"
               alt="Flowbite Logo"
             />
-          </a>
+          </Link>
         </div>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse lg:relative">
           <button
