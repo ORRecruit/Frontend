@@ -31,11 +31,38 @@ const page = () => {
       rating: "230k",
     },
   ];
+  const sidebarDetails = [
+    {
+      iconUrl: "/adminSidebar1.svg",
+      text: "Overview",
+      href: "#",
+    },
+    {
+      iconUrl: "/adminSidebar2.svg",
+      text: "Job Board",
+      href: "/dashboard/adminDashboard/jobBoard",
+    },
+    {
+      iconUrl: "/adminSidebar3.svg",
+      text: "Users",
+      href: "#",
+    },
+    {
+      iconUrl: "/adminSidebar4.svg",
+      text: "Activity Tracking",
+      href: "#",
+    },
+    {
+      iconUrl: "/adminSidebar5.svg",
+      text: "Leads",
+      href: "#",
+    },
+  ];
   return (
     <div className="bg-dashboard h-screen w-full">
-      <DashboardNavbar />
+      {/* <DashboardNavbar /> */}
       <div className="flex">
-        <DashboardSidebar />
+        {/* <DashboardSidebar sidebarDetails={sidebarDetails} /> */}
         <DashboardContent details={details} />
       </div>
     </div>
