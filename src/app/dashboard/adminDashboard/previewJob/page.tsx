@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import SuccessModal from "../successModal/successModal";
 
 const page = () => {
   return (
@@ -8,14 +9,16 @@ const page = () => {
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] pt-4">
         <div className="p-4">
           <div>
-            <Image
-              src="/arrowLeft.svg"
-              alt="back-icon"
-              width={20}
-              height={20}
-            />
+            <Link href="/dashboard/adminDashboard/inputNewJob">
+              <Image
+                src="/arrowLeft.svg"
+                alt="back-icon"
+                width={20}
+                height={20}
+              />
+            </Link>
           </div>
-          <div className="absolute right-2 top-6">
+          <div className="absolute right-2 top-6 flex">
             <Link href="/dashboard/adminDashboard/previewJob">
               <button className="text-sm border border-gray-500 mr-6 text-black w-20 py-2 rounded-xl hover:shadow-xl">
                 Edit
@@ -31,9 +34,7 @@ const page = () => {
               />
             </Link>
             <Link href="/dashboard/adminDashboard/previewJob">
-              <button className="bg-primary-orange text-sm text-white w-40 py-2 rounded-xl hover:shadow-xl">
-                POST NOW
-              </button>
+              <SuccessModal />
             </Link>
           </div>
         </div>

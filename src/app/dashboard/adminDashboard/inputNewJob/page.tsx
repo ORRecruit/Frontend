@@ -8,12 +8,14 @@ const page = () => {
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%]">
         <div className="p-4 ">
           <div>
-            <Image
-              src="/arrowLeft.svg"
-              alt="back-icon"
-              width={20}
-              height={20}
-            />
+            <Link href="/dashboard/adminDashboard/newJob">
+              <Image
+                src="/arrowLeft.svg"
+                alt="back-icon"
+                width={20}
+                height={20}
+              />
+            </Link>
           </div>
           <div className="absolute right-2 top-5">
             <Link href="/dashboard/adminDashboard/previewJob">
