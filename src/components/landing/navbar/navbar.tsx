@@ -79,6 +79,19 @@ const Navbar = () => {
             </li>
             <li>
               <Link
+                href="/jobboard"
+                className={`${
+                  isMenuOpen
+                    ? "hover:bg-orange-600 hover:text-white hover:w-full"
+                    : ""
+                } block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0`}
+                aria-current="page"
+              >
+                Jobs
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/jobs"
                 className={`${
                   isMenuOpen
