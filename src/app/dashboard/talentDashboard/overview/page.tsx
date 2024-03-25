@@ -26,38 +26,9 @@ const overview = () => {
       rating: "68",
     },
   ];
-  const sidebarDetails = [
-    {
-      iconUrl: "/talendSidebar1.svg",
-      text: "Overview",
-      href: "#",
-    },
-    {
-      iconUrl: "/talendSidebar2.svg",
-      text: "Job Board",
-      href: "#",
-    },
-    {
-      iconUrl: "/talendSidebar3.svg",
-      text: "My Resume",
-      href: "#",
-    },
-    {
-      iconUrl: "/talendSidebar4.svg",
-      text: "Application Status",
-      href: "#",
-    },
-    {
-      iconUrl: "/talendSidebar5.svg",
-      text: "Interviews",
-      href: "#",
-    },
-  ];
   return (
     <div className="bg-dashboard h-screen w-full">
-      <DashboardNavbar />
       <div className="flex">
-        <DashboardSidebar sidebarDetails={sidebarDetails} />
         <DashboardContent details={details} />
       </div>
     </div>
