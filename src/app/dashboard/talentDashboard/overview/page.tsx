@@ -28,9 +28,7 @@ const overview = () => {
   ];
   return (
     <div className="bg-dashboard h-screen w-full">
-      <DashboardNavbar />
       <div className="flex">
-        <DashboardSidebar />
         <DashboardContent details={details} />
       </div>
     </div>
