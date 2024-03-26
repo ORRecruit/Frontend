@@ -14,7 +14,7 @@ const page = () => {
             <p className="text-sm font-light text-gray-500 dark:text-gray-300">
               Don’t have an account?
               <Link
-                href="#"
+                href="/dashboard/auth/signup"
                 className="font-medium text-primary-600 hover:underline text-primary-color sm:ml-2"
               >
                 Sign Up

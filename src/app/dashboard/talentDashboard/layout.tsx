@@ -19,7 +19,7 @@ export default function RootLayout({
     {
       iconUrl: "/talendSidebar1.svg",
       text: "Overview",
-      href: "#",
+      href: "/dashboard/talentDashboard/overview",
     },
     {
       iconUrl: "/talendSidebar2.svg",
