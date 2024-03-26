@@ -78,6 +78,22 @@ const page = () => {
       author: "shan",
       date: "March 13, 2024",
     },
+    {
+      image: "/blog-no10.png",
+      title: "Highlight Company Culture",
+      description:
+        "By defining your company culture, leveraging social media, creating compelling employer branding materials you can create a compelling employer brand that resonates with candidates.",
+      author: "shan",
+      date: "March 23, 2024",
+    },
+    {
+      image: "/blog-no11.png",
+      title: "Effective Salary Negotiation",
+      description:
+        "Salary negotiations can be intimidating, but with the right strategies and preparation, you can advocate for yourself effectively and secure the compensation you deserve.",
+      author: "shan",
+      date: "March 21, 2024",
+    },
   ];
   return (
     <>
