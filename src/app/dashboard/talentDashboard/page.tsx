@@ -4,29 +4,24 @@ import DashboardContent from "@/components/dashboard/dashboardContent/dashboardC
 const page = () => {
   const details = [
     {
-      iconUrl: "/overviewAdmin1.svg",
-      heading: "Open Positions",
-      rating: "123",
+      iconUrl: "/overview1.svg",
+      heading: "Jobs Applied",
+      rating: "$163.4k",
     },
     {
-      iconUrl: "/overviewAdmin2.svg",
-      heading: "Closed Positions",
-      rating: "2134",
+      iconUrl: "/overview2.svg",
+      heading: "AI Searches",
+      rating: "$82.1k",
     },
     {
-      iconUrl: "/overviewAdmin3.svg",
-      heading: "Time to Fill",
-      rating: "10h, 2m",
+      iconUrl: "/overview3.svg",
+      heading: "Profile Views",
+      rating: "$81.3k",
     },
     {
-      iconUrl: "/overviewAdmin4.svg",
-      heading: "Acceptance Rate",
-      rating: "34%",
-    },
-    {
-      iconUrl: "/overviewAdmin5.svg",
-      heading: "Revenue Generate",
-      rating: "230k",
+      iconUrl: "/overview4.svg",
+      heading: "Interviews",
+      rating: "68",
     },
   ];
   return (
