@@ -19,12 +19,12 @@ export default function RootLayout({
     {
       iconUrl: "/talendSidebar1.svg",
       text: "Overview",
-      href: "#",
+      href: "/dashboard/talentDashboard/overview",
     },
     {
       iconUrl: "/talendSidebar2.svg",
       text: "Job Board",
-      href: "#",
+      href: "/dashboard/talentDashboard/jobBoard",
     },
     {
       iconUrl: "/talendSidebar3.svg",
@@ -34,7 +34,7 @@ export default function RootLayout({
     {
       iconUrl: "/talendSidebar4.svg",
       text: "Application Status",
-      href: "#",
+      href: "/dashboard/talentDashboard/appliedJobs",
     },
     {
       iconUrl: "/talendSidebar5.svg",
