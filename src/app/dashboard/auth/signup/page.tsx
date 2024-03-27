@@ -1,8 +1,40 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useMutation } from "@tanstack/react-query";
+import { registerUser } from "@/api/auth/register";
 
 const page = () => {
+  const signUpMutation = useMutation({
+    mutationFn: (body: any) => registerUser(email, password, role),
+  });
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("Candidate");
+
+  const handleSubmit = async (e: any) => {
+    e?.preventDefault();
+    if (email && password && role) {
+      const response = await signUpMutation.mutateAsync({
+        email,
+        password,
+        role,
+      });
+      console.log("response...", response);
+    }
+  };
+
+  const handleEmailChange = (event: any) => {
+    setEmail(event.target.value);
+  };
+  const handlePasswordChange = (event: any) => {
+    setPassword(event.target.value);
+  };
+  const handleRoleChange = (event: any) => {
+    setRole(event.target.value);
+  };
   return (
     <>
       <section className="h-screen flex justify-center items-center">
@@ -21,7 +53,7 @@ const page = () => {
               </Link>
               .
             </p>
-            <form className="mt-4 space-y-6 sm:mt-6" action="#">
+            <form onSubmit={handleSubmit} className="mt-4 space-y-6 sm:mt-6">
               <div className="grid gap-6 sm:grid-cols-2">
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -34,6 +66,8 @@ const page = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
                     required={true}
+                    value={email}
+                    onChange={handleEmailChange}
                   />
                 </div>
                 <div>
@@ -46,22 +80,22 @@ const page = () => {
                     id="full-name"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="e.g. Bonnie Green"
-                    required={true}
+                    required={false}
                   />
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-                    Country
+                    Role
                   </label>
                   <select
                     id="countries"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    value={role}
+                    onChange={handleRoleChange}
                   >
-                    <option>Choose a country</option>
-                    <option value="US">United States</option>
-                    <option value="CA">Canada</option>
-                    <option value="FR">France</option>
-                    <option value="DE">Germany</option>
+                    <option>Choose a Role</option>
+                    <option value="Recruiter">Recruiter</option>
+                    <option value="Candidate">Candidate</option>
                   </select>
                 </div>
                 <div>
@@ -75,6 +109,8 @@ const page = () => {
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required={true}
+                    value={password}
+                    onChange={handlePasswordChange}
                   />
                 </div>
               </div>
@@ -165,7 +201,7 @@ const page = () => {
                       aria-describedby="terms"
                       type="checkbox"
                       className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                      required={true}
+                      required={false}
                     />
                   </div>
                   <div className="ml-3 text-sm">
@@ -196,7 +232,7 @@ const page = () => {
                       aria-describedby="newsletter"
                       type="checkbox"
                       className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                      required={true}
+                      required={false}
                     />
                   </div>
                   <div className="ml-3 text-sm">
