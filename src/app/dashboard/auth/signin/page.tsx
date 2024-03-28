@@ -1,8 +1,36 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useMutation } from "@tanstack/react-query";
+import { loginUser } from "@/api/auth/login";
 
 const page = () => {
+  const signInMutation = useMutation({
+    mutationFn: (body: any) => loginUser(email, password),
+  });
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e: any) => {
+    e?.preventDefault();
+    if (email && password) {
+      const response = await signInMutation.mutateAsync({
+        email,
+        password,
+      });
+      console.log("response...", response);
+    }
+  };
+
+  const handleEmailChange = (event: any) => {
+    setEmail(event.target.value);
+  };
+  const handlePasswordChange = (event: any) => {
+    setPassword(event.target.value);
+  };
+
   return (
     <div className="h-screen flex justify-center items-center">
       <section className="">
@@ -21,7 +49,11 @@ const page = () => {
               </Link>
               .
             </p>
-            <form className="mt-4 space-y-6 sm:mt-6" action="#">
+            <form
+              onSubmit={handleSubmit}
+              className="mt-4 space-y-6 sm:mt-6"
+              action="#"
+            >
               <div className="space-y-3">
                 <Link
                   href="#"
@@ -113,6 +145,8 @@ const page = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@example.com"
                     required={true}
+                    value={email}
+                    onChange={handleEmailChange}
                   />
                 </div>
                 <div>
@@ -126,6 +160,8 @@ const page = () => {
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required={true}
+                    value={password}
+                    onChange={handlePasswordChange}
                   />
                 </div>
               </div>

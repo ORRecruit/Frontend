@@ -1,8 +1,42 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { createProfile } from "@/api/recruiter/createProfile";
 
 const page = () => {
+  const [companyName, setCompanyName] = useState("");
+  const [location, setLocation] = useState("");
+  const [industry, setIndustry] = useState("");
+
+  const createProfileMutation = useMutation({
+    mutationFn: (body: any) => createProfile(companyName, location, industry),
+  });
+
+  const handleSubmit = async (e: any) => {
+    console.log("submit.....", companyName, location, industry);
+    e?.preventDefault();
+    if (companyName && location && industry) {
+      const response = await createProfileMutation.mutateAsync({
+        companyName,
+        location,
+        industry,
+      });
+      console.log("response...", companyName, location, industry, response);
+    }
+  };
+
+  const handleCompanyNameChange = (event: any) => {
+    setCompanyName(event.target.value);
+  };
+  const handleLocationChange = (event: any) => {
+    setLocation(event.target.value);
+  };
+  const handleIndustryChange = (event: any) => {
+    setIndustry(event.target.value);
+  };
+
   return (
     <div>
       <section className="h-screen flex justify-center items-center">
@@ -27,6 +61,8 @@ const page = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@flowbite.com"
                     required={true}
+                    value={companyName}
+                    onChange={handleCompanyNameChange}
                   />
                 </div>
                 <div className="flex flex-2 justify-between">
@@ -52,6 +88,8 @@ const page = () => {
                     <select
                       id="countries"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      value={industry}
+                      onChange={handleIndustryChange}
                     >
                       <option>IT Industry</option>
                       <option value="US">IT Industry</option>
@@ -72,6 +110,8 @@ const page = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
                     required={true}
+                    value={location}
+                    onChange={handleLocationChange}
                   />
                 </div>
               </div>
@@ -125,6 +165,7 @@ const page = () => {
               <button
                 type="submit"
                 className="w-full bg-primary-orange focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white"
+                onClick={handleSubmit}
               >
                 Continue
               </button>

@@ -1,8 +1,35 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 const page = () => {
+  const [formData, setFormData] = useState({
+    companyName: "",
+    jobTitle: "",
+    category: "",
+    qualification: "",
+    skills: "",
+    experience: "",
+    salary: "",
+    workEnvironment: "",
+    description: "",
+  });
+
+  const handleChange = (e: any) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: any) => {
+    e?.preventDefault();
+    console.log("apply...", formData);
+  };
+
   return (
     <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%]">
@@ -19,7 +46,10 @@ const page = () => {
           </div>
           <div className="absolute right-2 top-5">
             <Link href="/dashboard/adminDashboard/previewJob">
-              <button className="bg-primary-orange text-sm text-white w-40 py-2 rounded-xl hover:shadow-xl">
+              <button
+                onClick={handleSubmit}
+                className="bg-primary-orange text-sm text-white w-40 py-2 rounded-xl hover:shadow-xl"
+              >
                 Continue
               </button>
             </Link>
@@ -45,10 +75,12 @@ const page = () => {
               </label>
               <input
                 type="text"
-                name="brand"
+                name="companyName"
                 id="brand"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Input text"
+                value={formData.companyName}
+                onChange={handleChange}
               />
             </div>
             <div className="w-[48%]">
@@ -74,10 +106,12 @@ const page = () => {
               </label>
               <input
                 type="text"
-                name="brand"
+                name="jobTitle"
                 id="brand"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Input text"
+                value={formData.jobTitle}
+                onChange={handleChange}
               />
             </div>
             <div className="w-[32%]">
@@ -86,7 +120,10 @@ const page = () => {
               </label>
               <select
                 id="category"
+                name="category"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                value={formData.category}
+                onChange={handleChange}
               >
                 <option>Input Text</option>
                 <option value="TV">TV/Monitors</option>
@@ -101,7 +138,10 @@ const page = () => {
               </label>
               <select
                 id="category"
+                name="qualification"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                value={formData.qualification}
+                onChange={handleChange}
               >
                 <option>Input Text</option>
                 <option value="TV">TV/Monitors</option>
@@ -118,7 +158,10 @@ const page = () => {
             <input
               type="text"
               id="default-input"
+              name="skills"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+              value={formData.skills}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -129,15 +172,18 @@ const page = () => {
               <input
                 id="labels-range-input"
                 type="range"
-                min="100"
-                max="1500"
+                min="1"
+                max="10"
+                name="experience"
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                value={formData.experience}
+                onChange={handleChange}
               />
               <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6">
                 1+ Years
               </span>
               <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-1/3 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
-                3+ Years
+                4+ Years
               </span>
               <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-2/3 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
                 7+ Years
@@ -157,13 +203,16 @@ const page = () => {
                 type="range"
                 min="100"
                 max="1500"
+                name="salary"
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                value={formData.salary}
+                onChange={handleChange}
               />
               <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6">
                 Min ($100)
               </span>
               <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-1/3 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
-                $500
+                $550
               </span>
               <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-2/3 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
                 $1000
@@ -182,8 +231,11 @@ const page = () => {
               <input
                 id="inline-radio"
                 type="radio"
-                name="inline-radio-group"
                 className="w-4 h-4 bg-gray-100 border-gray-300"
+                name="workEnvironment"
+                value="Hybrid"
+                checked={formData.workEnvironment === "Hybrid"}
+                onChange={handleChange}
               />
               <div>
                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -198,8 +250,11 @@ const page = () => {
               <input
                 id="inline-2-radio"
                 type="radio"
-                name="inline-radio-group"
                 className="w-4 h-4 bg-gray-100 border-gray-300"
+                name="workEnvironment"
+                value="Remote"
+                checked={formData.workEnvironment === "Remote"}
+                onChange={handleChange}
               />
               <div>
                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -214,7 +269,10 @@ const page = () => {
               <input
                 id="inline-checked-radio"
                 type="radio"
-                name="inline-radio-group"
+                name="workEnvironment"
+                value="On Site"
+                checked={formData.workEnvironment === "On Site"}
+                onChange={handleChange}
                 className="w-4 h-4 bg-gray-100 border-gray-300"
               />
               <div>
@@ -222,7 +280,7 @@ const page = () => {
                   On Site
                 </p>
                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                  Will only work from your office{" "}
+                  Will only work from your office
                 </p>
               </div>
             </div>
@@ -235,6 +293,9 @@ const page = () => {
               rows={4}
               id="default-input"
               placeholder="Type Description here..."
+              value={formData.description}
+              onChange={handleChange}
+              name="description"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
             />
           </div>
