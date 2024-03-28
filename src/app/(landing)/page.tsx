@@ -44,7 +44,7 @@ const page = () => {
                 personalized suggestions for skill development, helping you stay
                 competitive and ready for new challenges.`}
         img1={`/assessment-img.svg`}
-        href1={`/recruiters`}
+        href1={`/jobs`}
         buttonText1={`Discover Talent`}
         heading2={`Track Applications From a Single Dashboard`}
         paragraph2={`With our real-time application tracking system, you’ll always
@@ -52,7 +52,7 @@ const page = () => {
                 and feedback, so you’re never left wondering where you stand.`}
         img2={`/tracher-img.svg`}
         buttonText2={`Discover Talent`}
-        href2={`/recruiters`}
+        href2={`/jobs`}
       />
       <Features />
       <div id="contactUs">

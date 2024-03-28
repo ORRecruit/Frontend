@@ -27,6 +27,7 @@ const page = () => {
 
   const handleSubmit = async (e: any) => {
     e?.preventDefault();
+    console.log("apply...", formData);
   };
 
   return (
@@ -45,7 +46,10 @@ const page = () => {
           </div>
           <div className="absolute right-2 top-5">
             <Link href="/dashboard/adminDashboard/previewJob">
-              <button className="bg-primary-orange text-sm text-white w-40 py-2 rounded-xl hover:shadow-xl">
+              <button
+                onClick={handleSubmit}
+                className="bg-primary-orange text-sm text-white w-40 py-2 rounded-xl hover:shadow-xl"
+              >
                 Continue
               </button>
             </Link>
@@ -229,7 +233,8 @@ const page = () => {
                 type="radio"
                 className="w-4 h-4 bg-gray-100 border-gray-300"
                 name="workEnvironment"
-                value={formData.workEnvironment}
+                value="Hybrid"
+                checked={formData.workEnvironment === "Hybrid"}
                 onChange={handleChange}
               />
               <div>
@@ -247,7 +252,8 @@ const page = () => {
                 type="radio"
                 className="w-4 h-4 bg-gray-100 border-gray-300"
                 name="workEnvironment"
-                value={formData.workEnvironment}
+                value="Remote"
+                checked={formData.workEnvironment === "Remote"}
                 onChange={handleChange}
               />
               <div>
@@ -264,7 +270,8 @@ const page = () => {
                 id="inline-checked-radio"
                 type="radio"
                 name="workEnvironment"
-                value={formData.workEnvironment}
+                value="On Site"
+                checked={formData.workEnvironment === "On Site"}
                 onChange={handleChange}
                 className="w-4 h-4 bg-gray-100 border-gray-300"
               />
@@ -273,7 +280,7 @@ const page = () => {
                   On Site
                 </p>
                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                  Will only work from your office{" "}
+                  Will only work from your office
                 </p>
               </div>
             </div>
