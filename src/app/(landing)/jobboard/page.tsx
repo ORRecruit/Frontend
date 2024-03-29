@@ -39,9 +39,10 @@ const page = () => {
             </div>
 
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Static websites are now used to bootstrap lots of websites and are
-              becoming the basis for a variety of tools that even influence both
-              web designers and developers.
+              Experienced IT Sales Account Manager needed to manage accounts,
+              develop opportunities, lead sales processes, and ensure success in
+              the UAE market through strong client relationships and team
+              oversight.
             </p>
           </div>
         </div>
@@ -70,7 +71,7 @@ const page = () => {
           </div>
 
           <h2 className="text-lg font-semibold mb-4">Job Description</h2>
-          <p className="text-gray-700 mb-8">
+          <div className="text-gray-700 mb-8">
             <p>
               To oversee sales efforts and provide client assistance, we are
               seeking an experienced sales account manager. A sales account
@@ -90,7 +91,7 @@ const page = () => {
               Experience of IT Companies (Networking, Security) along with
               exposure of UAE Market.
             </p>
-          </p>
+          </div>
 
           <h3 className="text-lg font-semibold mb-3">Responsibilities</h3>
           <ul className="list-disc list-inside text-gray-700 mb-8">
@@ -103,7 +104,7 @@ const page = () => {
             <li>Monitoring account goals. </li>
             <li>Keeping an eye on sales. </li>
           </ul>
-          <p className="text-gray-700 mb-8">
+          <div className="text-gray-700 mb-8">
             <h3 className="text-lg font-semibold mb-3">Requirements</h3>
             <ul className="list-disc list-inside text-gray-700 mb-8">
               <li>A degree in business, marketing, or a related field.</li>
@@ -116,7 +117,7 @@ const page = () => {
               <li>An understanding of sales metrics. </li>
               <li>The capacity to solve problems.</li>
             </ul>
-          </p>
+          </div>
         </div>
       </div>
       <About height="473px" backgroundImage="" />
