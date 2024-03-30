@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   useEffect(() => {
-    document.title = "Online Remote Recruit";
+    document.title = "Online Remote Recruiting";
   });
   return (
     <html lang="en">
