@@ -10,8 +10,8 @@ const page = () => {
     <div>
       <Navbar />
       <FilterHeaderJobBoard />
-      <div className="max-w-screen-xl flex items-start justify-between mx-auto p-4">
-        <div className="w-[29%] mt-12">
+      <div className="max-w-screen-xl sm:flex sm:items-start sm:justify-between mx-auto p-4">
+        <div className="sm:w-[29%] mt-12">
           <div className="self-center w-full border border-black-400 p-4 mb-6 rounded-2xl hover:bg-gray-200">
             <div className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
               Sales Account Manager
@@ -46,13 +46,13 @@ const page = () => {
             </p>
           </div>
         </div>
-        <div className="p-8 bg-white rounded-lg mt-4 w-[68%]">
+        <div className="bg-white rounded-lg mt-4 sm:w-[68%] sm:p-8">
           <div className="mb-5">
             <div className="flex justify-between">
               <h1 className="text-3xl font-bold">Sales Account Manager </h1>
               <button
                 type="button"
-                className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center bg-orange-600"
+                className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[120px] h-[40px] mt-[20px] sm:w-fit sm:h-fit sm:mt-0"
               >
                 <Link href="#">Apply Now</Link>
               </button>
