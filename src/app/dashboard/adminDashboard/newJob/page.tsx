@@ -4,7 +4,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available]">
+    <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available]">
       <section className="w-full h-screen bg-gray-50 dark:bg-gray-900 pt-2">
         <div className="w-full px-4 mx-auto">
           <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">

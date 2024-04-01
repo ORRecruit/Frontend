@@ -4,7 +4,7 @@ import React from "react";
 
 const jobList = () => {
   return (
-    <section className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
+    <section className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
       <div className="mx-auto w-full px-4 lg:px-12">
         <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
           <div className="border-b dark:border-gray-700 mx-4">
@@ -42,13 +42,13 @@ const jobList = () => {
                     </button>
                   </div>
                 </form>
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-0 sm:space-x-4">
                   <div>
                     <button
                       id="filterDropdownButton"
                       data-dropdown-toggle="filterDropdown"
                       type="button"
-                      className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      className="w-32 sm:w-full md:w-auto flex items-center justify-center py-2 px-2 sm:px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -180,7 +180,7 @@ const jobList = () => {
                       id="configurationDropdownButton"
                       data-dropdown-toggle="configurationDropdown"
                       type="button"
-                      className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      className="w-34 sm:w-full md:w-auto flex items-center justify-center py-2 px-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                     >
                       <Image
                         src="/talendSidebar4.svg"
@@ -229,7 +229,7 @@ const jobList = () => {
                   </div>
                   <div className="absolute right-0">
                     <Link href="/dashboard/adminDashboard/newJob">
-                      <button className="bg-primary-orange text-sm text-white w-40 py-2 rounded-xl hover:shadow-xl">
+                      <button className="bg-primary-orange text-sm text-white w-24 sm:w-40 py-2 rounded-xl hover:shadow-xl">
                         Post New Job
                       </button>
                     </Link>

@@ -1,6 +1,7 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 interface sidebarInterface {
   sidebarDetails: any[];
@@ -9,6 +10,12 @@ interface sidebarInterface {
 const dashboardSidebar: React.FC<sidebarInterface> = ({
   sidebarDetails = [],
 }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <div>
       <button
@@ -17,6 +24,7 @@ const dashboardSidebar: React.FC<sidebarInterface> = ({
         aria-controls="default-sidebar"
         type="button"
         className="absolute top-0 z-50 inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        onClick={toggleMenu}
       >
         <span className="sr-only">Open sidebar</span>
         <svg
@@ -36,7 +44,9 @@ const dashboardSidebar: React.FC<sidebarInterface> = ({
 
       <aside
         id="default-sidebar"
-        className="fixed top-[60px] left-0 z-40 w-64 h-[90%] transition-transform -translate-x-full sm:translate-x-0"
+        className={`fixed top-[60px] left-0 z-40 w-64 h-[90%] transition-transform ${
+          isMenuOpen ? "" : "-translate-x-full"
+        } sm:translate-x-0`}
         aria-label="Sidenav"
       >
         <div className="overflow-y-auto py-5 px-3 h-full bg-white">
