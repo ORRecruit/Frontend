@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "@/api/auth/login";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
   const signInMutation = useMutation({
     mutationFn: (body: any) => loginUser(email, password),
   });
@@ -20,7 +22,14 @@ const page = () => {
         email,
         password,
       });
-      console.log("response...", response);
+      if (response) {
+        localStorage.setItem("currentRole", response.token);
+        if (response.User.role == "Candidate") {
+          router.push("/dashboard/talentDashboard");
+        } else if (response.User.role == "Admin") {
+          router.push("/dashboard/adminDashboard");
+        }
+      }
     }
   };
 

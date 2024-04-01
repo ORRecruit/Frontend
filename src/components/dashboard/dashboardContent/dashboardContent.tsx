@@ -7,8 +7,8 @@ interface overviewInterface {
 
 const dashboardContent: React.FC<overviewInterface> = ({ details }) => {
   return (
-    <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available]">
-      <div className="flex w-[99%] gap-4">
+    <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available]">
+      <div className="flex w-[99%] gap-4 flex-wrap lg:flex-nowrap">
         {details.map((item: any, index: any) => (
           <div
             key={index}
