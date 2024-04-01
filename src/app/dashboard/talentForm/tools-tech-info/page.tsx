@@ -1,8 +1,15 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
+  const submitForm = (e: any) => {
+    e.preventDefault();
+    router.push("/dashboard/talentForm/experience-info");
+  };
   return (
     <>
       <section className="h-screen flex justify-center items-center">
@@ -15,7 +22,7 @@ const page = () => {
               Please add the skills and technologies you have worked on and
               mastered.
             </p>
-            <form className="mt-4" action="#">
+            <form onSubmit={submitForm} className="mt-4" action="#">
               <div className="grid gap-6 sm:grid-cols-1">
                 <div className="w-[100%]">
                   <label className="block text-sm font-medium text-gray-900 dark:text-gray-400">

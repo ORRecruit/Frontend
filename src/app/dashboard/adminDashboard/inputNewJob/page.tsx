@@ -231,7 +231,7 @@ const page = () => {
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
           <h1 className="text-lg font-bold pb-2">Work Environment</h1>
 
-          <div className="flex border border-red-400">
+          <div className="flex">
             <div className="flex me-4 mr-16">
               <input
                 id="inline-radio"

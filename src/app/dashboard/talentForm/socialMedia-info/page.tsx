@@ -1,7 +1,14 @@
+"use client";
 import Image from "next/image";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
+  const submitForm = (e: any) => {
+    e.preventDefault();
+    router.push("/dashboard/talentDashboard/overview");
+  };
   return (
     <>
       <section className="h-screen flex justify-center items-center">
@@ -13,7 +20,7 @@ const page = () => {
             <p className="text-sm font-light text-gray-500 dark:text-gray-300">
               Selec your website and social media links (optional).
             </p>
-            <form className="mt-4" action="#">
+            <form onSubmit={submitForm} className="mt-4" action="#">
               <div className="flex justify-between space-x-4 py-4">
                 <div className="bg-gray-200 p-2 rounded-lg">
                   <svg

@@ -25,7 +25,7 @@ const page = () => {
       if (response) {
         localStorage.setItem("currentRole", response.token);
         if (response.User.role == "Candidate") {
-          router.push("/dashboard/talentDashboard");
+          router.push("/dashboard/talentForm/resume-upload");
         } else if (response.User.role == "Admin") {
           router.push("/dashboard/adminDashboard");
         }
