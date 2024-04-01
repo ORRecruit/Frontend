@@ -3,7 +3,6 @@ import axios, { AxiosResponse } from "axios";
 
 function getAuthToken() {
   if (typeof window !== "undefined") {
-    // Safe to use window.localStorage (API Integration Started)
     return localStorage.getItem("authToken");
   }
   return null;
