@@ -59,7 +59,7 @@ const page = () => {
     },
   ];
   return (
-    <div className="bg-dashboard h-screen w-full">
+    <div className="bg-dashboard w-full">
       {/* <DashboardNavbar /> */}
       <div className="flex">
         {/* <DashboardSidebar sidebarDetails={sidebarDetails} /> */}

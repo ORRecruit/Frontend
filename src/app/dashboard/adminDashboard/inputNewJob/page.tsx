@@ -31,7 +31,7 @@ const page = () => {
   };
 
   return (
-    <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
+    <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%]">
         <div className="p-4 ">
           <div>
@@ -68,7 +68,7 @@ const page = () => {
       <form action="">
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
           <h1 className="text-lg font-bold pb-2">Company Info</h1>
-          <div className="flex justify-between w-[60%]">
+          <div className="flex justify-between w-[80%] sm:w-[60%]">
             <div className="w-[48%]">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Company Name
@@ -99,7 +99,7 @@ const page = () => {
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
           <h1 className="text-lg font-bold pb-2">Basic Info</h1>
-          <div className="flex justify-between w-[90%]">
+          <div className="flex justify-between w-[98%] sm:w-[90%]">
             <div className="w-[32%]">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Job Title

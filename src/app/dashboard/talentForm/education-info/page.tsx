@@ -1,7 +1,14 @@
+"use client";
 import Image from "next/image";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
+  const submitForm = (e: any) => {
+    e.preventDefault();
+    router.push("/dashboard/talentForm/socialMedia-info");
+  };
   return (
     <>
       <section className="h-screen flex justify-center items-center">
@@ -13,7 +20,7 @@ const page = () => {
             <p className="text-sm font-light text-gray-500 dark:text-gray-300">
               Tell us about your most recent qualification.
             </p>
-            <form className="mt-4" action="#">
+            <form onSubmit={submitForm} className="mt-4" action="#">
               <div className="grid gap-6">
                 <div className="grid sm:grid-cols-2">
                   <div className="w-[96%]">

@@ -1,8 +1,15 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
+  const submitResume = (e: any) => {
+    e.preventDefault();
+    router.push("/dashboard/talentForm/personalInfo");
+  };
   return (
     <>
       <section className="h-screen flex justify-center items-center">
@@ -15,7 +22,7 @@ const page = () => {
               Please upload your resume. You may skip this and add all the
               information manually{" "}
             </p>
-            <form className="mt-4" action="#">
+            <form onSubmit={submitResume} className="mt-4" action="#">
               <div>
                 <div className="flex items-start">
                   <div className="text-sm w-full mb-[20px]">

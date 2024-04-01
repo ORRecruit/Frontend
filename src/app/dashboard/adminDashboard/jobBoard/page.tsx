@@ -3,7 +3,7 @@ import JobList from "./jobsList/jobList";
 
 const page = () => {
   return (
-    <div className="bg-dashboard h-screen w-full">
+    <div className="bg-dashboard w-full">
       <div className="flex">
         <JobList />
       </div>
