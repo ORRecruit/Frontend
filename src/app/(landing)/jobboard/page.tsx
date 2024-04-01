@@ -45,6 +45,40 @@ const page = () => {
               oversight.
             </p>
           </div>
+
+          <div className="self-center w-full border border-black-400 p-4 mb-6 rounded-2xl hover:bg-gray-200">
+            <div className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+              Business Development Executive
+            </div>
+            <div className="font-light text-gray-500 dark:text-gray-400">
+              Ontario, Canada
+            </div>
+            <div className="mb-4 text-lg font-extrabold text-gray-900 dark:text-white">
+              Market Competitive Salary
+            </div>
+
+            <div className="mb-5">
+              <button
+                type="button"
+                className="text-black-400 hover:text-white border border-gray-800 bg-white hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-3xl text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
+              >
+                Part Time
+              </button>
+              <button
+                type="button"
+                className="text-black-400 hover:text-white border border-gray-800 bg-white hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-3xl text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
+              >
+                Full Time
+              </button>
+            </div>
+
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Seeking a Canadian-based sales professional with proven experience
+              in lead generation, relationship building, and achieving sales
+              targets. Must have strong communication skills, familiarity with
+              Ontario's business environment, and willingness to travel.
+            </p>
+          </div>
         </div>
         <div className="bg-white rounded-lg mt-4 sm:w-[68%] sm:p-8">
           <div className="mb-5">
