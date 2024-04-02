@@ -1,14 +1,35 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const page = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    country: "",
+    sector: "",
+    about: "",
+  });
+
+  const handleChange = (e: any) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   const router = useRouter();
   const submitForm = (e: any) => {
     e.preventDefault();
-    router.push("/dashboard/talentForm/tools-tech-info");
+    console.log("formData....", formData);
+    if (formData.firstName) {
+      localStorage.setItem("candidateInfo", JSON.stringify(formData));
+      router.push("/dashboard/talentForm/tools-tech-info");
+    }
   };
   return (
     <>
@@ -30,11 +51,13 @@ const page = () => {
                     </label>
                     <input
                       type="text"
-                      name="first-name"
+                      name="firstName"
                       id="first-name"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="e.g. Bonnie"
                       required={true}
+                      value={formData.firstName}
+                      onChange={handleChange}
                     />
                   </div>
                   <div>
@@ -43,11 +66,13 @@ const page = () => {
                     </label>
                     <input
                       type="text"
-                      name="last-name"
+                      name="lastName"
                       id="last-name"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="e.g. Green"
                       required={true}
+                      value={formData.lastName}
+                      onChange={handleChange}
                     />
                   </div>
                 </div>
@@ -57,7 +82,10 @@ const page = () => {
                   </label>
                   <select
                     id="countries"
+                    name="country"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    value={formData.country}
+                    onChange={handleChange}
                   >
                     <option>Canada</option>
                     <option value="US">USA</option>
@@ -72,7 +100,10 @@ const page = () => {
                   </label>
                   <select
                     id="countries"
+                    name="sector"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    value={formData.sector}
+                    onChange={handleChange}
                   >
                     <option>IT Industry</option>
                     <option value="US">Medical Industry</option>
@@ -92,6 +123,8 @@ const page = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Who You Are?"
                     required={true}
+                    value={formData.about}
+                    onChange={handleChange}
                   />
                 </div>
               </div>

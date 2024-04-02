@@ -7,12 +7,13 @@ import { registerUser } from "@/api/auth/register";
 
 const page = () => {
   const signUpMutation = useMutation({
-    mutationFn: (body: any) => registerUser(email, password, role),
+    mutationFn: (body: any) => registerUser(email, password, role, full_name),
   });
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("Candidate");
+  const [full_name, setFullName] = useState("");
 
   const handleSubmit = async (e: any) => {
     e?.preventDefault();
@@ -34,6 +35,9 @@ const page = () => {
   };
   const handleRoleChange = (event: any) => {
     setRole(event.target.value);
+  };
+  const handleFullName = (event: any) => {
+    setFullName(event.target.value);
   };
   return (
     <>
@@ -80,7 +84,9 @@ const page = () => {
                     id="full-name"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="e.g. Bonnie Green"
-                    required={false}
+                    required={true}
+                    value={full_name}
+                    onChange={handleFullName}
                   />
                 </div>
                 <div>

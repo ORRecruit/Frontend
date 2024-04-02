@@ -4,7 +4,7 @@ import React from "react";
 
 const jobsList = () => {
   return (
-    <section className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
+    <section className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
       <div className="mx-auto w-full px-4 lg:px-12">
         <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
           <div className="border-b dark:border-gray-700 mx-4">

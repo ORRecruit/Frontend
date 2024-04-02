@@ -45,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="bg-dashboard h-screen w-full relative border border-red-500">
+        <div className="bg-dashboard h-screen w-full relative">
           <DashboardNavbar />
           <div className="flex">
             <DashboardSidebar sidebarDetails={sidebarDetails} />

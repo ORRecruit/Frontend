@@ -23,7 +23,8 @@ const page = () => {
         password,
       });
       if (response) {
-        localStorage.setItem("currentRole", response.token);
+        console.log("response....", response);
+        localStorage.setItem("authToken", response.token);
         if (response.User.role == "Candidate") {
           router.push("/dashboard/talentForm/resume-upload");
         } else if (response.User.role == "Admin") {

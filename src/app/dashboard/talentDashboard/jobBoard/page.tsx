@@ -3,10 +3,10 @@ import FilterHeaderJobBoard from "@/components/landing/filterHeaderJobBoard/filt
 
 const page = () => {
   return (
-    <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
+    <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
       <FilterHeaderJobBoard />
-      <div className="max-w-screen-xl flex items-start justify-between mx-auto p-4">
-        <div className="w-[29%] mt-12">
+      <div className="max-w-screen-xl sm:flex items-start justify-between mx-auto p-4">
+        <div className="sm:w-[29%] mt-12">
           <div className="self-center w-full border border-black-400 p-4 mb-6 rounded-2xl hover:bg-gray-200">
             <div className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
               Looking for a Senior UX Designer
@@ -104,7 +104,7 @@ const page = () => {
             </p>
           </div>
         </div>
-        <div className="p-8 bg-white rounded-lg mt-4 w-[68%]">
+        <div className="p-8 bg-white rounded-lg mt-4 sm:w-[68%]">
           <div className="mb-5">
             <h1 className="text-3xl font-bold">
               Looking for a Senior UX Designer

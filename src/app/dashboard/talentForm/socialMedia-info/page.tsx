@@ -1,13 +1,55 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { createProfile } from "@/api/talent/profileInfo";
 
 const page = () => {
-  const router = useRouter();
-  const submitForm = (e: any) => {
+  const [formData, setFormData] = useState({
+    website: "",
+    linkedIn: "",
+    github: "",
+    twitter: "",
+  });
+  const profileMutation = useMutation({
+    mutationFn: (data) => createProfile(data),
+  });
+  const handleChange = (e: any) => {
     e.preventDefault();
-    router.push("/dashboard/talentDashboard/overview");
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const router = useRouter();
+  const submitForm = async (e: any) => {
+    e.preventDefault();
+    const candidateInfo = localStorage.getItem("candidateInfo");
+
+    if (candidateInfo !== null) {
+      const data = JSON.parse(candidateInfo);
+      data.website = formData.website;
+      data.linkedIn = formData.linkedIn;
+      data.github = formData.github;
+      data.twitter = formData.twitter;
+      console.log("data", data);
+      if (data) {
+        const response = await profileMutation.mutateAsync({
+          ...data,
+          location: "",
+          industry: "",
+          desiredRoles: ["Full Stack"],
+        });
+        console.log(response);
+        if (response) {
+          localStorage.removeItem("candidateInfo");
+          router.push("/dashboard/talentDashboard/overview");
+        }
+      }
+    }
   };
   return (
     <>
@@ -148,8 +190,11 @@ const page = () => {
                   </div>
                   <input
                     type="text"
+                    name="website"
                     placeholder="https://"
                     className="border p-2 w-full"
+                    value={formData.website}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="mb-4">
@@ -175,8 +220,11 @@ const page = () => {
 
                   <input
                     type="text"
+                    name="linkedIn"
                     placeholder="linkedin.com/userid"
                     className="border p-2 w-full"
+                    value={formData.linkedIn}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="mb-4">
@@ -201,8 +249,11 @@ const page = () => {
 
                   <input
                     type="text"
+                    name="github"
                     placeholder="github.com/userid"
                     className="border p-2 w-full"
+                    value={formData.github}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="mb-4">
@@ -227,8 +278,11 @@ const page = () => {
 
                   <input
                     type="text"
+                    name="twitter"
                     placeholder="x.com/username"
                     className="border p-2 w-full"
+                    value={formData.twitter}
+                    onChange={handleChange}
                   />
                 </div>
               </div>

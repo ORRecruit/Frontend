@@ -2,18 +2,34 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { jobPost } from "@/api/admin/jobPost";
+import { useMutation } from "@tanstack/react-query";
 
 const page = () => {
+  const router = useRouter();
+
+  const jobPostMutation = useMutation({
+    mutationFn: (body: any) =>
+      jobPost(
+        formData.title,
+        formData.description,
+        formData.location,
+        formData.type,
+        formData.industry,
+        formData.skillsRequired,
+        formData.experienceRequired
+      ),
+  });
+
   const [formData, setFormData] = useState({
-    companyName: "",
-    jobTitle: "",
-    category: "",
-    qualification: "",
-    skills: "",
-    experience: "",
-    salary: "",
-    workEnvironment: "",
+    title: "",
     description: "",
+    location: "",
+    type: "",
+    industry: "",
+    skillsRequired: "",
+    experienceRequired: "",
   });
 
   const handleChange = (e: any) => {
@@ -28,6 +44,29 @@ const page = () => {
   const handleSubmit = async (e: any) => {
     e?.preventDefault();
     console.log("apply...", formData);
+    if (
+      !formData.title ||
+      !formData.description ||
+      !formData.location ||
+      !formData.type ||
+      !formData.industry ||
+      !formData.skillsRequired ||
+      !formData.experienceRequired
+    ) {
+      return;
+    }
+
+    const response = await jobPostMutation.mutateAsync({
+      title: formData.title,
+      description: formData.description,
+      location: formData.location,
+      type: formData.type,
+      industry: formData.industry,
+      skillsRequired: formData.skillsRequired,
+      experienceRequired: formData.experienceRequired,
+    });
+    console.log("response...", response);
+    router.push("/dashboard/adminDashboard/previewJob");
   };
 
   return (
@@ -45,14 +84,12 @@ const page = () => {
             </Link>
           </div>
           <div className="absolute right-2 top-5">
-            <Link href="/dashboard/adminDashboard/previewJob">
-              <button
-                onClick={handleSubmit}
-                className="bg-primary-orange text-sm text-white w-40 py-2 rounded-xl hover:shadow-xl"
-              >
-                Continue
-              </button>
-            </Link>
+            <button
+              onClick={handleSubmit}
+              className="bg-primary-orange text-sm text-white w-40 py-2 rounded-xl hover:shadow-xl"
+            >
+              Continue
+            </button>
           </div>
         </div>
         <div className="flex-row items-center justify-between p-4 space-y-3 sm:flex sm:space-y-0 sm:space-x-4">
@@ -79,8 +116,6 @@ const page = () => {
                 id="brand"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Input text"
-                value={formData.companyName}
-                onChange={handleChange}
               />
             </div>
             <div className="w-[48%]">
@@ -89,10 +124,12 @@ const page = () => {
               </label>
               <input
                 type="text"
-                name="price"
+                name="location"
                 id="price"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="logo.png"
+                value={formData.location}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -106,11 +143,11 @@ const page = () => {
               </label>
               <input
                 type="text"
-                name="jobTitle"
+                name="title"
                 id="brand"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Input text"
-                value={formData.jobTitle}
+                value={formData.title}
                 onChange={handleChange}
               />
             </div>
@@ -119,10 +156,10 @@ const page = () => {
                 Industry
               </label>
               <select
-                id="category"
-                name="category"
+                id="industry"
+                name="industry"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                value={formData.category}
+                value={formData.industry}
                 onChange={handleChange}
               >
                 <option>Input Text</option>
@@ -142,9 +179,9 @@ const page = () => {
               </label>
               <select
                 id="category"
-                name="qualification"
+                name="type"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                value={formData.qualification}
+                value={formData.type}
                 onChange={handleChange}
               >
                 <option>Input Text</option>
@@ -163,9 +200,9 @@ const page = () => {
             <input
               type="text"
               id="default-input"
-              name="skills"
+              name="skillsRequired"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-              value={formData.skills}
+              value={formData.skillsRequired}
               onChange={handleChange}
             />
           </div>
@@ -179,9 +216,9 @@ const page = () => {
                 type="range"
                 min="1"
                 max="10"
-                name="experience"
+                name="experienceRequired"
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-                value={formData.experience}
+                value={formData.experienceRequired}
                 onChange={handleChange}
               />
               <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6">
@@ -210,8 +247,6 @@ const page = () => {
                 max="1500"
                 name="salary"
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-                value={formData.salary}
-                onChange={handleChange}
               />
               <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6">
                 Min ($100)
@@ -239,8 +274,6 @@ const page = () => {
                 className="w-4 h-4 bg-gray-100 border-gray-300"
                 name="workEnvironment"
                 value="Hybrid"
-                checked={formData.workEnvironment === "Hybrid"}
-                onChange={handleChange}
               />
               <div>
                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -258,8 +291,6 @@ const page = () => {
                 className="w-4 h-4 bg-gray-100 border-gray-300"
                 name="workEnvironment"
                 value="Remote"
-                checked={formData.workEnvironment === "Remote"}
-                onChange={handleChange}
               />
               <div>
                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -276,8 +307,6 @@ const page = () => {
                 type="radio"
                 name="workEnvironment"
                 value="On Site"
-                checked={formData.workEnvironment === "On Site"}
-                onChange={handleChange}
                 className="w-4 h-4 bg-gray-100 border-gray-300"
               />
               <div>
