@@ -11,7 +11,7 @@ function getAuthToken() {
 const client = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   headers: {
-    Authorization: "Bearer" + getAuthToken(),
+    Authorization: "Bearer " + getAuthToken(),
   },
 });
 
