@@ -2,6 +2,8 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { createProfile } from "@/api/talent/profileInfo";
 
 const page = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +12,9 @@ const page = () => {
     github: "",
     twitter: "",
   });
-
+  const profileMutation = useMutation({
+    mutationFn: (data) => createProfile(data),
+  });
   const handleChange = (e: any) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -21,7 +25,7 @@ const page = () => {
   };
 
   const router = useRouter();
-  const submitForm = (e: any) => {
+  const submitForm = async (e: any) => {
     e.preventDefault();
     const candidateInfo = localStorage.getItem("candidateInfo");
 
@@ -32,9 +36,20 @@ const page = () => {
       data.github = formData.github;
       data.twitter = formData.twitter;
       console.log("data", data);
-      localStorage.removeItem("candidateInfo");
+      if (data) {
+        const response = await profileMutation.mutateAsync({
+          ...data,
+          location: "",
+          industry: "",
+          desiredRoles: ["Full Stack"],
+        });
+        console.log(response);
+        if (response) {
+          localStorage.removeItem("candidateInfo");
+          router.push("/dashboard/talentDashboard/overview");
+        }
+      }
     }
-    router.push("/dashboard/talentDashboard/overview");
   };
   return (
     <>
