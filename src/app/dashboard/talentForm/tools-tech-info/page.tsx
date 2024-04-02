@@ -1,13 +1,35 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const page = () => {
+  const [skills, setSkills] = useState([]);
+  const [tools, setTools] = useState([]);
+
+  const handleSkills = (e: any) => {
+    e.preventDefault();
+    setSkills(e.target.value);
+  };
+
+  const handleTools = (e: any) => {
+    e.preventDefault();
+    setTools(e.target.value);
+  };
+
   const router = useRouter();
   const submitForm = (e: any) => {
     e.preventDefault();
+    const candidateInfo = localStorage.getItem("candidateInfo");
+
+    if (candidateInfo !== null) {
+      const data = JSON.parse(candidateInfo);
+      data.skills = [skills];
+      data.tools = [tools];
+      localStorage.setItem("candidateInfo", JSON.stringify(data));
+      console.log("data", data);
+    }
     router.push("/dashboard/talentForm/experience-info");
   };
   return (
@@ -31,12 +53,13 @@ const page = () => {
                   <select
                     id="countries"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    onChange={handleSkills}
                   >
                     <option>IT Industry</option>
-                    <option value="US">IT Industry</option>
-                    <option value="CA">IT Industry</option>
-                    <option value="FR">IT Industry</option>
-                    <option value="DE">IT Industry</option>
+                    <option value="ITIndustry">IT Industry</option>
+                    <option value="ITIndustry">IT Industry</option>
+                    <option value="ITIndustry">IT Industry</option>
+                    <option value="ITIndustry">IT Industry</option>
                   </select>
                 </div>
                 <div className="w-[100%]">
@@ -46,12 +69,13 @@ const page = () => {
                   <select
                     id="countries"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    onChange={handleTools}
                   >
                     <option>IT Industry</option>
-                    <option value="US">Medical Industry</option>
-                    <option value="CA">Agriculture Industry</option>
-                    <option value="FR">Space Industry</option>
-                    <option value="DE">Mechanical Industry</option>
+                    <option value="medical">Medical Industry</option>
+                    <option value="agriculture">Agriculture Industry</option>
+                    <option value="space">Space Industry</option>
+                    <option value="civil">Mechanical Industry</option>
                   </select>
                 </div>
               </div>

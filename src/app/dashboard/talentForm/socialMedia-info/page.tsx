@@ -1,12 +1,39 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const page = () => {
+  const [formData, setFormData] = useState({
+    website: "",
+    linkedIn: "",
+    github: "",
+    twitter: "",
+  });
+
+  const handleChange = (e: any) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   const router = useRouter();
   const submitForm = (e: any) => {
     e.preventDefault();
+    const candidateInfo = localStorage.getItem("candidateInfo");
+
+    if (candidateInfo !== null) {
+      const data = JSON.parse(candidateInfo);
+      data.website = formData.website;
+      data.linkedIn = formData.linkedIn;
+      data.github = formData.github;
+      data.twitter = formData.twitter;
+      console.log("data", data);
+      localStorage.removeItem("candidateInfo");
+    }
     router.push("/dashboard/talentDashboard/overview");
   };
   return (
@@ -148,8 +175,11 @@ const page = () => {
                   </div>
                   <input
                     type="text"
+                    name="website"
                     placeholder="https://"
                     className="border p-2 w-full"
+                    value={formData.website}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="mb-4">
@@ -175,8 +205,11 @@ const page = () => {
 
                   <input
                     type="text"
+                    name="linkedIn"
                     placeholder="linkedin.com/userid"
                     className="border p-2 w-full"
+                    value={formData.linkedIn}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="mb-4">
@@ -201,8 +234,11 @@ const page = () => {
 
                   <input
                     type="text"
+                    name="github"
                     placeholder="github.com/userid"
                     className="border p-2 w-full"
+                    value={formData.github}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="mb-4">
@@ -227,8 +263,11 @@ const page = () => {
 
                   <input
                     type="text"
+                    name="twitter"
                     placeholder="x.com/username"
                     className="border p-2 w-full"
+                    value={formData.twitter}
+                    onChange={handleChange}
                   />
                 </div>
               </div>

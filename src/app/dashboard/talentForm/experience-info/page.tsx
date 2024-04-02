@@ -1,13 +1,46 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const page = () => {
+  const [formData, setFormData] = useState({
+    companyName: "",
+    role: "",
+    startDate: "",
+    endDate: "",
+    description: "",
+  });
+
+  const handleChange = (e: any) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   const router = useRouter();
   const submitForm = (e: any) => {
     e.preventDefault();
+    const candidateInfo = localStorage.getItem("candidateInfo");
+
+    if (candidateInfo !== null) {
+      const data = JSON.parse(candidateInfo);
+      data.experiences = [
+        {
+          companyName: formData.companyName,
+          role: formData.role,
+          startDate: formData.startDate,
+          endDate: formData.endDate,
+          description: formData.description,
+        },
+      ];
+      localStorage.setItem("candidateInfo", JSON.stringify(data));
+      console.log("data", data);
+    }
     router.push("/dashboard/talentForm/education-info");
   };
   return (
@@ -30,7 +63,10 @@ const page = () => {
                     </label>
                     <select
                       id="countries"
+                      name="companyName"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      value={formData.companyName}
+                      onChange={handleChange}
                     >
                       <option>ABC Company</option>
                       <option value="US">DEF Company</option>
@@ -45,7 +81,10 @@ const page = () => {
                     </label>
                     <select
                       id="countries"
+                      name="role"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      value={formData.role}
+                      onChange={handleChange}
                     >
                       <option>Software Engineer</option>
                       <option value="US">Doctor</option>
@@ -63,10 +102,12 @@ const page = () => {
                     </label>
                     <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"></div>
                     <input
-                      name="start"
+                      name="startDate"
                       type="date"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Select date start"
+                      value={formData.startDate}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="relative w-[96%]">
@@ -75,10 +116,12 @@ const page = () => {
                     </label>
                     <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"></div>
                     <input
-                      name="end"
+                      name="endDate"
                       type="date"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Select date end"
+                      value={formData.endDate}
+                      onChange={handleChange}
                     />
                   </div>
                 </div>
@@ -89,11 +132,13 @@ const page = () => {
                   </label>
                   <input
                     type="text"
-                    name="about"
+                    name="description"
                     id="about"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="What did you do here?"
                     required={true}
+                    value={formData.description}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
