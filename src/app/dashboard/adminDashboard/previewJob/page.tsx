@@ -1,9 +1,58 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SuccessModal from "../successModal/successModal";
+import { jobPost } from "@/api/admin/jobPost";
+import { useMutation } from "@tanstack/react-query";
+
+interface PreviewData {
+  title: string;
+  type: string;
+  companyName: string;
+  saleryOffered: string;
+  description: string;
+  responsibilities: string;
+  requirements: string;
+}
 
 const page = () => {
+  const [previewData, setPreviewData] = useState<PreviewData | null>(null);
+
+  useEffect(() => {
+    const postJob = localStorage.getItem("postJob");
+    if (postJob !== null) {
+      const data = JSON.parse(postJob);
+      setPreviewData(data);
+      console.log("postJob", data);
+    }
+  }, []);
+
+  const postJob = (e: any) => {
+    e?.preventDefault();
+    console.log("apply...", previewData);
+
+    if (!previewData) {
+      return;
+    }
+
+    // const response = await jobPostMutation.mutateAsync({
+    //   title: formData.title,
+    //   description: formData.description,
+    //   location: formData.location,
+    //   type: formData.type,
+    //   industry: formData.industry,
+    //   skillsRequired: formData.skillsRequired,
+    //   experienceRequired: formData.experienceRequired,
+    //   companyName: formData.companyName,
+    //   qualification: formData.qualification,
+    //   saleryOffered: formData.saleryOffered,
+    //   requirements: formData.requirements,
+    //   responsibilities: formData.responsibilities,
+    // });
+    // console.log("response...", response);
+    // localStorage.removeItem("postJob");
+  };
   return (
     <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] pt-4">
@@ -33,66 +82,42 @@ const page = () => {
                 className="inline mr-6"
               />
             </Link>
-            <Link href="/dashboard/adminDashboard/previewJob">
+            <Link href="/dashboard/adminDashboard/previewJob" onClick={postJob}>
               <SuccessModal />
             </Link>
           </div>
         </div>
       </div>
-      <div className="p-8 bg-white shadow-lg rounded-lg mt-4 w-[99%]">
-        <div className="mb-5">
-          <h1 className="text-3xl font-bold">
-            Looking for a Senior UX Designer
-          </h1>
-          <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
-            Full Time
-          </span>
+      {previewData && (
+        <div className="p-8 bg-white shadow-lg rounded-lg mt-4 w-[99%]">
+          <div className="mb-5">
+            <h1 className="text-3xl font-bold">{previewData.title}</h1>
+            <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
+              {previewData.type}
+            </span>
+          </div>
+
+          <div className="mb-5">
+            <p className="text-gray-600">{previewData.companyName}</p>
+            <p className="text-gray-600">{previewData.type}</p>
+            <p className="font-semibold text-gray-900">
+              ${previewData.saleryOffered}/yr
+            </p>
+          </div>
+
+          <h2 className="text-lg font-semibold mb-4">Job Description</h2>
+          <p className="text-gray-700 mb-8">{previewData.description}</p>
+
+          <h3 className="text-lg font-semibold mb-3">Responsibilities</h3>
+          <ul className="list-disc list-inside text-gray-700 mb-8 lg:w-[70%] xl:w-[50%]">
+            <p>{previewData.responsibilities}</p>
+          </ul>
+          <h3 className="text-lg font-semibold mb-3">Requirements</h3>
+          <ul className="list-disc list-inside text-gray-700 mb-8 lg:w-[70%] xl:w-[50%]">
+            <p>{previewData.requirements}</p>
+          </ul>
         </div>
-
-        <div className="mb-5">
-          <p className="text-gray-600">ABC Technologies</p>
-          <p className="text-gray-600">Remote</p>
-          <p className="font-semibold text-gray-900">$120k/yr</p>
-        </div>
-
-        <h2 className="text-lg font-semibold mb-4">Job Description</h2>
-        <p className="text-gray-700 mb-8">
-          Lörem ipsum #metoo kiskade deling och ide triktigt i egt. Aska tredede
-          och plavis obel, av semir. Ysam lårskav. Heteromifagisk pegen. Novent
-          liplamingen sens tygt. Utvigning abeda dogt analiga i trollfabrik.
-          Antiskade jänade och måjöbelt i pörade obeber kaliga därför att
-          ninydohet, kanyng. Tetrapp vin att hexasade dosk ifall hypov medan
-          nenyvis gödade medeltism. Besovis köttskatt ogisk ifall megagam
-          gigekonomi. Lena täkivöliga incel prode kongar. Avinvestera man
-          proling inframide respektive dek premivis. Nollavfall disebel huruvida
-          hästlasagne i polyvuska iktig. Rerade krol såsom tore, underturism.
-          Transgraf benyre beliga, rogt sasm drinkorexi även om sonyr
-          frågestrejka. Du kan vara drabbad. Regnbågsbarn ambitism androvalens
-          pren krogon suprafangar. Ovödinde stafettläkare. Vinera depånde digon
-          pena fastän gigast. Ditt ultrande. Des mins. Prekäd litrevis om än
-          plalangen gönde parabel ologi att trer. Besm toligt då pokir,
-          klimatneutral rovus tresam egok. Du kan vara{" "}
-        </p>
-
-        <h3 className="text-lg font-semibold mb-3">Responsibilities</h3>
-        <ul className="list-disc list-inside text-gray-700 mb-8">
-          <li>Task detail one</li>
-          <li>Task detail two</li>
-          <li>Task detail three</li>
-          <li>Task detail four</li>
-        </ul>
-        <p className="text-gray-700 mb-8">
-          Lörem ipsum #metoo kiskade deling och ide triktigt i egt. Aska tredede
-          och plavis obel, av semir. Ysam lårskav. Heteromifagisk pegen. Novent
-          liplamingen sens tygt. Utvigning abeda dogt analiga i trollfabrik.
-          Antiskade jänade och måjöbelt i pörade obeber kaliga därför att
-          ninydohet, kanyng. Tetrapp vin att hexasade dosk ifall hypov medan
-          nenyvis gödade medeltism. Besovis köttskatt ogisk ifall megagam
-          gigekonomi. Lena täkivöliga incel prode kongar. Avinvestera man
-          proling inframide respektive dek premivis. Nollavfall disebel huruvida
-          hästlasagne i polyvuska iktig. Rerade krol såsom tore, underturism.
-        </p>
-      </div>
+      )}
     </div>
   );
 };

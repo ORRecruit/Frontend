@@ -7,7 +7,12 @@ export const jobPost = (
   type: any,
   industry: any,
   skillsRequired: any,
-  experienceRequired: any
+  experienceRequired: any,
+  companyName: any,
+  qualification: any,
+  saleryOffered: any,
+  requirements: any,
+  responsibilities: any
 ) => {
   return client.post<any, any>("/jobs/createJobs", {
     title,
@@ -17,5 +22,10 @@ export const jobPost = (
     industry,
     skillsRequired,
     experienceRequired,
+    companyName,
+    qualification,
+    saleryOffered,
+    requirements,
+    responsibilities,
   });
 };

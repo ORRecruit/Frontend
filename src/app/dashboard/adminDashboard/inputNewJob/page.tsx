@@ -17,8 +17,13 @@ const page = () => {
         formData.location,
         formData.type,
         formData.industry,
+        formData.companyName,
+        formData.qualification,
+        formData.saleryOffered,
         formData.skillsRequired,
-        formData.experienceRequired
+        formData.experienceRequired,
+        formData.requirements,
+        formData.responsibilities
       ),
   });
 
@@ -30,6 +35,9 @@ const page = () => {
     industry: "",
     skillsRequired: "",
     experienceRequired: "",
+    companyName: "",
+    qualification: "",
+    saleryOffered: "",
     requirements: "",
     responsibilities: "",
   });
@@ -46,6 +54,8 @@ const page = () => {
   const handleSubmit = async (e: any) => {
     e?.preventDefault();
     console.log("apply...", formData);
+    router.push("/dashboard/adminDashboard/previewJob?key=value");
+
     if (
       !formData.title ||
       !formData.description ||
@@ -53,22 +63,33 @@ const page = () => {
       !formData.type ||
       !formData.industry ||
       !formData.skillsRequired ||
-      !formData.experienceRequired
+      !formData.experienceRequired ||
+      !formData.companyName ||
+      !formData.qualification ||
+      !formData.saleryOffered ||
+      !formData.requirements ||
+      !formData.responsibilities
     ) {
       return;
     }
 
-    const response = await jobPostMutation.mutateAsync({
-      title: formData.title,
-      description: formData.description,
-      location: formData.location,
-      type: formData.type,
-      industry: formData.industry,
-      skillsRequired: formData.skillsRequired,
-      experienceRequired: formData.experienceRequired,
-    });
-    console.log("response...", response);
-    router.push("/dashboard/adminDashboard/previewJob");
+    localStorage.setItem("postJob", JSON.stringify(formData));
+    // const response = await jobPostMutation.mutateAsync({
+    //   title: formData.title,
+    //   description: formData.description,
+    //   location: formData.location,
+    //   type: formData.type,
+    //   industry: formData.industry,
+    //   skillsRequired: formData.skillsRequired,
+    //   experienceRequired: formData.experienceRequired,
+    //   companyName: formData.companyName,
+    //   qualification: formData.qualification,
+    //   saleryOffered: formData.saleryOffered,
+    //   requirements: formData.requirements,
+    //   responsibilities: formData.responsibilities,
+    // });
+    // console.log("response...", response);
+    // router.push("/dashboard/adminDashboard/previewJob");
   };
 
   return (
@@ -118,6 +139,8 @@ const page = () => {
                 id="brand"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Input text"
+                value={formData.companyName}
+                onChange={handleChange}
               />
             </div>
             <div className="w-[48%]">
@@ -181,9 +204,9 @@ const page = () => {
               </label>
               <select
                 id="category"
-                name="type"
+                name="qualification"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                value={formData.type}
+                value={formData.qualification}
                 onChange={handleChange}
               >
                 <option>Input Text</option>
@@ -247,8 +270,10 @@ const page = () => {
                 type="range"
                 min="100"
                 max="1500"
-                name="salary"
+                name="saleryOffered"
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                value={formData.saleryOffered}
+                onChange={handleChange}
               />
               <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6">
                 Min ($100)
@@ -274,8 +299,9 @@ const page = () => {
                 id="inline-radio"
                 type="radio"
                 className="w-4 h-4 bg-gray-100 border-gray-300"
-                name="workEnvironment"
+                name="type"
                 value="Hybrid"
+                onChange={handleChange}
               />
               <div>
                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -291,8 +317,9 @@ const page = () => {
                 id="inline-2-radio"
                 type="radio"
                 className="w-4 h-4 bg-gray-100 border-gray-300"
-                name="workEnvironment"
+                name="type"
                 value="Remote"
+                onChange={handleChange}
               />
               <div>
                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -307,9 +334,10 @@ const page = () => {
               <input
                 id="inline-checked-radio"
                 type="radio"
-                name="workEnvironment"
-                value="On Site"
                 className="w-4 h-4 bg-gray-100 border-gray-300"
+                name="type"
+                value="On Site"
+                onChange={handleChange}
               />
               <div>
                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -360,9 +388,9 @@ const page = () => {
               </label>
               <textarea
                 name="responsibilities"
-                id="price"
+                id="responsibilities"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="logo.png"
+                placeholder="Input Text"
                 value={formData.responsibilities}
                 onChange={handleChange}
               />
