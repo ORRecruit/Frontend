@@ -30,6 +30,8 @@ const page = () => {
     industry: "",
     skillsRequired: "",
     experienceRequired: "",
+    requirements: "",
+    responsibilities: "",
   });
 
   const handleChange = (e: any) => {
@@ -332,6 +334,39 @@ const page = () => {
               name="description"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
             />
+          </div>
+        </div>
+        <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
+          <h1 className="text-lg font-bold pb-2">
+            Requirements & Responsibilities
+          </h1>
+          <div className="flex justify-between w-[80%] sm:w-[90%]">
+            <div className="w-[48%]">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Requirements
+              </label>
+              <textarea
+                id="brand"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Input text"
+                value={formData.requirements}
+                onChange={handleChange}
+                name="requirements"
+              />
+            </div>
+            <div className="w-[48%]">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Responsibilities
+              </label>
+              <textarea
+                name="responsibilities"
+                id="price"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="logo.png"
+                value={formData.responsibilities}
+                onChange={handleChange}
+              />
+            </div>
           </div>
         </div>
       </form>

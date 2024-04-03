@@ -11,8 +11,8 @@ const page = () => {
       <Navbar />
       <FilterHeaderJobBoard />
       <div className="max-w-screen-xl sm:flex sm:items-start sm:justify-between mx-auto p-4">
-        <div className="sm:w-[29%] mt-12">
-          <div className="self-center w-full border border-black-400 p-4 mb-6 rounded-2xl hover:bg-gray-200">
+        <div className="sm:w-[29%] h-[350px] sm:h-auto overflow-auto mt-12">
+          <div className="border border-black-400 p-4 mb-6 rounded-2xl hover:bg-gray-200">
             <div className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
               Sales Account Manager
             </div>
@@ -46,7 +46,7 @@ const page = () => {
             </p>
           </div>
 
-          <div className="self-center w-full border border-black-400 p-4 mb-6 rounded-2xl hover:bg-gray-200">
+          <div className="border border-black-400 p-4 mb-6 rounded-2xl hover:bg-gray-200">
             <div className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
               Business Development Executive
             </div>
