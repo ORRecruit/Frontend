@@ -1,8 +1,19 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
+import { getAllJobs } from "@/api/jobs/getAllJobs";
+import { useQuery } from "@tanstack/react-query";
 
 const jobList = () => {
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ["get all naukrian"],
+    queryFn: () => getAllJobs(),
+  });
+
+  useEffect(() => {
+    console.log("data....", data?.jobs);
+  }, [data]);
   return (
     <section className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
       <div className="mx-auto w-full px-4 lg:px-12">
@@ -323,10 +334,10 @@ const jobList = () => {
                     Recruiter
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    Job Code
+                    Experience
                   </th>
-                  <th scope="col" className="px-4 py-3 min-w-[14rem]">
-                    Applicants
+                  <th scope="col" className="px-4 py-3 min-w-[6rem]">
+                    Job Type
                   </th>
                   <th scope="col" className="px-4 py-3">
                     Date
@@ -340,370 +351,105 @@ const jobList = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-                  <td className="px-4 py-2 w-4">
-                    <div className="flex items-center">
-                      <input
-                        id="checkbox-table-search-1"
-                        type="checkbox"
-                        className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      />
-                      <label className="sr-only">checkbox</label>
-                    </div>
-                  </td>
-                  <th
-                    scope="row"
-                    className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
-                  >
-                    <img
-                      src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/avatar-10.png"
-                      alt=""
-                      className="w-10 h-10 flex-shrink-0 border-2 border-white rounded-full dark:border-gray-800 mr-2"
-                    />
-                    Senior UX Designer
-                  </th>
-                  <td className="px-4 py-2 whitespace-nowrap">
-                    <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                      ANY Organization
-                    </span>
-                  </td>
-                  <td className="px-4 py-2 whitespace-nowrap">
-                    <span>ABC 1234</span>
-                  </td>
-                  <td className="px-4 py-2 font-medium whitespace-nowrap">
-                    <span>124</span>
-                  </td>
-                  <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <span>13/02/2024</span>
-                  </td>
-                  <td className="px-4 py-2 text-gray-900 whitespace-nowrap dark:text-white">
-                    <span>Active</span>
-                  </td>
-                  <td className="px-4 py-2">
-                    <button
-                      id="-dropdown-button"
-                      type="button"
-                      data-dropdown-toggle="-dropdown"
-                      className="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
+                {data &&
+                  data?.jobs?.map((item: any, index: any) => {
+                    return (
+                      <tr
+                        key={index}
+                        className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
                       >
-                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                      </svg>
-                    </button>
-                    <div
-                      id="-dropdown"
-                      className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                    >
-                      <ul
-                        className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="-dropdown-button"
-                      >
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >
-                            Show
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >
-                            Edit
-                          </a>
-                        </li>
-                      </ul>
-                      <div className="py-1">
-                        <a
-                          href="#"
-                          className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        <td className="px-4 py-2 w-4">
+                          <div className="flex items-center">
+                            <input
+                              id="checkbox-table-search-1"
+                              type="checkbox"
+                              className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            />
+                            <label className="sr-only">checkbox</label>
+                          </div>
+                        </td>
+                        <th
+                          scope="row"
+                          className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
                         >
-                          Delete
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-                  <td className="px-4 py-2 w-4">
-                    <div className="flex items-center">
-                      <input
-                        id="checkbox-table-search-1"
-                        type="checkbox"
-                        className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      />
-                      <label className="sr-only">checkbox</label>
-                    </div>
-                  </td>
-                  <th
-                    scope="row"
-                    className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
-                  >
-                    <img
-                      src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/avatar-10.png"
-                      alt=""
-                      className="w-10 h-10 flex-shrink-0 border-2 border-white rounded-full dark:border-gray-800 mr-2"
-                    />
-                    Senior UX Designer
-                  </th>
-                  <td className="px-4 py-2 whitespace-nowrap">
-                    <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                      ANY Organization
-                    </span>
-                  </td>
-                  <td className="px-4 py-2 whitespace-nowrap">
-                    <span>ABC 1234</span>
-                  </td>
-                  <td className="px-4 py-2 font-medium whitespace-nowrap">
-                    <span>124</span>
-                  </td>
-                  <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <span>13/02/2024</span>
-                  </td>
-                  <td className="px-4 py-2 text-gray-900 whitespace-nowrap dark:text-white">
-                    <span>Active</span>
-                  </td>
-                  <td className="px-4 py-2">
-                    <button
-                      id="-dropdown-button"
-                      type="button"
-                      data-dropdown-toggle="-dropdown"
-                      className="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                      </svg>
-                    </button>
-                    <div
-                      id="-dropdown"
-                      className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                    >
-                      <ul
-                        className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="-dropdown-button"
-                      >
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                          {/* <img
+                            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/avatar-10.png"
+                            alt=""
+                            className="w-10 h-10 flex-shrink-0 border-2 border-white rounded-full dark:border-gray-800 mr-2"
+                          /> */}
+                          {item.title}
+                        </th>
+                        <td className="px-4 py-2 whitespace-nowrap">
+                          <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                            {item.companyName}
+                          </span>
+                        </td>
+                        <td className="px-4 py-2 whitespace-nowrap">
+                          <span>{item.experienceRequired} Yrs</span>
+                        </td>
+                        <td className="px-4 py-2 font-medium whitespace-nowrap">
+                          <span>{item.type}</span>
+                        </td>
+                        <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          <span>13/02/2024</span>
+                        </td>
+                        <td className="px-4 py-2 text-gray-900 whitespace-nowrap dark:text-white">
+                          <span>{item.jobStatus}</span>
+                        </td>
+                        <td className="px-4 py-2">
+                          <button
+                            id="-dropdown-button"
+                            type="button"
+                            data-dropdown-toggle="-dropdown"
+                            className="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                           >
-                            Show
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            <svg
+                              className="w-5 h-5"
+                              aria-hidden="true"
+                              fill="currentColor"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                            </svg>
+                          </button>
+                          <div
+                            id="-dropdown"
+                            className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                           >
-                            Edit
-                          </a>
-                        </li>
-                      </ul>
-                      <div className="py-1">
-                        <a
-                          href="#"
-                          className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                        >
-                          Delete
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-                  <td className="px-4 py-2 w-4">
-                    <div className="flex items-center">
-                      <input
-                        id="checkbox-table-search-1"
-                        type="checkbox"
-                        className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      />
-                      <label className="sr-only">checkbox</label>
-                    </div>
-                  </td>
-                  <th
-                    scope="row"
-                    className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
-                  >
-                    <img
-                      src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/avatar-10.png"
-                      alt=""
-                      className="w-10 h-10 flex-shrink-0 border-2 border-white rounded-full dark:border-gray-800 mr-2"
-                    />
-                    Senior UX Designer
-                  </th>
-                  <td className="px-4 py-2 whitespace-nowrap">
-                    <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                      ANY Organization
-                    </span>
-                  </td>
-                  <td className="px-4 py-2 whitespace-nowrap">
-                    <span>ABC 1234</span>
-                  </td>
-                  <td className="px-4 py-2 font-medium whitespace-nowrap">
-                    <span>124</span>
-                  </td>
-                  <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <span>13/02/2024</span>
-                  </td>
-                  <td className="px-4 py-2 text-gray-900 whitespace-nowrap dark:text-white">
-                    <span>Active</span>
-                  </td>
-                  <td className="px-4 py-2">
-                    <button
-                      id="-dropdown-button"
-                      type="button"
-                      data-dropdown-toggle="-dropdown"
-                      className="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                      </svg>
-                    </button>
-                    <div
-                      id="-dropdown"
-                      className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                    >
-                      <ul
-                        className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="-dropdown-button"
-                      >
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >
-                            Show
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >
-                            Edit
-                          </a>
-                        </li>
-                      </ul>
-                      <div className="py-1">
-                        <a
-                          href="#"
-                          className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                        >
-                          Delete
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-                  <td className="px-4 py-2 w-4">
-                    <div className="flex items-center">
-                      <input
-                        id="checkbox-table-search-1"
-                        type="checkbox"
-                        className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      />
-                      <label className="sr-only">checkbox</label>
-                    </div>
-                  </td>
-                  <th
-                    scope="row"
-                    className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
-                  >
-                    <img
-                      src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/avatar-10.png"
-                      alt=""
-                      className="w-10 h-10 flex-shrink-0 border-2 border-white rounded-full dark:border-gray-800 mr-2"
-                    />
-                    Senior UX Designer
-                  </th>
-                  <td className="px-4 py-2 whitespace-nowrap">
-                    <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                      ANY Organization
-                    </span>
-                  </td>
-                  <td className="px-4 py-2 whitespace-nowrap">
-                    <span>ABC 1234</span>
-                  </td>
-                  <td className="px-4 py-2 font-medium whitespace-nowrap">
-                    <span>124</span>
-                  </td>
-                  <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <span>13/02/2024</span>
-                  </td>
-                  <td className="px-4 py-2 text-gray-900 whitespace-nowrap dark:text-white">
-                    <span>Active</span>
-                  </td>
-                  <td className="px-4 py-2">
-                    <button
-                      id="-dropdown-button"
-                      type="button"
-                      data-dropdown-toggle="-dropdown"
-                      className="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                      </svg>
-                    </button>
-                    <div
-                      id="-dropdown"
-                      className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                    >
-                      <ul
-                        className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="-dropdown-button"
-                      >
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >
-                            Show
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >
-                            Edit
-                          </a>
-                        </li>
-                      </ul>
-                      <div className="py-1">
-                        <a
-                          href="#"
-                          className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                        >
-                          Delete
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
+                            <ul
+                              className="py-1 text-sm text-gray-700 dark:text-gray-200"
+                              aria-labelledby="-dropdown-button"
+                            >
+                              <li>
+                                <a
+                                  href="#"
+                                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                >
+                                  Show
+                                </a>
+                              </li>
+                              <li>
+                                <a
+                                  href="#"
+                                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                >
+                                  Edit
+                                </a>
+                              </li>
+                            </ul>
+                            <div className="py-1">
+                              <a
+                                href="#"
+                                className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                              >
+                                Delete
+                              </a>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
           </div>
