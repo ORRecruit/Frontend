@@ -3,29 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { jobPost } from "@/api/admin/jobPost";
-import { useMutation } from "@tanstack/react-query";
 
 const page = () => {
   const router = useRouter();
-
-  const jobPostMutation = useMutation({
-    mutationFn: (body: any) =>
-      jobPost(
-        formData.title,
-        formData.description,
-        formData.location,
-        formData.type,
-        formData.industry,
-        formData.companyName,
-        formData.qualification,
-        formData.saleryOffered,
-        formData.skillsRequired,
-        formData.experienceRequired,
-        formData.requirements,
-        formData.responsibilities
-      ),
-  });
 
   const [formData, setFormData] = useState({
     title: "",
@@ -53,8 +33,6 @@ const page = () => {
 
   const handleSubmit = async (e: any) => {
     e?.preventDefault();
-    console.log("apply...", formData);
-    router.push("/dashboard/adminDashboard/previewJob?key=value");
 
     if (
       !formData.title ||
@@ -74,22 +52,7 @@ const page = () => {
     }
 
     localStorage.setItem("postJob", JSON.stringify(formData));
-    // const response = await jobPostMutation.mutateAsync({
-    //   title: formData.title,
-    //   description: formData.description,
-    //   location: formData.location,
-    //   type: formData.type,
-    //   industry: formData.industry,
-    //   skillsRequired: formData.skillsRequired,
-    //   experienceRequired: formData.experienceRequired,
-    //   companyName: formData.companyName,
-    //   qualification: formData.qualification,
-    //   saleryOffered: formData.saleryOffered,
-    //   requirements: formData.requirements,
-    //   responsibilities: formData.responsibilities,
-    // });
-    // console.log("response...", response);
-    // router.push("/dashboard/adminDashboard/previewJob");
+    router.push("/dashboard/adminDashboard/previewJob");
   };
 
   return (
