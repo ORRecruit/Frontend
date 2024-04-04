@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import SuccessModal from "../successModal/successModal";
-import { jobPost } from "@/api/admin/jobPost";
+import { postJob as postJobApi } from "@/api/jobs/postJob";
 import { useMutation } from "@tanstack/react-query";
 
 interface PreviewData {
@@ -18,40 +18,25 @@ interface PreviewData {
 
 const page = () => {
   const [previewData, setPreviewData] = useState<PreviewData | null>(null);
+  const postJobMutation = useMutation({
+    mutationFn: (data: any) => postJobApi(data),
+  });
 
   useEffect(() => {
     const postJob = localStorage.getItem("postJob");
     if (postJob !== null) {
       const data = JSON.parse(postJob);
       setPreviewData(data);
-      console.log("postJob", data);
     }
   }, []);
 
-  const postJob = (e: any) => {
-    e?.preventDefault();
-    console.log("apply...", previewData);
-
+  const postJob = async (e: any) => {
     if (!previewData) {
       return;
     }
 
-    // const response = await jobPostMutation.mutateAsync({
-    //   title: formData.title,
-    //   description: formData.description,
-    //   location: formData.location,
-    //   type: formData.type,
-    //   industry: formData.industry,
-    //   skillsRequired: formData.skillsRequired,
-    //   experienceRequired: formData.experienceRequired,
-    //   companyName: formData.companyName,
-    //   qualification: formData.qualification,
-    //   saleryOffered: formData.saleryOffered,
-    //   requirements: formData.requirements,
-    //   responsibilities: formData.responsibilities,
-    // });
-    // console.log("response...", response);
-    // localStorage.removeItem("postJob");
+    await postJobMutation.mutateAsync(previewData);
+    localStorage.removeItem("postJob");
   };
   return (
     <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
@@ -82,9 +67,9 @@ const page = () => {
                 className="inline mr-6"
               />
             </Link>
-            <Link href="/dashboard/adminDashboard/previewJob" onClick={postJob}>
+            <div onClick={postJob}>
               <SuccessModal />
-            </Link>
+            </div>
           </div>
         </div>
       </div>

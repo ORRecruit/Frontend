@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 
 const successModal = () => {
@@ -35,13 +36,15 @@ const successModal = () => {
             </div>
 
             <div className="mt-5 sm:mt-6">
-              <button
-                type="button"
-                className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-                onClick={() => setModalOpen(false)}
-              >
-                Awesome!
-              </button>
+              <Link href="/dashboard/adminDashboard/jobBoard">
+                <button
+                  type="button"
+                  className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                  onClick={() => setModalOpen(false)}
+                >
+                  Awesome!
+                </button>
+              </Link>
             </div>
           </div>
         </div>
