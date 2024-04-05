@@ -45,7 +45,8 @@ const page = () => {
         });
         console.log(response);
         if (response) {
-          localStorage.removeItem("candidateInfo");
+          localStorage.setItem("candidateId", response?.profile?.userId);
+          // localStorage.removeItem("candidateInfo");
           router.push("/dashboard/talentDashboard/overview");
         }
       }
