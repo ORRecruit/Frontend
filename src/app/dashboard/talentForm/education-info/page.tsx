@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 
 const page = () => {
   const [formData, setFormData] = useState({
-    school: "",
-    degree: "",
+    school: "harvard",
+    degree: "Matric",
     fieldOfStudy: "",
-    startYear: "",
-    endYear: "",
+    startYear: "2024-04-04",
+    endYear: "2024-04-04",
     description: "",
   });
 
@@ -27,6 +27,7 @@ const page = () => {
     e.preventDefault();
     const candidateInfo = localStorage.getItem("candidateInfo");
 
+    console.log(formData);
     if (candidateInfo !== null) {
       const data = JSON.parse(candidateInfo);
       data.educations = [
@@ -60,7 +61,7 @@ const page = () => {
                 <div className="grid sm:grid-cols-2">
                   <div className="w-[96%]">
                     <label className="block text-sm font-medium text-gray-900 dark:text-gray-400 mb-2">
-                      Degree
+                      Degree*
                     </label>
                     <select
                       id="countries"
@@ -69,16 +70,16 @@ const page = () => {
                       value={formData.degree}
                       onChange={handleChange}
                     >
-                      <option>Matric</option>
-                      <option value="US">Intermediate</option>
-                      <option value="CA">BS - Bachlors</option>
-                      <option value="FR">MS - Masters</option>
-                      <option value="DE">PhD - Doctorate</option>
+                      <option value="Matric">Matric</option>
+                      <option value="Intermediate">Intermediate</option>
+                      <option value="BS - Bachlors">BS - Bachlors</option>
+                      <option value="MS - Masters">MS - Masters</option>
+                      <option value="PhD - Doctorate">PhD - Doctorate</option>
                     </select>
                   </div>
                   <div className="w-[96%]">
                     <label className="block text-sm font-medium text-gray-900 dark:text-gray-400 mb-2">
-                      School
+                      School*
                     </label>
                     <select
                       id="countries"
@@ -87,11 +88,11 @@ const page = () => {
                       value={formData.school}
                       onChange={handleChange}
                     >
-                      <option>Any School</option>
-                      <option value="US">Any School</option>
-                      <option value="CA">Any School</option>
-                      <option value="FR">Any School</option>
-                      <option value="DE">Any School</option>
+                      <option value="roots millennium">roots millennium</option>
+                      <option value="becan house">becan house</option>
+                      <option value="harvard">becan house</option>
+                      <option value="oxford">oxford</option>
+                      <option value="derby">derby</option>
                     </select>
                   </div>
                 </div>
@@ -99,7 +100,7 @@ const page = () => {
                 <div date-rangepicker="true" className="grid sm:grid-cols-2">
                   <div className="relative w-[96%]">
                     <label className="block text-sm font-medium text-gray-900 dark:text-gray-400 mb-2">
-                      From
+                      From*
                     </label>
                     <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"></div>
                     <input
@@ -113,7 +114,7 @@ const page = () => {
                   </div>
                   <div className="relative w-[96%]">
                     <label className="block text-sm font-medium text-gray-900 dark:text-gray-400 mb-2">
-                      Till
+                      Till*
                     </label>
                     <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"></div>
                     <input
@@ -129,7 +130,7 @@ const page = () => {
 
                 <div className="w-[100%]">
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Details
+                    Details*
                   </label>
                   <input
                     type="text"
