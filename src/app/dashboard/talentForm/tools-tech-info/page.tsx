@@ -5,8 +5,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const page = () => {
-  const [skills, setSkills] = useState([]);
-  const [tools, setTools] = useState([]);
+  const [skills, setSkills] = useState("Software Engineering");
+  const [tools, setTools] = useState("Front end development");
 
   const handleSkills = (e: any) => {
     e.preventDefault();
@@ -22,6 +22,7 @@ const page = () => {
   const submitForm = (e: any) => {
     e.preventDefault();
     const candidateInfo = localStorage.getItem("candidateInfo");
+    console.log(skills, tools);
 
     if (candidateInfo !== null) {
       const data = JSON.parse(candidateInfo);
@@ -55,11 +56,13 @@ const page = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     onChange={handleSkills}
                   >
-                    <option>IT Industry</option>
-                    <option value="ITIndustry">IT Industry</option>
-                    <option value="ITIndustry">IT Industry</option>
-                    <option value="ITIndustry">IT Industry</option>
-                    <option value="ITIndustry">IT Industry</option>
+                    <option value="Software Engineering">
+                      Software Engineering
+                    </option>
+                    <option value="IT Industry">IT Industry</option>
+                    <option value="Problem Solving">Problem Solving</option>
+                    <option value="Creativity">Creativity</option>
+                    <option value="Leadership">Leadership</option>
                   </select>
                 </div>
                 <div className="w-[100%]">
@@ -71,11 +74,13 @@ const page = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     onChange={handleTools}
                   >
-                    <option>IT Industry</option>
-                    <option value="medical">Medical Industry</option>
-                    <option value="agriculture">Agriculture Industry</option>
-                    <option value="space">Space Industry</option>
-                    <option value="civil">Mechanical Industry</option>
+                    <option value="Front end development">
+                      Front end development
+                    </option>
+                    <option value="react js">react js</option>
+                    <option value="Angular">Angular</option>
+                    <option value="node js">node js</option>
+                    <option value="docker">docker</option>
                   </select>
                 </div>
               </div>

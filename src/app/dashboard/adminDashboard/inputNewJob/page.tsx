@@ -7,17 +7,18 @@ import { useRouter } from "next/navigation";
 const page = () => {
   const router = useRouter();
 
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     location: "",
     type: "",
-    industry: "",
+    industry: "Information Technology",
     skillsRequired: "",
-    experienceRequired: "",
+    experienceRequired: "4",
     companyName: "",
-    qualification: "",
-    saleryOffered: "",
+    qualification: "Middle",
+    saleryOffered: "550",
     requirements: "",
     responsibilities: "",
   });
@@ -34,6 +35,8 @@ const page = () => {
   const handleSubmit = async (e: any) => {
     e?.preventDefault();
 
+    console.log("formData", formData);
+
     if (
       !formData.title ||
       !formData.description ||
@@ -48,9 +51,10 @@ const page = () => {
       !formData.requirements ||
       !formData.responsibilities
     ) {
+      setErrorMessage("Please provide all details to post the job!");
       return;
     }
-
+    setErrorMessage("");
     localStorage.setItem("postJob", JSON.stringify(formData));
     router.push("/dashboard/adminDashboard/previewJob");
   };
@@ -69,6 +73,11 @@ const page = () => {
               />
             </Link>
           </div>
+          {errorMessage?.length ? (
+            <p className="text-center text-red-500">{errorMessage}</p>
+          ) : (
+            ""
+          )}
           <div className="absolute right-2 top-5">
             <button
               onClick={handleSubmit}
@@ -94,7 +103,7 @@ const page = () => {
           <div className="flex justify-between w-[80%] sm:w-[60%]">
             <div className="w-[48%]">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Company Name
+                Company Name*
               </label>
               <input
                 type="text"
@@ -104,11 +113,12 @@ const page = () => {
                 placeholder="Input text"
                 value={formData.companyName}
                 onChange={handleChange}
+                required={true}
               />
             </div>
             <div className="w-[48%]">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Enter Your Location
+                Enter Your Location*
               </label>
               <input
                 type="text"
@@ -118,6 +128,7 @@ const page = () => {
                 placeholder="logo.png"
                 value={formData.location}
                 onChange={handleChange}
+                required={true}
               />
             </div>
           </div>
@@ -127,7 +138,7 @@ const page = () => {
           <div className="flex justify-between w-[98%] sm:w-[90%]">
             <div className="w-[32%]">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Job Title
+                Job Title*
               </label>
               <input
                 type="text"
@@ -137,11 +148,12 @@ const page = () => {
                 placeholder="Input text"
                 value={formData.title}
                 onChange={handleChange}
+                required={true}
               />
             </div>
             <div className="w-[32%]">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Industry
+                Industry*
               </label>
               <select
                 id="industry"
@@ -151,19 +163,19 @@ const page = () => {
                 onChange={handleChange}
               >
                 <option>Input Text</option>
-                <option value="informationTechnology">
+                <option value="Information Technology">
                   Information Technology
                 </option>
-                <option value="healthcare">Healthcare</option>
-                <option value="financeAndBanking">Finance and Banking</option>
-                <option value="engineering">Engineering</option>
-                <option value="education">Education</option>
-                <option value="retailAndSale">Retail and Sales</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Finance and Banking">Finance and Banking</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Education">Education</option>
+                <option value="Retail and Sales">Retail and Sales</option>
               </select>
             </div>
             <div className="w-[32%]">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Req. Qualification
+                Req. Qualification*
               </label>
               <select
                 id="category"
@@ -172,18 +184,17 @@ const page = () => {
                 value={formData.qualification}
                 onChange={handleChange}
               >
-                <option>Input Text</option>
-                <option value="middle">Middle</option>
-                <option value="college">College</option>
-                <option value="bachelor">Bachelor</option>
-                <option value="master">Master</option>
-                <option value="phd">Ph.D</option>
+                <option value="Middle">Middle</option>
+                <option value="College">College</option>
+                <option value="Bachelor">Bachelor</option>
+                <option value="Master">Master</option>
+                <option value="Ph.D">Ph.D</option>
               </select>
             </div>
           </div>
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
-          <h1 className="text-lg font-bold pb-2">Skills Required</h1>
+          <h1 className="text-lg font-bold pb-2">Skills Required*</h1>
           <div className="mb-2 w-[90%]">
             <input
               type="text"
@@ -192,11 +203,12 @@ const page = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
               value={formData.skillsRequired}
               onChange={handleChange}
+              required={true}
             />
           </div>
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
-          <h1 className="text-lg font-bold pb-2">Experience</h1>
+          <h1 className="text-lg font-bold pb-2">Experience*</h1>
           <div className="mb-2 w-[90%]">
             <div className="relative mb-6">
               <input
@@ -225,7 +237,7 @@ const page = () => {
           </div>
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
-          <h1 className="text-lg font-bold pb-2">Salary Offered (Monthly)</h1>
+          <h1 className="text-lg font-bold pb-2">Salary Offered (Monthly)*</h1>
           <div className="mb-2 w-[90%]">
             <div className="relative mb-6">
               <input
@@ -254,7 +266,7 @@ const page = () => {
           </div>
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
-          <h1 className="text-lg font-bold pb-2">Work Environment</h1>
+          <h1 className="text-lg font-bold pb-2">Work Environment*</h1>
 
           <div className="flex">
             <div className="flex me-4 mr-16">
@@ -265,6 +277,7 @@ const page = () => {
                 name="type"
                 value="Hybrid"
                 onChange={handleChange}
+                required={true}
               />
               <div>
                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -314,7 +327,7 @@ const page = () => {
           </div>
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
-          <h1 className="text-lg font-bold pb-2">Description</h1>
+          <h1 className="text-lg font-bold pb-2">Description*</h1>
           <div className="mb-2 w-[90%]">
             <textarea
               rows={4}
@@ -334,7 +347,7 @@ const page = () => {
           <div className="flex justify-between w-[80%] sm:w-[90%]">
             <div className="w-[48%]">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Requirements
+                Requirements*
               </label>
               <textarea
                 id="brand"
@@ -343,11 +356,12 @@ const page = () => {
                 value={formData.requirements}
                 onChange={handleChange}
                 name="requirements"
+                required={true}
               />
             </div>
             <div className="w-[48%]">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Responsibilities
+                Responsibilities*
               </label>
               <textarea
                 name="responsibilities"
@@ -356,6 +370,7 @@ const page = () => {
                 placeholder="Input Text"
                 value={formData.responsibilities}
                 onChange={handleChange}
+                required={true}
               />
             </div>
           </div>

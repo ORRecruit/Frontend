@@ -67,9 +67,9 @@ const page = () => {
                 className="inline mr-6"
               />
             </Link>
-            <div onClick={postJob}>
-              <SuccessModal />
-            </div>
+            {/* <div onClick={postJob}> */}
+            <SuccessModal />
+            {/* </div> */}
           </div>
         </div>
       </div>

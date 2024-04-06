@@ -8,8 +8,8 @@ const page = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    country: "",
-    sector: "",
+    country: "Canada",
+    sector: "IT Industry",
     about: "",
   });
 
@@ -26,10 +26,17 @@ const page = () => {
   const submitForm = (e: any) => {
     e.preventDefault();
     console.log("formData....", formData);
-    if (formData.firstName) {
-      localStorage.setItem("candidateInfo", JSON.stringify(formData));
-      router.push("/dashboard/talentForm/tools-tech-info");
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.country ||
+      !formData.sector ||
+      !formData.about
+    ) {
+      return;
     }
+    localStorage.setItem("candidateInfo", JSON.stringify(formData));
+    router.push("/dashboard/talentForm/tools-tech-info");
   };
   return (
     <>
@@ -47,7 +54,7 @@ const page = () => {
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div>
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                      First Name
+                      First Name*
                     </label>
                     <input
                       type="text"
@@ -62,7 +69,7 @@ const page = () => {
                   </div>
                   <div>
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                      Last Name
+                      Last Name*
                     </label>
                     <input
                       type="text"
@@ -78,7 +85,7 @@ const page = () => {
                 </div>
                 <div className="w-[100%]">
                   <label className="block text-sm font-medium text-gray-900 dark:text-gray-400">
-                    Country
+                    Country*
                   </label>
                   <select
                     id="countries"
@@ -96,7 +103,7 @@ const page = () => {
                 </div>
                 <div className="w-[100%]">
                   <label className="block text-sm font-medium text-gray-900 dark:text-gray-400">
-                    Sector
+                    Sector*
                   </label>
                   <select
                     id="countries"
@@ -114,7 +121,7 @@ const page = () => {
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    About You
+                    About You*
                   </label>
                   <input
                     type="text"
