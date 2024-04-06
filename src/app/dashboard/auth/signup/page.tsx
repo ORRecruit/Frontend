@@ -4,10 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "@/api/auth/register";
-
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 const page = () => {
+  const router = useRouter();
   const signUpMutation = useMutation({
     mutationFn: (body: any) => registerUser(email, password, role, full_name),
+    onSuccess: (data) => { 
+      toast.success(data.message)
+      router.push("/dashboard/auth/signin");
+    },
+    onError: (error) =>{ toast.error(error.message)},
   });
 
   const [email, setEmail] = useState("");
@@ -16,7 +23,11 @@ const page = () => {
   const [full_name, setFullName] = useState("");
 
   const handleSubmit = async (e: any) => {
-    e?.preventDefault();
+    e.preventDefault();
+    if (!email.trim() || !password.trim() || !role.trim() || !full_name.trim()) {
+      toast.error("Please fill in all fields");
+      return;
+    }
     if (email && password && role) {
       const response = await signUpMutation.mutateAsync({
         email,
