@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 
 const page = () => {
   const [formData, setFormData] = useState({
-    companyName: "",
-    role: "",
+    companyName: "ABC Company",
+    role: "Software Engineer",
     startDate: "",
     endDate: "",
     description: "",
@@ -68,11 +68,11 @@ const page = () => {
                       value={formData.companyName}
                       onChange={handleChange}
                     >
-                      <option>ABC Company</option>
-                      <option value="US">DEF Company</option>
-                      <option value="CA">GHI Company</option>
-                      <option value="FR">JKL Company</option>
-                      <option value="DE">MNO Company</option>
+                      <option value="ABC Company">ABC Company</option>
+                      <option value="DEF Company">DEF Company</option>
+                      <option value="GHI Company">GHI Company</option>
+                      <option value="JKL Company">JKL Company</option>
+                      <option value="MNO Company">MNO Company</option>
                     </select>
                   </div>
                   <div className="w-[96%]">
@@ -86,11 +86,13 @@ const page = () => {
                       value={formData.role}
                       onChange={handleChange}
                     >
-                      <option>Software Engineer</option>
-                      <option value="US">Doctor</option>
-                      <option value="CA">AI Engineer</option>
-                      <option value="FR">Database Manager</option>
-                      <option value="DE">CTO</option>
+                      <option value="Software Engineer">
+                        Software Engineer
+                      </option>
+                      <option value="Doctor">Doctor</option>
+                      <option value="AI Engineer">AI Engineer</option>
+                      <option value="Database Manager">Database Manager</option>
+                      <option value="CTO">CTO</option>
                     </select>
                   </div>
                 </div>
