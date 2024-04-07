@@ -26,8 +26,8 @@ const page = () => {
         email,
         password,
       });
-      console.log("response", response);
-      if (response) {
+      console.log("response here >>>>", response);
+      if (response.success === true) {
         setErrorMessage("");
         console.log("response....", response);
         toast.success(response?.message);
@@ -41,7 +41,7 @@ const page = () => {
         } else if (response.User.role == "Admin") {
           router.push("/dashboard/adminDashboard");
         }
-      } else {
+      } else if(response.success === false) {
         console.log("response undef");
         setErrorMessage("Please provide correct information");
         setTimeout(() => {

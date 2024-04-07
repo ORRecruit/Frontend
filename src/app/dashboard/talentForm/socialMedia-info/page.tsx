@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { createProfile } from "@/api/talent/profileInfo";
 import CustomLoader from "@/components/customLoader";
-
+import toast from 'react-hot-toast';
 const page = () => {
   const [formData, setFormData] = useState({
     website: "https://",
@@ -45,10 +45,16 @@ const page = () => {
           desiredRoles: ["Full Stack"],
         });
         console.log(response);
-        if (response) {
+        if (response.success === true) {
+          console.log("res here>>>",response);
+          toast.success(response?.message);
           localStorage.setItem("candidateId", response?.profile?.userId);
           // localStorage.removeItem("candidateInfo");
           router.push("/dashboard/talentDashboard/overview");
+        }
+        else if(response.success === false){
+         toast.error(response?.message);
+         router.push("/dashboard/auth/signin");
         }
       }
     }

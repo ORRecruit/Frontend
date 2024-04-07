@@ -22,8 +22,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <QueryClientProvider client={queryClient}>
-          <Toaster toastOptions={{ duration: 4000 }} />
           {children}
+          <Toaster toastOptions={{ duration: 4000, style:{zIndex:999999} }} />
         </QueryClientProvider>
       </body>
     </html>
