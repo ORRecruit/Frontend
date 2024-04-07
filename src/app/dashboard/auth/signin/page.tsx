@@ -36,7 +36,7 @@ const page = () => {
         }, 3000);
         localStorage.setItem("authToken", response.token);
         if (response.User?.role == "Candidate") {
-          if(response?.User?.isProfile === true){
+          if(response?.User?.isProfile === true){   // This check add newly
             router.replace("/dashboard/talentDashboard");
           }
           else{
