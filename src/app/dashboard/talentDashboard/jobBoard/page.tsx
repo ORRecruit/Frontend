@@ -7,6 +7,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { applyJob as applyJobApi } from "@/api/talent/applyJob";
 
 const page = () => {
+  const [appliedRes, setAppliedRes] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const router = useRouter();
   const [selectedValue, setSelectedValue] = useState<any>({});
   const { data, error, isLoading, refetch } = useQuery({
@@ -47,12 +49,28 @@ const page = () => {
 
   const applyJob = async (jobId: any) => {
     const response = await applyJobMutation.mutateAsync(jobId);
+    if (response) {
+      console.log("response", response);
+      setAppliedRes(true);
+      setSuccessMessage(response.message);
+      setTimeout(() => {
+        setAppliedRes(false);
+        setSuccessMessage("");
+      }, 2000);
+    }
   };
 
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
       <FilterHeaderJobBoard />
-      <div className="max-w-screen-xl sm:flex items-start justify-between mx-auto p-4">
+      <div className="max-w-screen-xl sm:flex items-start justify-between mx-auto p-4 relative">
+        {appliedRes ? (
+          <p className="absolute top-0 right-[40%] w-[330px] px-8 py-2 rounded-2xl text-base shadow-lg z-10 mt-2 text-black bg-white">
+            {successMessage}
+          </p>
+        ) : (
+          ""
+        )}
         <div className="sm:w-[29%] h-[350px] sm:h-auto overflow-auto mt-12 max-h-[65rem]">
           {data?.jobs?.map((item: any, index: any) => {
             return (
@@ -93,7 +111,7 @@ const page = () => {
             );
           })}
         </div>
-        <div className="p-8 bg-white rounded-lg mt-4 sm:w-[68%]">
+        <div className="p-8 bg-white rounded-lg mt-8 sm:w-[68%]">
           <div className="mb-5">
             <h1 className="text-3xl font-bold">{selectedValue?.title}</h1>
             <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
