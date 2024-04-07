@@ -1,12 +1,15 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getAllJobs } from "@/api/jobs/getAllJobs";
 import { useQuery } from "@tanstack/react-query";
 import CustomLoader from "@/components/customLoader";
 
 const jobList = () => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
+
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all naukrian"],
     queryFn: () => getAllJobs(),
@@ -15,6 +18,19 @@ const jobList = () => {
   useEffect(() => {
     console.log("data....", data?.jobs);
   }, [data]);
+
+  const handleRowClick = (item: any) => {
+    setSelectedItem(item);
+    setIsDialogOpen(!isDialogOpen);
+  };
+
+  console.log("askldfjaklsdfj", selectedItem);
+
+  const closeDialog = () => {
+    setIsDialogOpen(!isDialogOpen);
+    console.log("cloase", isDialogOpen);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -361,7 +377,8 @@ const jobList = () => {
                         return (
                           <tr
                             key={index}
-                            className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
+                            onClick={() => handleRowClick(item)}
+                            className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                           >
                             <td className="px-4 py-2 w-4">
                               <div className="flex items-center">
@@ -452,6 +469,65 @@ const jobList = () => {
                                 </div>
                               </div>
                             </td>
+                            {isDialogOpen && (
+                              <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                                <div className="relative bg-white p-5 rounded-lg max-w-2xl w-full border border-black-400">
+                                  <div className="bg-white rounded-lg">
+                                    <div className="mb-5">
+                                      <div className="flex justify-between">
+                                        <h1 className="text-3xl font-bold">
+                                          {selectedItem?.title}
+                                        </h1>
+                                      </div>
+                                      <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
+                                        {selectedItem?.type}
+                                      </span>
+                                    </div>
+
+                                    <div className="mb-5">
+                                      <p className="text-gray-600">
+                                        {selectedItem?.location}
+                                      </p>
+                                      <p className="text-gray-600">
+                                        {selectedItem?.type}
+                                      </p>
+                                      <p className="font-semibold text-gray-900">
+                                        {selectedItem?.saleryOffered}k
+                                      </p>
+                                    </div>
+
+                                    <h2 className="text-lg font-semibold mb-2">
+                                      Job Description
+                                    </h2>
+                                    <div className="text-gray-700 mb-2">
+                                      <p>{selectedItem?.description}</p>
+                                      <br />
+                                    </div>
+
+                                    <h3 className="text-lg font-semibold mb-2">
+                                      Responsibilities
+                                    </h3>
+                                    <ul className="list-disc list-inside text-gray-700 mb-2">
+                                      <p>{selectedItem?.responsibilities}</p>
+                                    </ul>
+                                    <div className="text-gray-700 mb-2">
+                                      <h3 className="text-lg font-semibold mb-2">
+                                        Requirements
+                                      </h3>
+                                      <ul className="list-disc list-inside text-gray-700 mb-2">
+                                        {selectedItem?.requirements}
+                                      </ul>
+                                    </div>
+                                  </div>
+                                  <button
+                                    onClick={closeDialog} // This closes the modal when clicked
+                                    className="absolute top-0 right-0 p-8 text-lg text-black bg-transparent text-2xl"
+                                  >
+                                    &times;{" "}
+                                  </button>
+                                </div>
+                              </div>
+                            )}
                           </tr>
                         );
                       })}
