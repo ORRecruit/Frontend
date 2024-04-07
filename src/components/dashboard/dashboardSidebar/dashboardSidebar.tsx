@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface sidebarInterface {
   sidebarDetails: any[];
@@ -10,10 +11,16 @@ interface sidebarInterface {
 const dashboardSidebar: React.FC<sidebarInterface> = ({
   sidebarDetails = [],
 }) => {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("authToken");
+    router.push("/dashboard/auth/signin");
   };
 
   return (
@@ -49,7 +56,7 @@ const dashboardSidebar: React.FC<sidebarInterface> = ({
         } sm:translate-x-0`}
         aria-label="Sidenav"
       >
-        <div className="overflow-y-auto py-5 px-3 h-full bg-white">
+        <div className="relative overflow-y-auto py-5 px-3 h-full bg-white">
           <ul className="space-y-2">
             {sidebarDetails.map((item: any, index: any) => {
               return (
@@ -93,6 +100,12 @@ const dashboardSidebar: React.FC<sidebarInterface> = ({
               </a>
             </li>
           </ul>
+          <div
+            onClick={logout}
+            className="absolute cursor-pointer bottom-5 w-[90%] flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+          >
+            <span className="ml-3">Logout</span>
+          </div>
         </div>
       </aside>
     </div>
