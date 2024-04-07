@@ -13,7 +13,9 @@ const page = () => {
   const signUpMutation = useMutation({
     mutationFn: (body: any) => registerUser(email, password, role, full_name),
     onSuccess: (data) => {
-      toast.success("Registration successful, Please check your email to verify your account.");
+      toast.success(
+        "Registration successful, Please check your email to verify your account."
+      );
       // router.push("/dashboard/auth/signin");
     },
     onError: (error) => {
@@ -21,6 +23,7 @@ const page = () => {
     },
   });
 
+  const [verifyEmail, setVerifyEmail] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("Candidate");
@@ -48,7 +51,13 @@ const page = () => {
         console.log("response...", response);
         if (response?.message) {
           setErrorMessage("");
-          toast.success("Registration successful, Please check your email to verify your account.");
+          setVerifyEmail(true);
+          setTimeout(() => {
+            setVerifyEmail(false);
+          }, 3000);
+          // toast.success(
+          //   "Registration successful, Please check your email to verify your account."
+          // );
           // router.push("/dashboard/auth/signin");
         }
       } catch (error) {
@@ -82,6 +91,14 @@ const page = () => {
           {errorMessage?.length ? (
             <p className="absolute top-5 px-8 py-2 rounded-2xl shadow-lg text-white bg-red-600">
               {errorMessage}
+            </p>
+          ) : (
+            ""
+          )}
+          {verifyEmail ? (
+            <p className="absolute top-5 px-8 py-2 rounded-2xl shadow-lg mt-4 bg-red-600 text-black bg-white">
+              Registration successful, Please check your email to verify your
+              account.
             </p>
           ) : (
             ""
