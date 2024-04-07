@@ -192,7 +192,7 @@ const page = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <p>Website*</p>
+                      <p>Website</p>
                     </div>
                     <input
                       type="text"
@@ -221,7 +221,7 @@ const page = () => {
                         />
                         <path d="M7.2 8.809H4V19.5h3.2V8.809Z" />
                       </svg>
-                      <p>Linked In*</p>
+                      <p>Linked In</p>
                     </div>
 
                     <input
@@ -250,7 +250,7 @@ const page = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <p>GitHub*</p>
+                      <p>GitHub</p>
                     </div>
 
                     <input
@@ -279,7 +279,7 @@ const page = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <p>Twitter/X*</p>
+                      <p>Twitter/X</p>
                     </div>
 
                     <input
