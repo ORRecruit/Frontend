@@ -2,10 +2,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const dashboardNavbar = () => {
   const [notification, setNotification] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
+  const router = useRouter();
+
+  const logout = () => {
+    localStorage.removeItem("authToken");
+    router.push("/dashboard/auth/signin");
+  };
 
   return (
     <header className="antialiased">
@@ -404,12 +411,12 @@ const dashboardNavbar = () => {
                   aria-labelledby="dropdown"
                 >
                   <li>
-                    <Link
-                      href="#"
+                    <div
+                      onClick={logout}
                       className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
                       Sign out
-                    </Link>
+                    </div>
                   </li>
                 </ul>
               </div>
