@@ -1,9 +1,61 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { postJob as postJobApi } from "@/api/jobs/postJob";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
+interface PreviewData {
+  title: string;
+  type: string;
+  companyName: string;
+  saleryOffered: string;
+  description: string;
+  responsibilities: string;
+  requirements: string;
+}
 
 const successModal = () => {
+  const router = useRouter();
+  const [previewData, setPreviewData] = useState<PreviewData | null>(null);
+  const postJobMutation = useMutation({
+    mutationFn: (data: any) => postJobApi(data),
+    onSuccess: (data) => {
+      // toast.success(data?.message)
+      console.log("data", data);
+    },
+    onError: (error) => {
+      console.log("error", error);
+    },
+  });
+
+  useEffect(() => {
+    const postJob = localStorage.getItem("postJob");
+    if (postJob !== null) {
+      const data = JSON.parse(postJob);
+      setPreviewData(data);
+    }
+  }, []);
+
+  const postJob = async (e: any) => {
+    if (!previewData) {
+      return;
+    }
+
+    console.log("previewDAta", previewData);
+    const response = await postJobMutation.mutateAsync(previewData);
+    console.log("response....", response);
+    if (response) {
+      toast.success(response?.message);
+      if (response?.job) {
+        router.push("/dashboard/adminDashboard/jobBoard");
+        localStorage.removeItem("postJob");
+      }
+    }
+  };
+
   const [isModalOpen, setModalOpen] = useState(false);
   return (
     <div>
@@ -27,24 +79,23 @@ const successModal = () => {
                 />
               </div>
               <h3 className="text-2xl my-4 font-bold leading-6 font-medium text-gray-900">
-                Job Posted
+                Job Post
               </h3>
               <p className="text-sm leading-5 text-gray-500">
-                Your job has been posted successfully. You can view this on your
-                posted jobs tab.
+                Are you sure want to upload the Job?
               </p>
             </div>
 
             <div className="mt-5 sm:mt-6">
-              <Link href="/dashboard/adminDashboard/jobBoard">
-                <button
-                  type="button"
-                  className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-                  onClick={() => setModalOpen(false)}
-                >
-                  Awesome!
-                </button>
-              </Link>
+              {/* <Link href="/dashboard/adminDashboard/jobBoard"> */}
+              <button
+                type="button"
+                className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                onClick={postJob}
+              >
+                Post
+              </button>
+              {/* </Link> */}
             </div>
           </div>
         </div>
