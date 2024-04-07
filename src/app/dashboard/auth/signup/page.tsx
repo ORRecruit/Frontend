@@ -13,8 +13,8 @@ const page = () => {
   const signUpMutation = useMutation({
     mutationFn: (body: any) => registerUser(email, password, role, full_name),
     onSuccess: (data) => {
-      toast.success(data.message);
-      router.push("/dashboard/auth/signin");
+      toast.success("Registration successful, Please check your email to verify your account.");
+      // router.push("/dashboard/auth/signin");
     },
     onError: (error) => {
       toast.error(error.message);
@@ -48,7 +48,8 @@ const page = () => {
         console.log("response...", response);
         if (response?.message) {
           setErrorMessage("");
-          router.push("/dashboard/auth/signin");
+          toast.success("Registration successful, Please check your email to verify your account.");
+          // router.push("/dashboard/auth/signin");
         }
       } catch (error) {
         console.log("error", error);
