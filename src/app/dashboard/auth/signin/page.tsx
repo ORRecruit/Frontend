@@ -26,7 +26,6 @@ const page = () => {
         email,
         password,
       });
-      console.log("response here >>>>", response);
       if (response.success === true) {
         setErrorMessage("");
         console.log("response....", response);
@@ -37,7 +36,12 @@ const page = () => {
         }, 3000);
         localStorage.setItem("authToken", response.token);
         if (response.User?.role == "Candidate") {
+          if(response?.User?.isProfile === true){   // This check add newly
+            router.replace("/dashboard/talentDashboard");
+          }
+          else{
           router.push("/dashboard/talentForm/resume-upload");
+          }
         } else if (response.User.role == "Admin") {
           router.push("/dashboard/adminDashboard");
         }
