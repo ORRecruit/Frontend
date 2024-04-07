@@ -17,6 +17,7 @@ const page = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
 
   const handleSubmit = async (e: any) => {
     e?.preventDefault();
@@ -30,6 +31,10 @@ const page = () => {
         setErrorMessage("");
         console.log("response....", response);
         toast.success(response?.message);
+        setResponseMessage(response?.message);
+        setTimeout(() => {
+          setResponseMessage("");
+        }, 3000);
         localStorage.setItem("authToken", response.token);
         if (response.User?.role == "Candidate") {
           router.push("/dashboard/talentForm/resume-upload");
@@ -62,6 +67,13 @@ const page = () => {
           {errorMessage?.length ? (
             <p className="absolute top-5 px-8 py-2 rounded-2xl shadow-lg text-white bg-red-600">
               {errorMessage}
+            </p>
+          ) : (
+            ""
+          )}
+          {responseMessage?.length ? (
+            <p className="absolute top-5 px-8 py-2 rounded-2xl shadow-lg text-black text-base bg-gray-100">
+              {responseMessage}
             </p>
           ) : (
             ""
