@@ -52,9 +52,12 @@ const page = () => {
         if (response?.message) {
           setErrorMessage("");
           setVerifyEmail(true);
+          setEmail("");
+          setPassword("");
+          setFullName("");
           setTimeout(() => {
             setVerifyEmail(false);
-          }, 3000);
+          }, 5000);
           // toast.success(
           //   "Registration successful, Please check your email to verify your account."
           // );
@@ -96,7 +99,7 @@ const page = () => {
             ""
           )}
           {verifyEmail ? (
-            <p className="absolute top-5 px-8 py-2 rounded-2xl shadow-lg mt-4 bg-red-600 text-black bg-white">
+            <p className="absolute top-5 px-8 py-2 rounded-2xl shadow-lg mt-4 text-white bg-green-500">
               Registration successful, Please check your email to verify your
               account.
             </p>
