@@ -26,11 +26,11 @@ const page = () => {
   });
 
   useEffect(() => {
-    const candidateId = localStorage.getItem("candidateId");
-    if (!candidateId) {
-      router.push("/dashboard/talentForm/resume-upload");
-      return;
-    }
+    // const candidateId = localStorage.getItem("candidateId");
+    // if (!candidateId) {
+    //   router.push("/dashboard/talentForm/resume-upload");
+    //   return;
+    // }
     console.log("data....", data?.jobs);
     if (params) {
       const queryJobData = data?.jobs?.filter((item: any) => item.id == params);
