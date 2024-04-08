@@ -377,7 +377,6 @@ const jobList = () => {
                         return (
                           <tr
                             key={index}
-                            onClick={() => handleRowClick(item)}
                             className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                           >
                             <td className="px-4 py-2 w-4">
@@ -393,6 +392,7 @@ const jobList = () => {
                             <th
                               scope="row"
                               className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
+                              onClick={() => handleRowClick(item)}
                             >
                               {/* <img
                             src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/avatar-10.png"
@@ -401,21 +401,36 @@ const jobList = () => {
                           /> */}
                               {item.title}
                             </th>
-                            <td className="px-4 py-2 whitespace-nowrap">
+                            <td
+                              onClick={() => handleRowClick(item)}
+                              className="px-4 py-2 whitespace-nowrap"
+                            >
                               <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
                                 {item.companyName}
                               </span>
                             </td>
-                            <td className="px-4 py-2 whitespace-nowrap">
+                            <td
+                              onClick={() => handleRowClick(item)}
+                              className="px-4 py-2 whitespace-nowrap"
+                            >
                               <span>{item.experienceRequired} Yrs</span>
                             </td>
-                            <td className="px-4 py-2 font-medium whitespace-nowrap">
+                            <td
+                              onClick={() => handleRowClick(item)}
+                              className="px-4 py-2 font-medium whitespace-nowrap"
+                            >
                               <span>{item.type}</span>
                             </td>
-                            <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <td
+                              onClick={() => handleRowClick(item)}
+                              className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                            >
                               <span>13/02/2024</span>
                             </td>
-                            <td className="px-4 py-2 text-gray-900 whitespace-nowrap dark:text-white">
+                            <td
+                              onClick={() => handleRowClick(item)}
+                              className="px-4 py-2 text-gray-900 whitespace-nowrap dark:text-white"
+                            >
                               <span>{item.jobStatus}</span>
                             </td>
                             <td className="px-4 py-2">
