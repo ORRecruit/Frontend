@@ -5,10 +5,21 @@ import React, { useEffect, useState } from "react";
 import { getAllJobs } from "@/api/jobs/getAllJobs";
 import { useQuery } from "@tanstack/react-query";
 import CustomLoader from "@/components/customLoader";
+import { DeleteJob } from "@/api/jobs/deleteJob";
+import { useMutation } from "@tanstack/react-query";
 
 const jobList = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [showOptions, setShowOptions] = useState(false);
+  const [activeOptionsIndex, setActiveOptionsIndex] = useState<number | null>(
+    null
+  );
+  const [deleteDialog, setDeleteDialog] = useState<any>(false);
+
+  const deleteJobMutation = useMutation({
+    mutationFn: (id: any) => DeleteJob(id),
+  });
 
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all naukrian"],
@@ -24,11 +35,28 @@ const jobList = () => {
     setIsDialogOpen(!isDialogOpen);
   };
 
-  console.log("askldfjaklsdfj", selectedItem);
-
   const closeDialog = () => {
     setIsDialogOpen(!isDialogOpen);
     console.log("cloase", isDialogOpen);
+  };
+
+  const toggleShowOptions = (index: number) => {
+    setActiveOptionsIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
+
+  const deleteJob = async (item: any) => {
+    console.log("item...", item);
+    setDeleteDialog(!deleteDialog);
+  };
+
+  const closeDeleteDialog = async (job: any) => {
+    const response = await deleteJobMutation.mutateAsync(job.id);
+    if (response?.success) {
+      console.log("responlse.....", response);
+
+      setDeleteDialog(!deleteDialog);
+      refetch();
+    }
   };
 
   return (
@@ -433,12 +461,16 @@ const jobList = () => {
                             >
                               <span>{item.jobStatus}</span>
                             </td>
-                            <td className="px-4 py-2">
+                            <td className="px-4 py-2 relative">
                               <button
                                 id="-dropdown-button"
                                 type="button"
                                 data-dropdown-toggle="-dropdown"
                                 className="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  toggleShowOptions(index);
+                                }}
                               >
                                 <svg
                                   className="w-5 h-5"
@@ -449,40 +481,21 @@ const jobList = () => {
                                   <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                 </svg>
                               </button>
-                              <div
-                                id="-dropdown"
-                                className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                              >
-                                <ul
-                                  className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                  aria-labelledby="-dropdown-button"
+                              {activeOptionsIndex === index && (
+                                <div
+                                  id="-dropdown"
+                                  className="cursor-pointer z-10 w-44 bg-white rounded divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                                 >
-                                  <li>
-                                    <a
-                                      href="#"
-                                      className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    >
-                                      Show
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a
-                                      href="#"
-                                      className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    >
-                                      Edit
-                                    </a>
-                                  </li>
-                                </ul>
-                                <div className="py-1">
-                                  <a
-                                    href="#"
-                                    className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                  <div
+                                    className="py-1"
+                                    onClick={() => deleteJob(item)}
                                   >
-                                    Delete
-                                  </a>
+                                    <p className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                      Delete
+                                    </p>
+                                  </div>
                                 </div>
-                              </div>
+                              )}
                             </td>
                             {isDialogOpen && (
                               <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
@@ -540,6 +553,25 @@ const jobList = () => {
                                   >
                                     &times;{" "}
                                   </button>
+                                </div>
+                              </div>
+                            )}
+                            {deleteDialog && (
+                              <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                                <div className="relative bg-white p-5 rounded-lg max-w-lg w-full border border-black-400">
+                                  <div className="bg-white rounded-lg flex flex-col items-center">
+                                    <p className="text-gray-600 text-xl mb-4">
+                                      Are You Sure Want To Delete The Job?
+                                    </p>
+                                    <div>
+                                      <button
+                                        onClick={() => closeDeleteDialog(item)}
+                                        className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
+                                      >
+                                        Yes
+                                      </button>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             )}
