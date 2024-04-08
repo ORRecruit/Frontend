@@ -276,12 +276,12 @@ const page = () => {
                     </div>
                     <div className="ml-3 text-sm">
                       <label className="font-light text-gray-500 dark:text-gray-300">
-                        By signing up, you are creating a Sendinblue account,
-                        and you agree to Sendinblue's
+                        By signing up, you're accepting Online Remote Recruiting
                         <Link
                           className="font-medium text-primary-600 dark:text-primary-500 hover:underline"
                           href="#"
                         >
+                          {" "}
                           Terms of Use
                         </Link>{" "}
                         and{" "}

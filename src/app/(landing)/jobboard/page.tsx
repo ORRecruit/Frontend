@@ -28,12 +28,13 @@ const page = () => {
   };
 
   const applyJob = (item: any) => {
-    const candidateId = localStorage.getItem("candidateId");
-    if (candidateId) {
-      router.push(`/dashboard/talentDashboard/jobBoard?jobId=${item?.id}`);
-    } else {
-      alert("please set up your account first to apply for job");
-    }
+    // const candidateId = localStorage.getItem("candidateId");
+    // if (candidateId) {
+    //   router.push(`/dashboard/talentDashboard/jobBoard?jobId=${item?.id}`);
+    // } else {
+    //   alert("please set up your account first to apply for job");
+    // }
+    router.push(`/dashboard/auth/signin`);
   };
 
   return (
