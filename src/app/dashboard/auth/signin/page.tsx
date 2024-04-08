@@ -36,16 +36,16 @@ const page = () => {
         }, 3000);
         localStorage.setItem("authToken", response.token);
         if (response.User?.role == "Candidate") {
-          if(response?.User?.isProfile === true){   // This check add newly
+          if (response?.User?.isProfile === true) {
             router.replace("/dashboard/talentDashboard");
-          }
-          else{
-          router.push("/dashboard/talentForm/resume-upload");
+            localStorage.setItem("candidateId", response?.User?.userId);
+          } else {
+            router.push("/dashboard/talentForm/resume-upload");
           }
         } else if (response.User.role == "Admin") {
           router.push("/dashboard/adminDashboard");
         }
-      } else if(response.success === false) {
+      } else if (response.success === false) {
         console.log("response undef");
         setErrorMessage("Please provide correct information");
         setTimeout(() => {
