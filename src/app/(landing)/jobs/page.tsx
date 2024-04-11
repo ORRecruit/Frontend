@@ -26,7 +26,7 @@ const page = () => {
         href={"/recruiters"}
       />
       <Assessments
-        heading1={`Find jobs that match your career tragetory`}
+        heading1={`Find jobs that match your career trajectory`}
         paragraph1={`Utilize our AI-driven skill assessment tools to gain insights into your strengths and areas for growth. Our platform provides personalized suggestions for skill development, helping you stay competitive and ready for new challenges.`}
         img1={`/assessment-img.svg`}
         buttonText1={`Explore Opportunities`}
