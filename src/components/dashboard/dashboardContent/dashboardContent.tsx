@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface overviewInterface {
@@ -21,12 +22,12 @@ const dashboardContent: React.FC<overviewInterface> = ({ details }) => {
               alt="icon"
               className="mb-4"
             />
-            <a href="#">
+            <Link href="#">
               <p>{item.heading}</p>
               <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
                 {item.rating}
               </h5>
-            </a>
+            </Link>
           </div>
         ))}
       </div>

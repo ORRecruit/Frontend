@@ -1,9 +1,9 @@
 import React from "react";
-import Navbar from "../../../components/landing/navbar/navbar";
-import HeroSection from "../../../components/landing/heroSection/heroSection";
-import Assessments from "../../../components/landing/assessments/assessments";
-import Footer from "../../../components/landing/footer/footer";
-import About from "../../../components/landing/about/about";
+import Navbar from "@/components/landing/navbar/navbar";
+import HeroSection from "@/components/landing/heroSection/heroSection";
+import Assessments from "@/components/landing/assessments/assessments";
+import Footer from "@/components/landing/footer/footer";
+import About from "@/components/landing/about/about";
 import StatsComponent from "@/components/landing/jobs/statsComponent/statsComponent";
 
 const page = () => {

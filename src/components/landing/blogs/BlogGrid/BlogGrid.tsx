@@ -39,7 +39,7 @@ const BlogGrid: React.FC<blogGridInterface> = ({ articles }) => {
                 className="max-w-sm bg-white border border-gray-200 rounded-lg shadow"
               >
                 <Link
-                  href={"/blogs/blogDetails?blogNo=" + (index + 1)}
+                  href={"/blogs/blog-details?blogNo=" + (index + 1)}
                   onClick={() => handleClick(item.image)}
                 >
                   <Image
@@ -54,12 +54,12 @@ const BlogGrid: React.FC<blogGridInterface> = ({ articles }) => {
                   <p className="text-xs mb-2 text-purple-artist rounded-lg w-max px-4 bg-light-gray">
                     Artist
                   </p>
-                  <Link href={"/blogs/blogDetails?blogNo=" + (index + 1)}>
+                  <Link href={"/blogs/blog-details?blogNo=" + (index + 1)}>
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                       {item.title}
                     </h5>
                   </Link>
-                  <Link href={"/blogs/blogDetails?blogNo=" + (index + 1)}>
+                  <Link href={"/blogs/blog-details?blogNo=" + (index + 1)}>
                     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                       {item.description}
                     </p>
