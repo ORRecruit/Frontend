@@ -10,7 +10,7 @@ const page = () => {
           <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
             <div className="p-4 ">
               <div>
-                <Link href="/dashboard/adminDashboard/jobBoard">
+                <Link href="/admin/dashboard/jobBoard">
                   <Image
                     src="/arrowLeft.svg"
                     alt="back-icon"
@@ -20,7 +20,7 @@ const page = () => {
                 </Link>
               </div>
               <div className="absolute right-2 top-5">
-                <Link href="/dashboard/adminDashboard/inputNewJob">
+                <Link href="/admin/dashboard/inputNewJob">
                   <button className="bg-primary-orange text-sm text-white w-40 py-2 rounded-xl hover:shadow-xl">
                     Start Manually
                   </button>

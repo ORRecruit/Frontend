@@ -19,12 +19,12 @@ export default function RootLayout({
     {
       iconUrl: "/adminSidebar1.svg",
       text: "Overview",
-      href: "/dashboard/adminDashboard/overview",
+      href: "/admin/dashboard/overview",
     },
     {
       iconUrl: "/adminSidebar2.svg",
       text: "Job Board",
-      href: "/dashboard/adminDashboard/jobBoard",
+      href: "/admin/dashboard/jobBoard",
     },
     {
       iconUrl: "/adminSidebar3.svg",

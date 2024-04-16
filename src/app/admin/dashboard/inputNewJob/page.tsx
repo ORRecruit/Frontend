@@ -56,7 +56,7 @@ const page = () => {
     }
     setErrorMessage("");
     localStorage.setItem("postJob", JSON.stringify(formData));
-    router.push("/dashboard/adminDashboard/previewJob");
+    router.push("/admin/dashboard/previewJob");
   };
 
   return (
@@ -64,7 +64,7 @@ const page = () => {
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%]">
         <div className="p-4 ">
           <div>
-            <Link href="/dashboard/adminDashboard/newJob">
+            <Link href="/admin/dashboard/newJob">
               <Image
                 src="/arrowLeft.svg"
                 alt="back-icon"

@@ -25,7 +25,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse lg:relative">
-          <Link href="/dashboard/auth/signin">
+          <Link href="/auth/signin">
             <p className="text-base pr-4 cursor-pointer">Log In</p>
           </Link>
           <button

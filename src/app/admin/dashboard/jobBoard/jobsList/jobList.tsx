@@ -288,7 +288,7 @@ const jobList = () => {
                         </div>
                       </div>
                       <div className="absolute right-0">
-                        <Link href="/dashboard/adminDashboard/newJob">
+                        <Link href="/admin/dashboard/newJob">
                           <button className="bg-primary-orange text-sm text-white w-24 sm:w-40 py-2 rounded-xl hover:shadow-xl">
                             Post New Job
                           </button>

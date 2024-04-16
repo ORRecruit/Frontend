@@ -40,7 +40,7 @@ const page = () => {
     {
       iconUrl: "/adminSidebar2.svg",
       text: "Job Board",
-      href: "/dashboard/adminDashboard/jobBoard",
+      href: "/admin/dashboard/jobBoard",
     },
     {
       iconUrl: "/adminSidebar3.svg",

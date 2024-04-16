@@ -43,7 +43,7 @@ const page = () => {
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] pt-4">
         <div className="p-4">
           <div>
-            <Link href="/dashboard/adminDashboard/inputNewJob">
+            <Link href="/admin/dashboard/inputNewJob">
               <Image
                 src="/arrowLeft.svg"
                 alt="back-icon"
@@ -53,12 +53,12 @@ const page = () => {
             </Link>
           </div>
           <div className="absolute right-2 top-6 flex">
-            <Link href="/dashboard/adminDashboard/previewJob">
+            <Link href="/admin/dashboard/previewJob">
               <button className="text-sm border border-gray-500 mr-6 text-black w-20 py-2 rounded-xl hover:shadow-xl">
                 Edit
               </button>
             </Link>
-            <Link href="/dashboard/adminDashboard/previewJob">
+            <Link href="/admin/dashboard/previewJob">
               <Image
                 src="/forwardIcon.svg"
                 alt="back-icon"

@@ -50,7 +50,7 @@ const successModal = () => {
     if (response) {
       toast.success(response?.message);
       if (response?.job) {
-        router.push("/dashboard/adminDashboard/jobBoard");
+        router.push("/admin/dashboard/jobBoard");
         localStorage.removeItem("postJob");
       }
     }
@@ -87,7 +87,7 @@ const successModal = () => {
             </div>
 
             <div className="mt-5 sm:mt-6">
-              {/* <Link href="/dashboard/adminDashboard/jobBoard"> */}
+              {/* <Link href="/admin/dashboard/jobBoard"> */}
               <button
                 type="button"
                 className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
