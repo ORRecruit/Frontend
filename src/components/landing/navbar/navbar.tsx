@@ -95,7 +95,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/talent-board"
+                href="/talent"
                 className={`${
                   isMenuOpen
                     ? "hover:bg-orange-600 hover:text-white hover:w-full"
@@ -108,7 +108,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/clients-board"
+                href="/client"
                 className={`${
                   isMenuOpen
                     ? "hover:bg-orange-600 hover:text-white hover:w-full"
