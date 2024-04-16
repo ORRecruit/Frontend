@@ -1,5 +1,8 @@
+import { ApplyJobInterface } from "@/interfaces/applyJobInterface";
 import client from "../axiox.config";
 
 export const applyJob = (data: any) => {
-  return client.post<any, any>("/jobs/apply/" + data);
+  return client.post<ApplyJobInterface, ApplyJobInterface>(
+    "/jobs/apply/" + data
+  );
 };

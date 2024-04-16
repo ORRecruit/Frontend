@@ -37,10 +37,10 @@ const page = () => {
         localStorage.setItem("authToken", response.token);
         if (response.User?.role == "Candidate") {
           if (response?.User?.isProfile === true) {
-            router.replace("/dashboard/talentDashboard");
+            router.replace("/talent/dashboard");
             localStorage.setItem("candidateId", response?.User?.userId);
           } else {
-            router.push("/dashboard/talentForm/resume-upload");
+            router.push("/talentForm/resume-upload");
           }
         } else if (response.User.role == "Admin") {
           router.push("/admin/dashboard");

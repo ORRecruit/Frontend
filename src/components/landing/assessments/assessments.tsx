@@ -3,16 +3,16 @@ import React from "react";
 import Image from "next/image";
 
 interface AssessmentInterface {
-  heading1: any;
-  paragraph1: any;
-  img1: any;
-  buttonText1: any;
-  href1: any;
-  heading2: any;
-  paragraph2: any;
-  img2: any;
-  buttonText2: any;
-  href2: any;
+  heading1: string;
+  paragraph1: string;
+  img1: string;
+  buttonText1: string;
+  href1: string;
+  heading2: string;
+  paragraph2: string;
+  img2: string;
+  buttonText2: string;
+  href2: string;
 }
 
 const assessments: React.FC<AssessmentInterface> = ({

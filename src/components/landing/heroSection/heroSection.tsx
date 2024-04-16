@@ -3,12 +3,12 @@ import Link from "next/link";
 import React from "react";
 
 interface heroSectionInterface {
-  heading: any;
-  paragraph: any;
-  videoImageSrc: any;
+  heading: string;
+  paragraph: string;
+  videoImageSrc: string;
   iconImages: any[];
   showIconImages: any;
-  href: any;
+  href: string;
 }
 
 const heroSection: React.FC<heroSectionInterface> = ({
