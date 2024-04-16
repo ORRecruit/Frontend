@@ -43,7 +43,7 @@ const page = () => {
       localStorage.setItem("candidateInfo", JSON.stringify(data));
       console.log("data", data);
     }
-    router.push("/dashboard/talentForm/socialMedia-info");
+    router.push("/talentForm/socialMedia-info");
   };
   return (
     <>

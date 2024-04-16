@@ -8,7 +8,7 @@ const page = () => {
   const router = useRouter();
   const submitResume = (e: any) => {
     e.preventDefault();
-    router.push("/dashboard/talentForm/personalInfo");
+    router.push("/talentForm/personalInfo");
   };
   return (
     <>

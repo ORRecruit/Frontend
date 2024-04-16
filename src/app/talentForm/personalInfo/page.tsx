@@ -36,7 +36,7 @@ const page = () => {
       return;
     }
     localStorage.setItem("candidateInfo", JSON.stringify(formData));
-    router.push("/dashboard/talentForm/tools-tech-info");
+    router.push("/talentForm/tools-tech-info");
   };
   return (
     <>

@@ -31,7 +31,7 @@ const page = () => {
       localStorage.setItem("candidateInfo", JSON.stringify(data));
       console.log("data", data);
     }
-    router.push("/dashboard/talentForm/experience-info");
+    router.push("/talentForm/experience-info");
   };
   return (
     <>
