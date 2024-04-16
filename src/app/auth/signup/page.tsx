@@ -271,7 +271,7 @@ const page = () => {
                         aria-describedby="terms"
                         type="checkbox"
                         className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                        required={false}
+                        required={true}
                       />
                     </div>
                     <div className="ml-3 text-sm">
@@ -279,7 +279,7 @@ const page = () => {
                         By signing up, you're accepting Online Remote Recruiting
                         <Link
                           className="font-medium text-primary-600 dark:text-primary-500 hover:underline"
-                          href="#"
+                          href="/privacy-policy"
                         >
                           {" "}
                           Terms of Use
