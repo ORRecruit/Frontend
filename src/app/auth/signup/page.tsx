@@ -287,7 +287,7 @@ const page = () => {
                         and{" "}
                         <Link
                           className="font-medium text-primary-600 dark:text-primary-500 hover:underline"
-                          href="#"
+                          href="/privacy-policy"
                         >
                           Privacy Policy
                         </Link>

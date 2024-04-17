@@ -38,21 +38,21 @@ const page = () => {
       <Service />
       <CompanyServices />
       <Assessments
-        heading1={`Find Quality Talent Using AI Powered ATS`}
+        heading1={`AI powered ATS for Recruiters hunting quality talent`}
         paragraph1={`Utilize our AI-driven skill assessment tools to gain insights
                 into your strengths and areas for growth. Our platform provides
                 personalized suggestions for skill development, helping you stay
                 competitive and ready for new challenges.`}
         img1={`/assessment-img.svg`}
-        href1={`/jobs`}
+        href1={`/client`}
         buttonText1={`Discover Talent`}
-        heading2={`Track Applications From a Single Dashboard`}
+        heading2={`Smart Job Recommendations for Candidates`}
         paragraph2={`With our real-time application tracking system, you’ll always
                 know the status of your job applications. Get instant updates
                 and feedback, so you’re never left wondering where you stand.`}
         img2={`/tracher-img.svg`}
-        buttonText2={`Discover Talent`}
-        href2={`/jobs`}
+        buttonText2={`Find Jobs`}
+        href2={`/talent`}
       />
       <Features />
       <div id="contactUs">
