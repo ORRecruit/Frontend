@@ -23,7 +23,7 @@ const page = () => {
         videoImageSrc={`/tracher-img.svg`}
         iconImages={iconImages}
         showIconImages="false"
-        href={"/recruiters"}
+        href={"/client"}
       />
       <Assessments
         heading1={`Find jobs that match your career trajectory`}
@@ -35,7 +35,7 @@ const page = () => {
         paragraph2={`With our real-time application tracking system, you’ll always know the status of your job applications. Get instant updates and feedback, so you’re never left wondering where you stand.`}
         img2={`/assessment-page-img2.svg`}
         buttonText2={`Track Progress`}
-        href2={`/recruiters`}
+        href2={`/client`}
       />
       <div id="contactUsJobs">
         <ContactUs />
