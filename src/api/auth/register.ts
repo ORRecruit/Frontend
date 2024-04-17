@@ -1,12 +1,13 @@
+import { SignupInterface } from "@/interfaces/signupInterface";
 import client from "../axiox.config";
 
 export const registerUser = (
-  email: any,
-  password: any,
-  role: any,
-  full_name: any
+  email: string,
+  password: string,
+  role: string,
+  full_name: string
 ) => {
-  return client.post<any, any>("/auth/register", {
+  return client.post<SignupInterface, SignupInterface>("/auth/register", {
     email,
     password,
     role,

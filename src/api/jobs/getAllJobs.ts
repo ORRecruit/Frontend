@@ -1,5 +1,6 @@
 import client from "../axiox.config";
+import { AllJobsInterface } from "@/interfaces/allJobsInterface";
 
 export const getAllJobs = () => {
-  return client.get<any, any>("/jobs/getAlljobs");
+  return client.get<AllJobsInterface, AllJobsInterface>("/jobs/getAlljobs");
 };

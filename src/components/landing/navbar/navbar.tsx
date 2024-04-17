@@ -25,7 +25,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse lg:relative">
-          <Link href="/dashboard/auth/signin">
+          <Link href="/auth/signin">
             <p className="text-base pr-4 cursor-pointer">Log In</p>
           </Link>
           <button
@@ -82,7 +82,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/jobboard"
+                href="/job-board"
                 className={`${
                   isMenuOpen
                     ? "hover:bg-orange-600 hover:text-white hover:w-full"
@@ -95,7 +95,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/jobs"
+                href="/talent"
                 className={`${
                   isMenuOpen
                     ? "hover:bg-orange-600 hover:text-white hover:w-full"
@@ -108,7 +108,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/recruiters"
+                href="/client"
                 className={`${
                   isMenuOpen
                     ? "hover:bg-orange-600 hover:text-white hover:w-full"
