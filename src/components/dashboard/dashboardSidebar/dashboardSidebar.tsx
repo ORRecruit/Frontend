@@ -20,7 +20,8 @@ const dashboardSidebar: React.FC<sidebarInterface> = ({
 
   const logout = () => {
     localStorage.removeItem("authToken");
-    router.push("/dashboard/auth/signin");
+    localStorage.removeItem("role");
+    router.push("/auth/signin");
   };
 
   return (
