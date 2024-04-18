@@ -39,6 +39,7 @@ const page = () => {
           if (response?.User?.isProfile === true) {
             router.replace("/talent/dashboard");
             localStorage.setItem("candidateId", response?.User?.userId);
+            localStorage.setItem("role", response?.User?.role);
           } else {
             router.push("/talentForm/resume-upload");
           }
