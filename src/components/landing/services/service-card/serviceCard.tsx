@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 
 interface ServiceCardProps {
@@ -44,11 +43,9 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         src={iconUrl}
         alt={title}
       />
-      <Link href="#">
-        <h5 className="mb-2 text-2xl font-semibold text-black font-sm lg:my-[20px]">
-          {title}
-        </h5>
-      </Link>
+      <h5 className="mb-2 text-2xl font-semibold text-black font-sm lg:my-[20px]">
+        {title}
+      </h5>
       <p className="mb-3 font-normal text-base">{paragraphText}</p>
 
       {isModalOpen && (

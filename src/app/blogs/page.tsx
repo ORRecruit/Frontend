@@ -94,6 +94,14 @@ const page = () => {
       author: "shan",
       date: "March 21, 2024",
     },
+    {
+      image: "/blog-no12.png",
+      title: "Power of Recruitment Agencies for SMEs",
+      description:
+        "To maximize the effectiveness of the partnership between SMEs and recruitment agencies, clear and open communication is paramount.",
+      author: "shan",
+      date: "April 13, 2024",
+    },
   ];
   return (
     <>
