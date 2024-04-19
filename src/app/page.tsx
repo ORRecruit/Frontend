@@ -11,6 +11,7 @@ import Features from "@/components/landing/jobs/features";
 import CompanyServices from "@/components/landing/companyServices/companyServices";
 import Cookie from "@/components/landing/cookie/cookie";
 import ORRTeam from "@/components/landing/orrTeam/orrTeam";
+import Specialization from "@/components/landing/specialization/specialization";
 
 const page = () => {
   const iconImages = [
@@ -55,6 +56,7 @@ const page = () => {
         href2={`/job-board`}
       />
       <Features />
+      <Specialization />
       <div id="contactUs">
         <ContactUs />
       </div>

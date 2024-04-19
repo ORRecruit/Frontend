@@ -7,12 +7,24 @@ interface ServiceCardProps {
   paragraphText: string;
   title: string;
   iconUrl: string;
+  modalTitle: string;
+  modalParas: string;
+  modalSubHeadings: string;
+  modalListHeadings: string[];
+  modalListParas: string[];
+  modalConclusion: string;
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({
   paragraphText,
   title,
   iconUrl,
+  modalTitle,
+  modalParas,
+  modalSubHeadings,
+  modalListHeadings,
+  modalListParas,
+  modalConclusion,
 }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const handleCloseClick = (e: any) => {
@@ -41,13 +53,22 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center">
-          <div className="bg-white rounded-lg p-6 w-[400px]">
-            <div className="text-center">
-              <h5 className="mb-2 text-2xl font-semibold text-black font-sm lg:my-[20px]">
-                {title}
-              </h5>
-              <p className="mb-3 font-normal text-base">{paragraphText}</p>
-            </div>
+          <div className="bg-white rounded-lg p-10 w-[900px] ">
+            <h2 className="text-2xl font-bold mb-4">{modalTitle}</h2>
+
+            <p className="mb-4">{modalParas}</p>
+
+            <h3 className="text-xl font-semibold mb-3">{modalSubHeadings}</h3>
+
+            <ul className="list-disc pl-5 space-y-2 mb-4">
+              {modalListHeadings?.map((item, index) => (
+                <li key={index}>
+                  <strong>{item}</strong> {modalListParas[index]}
+                </li>
+              ))}
+            </ul>
+
+            <p className="font-semibold">{modalConclusion}</p>
             <div className="mt-5 sm:mt-6">
               <button
                 type="button"

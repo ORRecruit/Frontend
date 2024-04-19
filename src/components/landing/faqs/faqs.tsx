@@ -34,10 +34,9 @@ const faqs = () => {
         "Online Remote Recruiting is your trusted partner for all your recruitment needs. Whether you're a startup looking to expand your team or an established enterprise seeking top talent, we are here to help you build a brighter future with the right people. Let's embark on this journey together and make your recruitment experience seamless and successful. Reach out to us today, and let's start finding your next great hire!",
     },
     {
-      question:
-        "What sets Online Remote Recruiting apart in providing recruitment services?",
+      question: "What is your pricing structure?",
       answer:
-        "At Online Remote Recruiting, our dedication to excellence is unwavering. We are relentless in our pursuit of refining our recruitment methodologies, ensuring we not only meet but exceed our clients' expectations. Our commitment extends to embracing cutting-edge technologies and innovative strategies, positioning us as leaders in the evolving landscape of the recruitment industry.",
+        "Like our simple and innovative services, our pricing is straightforward. We charge fixed fees based on the seniority of the position you're filling. This means all our premium services are included, so there are no confusing percentage calculations or separate costs to worry about. Our tiers are: Basic placements: $5,000 Mid-Management: $10,000 Upper Management: $15,000 These fixed prices cover everything you need for a successful remote recruitment experience.",
     },
   ];
   return (
