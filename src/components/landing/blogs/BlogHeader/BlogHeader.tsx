@@ -11,7 +11,7 @@ const BlogHeader = () => {
         innovation, and capital can unlock long-term value and drive economic
         growth.
       </p>
-      <div className="flex border text-center border-gray-300 rounded overflow-hidden">
+      {/* <div className="flex border text-center border-gray-300 rounded overflow-hidden">
         <Image
           width={40}
           height={40}
@@ -24,7 +24,7 @@ const BlogHeader = () => {
           placeholder="Search Blogs"
           className="px-4 py-2 w-80 outline-none"
         />
-      </div>
+      </div> */}
     </div>
   );
 };

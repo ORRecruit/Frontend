@@ -87,7 +87,7 @@ const BlogDetailsHeader = () => {
     },
     {
       id: 10,
-      title: "How to Showcase Your Company Culture to Attract Top Talent      ",
+      title: "How to Showcase Your Company Culture to Attract Top Talent",
       description:
         "Attracting and retaining top talent is imperative for success of organization in today's fiercely competitive job market.",
       date: "March 23, 2024",
@@ -96,10 +96,18 @@ const BlogDetailsHeader = () => {
     {
       id: 11,
       title:
-        "Strategies for Successful Salary Negotiations: Securing the Compensation You Deserve      ",
+        "Strategies for Successful Salary Negotiations: Securing the Compensation You Deserve",
       description:
         "Negotiating salary can be a daunting task for many job seekers, but it's a crucial step in securing compensation & advancing in your career.",
       date: "March 21, 2024",
+      author: "Online Remote Recruiting",
+    },
+    {
+      id: 12,
+      title: "Enhancing Efficiency: The Power of Recruitment Agencies for SMEs",
+      description:
+        "To maximize the effectiveness of the partnership between SMEs and recruitment agencies, clear and open communication is paramount.",
+      date: "April 13, 2024",
       author: "Online Remote Recruiting",
     },
   ];

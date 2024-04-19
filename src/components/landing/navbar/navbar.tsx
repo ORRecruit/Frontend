@@ -32,7 +32,7 @@ const Navbar = () => {
             type="button"
             className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600"
           >
-            <Link href="#contactUs">Get started</Link>
+            <Link href="#contactUs">Contact Us</Link>
           </button>
           <button
             data-collapse-toggle="navbar-cta"
