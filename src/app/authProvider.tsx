@@ -16,6 +16,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       path === "/client" ||
       path === "/blogs" ||
       path === "/admin" ||
+      path === "/auth/signup" ||
       path.includes("/blogs/blog-details")
     ) {
       router.push(path);
