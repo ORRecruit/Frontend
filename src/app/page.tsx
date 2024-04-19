@@ -52,7 +52,7 @@ const page = () => {
                 and feedback, so you’re never left wondering where you stand.`}
         img2={`/tracher-img.svg`}
         buttonText2={`Find Jobs`}
-        href2={`/talent`}
+        href2={`/job-board`}
       />
       <Features />
       <div id="contactUs">

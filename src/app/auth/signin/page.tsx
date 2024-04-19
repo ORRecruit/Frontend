@@ -29,11 +29,11 @@ const page = () => {
       if (response.success === true) {
         setErrorMessage("");
         console.log("response....", response);
+        if (response.User.role === "Admin") {
+          toast.error("Use Admin Route to Sign Admin In!");
+          return;
+        }
         toast.success(response?.message);
-        setResponseMessage(response?.message);
-        setTimeout(() => {
-          setResponseMessage("");
-        }, 3000);
         localStorage.setItem("authToken", response.token);
         if (response.User?.role == "Candidate") {
           if (response?.User?.isProfile === true) {
@@ -47,11 +47,7 @@ const page = () => {
           router.push("/admin/dashboard");
         }
       } else if (response.success === false) {
-        console.log("response undef");
-        setErrorMessage("Please provide correct information");
-        setTimeout(() => {
-          setErrorMessage("");
-        }, 3000);
+        toast.error("Please provide correct information");
       }
     }
   };
@@ -69,20 +65,6 @@ const page = () => {
         <CustomLoader />
       ) : (
         <div className="h-screen flex justify-center items-center border border-red-400 relative">
-          {errorMessage?.length ? (
-            <p className="absolute top-5 px-8 py-2 rounded-2xl shadow-lg text-white bg-red-600">
-              {errorMessage}
-            </p>
-          ) : (
-            ""
-          )}
-          {responseMessage?.length ? (
-            <p className="absolute top-5 px-8 py-2 rounded-2xl shadow-lg text-black text-base bg-gray-100">
-              {responseMessage}
-            </p>
-          ) : (
-            ""
-          )}
           <section>
             <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-20 lg:py-16 lg:grid-cols-12">
               <div className="w-full p-6 mx-auto bg-white sm:max-w-xl lg:col-span-6 sm:p-8">
