@@ -33,7 +33,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 
   return (
     <div
-      className="max-w-sm mb-[20px] p-6 rounded-lg shadow lg:w-[50%] xl:w-[23%] 2xl:w-[22%] cursor-pointer"
+      className="max-w-sm mb-[20px] p-6 rounded-lg shadow md:w-[50%] lg:w-[24%] xl:w-[23%] 2xl:w-[22%] cursor-pointer"
       onClick={() => setModalOpen(true)}
     >
       <Image
