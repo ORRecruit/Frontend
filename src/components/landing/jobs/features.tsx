@@ -34,7 +34,7 @@ const features = () => {
               />
             ))}
           </div>
-          <Link href="#contactUs">
+          <Link href="/auth/signin">
             <button
               type="button"
               className="ml-4 w-40 h-10 flex justify-between items-center text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-base px-4 py-2 text-center bg-orange-600 my-3"

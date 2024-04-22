@@ -62,7 +62,7 @@ const Services = () => {
       "Reduced Time to Productivity: ",
       "Improved Engagement: ",
       "Scalability and Flexibility: ",
-      "Scalability and Flexibility: :",
+      "Compliance Management",
     ],
   ];
   const modalListParas: any[] = [
