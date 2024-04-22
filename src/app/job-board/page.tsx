@@ -49,13 +49,19 @@ const page = () => {
                     onClick={() => selectedJob(item)}
                   >
                     <div className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
-                      {item.title}
+                      {item.id} - {item.title}
                     </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
                       {item.location}
                     </div>
-                    <div className="mb-4 text-lg font-extrabold text-gray-900 dark:text-white">
+                    <div className="text-lg font-extrabold text-gray-900 dark:text-white">
                       {item.saleryOffered}K - USD
+                    </div>
+                    <div className="font-light text-gray-500 dark:text-gray-400">
+                      {item.qualification}
+                    </div>
+                    <div className="mb-4 font-light text-gray-500 dark:text-gray-400">
+                      {item.experienceRequired} Yrs
                     </div>
 
                     <div className="mb-5">
@@ -74,7 +80,7 @@ const page = () => {
                     </div>
 
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {item.description}
+                      {item.description?.slice(0, 200)}...
                     </p>
                   </div>
                 );
@@ -83,7 +89,9 @@ const page = () => {
             <div className="bg-white rounded-lg mt-4 sm:w-[68%] sm:p-8">
               <div className="mb-5">
                 <div className="flex justify-between">
-                  <h1 className="text-3xl font-bold">{selectedValue?.title}</h1>
+                  <h1 className="text-3xl font-bold">
+                    {selectedValue?.id} - {selectedValue?.title}
+                  </h1>
                   <button
                     type="button"
                     className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[120px] h-[40px] mt-[20px] sm:w-fit sm:h-fit sm:mt-0"
@@ -102,6 +110,12 @@ const page = () => {
                 <p className="text-gray-600">{selectedValue?.type}</p>
                 <p className="font-semibold text-gray-900">
                   {selectedValue?.saleryOffered}K - USD
+                </p>
+                <p className="font-light text-gray-500 dark:text-gray-400">
+                  {selectedValue?.qualification}
+                </p>
+                <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
+                  {selectedValue?.experienceRequired} Yrs
                 </p>
               </div>
 

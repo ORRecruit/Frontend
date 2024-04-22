@@ -34,7 +34,7 @@ const page = () => {
         videoImageSrc={`/demo-video.svg`}
         iconImages={iconImages}
         showIconImages="true"
-        href={"#contactUs"}
+        href={"/auth/signin"}
       />
       <Service />
       <CompanyServices />
@@ -45,7 +45,7 @@ const page = () => {
                 personalized suggestions for skill development, helping you stay
                 competitive and ready for new challenges.`}
         img1={`/assessment-img.svg`}
-        href1={`/client`}
+        href1={`/talent`}
         buttonText1={`Discover Talent`}
         heading2={`Smart Job Recommendations for Candidates`}
         paragraph2={`With our real-time application tracking system, you’ll always

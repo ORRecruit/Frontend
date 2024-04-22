@@ -504,6 +504,7 @@ const jobList = () => {
                                     <div className="mb-5">
                                       <div className="flex justify-between">
                                         <h1 className="text-3xl font-bold">
+                                          {selectedItem?.id} -{" "}
                                           {selectedItem?.title}
                                         </h1>
                                       </div>
@@ -521,6 +522,12 @@ const jobList = () => {
                                       </p>
                                       <p className="font-semibold text-gray-900">
                                         {selectedItem?.saleryOffered}k
+                                      </p>
+                                      <p className="font-light text-gray-500 dark:text-gray-400">
+                                        {selectedItem?.qualification}
+                                      </p>
+                                      <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
+                                        {selectedItem?.experienceRequired} Yrs
                                       </p>
                                     </div>
 

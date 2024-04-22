@@ -125,7 +125,7 @@ const page = () => {
                 name="location"
                 id="price"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="logo.png"
+                placeholder="Enter Your Location"
                 value={formData.location}
                 onChange={handleChange}
                 required={true}
@@ -163,14 +163,12 @@ const page = () => {
                 onChange={handleChange}
               >
                 <option>Input Text</option>
-                <option value="Information Technology">
-                  Information Technology
+                <option value="Technology">Technology</option>
+                <option value="Tourism">Tourism</option>
+                <option value="Hospitality">Hospitality</option>
+                <option value="Staffing & Recruiting">
+                  Staffing & Recruiting
                 </option>
-                <option value="Healthcare">Healthcare</option>
-                <option value="Finance and Banking">Finance and Banking</option>
-                <option value="Engineering">Engineering</option>
-                <option value="Education">Education</option>
-                <option value="Retail and Sales">Retail and Sales</option>
               </select>
             </div>
             <div className="w-[32%]">
@@ -284,7 +282,7 @@ const page = () => {
                   Hybrid
                 </p>
                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                  Can work Onsight and remote
+                  Can work on site and remote
                 </p>
               </div>
             </div>
