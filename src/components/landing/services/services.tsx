@@ -101,7 +101,7 @@ const Services = () => {
   return (
     <>
       <div className="w-[100%] mx-auto bg-bg-service py-28">
-        <div className="w-4/5 mx-auto 2xl:w-9/12	">
+        <div className="w-4/5 mx-auto 2xl:w-9/12 md:w-[90%] lg:w-4/5">
           <div className="mb-12">
             <p className="text-3xl	font-bold mb-2 text-center">Why Us</p>
             <div className="text-xl font-normal text-center lg:w-[100%] flex justify-center items-center lg:my-[20px]">

@@ -36,7 +36,7 @@ const faqs = () => {
     {
       question: "What is Online Remote Recruiting's pricing structure?",
       answer:
-        "Like our simple and innovative services, our pricing is straightforward. We charge fixed fees based on the seniority of the position you're filling. This means all our premium services are included, so there are no confusing percentage calculations or separate costs to worry about. Our tiers are: Basic placements: $5,000 Mid-Management: $10,000 Upper Management: $15,000 These fixed prices cover everything you need for a successful remote recruitment experience.",
+        "Like our simple and innovative services, our pricing is straightforward. We charge fixed fees based on the seniority of the position you're filling. This means all our premium services are included, so there are no confusing percentage calculations or separate costs to worry about. Our tiers are: Basic placements: $5,000 Mid-Management: $10,000 Upper Management: $15,000 These fixed prices cover everything you need for a successful recruitment experience.",
     },
   ];
   return (
