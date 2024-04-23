@@ -54,9 +54,9 @@ const page = () => {
                     <div className="font-light text-gray-500 dark:text-gray-400">
                       {item.location}
                     </div>
-                    <div className="text-lg font-extrabold text-gray-900 dark:text-white">
+                    {/* <div className="text-lg font-extrabold text-gray-900 dark:text-white">
                       {item.saleryOffered} - {item.currencyType}
-                    </div>
+                    </div> */}
                     <div className="font-light text-gray-500 dark:text-gray-400">
                       {item.qualification}
                     </div>
