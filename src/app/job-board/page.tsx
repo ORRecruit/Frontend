@@ -55,7 +55,7 @@ const page = () => {
                       {item.location}
                     </div>
                     <div className="text-lg font-extrabold text-gray-900 dark:text-white">
-                      {item.saleryOffered}K - USD
+                      {item.saleryOffered} - {item.currencyType}
                     </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
                       {item.qualification}
