@@ -14,6 +14,11 @@ interface PreviewData {
   description: string;
   responsibilities: string;
   requirements: string;
+  currencyType: string;
+  jobType: string;
+  location: string;
+  experienceRequired: string;
+  qualification: string;
 }
 
 const page = () => {
@@ -26,6 +31,7 @@ const page = () => {
     const postJob = localStorage.getItem("postJob");
     if (postJob !== null) {
       const data = JSON.parse(postJob);
+      console.log("data", data);
       setPreviewData(data);
     }
   }, []);
@@ -85,8 +91,16 @@ const page = () => {
           <div className="mb-5">
             <p className="text-gray-600">{previewData.companyName}</p>
             <p className="text-gray-600">{previewData.type}</p>
-            <p className="font-semibold text-gray-900">
-              ${previewData.saleryOffered}/yr
+            <p className="text-gray-600">{previewData?.location}</p>
+            <p className="text-lg font-extrabold text-gray-900 dark:text-white">
+              {previewData?.saleryOffered} - {previewData?.currencyType} /{" "}
+              {previewData?.jobType}
+            </p>
+            <p className="font-light text-gray-500 dark:text-gray-400">
+              {previewData?.qualification}
+            </p>
+            <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
+              {previewData?.experienceRequired} Yrs
             </p>
           </div>
 
