@@ -13,14 +13,16 @@ const page = () => {
     description: "",
     location: "",
     type: "",
-    industry: "Information Technology",
+    industry: "Technology",
     skillsRequired: "",
     experienceRequired: "4",
     companyName: "",
     qualification: "Middle",
-    saleryOffered: "550",
+    saleryOffered: "5",
     requirements: "",
     responsibilities: "",
+    jobType: "Hourly",
+    currencyType: "USD",
   });
 
   const handleChange = (e: any) => {
@@ -49,7 +51,9 @@ const page = () => {
       !formData.qualification ||
       !formData.saleryOffered ||
       !formData.requirements ||
-      !formData.responsibilities
+      !formData.responsibilities ||
+      !formData.currencyType ||
+      !formData.jobType
     ) {
       setErrorMessage("Please provide all details to post the job!");
       return;
@@ -208,6 +212,11 @@ const page = () => {
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
           <h1 className="text-lg font-bold pb-2">Experience*</h1>
           <div className="mb-2 w-[90%]">
+            <div className="text-base mt-4 font-medium text-gray-800 dark:text-white absolute inset-0 flex justify-center">
+              <p className="border border-black-300 pt-[2px] h-8 px-8 rounded-2xl bg-gray-300">
+                {formData.experienceRequired} Years
+              </p>
+            </div>
             <div className="relative mb-6">
               <input
                 id="labels-range-input"
@@ -236,30 +245,52 @@ const page = () => {
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
           <h1 className="text-lg font-bold pb-2">Salary Offered (Monthly)*</h1>
-          <div className="mb-2 w-[90%]">
-            <div className="relative mb-6">
+          <div className="flex justify-between w-[90%]">
+            <div className="w-[32%]">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Payment Intervals*
+              </label>
+              <select
+                id="jobType"
+                name="jobType"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                value={formData.jobType}
+                onChange={handleChange}
+              >
+                <option value="Hourly">Hourly</option>
+                <option value="Monthly">Monthly</option>
+                <option value="Yearly">Yearly</option>
+              </select>
+            </div>
+            <div className="w-[32%]">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Currency*
+              </label>
+              <select
+                id="currencyType"
+                name="currencyType"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                value={formData.currencyType}
+                onChange={handleChange}
+              >
+                <option value="USD">USD</option>
+                <option value="CAD">CAD</option>
+              </select>
+            </div>
+            <div className="w-[32%]">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Salary Offered*
+              </label>
               <input
-                id="labels-range-input"
-                type="range"
-                min="100"
-                max="1500"
+                type="number"
                 name="saleryOffered"
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                id="brand"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Input text"
                 value={formData.saleryOffered}
                 onChange={handleChange}
+                required={true}
               />
-              <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6">
-                Min ($100)
-              </span>
-              <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-1/3 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
-                $550
-              </span>
-              <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-2/3 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
-                $1000
-              </span>
-              <span className="text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6">
-                Max ($1500)
-              </span>
             </div>
           </div>
         </div>

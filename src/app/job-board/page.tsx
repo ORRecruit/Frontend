@@ -54,9 +54,10 @@ const page = () => {
                     <div className="font-light text-gray-500 dark:text-gray-400">
                       {item.location}
                     </div>
-                    {/* <div className="text-lg font-extrabold text-gray-900 dark:text-white">
-                      {item.saleryOffered} - {item.currencyType}
-                    </div> */}
+                    <div className="text-lg font-extrabold text-gray-900 dark:text-white">
+                      {item.saleryOffered} - {item.currencyType} /{" "}
+                      {item.jobType}
+                    </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
                       {item.qualification}
                     </div>
@@ -108,9 +109,10 @@ const page = () => {
               <div className="mb-5">
                 <p className="text-gray-600">{selectedValue?.location}</p>
                 <p className="text-gray-600">{selectedValue?.type}</p>
-                <p className="font-semibold text-gray-900">
-                  {selectedValue?.saleryOffered}K - USD
-                </p>
+                <div className="text-lg font-extrabold text-gray-900 dark:text-white">
+                  {selectedValue?.saleryOffered} - {selectedValue?.currencyType}{" "}
+                  / {selectedValue?.jobType}
+                </div>
                 <p className="font-light text-gray-500 dark:text-gray-400">
                   {selectedValue?.qualification}
                 </p>

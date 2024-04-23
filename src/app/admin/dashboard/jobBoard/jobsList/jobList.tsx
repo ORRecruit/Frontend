@@ -520,8 +520,10 @@ const jobList = () => {
                                       <p className="text-gray-600">
                                         {selectedItem?.type}
                                       </p>
-                                      <p className="font-semibold text-gray-900">
-                                        {selectedItem?.saleryOffered}k
+                                      <p className="text-lg font-extrabold text-gray-900 dark:text-white">
+                                        {selectedItem.saleryOffered} -{" "}
+                                        {selectedItem.currencyType} /{" "}
+                                        {selectedItem.jobType}
                                       </p>
                                       <p className="font-light text-gray-500 dark:text-gray-400">
                                         {selectedItem?.qualification}
