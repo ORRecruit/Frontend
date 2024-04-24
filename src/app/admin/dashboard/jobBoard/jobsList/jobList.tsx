@@ -7,8 +7,11 @@ import { useQuery } from "@tanstack/react-query";
 import CustomLoader from "@/components/customLoader";
 import { DeleteJob } from "@/api/jobs/deleteJob";
 import { useMutation } from "@tanstack/react-query";
+import { editJob as editJobApi } from "@/api/jobs/editJob";
+import { useRouter } from "next/navigation";
 
 const jobList = () => {
+  const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [showOptions, setShowOptions] = useState(false);
@@ -34,9 +37,13 @@ const jobList = () => {
     currencyType: "USD",
     contractType: "",
   });
+  const [editId, setEditId] = useState<any>(null);
 
   const deleteJobMutation = useMutation({
     mutationFn: (id: any) => DeleteJob(id),
+  });
+  const editJobMutation = useMutation({
+    mutationFn: (data: any) => editJobApi(editId, data),
   });
 
   const { data, error, isLoading, refetch } = useQuery({
@@ -57,6 +64,39 @@ const jobList = () => {
     setIsDialogOpen(!isDialogOpen);
     console.log("cloase", isDialogOpen);
   };
+  const closeEditDialog = () => {
+    setEditDialog(!editDialog);
+  };
+
+  const handleSubmit = async (e: any) => {
+    e?.preventDefault();
+
+    console.log("formData", editId, formData);
+    // setEditId()
+
+    if (
+      !formData.title ||
+      !formData.description ||
+      !formData.location ||
+      !formData.type ||
+      !formData.industry ||
+      !formData.skillsRequired ||
+      !formData.experienceRequired ||
+      !formData.companyName ||
+      !formData.qualification ||
+      !formData.saleryOffered ||
+      !formData.requirements ||
+      !formData.responsibilities ||
+      !formData.currencyType ||
+      !formData.jobType ||
+      !formData.contractType
+    ) {
+      return;
+    }
+    const response = await editJobMutation.mutateAsync(formData);
+    console.log("response===", response);
+    router.push("/admin/dashboard/jobBoard");
+  };
 
   const toggleShowOptions = (index: number) => {
     setActiveOptionsIndex((prevIndex) => (prevIndex === index ? null : index));
@@ -68,6 +108,7 @@ const jobList = () => {
   };
   const editJob = (item: any) => {
     console.log("edit", item);
+    setEditId(item?.id);
     setFormData({
       title: item?.title,
       description: item?.description,
@@ -559,8 +600,8 @@ const jobList = () => {
                                     <div className="mb-5">
                                       <div className="flex justify-between">
                                         <h1 className="text-3xl font-bold">
-                                          ORR!Tech
-                                          {selectedItem?.id} -{" "}
+                                          ORR-{selectedItem?.industry}-00
+                                          {selectedItem?.id + " "}
                                           {selectedItem?.title}
                                         </h1>
                                       </div>
@@ -573,9 +614,6 @@ const jobList = () => {
                                       <p className="text-gray-600">
                                         {selectedItem?.location}
                                       </p>
-                                      <p className="text-gray-600">
-                                        {selectedItem?.type}
-                                      </p>
                                       <p className="text-lg font-extrabold text-gray-900 dark:text-white">
                                         {selectedItem.saleryOffered + " "}
                                         {selectedItem.currencyType} /{" "}
@@ -586,6 +624,9 @@ const jobList = () => {
                                       </p>
                                       <p className="font-light text-gray-500 dark:text-gray-400">
                                         {selectedItem?.qualification}
+                                      </p>
+                                      <p className="font-light text-gray-500 dark:text-gray-400">
+                                        {selectedItem?.contractType}
                                       </p>
                                       <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
                                         {selectedItem?.experienceRequired} Yrs
@@ -647,7 +688,13 @@ const jobList = () => {
                               <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
                                 <div className="relative bg-white p-5 rounded-lg w-[60%] h-[80%] overflow-y-scroll border border-black-500">
                                   <div className="bg-white rounded-lg flex flex-col items-center">
-                                    <form action="" className="w-full">
+                                    <form action="" className="w-full relative">
+                                      <button
+                                        onClick={closeEditDialog}
+                                        className="absolute right-0 pb-1 text-lg text-black bg-transparent text-2xl"
+                                      >
+                                        &times;{" "}
+                                      </button>
                                       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
                                         <h1 className="text-lg font-bold pb-2">
                                           Company Info
@@ -857,7 +904,7 @@ const jobList = () => {
                                               Salary Offered*
                                             </label>
                                             <input
-                                              type="number"
+                                              type="text"
                                               name="saleryOffered"
                                               id="brand"
                                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
@@ -943,8 +990,8 @@ const jobList = () => {
                                               id="inline-radio"
                                               type="radio"
                                               className="w-4 h-4 bg-gray-100 border-gray-300"
-                                              name="type"
-                                              value={formData?.contractType}
+                                              name="contractType"
+                                              value="FullTime"
                                               onChange={handleChange}
                                               required={true}
                                             />
@@ -959,8 +1006,8 @@ const jobList = () => {
                                               id="inline-2-radio"
                                               type="radio"
                                               className="w-4 h-4 bg-gray-100 border-gray-300"
-                                              name="type"
-                                              value={formData?.contractType}
+                                              name="contractType"
+                                              value="PartTime"
                                               onChange={handleChange}
                                             />
                                             <div>
@@ -983,7 +1030,7 @@ const jobList = () => {
                                             value={formData.description}
                                             onChange={handleChange}
                                             name="description"
-                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                            className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                           />
                                         </div>
                                       </div>
@@ -999,7 +1046,7 @@ const jobList = () => {
                                             <textarea
                                               id="brand"
                                               rows={4}
-                                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                              className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                               placeholder="Input text"
                                               value={formData.requirements}
                                               onChange={handleChange}
@@ -1015,7 +1062,7 @@ const jobList = () => {
                                               name="responsibilities"
                                               id="responsibilities"
                                               rows={4}
-                                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                              className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                               placeholder="Input Text"
                                               value={formData.responsibilities}
                                               onChange={handleChange}
@@ -1023,6 +1070,14 @@ const jobList = () => {
                                             />
                                           </div>
                                         </div>
+                                      </div>
+                                      <div>
+                                        <button
+                                          onClick={handleSubmit}
+                                          className="w-full mt-[20px] sm:mt-[0px] bg-orange-600 text-white font-medium rounded-lg px-5 py-2.5 text-center"
+                                        >
+                                          Post Job
+                                        </button>
                                       </div>
                                     </form>
                                   </div>

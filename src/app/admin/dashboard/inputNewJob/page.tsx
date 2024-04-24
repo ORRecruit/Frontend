@@ -23,6 +23,7 @@ const page = () => {
     responsibilities: "",
     jobType: "Hourly",
     currencyType: "USD",
+    contractType: "FullTime",
   });
 
   const handleChange = (e: any) => {
@@ -186,8 +187,6 @@ const page = () => {
                 value={formData.qualification}
                 onChange={handleChange}
               >
-                <option value="Middle">Middle</option>
-                <option value="College">College</option>
                 <option value="Bachelor">Bachelor</option>
                 <option value="Master">Master</option>
                 <option value="Ph.D">Ph.D</option>
@@ -283,7 +282,7 @@ const page = () => {
                 Salary Offered*
               </label>
               <input
-                type="number"
+                type="text"
                 name="saleryOffered"
                 id="brand"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
@@ -364,8 +363,8 @@ const page = () => {
                 id="inline-radio"
                 type="radio"
                 className="w-4 h-4 bg-gray-100 border-gray-300"
-                name="type"
-                value="Full Time"
+                name="contractType"
+                value="FullTime"
                 onChange={handleChange}
                 required={true}
               />
@@ -380,8 +379,8 @@ const page = () => {
                 id="inline-2-radio"
                 type="radio"
                 className="w-4 h-4 bg-gray-100 border-gray-300"
-                name="type"
-                value="Part Time"
+                name="contractType"
+                value="PartTime"
                 onChange={handleChange}
               />
               <div>
