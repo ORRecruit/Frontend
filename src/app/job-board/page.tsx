@@ -8,6 +8,7 @@ import { getAllJobs } from "@/api/jobs/getAllJobs";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import CustomLoader from "@/components/customLoader";
+import { isAuthTokenExpired } from "../isAuthTokenExpired";
 
 const page = () => {
   const router = useRouter();
@@ -28,7 +29,13 @@ const page = () => {
   };
 
   const applyJob = (item: any) => {
-    router.push(`/auth/signin`);
+    const role = localStorage.getItem("role");
+    const authToken = localStorage.getItem("authToken");
+    if (role === "Candidate" && !isAuthTokenExpired(authToken!)) {
+      router.push("/talent/dashboard");
+    } else {
+      router.push(`/auth/signin`);
+    }
   };
 
   return (
@@ -56,7 +63,7 @@ const page = () => {
                     </div>
                     <div className="text-lg font-extrabold text-gray-900 dark:text-white">
                       {item.saleryOffered + " "} {item.currencyType} /{" "}
-                      {item.jobType}
+                      {item.jobType?.slice(0, item?.jobType?.length - 2)}
                     </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
                       {item.qualification}
@@ -111,7 +118,11 @@ const page = () => {
                 <p className="text-gray-600">{selectedValue?.type}</p>
                 <p className="text-lg font-extrabold text-gray-900 dark:text-white">
                   {selectedValue?.saleryOffered + " "}{" "}
-                  {selectedValue?.currencyType} / {selectedValue?.jobType}
+                  {selectedValue?.currencyType} /{" "}
+                  {selectedValue?.jobType?.slice(
+                    0,
+                    selectedValue?.jobType?.length - 2
+                  )}
                 </p>
                 <p className="font-light text-gray-500 dark:text-gray-400">
                   {selectedValue?.qualification}

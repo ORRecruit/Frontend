@@ -213,7 +213,7 @@ const page = () => {
           <h1 className="text-lg font-bold pb-2">Experience*</h1>
           <div className="mb-2 w-[90%]">
             <div className="text-base mt-4 font-medium text-gray-800 dark:text-white absolute inset-0 flex justify-center">
-              <p className="border border-black-300 pt-[2px] h-8 px-8 rounded-2xl bg-gray-300">
+              <p className="absolute left-[130px] text-white bg-primary-orange border border-black-300 pt-[2px] h-8 px-8 rounded-2xl bg-gray-300">
                 {formData.experienceRequired} Years
               </p>
             </div>
@@ -257,9 +257,9 @@ const page = () => {
                 value={formData.jobType}
                 onChange={handleChange}
               >
-                <option value="Hourly">Hourly</option>
-                <option value="Monthly">Monthly</option>
-                <option value="Yearly">Yearly</option>
+                <option value="Hourly">Hour</option>
+                <option value="Monthly">Month</option>
+                <option value="Yearly">Year</option>
               </select>
             </div>
             <div className="w-[32%]">
@@ -351,6 +351,42 @@ const page = () => {
                 </p>
                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                   Will only work from your office
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
+          <h1 className="text-lg font-bold pb-2">Contract Type*</h1>
+          <div className="flex">
+            <div className="flex me-4 mr-16">
+              <input
+                id="inline-radio"
+                type="radio"
+                className="w-4 h-4 bg-gray-100 border-gray-300"
+                name="type"
+                value="Full Time"
+                onChange={handleChange}
+                required={true}
+              />
+              <div>
+                <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  Full Time
+                </p>
+              </div>
+            </div>
+            <div className="flex me-4 mr-16">
+              <input
+                id="inline-2-radio"
+                type="radio"
+                className="w-4 h-4 bg-gray-100 border-gray-300"
+                name="type"
+                value="Part Time"
+                onChange={handleChange}
+              />
+              <div>
+                <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  Part Time
                 </p>
               </div>
             </div>
