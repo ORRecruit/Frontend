@@ -49,13 +49,13 @@ const page = () => {
                     onClick={() => selectedJob(item)}
                   >
                     <div className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
-                      {item.id} - {item.title}
+                      ORR!Tech{item.id} {item.title}
                     </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
                       {item.location}
                     </div>
                     <div className="text-lg font-extrabold text-gray-900 dark:text-white">
-                      {item.saleryOffered} - {item.currencyType} /{" "}
+                      {item.saleryOffered + " "} {item.currencyType} /{" "}
                       {item.jobType}
                     </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
@@ -91,7 +91,7 @@ const page = () => {
               <div className="mb-5">
                 <div className="flex justify-between">
                   <h1 className="text-3xl font-bold">
-                    {selectedValue?.id} - {selectedValue?.title}
+                    ORR!Tech{selectedValue?.id} {selectedValue?.title}
                   </h1>
                   <button
                     type="button"
@@ -109,10 +109,10 @@ const page = () => {
               <div className="mb-5">
                 <p className="text-gray-600">{selectedValue?.location}</p>
                 <p className="text-gray-600">{selectedValue?.type}</p>
-                <div className="text-lg font-extrabold text-gray-900 dark:text-white">
-                  {selectedValue?.saleryOffered} - {selectedValue?.currencyType}{" "}
-                  / {selectedValue?.jobType}
-                </div>
+                <p className="text-lg font-extrabold text-gray-900 dark:text-white">
+                  {selectedValue?.saleryOffered + " "}{" "}
+                  {selectedValue?.currencyType} / {selectedValue?.jobType}
+                </p>
                 <p className="font-light text-gray-500 dark:text-gray-400">
                   {selectedValue?.qualification}
                 </p>

@@ -494,6 +494,11 @@ const jobList = () => {
                                       Delete
                                     </p>
                                   </div>
+                                  <div className="py-1">
+                                    <p className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                      Edit
+                                    </p>
+                                  </div>
                                 </div>
                               )}
                             </td>
@@ -504,6 +509,7 @@ const jobList = () => {
                                     <div className="mb-5">
                                       <div className="flex justify-between">
                                         <h1 className="text-3xl font-bold">
+                                          ORR!Tech
                                           {selectedItem?.id} -{" "}
                                           {selectedItem?.title}
                                         </h1>
@@ -521,7 +527,7 @@ const jobList = () => {
                                         {selectedItem?.type}
                                       </p>
                                       <p className="text-lg font-extrabold text-gray-900 dark:text-white">
-                                        {selectedItem.saleryOffered} -{" "}
+                                        {selectedItem.saleryOffered + " "}
                                         {selectedItem.currencyType} /{" "}
                                         {selectedItem.jobType}
                                       </p>

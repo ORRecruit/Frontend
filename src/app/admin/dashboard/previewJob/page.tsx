@@ -93,7 +93,7 @@ const page = () => {
             <p className="text-gray-600">{previewData.type}</p>
             <p className="text-gray-600">{previewData?.location}</p>
             <p className="text-lg font-extrabold text-gray-900 dark:text-white">
-              {previewData?.saleryOffered} - {previewData?.currencyType} /{" "}
+              {previewData?.saleryOffered} {previewData?.currencyType} /{" "}
               {previewData?.jobType}
             </p>
             <p className="font-light text-gray-500 dark:text-gray-400">

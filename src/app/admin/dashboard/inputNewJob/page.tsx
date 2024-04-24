@@ -275,6 +275,7 @@ const page = () => {
               >
                 <option value="USD">USD</option>
                 <option value="CAD">CAD</option>
+                <option value="AED">AED</option>
               </select>
             </div>
             <div className="w-[32%]">
