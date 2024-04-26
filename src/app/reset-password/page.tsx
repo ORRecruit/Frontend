@@ -80,7 +80,7 @@ const page = () => {
         <div className="h-screen flex justify-center items-center border border-red-400 relative">
           <section>
             <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-20 lg:py-16 lg:grid-cols-12">
-              {token && !token?.length ? (
+              {!(token?.length > 0) ? (
                 <div className="w-full p-6 mx-auto bg-white sm:max-w-xl lg:col-span-6 sm:p-8">
                   <h1 className="mb-2 text-2xl font-bold leading-tight tracking-tight text-gray-900 text-black">
                     Reset Your Password.
