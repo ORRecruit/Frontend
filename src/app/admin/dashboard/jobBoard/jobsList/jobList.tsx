@@ -640,11 +640,19 @@ const jobList = () => {
                                       <div className="mb-5">
                                         <div className="flex justify-between">
                                           <h1 className="text-3xl font-bold">
-                                            ORR-{selectedItem?.industry}-00
-                                            {selectedItem?.id + " "}
-                                            {selectedItem?.title}
+                                            ORR-
+                                            {selectedItem?.industry?.slice(
+                                              0,
+                                              4
+                                            )}
+                                            -00
+                                            {selectedItem?.id}
                                           </h1>
                                         </div>
+                                        <div className="font-light text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                          {selectedItem?.title}
+                                        </div>
+
                                         <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
                                           {selectedItem?.type}
                                         </span>
