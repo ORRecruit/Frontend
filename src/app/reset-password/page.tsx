@@ -22,9 +22,7 @@ const page = () => {
   const [password, setPassword] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
 
-  const [token, setToken] = useState<string>(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImVtYWlsIjoienNhcmZyYXozNjNAZ21haWwuY29tIiwiaWF0IjoxNzE0MTQ5NzE1LCJleHAiOjE3MTQ3NTQ1MTV9.rO4VAv6p46mxzW5QQq47EO3qohd8rYb-kbj2IKeYcIc"
-  );
+  const [token, setToken] = useState<string>("");
   const searchParams = useSearchParams();
 
   const resetPassTokenMutation = useMutation({
@@ -35,10 +33,7 @@ const page = () => {
   });
 
   useEffect(() => {
-    setToken(
-      searchParams.get("token") ||
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImVtYWlsIjoienNhcmZyYXozNjNAZ21haWwuY29tIiwiaWF0IjoxNzE0MTQ5NzE1LCJleHAiOjE3MTQ3NTQ1MTV9.rO4VAv6p46mxzW5QQq47EO3qohd8rYb-kbj2IKeYcIc"
-    );
+    setToken(searchParams.get("token") || "");
   }, [token]);
 
   const submitEmail = async (e: any) => {
@@ -57,8 +52,7 @@ const page = () => {
     e?.preventDefault();
     if (password) {
       const obj = {
-        token:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImVtYWlsIjoienNhcmZyYXozNjNAZ21haWwuY29tIiwiaWF0IjoxNzE0MTQ5NzE1LCJleHAiOjE3MTQ3NTQ1MTV9.rO4VAv6p46mxzW5QQq47EO3qohd8rYb-kbj2IKeYcIc",
+        token: "",
         password,
       };
       const response = await resetPasswordMutation.mutateAsync(obj);
