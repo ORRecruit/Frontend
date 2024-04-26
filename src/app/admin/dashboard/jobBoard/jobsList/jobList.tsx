@@ -9,6 +9,7 @@ import { DeleteJob } from "@/api/jobs/deleteJob";
 import { useMutation } from "@tanstack/react-query";
 import { editJob as editJobApi } from "@/api/jobs/editJob";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const jobList = () => {
   const router = useRouter();
@@ -38,6 +39,7 @@ const jobList = () => {
     contractType: "",
   });
   const [editId, setEditId] = useState<any>(null);
+  const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
 
   const deleteJobMutation = useMutation({
     mutationFn: (id: any) => DeleteJob(id),
@@ -72,7 +74,6 @@ const jobList = () => {
     e?.preventDefault();
 
     console.log("formData", editId, formData);
-    // setEditId()
 
     if (
       !formData.title ||
@@ -91,11 +92,16 @@ const jobList = () => {
       !formData.jobType ||
       !formData.contractType
     ) {
+      toast.error("Please Provide All Details");
       return;
     }
     const response = await editJobMutation.mutateAsync(formData);
-    console.log("response===", response);
-    router.push("/admin/dashboard/jobBoard");
+    if (response) {
+      toast.success("You have updated the Job Successfully.");
+      router.push("/admin/dashboard");
+    } else {
+      toast.error("Please Provide All Details");
+    }
   };
 
   const toggleShowOptions = (index: number) => {
@@ -145,6 +151,9 @@ const jobList = () => {
       setDeleteDialog(!deleteDialog);
       refetch();
     }
+  };
+  const openEditConfirmation = () => {
+    setConfirmationDialog(!confirmationDialog);
   };
 
   return (
@@ -688,7 +697,7 @@ const jobList = () => {
                               <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
                                 <div className="relative bg-white p-5 rounded-lg w-[60%] h-[80%] overflow-y-scroll border border-black-500">
                                   <div className="bg-white rounded-lg flex flex-col items-center">
-                                    <form action="" className="w-full relative">
+                                    <div className="w-full relative">
                                       <button
                                         onClick={closeEditDialog}
                                         className="absolute right-0 pb-1 text-lg text-black bg-transparent text-2xl"
@@ -1073,13 +1082,39 @@ const jobList = () => {
                                       </div>
                                       <div>
                                         <button
-                                          onClick={handleSubmit}
+                                          onClick={openEditConfirmation}
                                           className="w-full mt-[20px] sm:mt-[0px] bg-orange-600 text-white font-medium rounded-lg px-5 py-2.5 text-center"
                                         >
                                           Post Job
                                         </button>
                                       </div>
-                                    </form>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                            {confirmationDialog && (
+                              <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                                <div className="relative bg-white p-5 rounded-lg border border-black-500">
+                                  <button
+                                    onClick={openEditConfirmation}
+                                    className="absolute top-0 right-3 pb-1 text-lg text-black bg-transparent text-2xl"
+                                  >
+                                    &times;{" "}
+                                  </button>
+                                  <div className="bg-white rounded-lg flex flex-col items-center">
+                                    <p className="text-sm leading-5 text-gray-500 mt-3">
+                                      Are you sure want to Edit the Job?
+                                    </p>
+                                    <div className="mt-5 sm:mt-6">
+                                      <button
+                                        type="button"
+                                        className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                                        onClick={handleSubmit}
+                                      >
+                                        Post
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
