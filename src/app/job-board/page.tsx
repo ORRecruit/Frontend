@@ -55,8 +55,11 @@ const page = () => {
                     className="border border-black-400 p-4 mb-6 rounded-2xl hover:bg-gray-200 hover:cursor-pointer"
                     onClick={() => selectedJob(item)}
                   >
-                    <div className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
-                      ORR-{item?.industry}-00{item?.id} {item?.title}
+                    <div className="mb-0 text-xl font-semibold text-gray-900 dark:text-white">
+                      ORR-{item?.industry?.slice(0, 4)}-00{item?.id}
+                    </div>
+                    <div className="font-light text-lg font-semibold text-gray-500 dark:text-gray-400">
+                      {item?.title}{" "}
                     </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
                       {item.location}
@@ -98,8 +101,8 @@ const page = () => {
               <div className="mb-5">
                 <div className="flex justify-between">
                   <h1 className="text-3xl font-bold">
-                    ORR-{selectedValue?.industry}-00{selectedValue?.id}{" "}
-                    {selectedValue?.title}
+                    ORR-{selectedValue?.industry?.slice(0, 4)}-00
+                    {selectedValue?.id}
                   </h1>
                   <button
                     type="button"
@@ -109,6 +112,10 @@ const page = () => {
                     Apply Now
                   </button>
                 </div>
+                <div className="font-light text-xl font-semibold text-gray-500 dark:text-gray-400">
+                  {selectedValue?.title}
+                </div>
+
                 <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
                   {selectedValue?.type}
                 </span>

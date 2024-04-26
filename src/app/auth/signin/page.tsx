@@ -214,9 +214,12 @@ const page = () => {
                         </label>
                       </div>
                     </div>
-                    <div className="text-[14px] m-0 text-primary-color">
+                    <Link
+                      href="/reset-password"
+                      className="text-[14px] m-0 text-primary-color"
+                    >
                       Forgot Password?
-                    </div>
+                    </Link>
                   </div>
                   <button
                     type="submit"
