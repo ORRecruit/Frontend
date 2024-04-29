@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import CustomLoader from "@/components/customLoader";
 import { isAuthTokenExpired } from "../isAuthTokenExpired";
+import JobList from "@/components/dashboard/jobList/jobList";
 
 const page = () => {
   const router = useRouter();
@@ -97,7 +98,7 @@ const page = () => {
                 );
               })}
             </div>
-            <div className="bg-white rounded-lg mt-4 sm:w-[68%] sm:p-8">
+            {/* <div className="bg-white rounded-lg mt-4 sm:w-[68%] sm:p-8">
               <div className="mb-5">
                 <div className="flex justify-between">
                   <h1 className="text-3xl font-bold">
@@ -155,7 +156,8 @@ const page = () => {
                   {selectedValue?.requirements}
                 </ul>
               </div>
-            </div>
+            </div> */}
+            <JobList data={selectedValue} />
           </div>
         )}
         <About height="473px" backgroundImage="" />

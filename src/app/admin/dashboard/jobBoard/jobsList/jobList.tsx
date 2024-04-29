@@ -11,10 +11,11 @@ import { editJob as editJobApi } from "@/api/jobs/editJob";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { filterJobs } from "@/api/jobs/filterJobs";
+import JobList from "@/components/dashboard/jobList/jobList";
 
 const jobList = () => {
   const router = useRouter();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [showOptions, setShowOptions] = useState(false);
   const [activeOptionsIndex, setActiveOptionsIndex] = useState<number | null>(
@@ -65,6 +66,7 @@ const jobList = () => {
   }, [allJobsResponse.data]);
 
   const handleRowClick = (item: any) => {
+    item.closeDialogFtn = closeDialog;
     setSelectedItem(item);
     setIsDialogOpen(!isDialogOpen);
   };
@@ -542,11 +544,6 @@ const jobList = () => {
                                 className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
                                 onClick={() => handleRowClick(item)}
                               >
-                                {/* <img
-                            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/avatar-10.png"
-                            alt=""
-                            className="w-10 h-10 flex-shrink-0 border-2 border-white rounded-full dark:border-gray-800 mr-2"
-                          /> */}
                                 {item.title}
                               </th>
                               <td
@@ -634,83 +631,89 @@ const jobList = () => {
                                 )}
                               </td>
                               {isDialogOpen && (
+                                // <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                                //   <div className="relative bg-white p-5 rounded-lg max-w-2xl w-full border border-black-400">
+                                //     <div className="bg-white rounded-lg">
+                                //       <div className="mb-5">
+                                //         <div className="flex justify-between">
+                                //           <h1 className="text-3xl font-bold">
+                                //             ORR-
+                                //             {selectedItem?.industry?.slice(
+                                //               0,
+                                //               4
+                                //             )}
+                                //             -00
+                                //             {selectedItem?.id}
+                                //           </h1>
+                                //         </div>
+                                //         <div className="font-light text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                //           {selectedItem?.title}
+                                //         </div>
+
+                                //         <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
+                                //           {selectedItem?.type}
+                                //         </span>
+                                //       </div>
+
+                                //       <div className="mb-5">
+                                //         <p className="text-gray-600">
+                                //           {selectedItem?.location}
+                                //         </p>
+                                //         <p className="text-lg font-extrabold text-gray-900 dark:text-white">
+                                //           {selectedItem.saleryOffered + " "}
+                                //           {selectedItem.currencyType} /{" "}
+                                //           {selectedItem.jobType?.slice(
+                                //             0,
+                                //             selectedItem?.jobType?.length - 2
+                                //           )}
+                                //         </p>
+                                //         <p className="font-light text-gray-500 dark:text-gray-400">
+                                //           {selectedItem?.qualification}
+                                //         </p>
+                                //         <p className="font-light text-gray-500 dark:text-gray-400">
+                                //           {selectedItem?.contractType}
+                                //         </p>
+                                //         <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
+                                //           {selectedItem?.experienceRequired} Yrs
+                                //         </p>
+                                //       </div>
+
+                                //       <h2 className="text-lg font-semibold mb-2">
+                                //         Job Description
+                                //       </h2>
+                                //       <div className="text-gray-700 mb-2">
+                                //         <p>{selectedItem?.description}</p>
+                                //         <br />
+                                //       </div>
+
+                                //       <h3 className="text-lg font-semibold mb-2">
+                                //         Responsibilities
+                                //       </h3>
+                                //       <ul className="list-disc list-inside text-gray-700 mb-2">
+                                //         <p>{selectedItem?.responsibilities}</p>
+                                //       </ul>
+                                //       <div className="text-gray-700 mb-2">
+                                //         <h3 className="text-lg font-semibold mb-2">
+                                //           Requirements
+                                //         </h3>
+                                //         <ul className="list-disc list-inside text-gray-700 mb-2">
+                                //           {selectedItem?.requirements}
+                                //         </ul>
+                                //       </div>
+                                //     </div>
+                                //     <button
+                                //       onClick={closeDialog} // This closes the modal when clicked
+                                //       className="absolute top-0 right-0 p-8 text-lg text-black bg-transparent text-2xl"
+                                //     >
+                                //       &times;{" "}
+                                //     </button>
+                                //   </div>
+                                // </div>
                                 <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
-                                  <div className="relative bg-white p-5 rounded-lg max-w-2xl w-full border border-black-400">
-                                    <div className="bg-white rounded-lg">
-                                      <div className="mb-5">
-                                        <div className="flex justify-between">
-                                          <h1 className="text-3xl font-bold">
-                                            ORR-
-                                            {selectedItem?.industry?.slice(
-                                              0,
-                                              4
-                                            )}
-                                            -00
-                                            {selectedItem?.id}
-                                          </h1>
-                                        </div>
-                                        <div className="font-light text-lg font-semibold text-gray-500 dark:text-gray-400">
-                                          {selectedItem?.title}
-                                        </div>
-
-                                        <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
-                                          {selectedItem?.type}
-                                        </span>
-                                      </div>
-
-                                      <div className="mb-5">
-                                        <p className="text-gray-600">
-                                          {selectedItem?.location}
-                                        </p>
-                                        <p className="text-lg font-extrabold text-gray-900 dark:text-white">
-                                          {selectedItem.saleryOffered + " "}
-                                          {selectedItem.currencyType} /{" "}
-                                          {selectedItem.jobType?.slice(
-                                            0,
-                                            selectedItem?.jobType?.length - 2
-                                          )}
-                                        </p>
-                                        <p className="font-light text-gray-500 dark:text-gray-400">
-                                          {selectedItem?.qualification}
-                                        </p>
-                                        <p className="font-light text-gray-500 dark:text-gray-400">
-                                          {selectedItem?.contractType}
-                                        </p>
-                                        <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
-                                          {selectedItem?.experienceRequired} Yrs
-                                        </p>
-                                      </div>
-
-                                      <h2 className="text-lg font-semibold mb-2">
-                                        Job Description
-                                      </h2>
-                                      <div className="text-gray-700 mb-2">
-                                        <p>{selectedItem?.description}</p>
-                                        <br />
-                                      </div>
-
-                                      <h3 className="text-lg font-semibold mb-2">
-                                        Responsibilities
-                                      </h3>
-                                      <ul className="list-disc list-inside text-gray-700 mb-2">
-                                        <p>{selectedItem?.responsibilities}</p>
-                                      </ul>
-                                      <div className="text-gray-700 mb-2">
-                                        <h3 className="text-lg font-semibold mb-2">
-                                          Requirements
-                                        </h3>
-                                        <ul className="list-disc list-inside text-gray-700 mb-2">
-                                          {selectedItem?.requirements}
-                                        </ul>
-                                      </div>
-                                    </div>
-                                    <button
-                                      onClick={closeDialog} // This closes the modal when clicked
-                                      className="absolute top-0 right-0 p-8 text-lg text-black bg-transparent text-2xl"
-                                    >
-                                      &times;{" "}
-                                    </button>
-                                  </div>
+                                  <JobList
+                                    data={selectedItem}
+                                    closeDialog={closeDialog}
+                                  />
                                 </div>
                               )}
                               {deleteDialog && (
