@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useRef } from "react";
 import Navbar from "@/components/landing/navbar/navbar";
 import Footer from "@/components/landing/footer/footer";
 import BlogGrid from "@/components/landing/blogs/BlogGrid/BlogGrid";
@@ -103,9 +104,22 @@ const page = () => {
       date: "April 13, 2024",
     },
   ];
+
+  const myRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
+
+  const scrollToBottom = () => {
+    if (myRef.current) {
+      myRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <>
-      <Navbar />
+      <Navbar scrollToBottom={scrollToBottom} />
       <BlogHeader />
       <BlogGrid articles={articles} />
       <Footer />

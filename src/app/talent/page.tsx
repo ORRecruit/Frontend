@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useRef } from "react";
 import Navbar from "@/components/landing/navbar/navbar";
 import HeroSection from "@/components/landing/heroSection/heroSection";
 import Assessments from "@/components/landing/assessments/assessments";
@@ -14,9 +15,22 @@ const page = () => {
     "/hero-icon4.svg",
     "/hero-icon5.svg",
   ];
+
+  const myRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
+
+  const scrollToBottom = () => {
+    if (myRef.current) {
+      myRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <>
-      <Navbar />
+      <Navbar scrollToBottom={scrollToBottom} />
       <HeroSection
         heading={"Find your Dream Job Today!"}
         paragraph={`Experience a guided process that helps you land a job that propels your career forward.`}

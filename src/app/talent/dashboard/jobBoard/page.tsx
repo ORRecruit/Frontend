@@ -114,6 +114,9 @@ const page = () => {
         <div className="p-8 bg-white rounded-lg mt-8 sm:w-[68%]">
           <div className="mb-5">
             <h1 className="text-3xl font-bold">{selectedValue?.title}</h1>
+            <div className="mb-0 text-xl font-semibold text-gray-900 dark:text-white">
+              ORR-{selectedValue?.industry?.slice(0, 4)}-00{selectedValue?.id}
+            </div>
             <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
               {selectedValue?.type}
             </span>
@@ -129,6 +132,9 @@ const page = () => {
           <div className="mb-5">
             <p className="text-gray-600">{selectedValue?.location}</p>
             <p className="text-gray-600">{selectedValue?.type}</p>
+            <p className="font-light text-gray-500 dark:text-gray-400">
+              {selectedValue?.contractType}
+            </p>
             <p className="font-semibold text-gray-900">
               {selectedValue?.saleryOffered}k
             </p>

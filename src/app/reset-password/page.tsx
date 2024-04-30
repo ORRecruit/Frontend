@@ -20,6 +20,7 @@ const page = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [ConfirmPassword, setConfirmPassword] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
 
   const [token, setToken] = useState<string>("");
@@ -33,7 +34,7 @@ const page = () => {
   });
 
   useEffect(() => {
-    setToken(searchParams.get("token") || "");
+    setToken(searchParams.get("token") || "mail");
   }, [token]);
 
   const submitEmail = async (e: any) => {
@@ -50,7 +51,7 @@ const page = () => {
   };
   const resetPasswordApi = async (e: any) => {
     e?.preventDefault();
-    if (password) {
+    if (password === ConfirmPassword) {
       const obj = {
         token: "",
         password,
@@ -62,6 +63,8 @@ const page = () => {
       } else {
         toast.error("Something went wrong, Please try again");
       }
+    } else {
+      toast.error(`Password did't match. Try Again`);
     }
   };
 
@@ -70,6 +73,9 @@ const page = () => {
   };
   const handlePasswordChange = (event: any) => {
     setPassword(event.target.value);
+  };
+  const handleConfirmPasswordChange = (event: any) => {
+    setConfirmPassword(event.target.value);
   };
 
   return (
@@ -146,6 +152,21 @@ const page = () => {
                           required={true}
                           value={password}
                           onChange={handlePasswordChange}
+                        />
+                      </div>
+                      <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          Confirm Password
+                        </label>
+                        <input
+                          type="password"
+                          name="password"
+                          id="password"
+                          placeholder="••••••••"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          required={true}
+                          value={ConfirmPassword}
+                          onChange={handleConfirmPasswordChange}
                         />
                       </div>
                     </div>

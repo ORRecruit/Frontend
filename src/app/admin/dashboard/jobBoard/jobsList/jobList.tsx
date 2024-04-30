@@ -542,11 +542,6 @@ const jobList = () => {
                                 className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
                                 onClick={() => handleRowClick(item)}
                               >
-                                {/* <img
-                            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/avatar-10.png"
-                            alt=""
-                            className="w-10 h-10 flex-shrink-0 border-2 border-white rounded-full dark:border-gray-800 mr-2"
-                          /> */}
                                 {item.title}
                               </th>
                               <td
@@ -640,17 +635,14 @@ const jobList = () => {
                                       <div className="mb-5">
                                         <div className="flex justify-between">
                                           <h1 className="text-3xl font-bold">
-                                            ORR-
-                                            {selectedItem?.industry?.slice(
-                                              0,
-                                              4
-                                            )}
-                                            -00
-                                            {selectedItem?.id}
+                                            {selectedItem?.title}
                                           </h1>
                                         </div>
                                         <div className="font-light text-lg font-semibold text-gray-500 dark:text-gray-400">
-                                          {selectedItem?.title}
+                                          ORR-
+                                          {selectedItem?.industry?.slice(0, 4)}
+                                          -00
+                                          {selectedItem?.id}
                                         </div>
 
                                         <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
