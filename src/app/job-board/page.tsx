@@ -1,6 +1,6 @@
 "use client";
 import Navbar from "@/components/landing/navbar/navbar";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FilterHeaderJobBoard from "@/components/landing/filterHeaderJobBoard/filterHeaderJobBoard";
 import About from "@/components/landing/about/about";
 import Footer from "@/components/landing/footer/footer";
@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import CustomLoader from "@/components/customLoader";
 import { isAuthTokenExpired } from "../isAuthTokenExpired";
-import DOMPurify from 'dompurify';
+import DOMPurify from "dompurify";
 const page = () => {
   const router = useRouter();
   const [selectedValue, setSelectedValue] = useState<any>({});
@@ -38,14 +38,26 @@ const page = () => {
     }
   };
 
-  const createMarkup = (htmlContent:any) => {
+  const createMarkup = (htmlContent: any) => {
     return { __html: DOMPurify.sanitize(htmlContent) };
+  };
+
+  const myRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
+
+  const scrollToBottom = () => {
+    if (myRef.current) {
+      myRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
     <div>
       <div>
-        <Navbar />
+        <Navbar scrollToBottom={scrollToBottom} />
         <FilterHeaderJobBoard />
         {isLoading ? (
           <CustomLoader />
@@ -60,10 +72,10 @@ const page = () => {
                     onClick={() => selectedJob(item)}
                   >
                     <div className="mb-0 text-xl font-semibold text-gray-900 dark:text-white">
-                      ORR-{item?.industry?.slice(0, 4)}-00{item?.id}
+                      {item?.title}{" "}
                     </div>
                     <div className="font-light text-lg font-semibold text-gray-500 dark:text-gray-400">
-                      {item?.title}{" "}
+                      ORR-{item?.industry?.slice(0, 4)}-00{item?.id}
                     </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
                       {item.location}
@@ -75,6 +87,9 @@ const page = () => {
                     <div className="font-light text-gray-500 dark:text-gray-400">
                       {item.qualification}
                     </div>
+                    <p className="font-light text-gray-500 dark:text-gray-400">
+                      {item?.contractType}
+                    </p>
                     <div className="mb-4 font-light text-gray-500 dark:text-gray-400">
                       {item.experienceRequired} Yrs
                     </div>
@@ -94,7 +109,12 @@ const page = () => {
                       </button>
                     </div>
 
-                    <p className="text-sm text-gray-500 dark:text-gray-400" dangerouslySetInnerHTML={createMarkup(selectedValue?.description?.slice(0,200))} />
+                    <p
+                      className="text-sm text-gray-500 dark:text-gray-400"
+                      dangerouslySetInnerHTML={createMarkup(
+                        selectedValue?.description?.slice(0, 200)
+                      )}
+                    />
                   </div>
                 );
               })}
@@ -142,7 +162,12 @@ const page = () => {
               </div>
 
               <h2 className="text-lg font-semibold mb-4">Job Description</h2>
-              <div className="text-gray-700 mb-8 job-description-content" dangerouslySetInnerHTML={createMarkup(selectedValue?.description)} />
+              <div
+                className="text-gray-700 mb-8 job-description-content"
+                dangerouslySetInnerHTML={createMarkup(
+                  selectedValue?.description
+                )}
+              />
 
               <h3 className="text-lg font-semibold mb-3">Responsibilities</h3>
               <ul className="list-disc list-inside text-gray-700 mb-8">
