@@ -1,13 +1,27 @@
 "use client";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-const Navbar = () => {
+interface NavbarProps {
+  scrollToBottom: () => void;
+}
+const Navbar = ({scrollToBottom}:NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const handleNavigation = () =>{
+    if(pathname === "/"){
+      scrollToBottom();
+    } else {
+      router.push("/")
+    }
+  }
 
   return (
     <nav className="bg-white h-24 lg:w-[100%] mx-auto 2xl:mb-10 xl:mb-6">
@@ -30,9 +44,10 @@ const Navbar = () => {
           </Link>
           <button
             type="button"
+            onClick={handleNavigation}
             className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600"
           >
-            <Link href="#contactUs">Contact Us</Link>
+            Contact Us
           </button>
           <button
             data-collapse-toggle="navbar-cta"
