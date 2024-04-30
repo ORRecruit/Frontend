@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import CustomLoader from "@/components/customLoader";
 import { isAuthTokenExpired } from "../isAuthTokenExpired";
-
+import DOMPurify from 'dompurify';
 const page = () => {
   const router = useRouter();
   const [selectedValue, setSelectedValue] = useState<any>({});
@@ -36,6 +36,10 @@ const page = () => {
     } else {
       router.push(`/auth/signin`);
     }
+  };
+
+  const createMarkup = (htmlContent:any) => {
+    return { __html: DOMPurify.sanitize(htmlContent) };
   };
 
   return (
@@ -90,9 +94,7 @@ const page = () => {
                       </button>
                     </div>
 
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {item.description?.slice(0, 200)}...
-                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400" dangerouslySetInnerHTML={createMarkup(selectedValue?.description?.slice(0,200))} />
                   </div>
                 );
               })}
@@ -140,10 +142,7 @@ const page = () => {
               </div>
 
               <h2 className="text-lg font-semibold mb-4">Job Description</h2>
-              <div className="text-gray-700 mb-8">
-                <p>{selectedValue?.description}</p>
-                <br />
-              </div>
+              <div className="text-gray-700 mb-8 job-description-content" dangerouslySetInnerHTML={createMarkup(selectedValue?.description)} />
 
               <h3 className="text-lg font-semibold mb-3">Responsibilities</h3>
               <ul className="list-disc list-inside text-gray-700 mb-8">

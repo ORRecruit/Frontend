@@ -1,48 +1,91 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo, ChangeEvent,KeyboardEvent  } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from 'next/dynamic';
+import 'react-quill/dist/quill.snow.css';
+import { debounce } from 'lodash';
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const page = () => {
   const router = useRouter();
-
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");  
+  const [description, setDescription] = useState("");
+  const [skills, setSkills] = useState<string[]>([]);
+  const [currentSkill, setCurrentSkill] = useState('');
   const [formData, setFormData] = useState({
     title: "",
-    description: "",
     location: "",
     type: "",
-    industry: "Technology",
+    industry: "",
     skillsRequired: "",
     experienceRequired: "4",
     companyName: "",
-    qualification: "Middle",
+    qualification: "",
     saleryOffered: "5",
     requirements: "",
     responsibilities: "",
-    jobType: "Hourly",
-    currencyType: "USD",
-    contractType: "FullTime",
+    jobType: "",
+    currencyType: "",
+    contractType: "",
   });
 
-  const handleChange = (e: any) => {
+
+  const setDebouncedDescription = useCallback(debounce((value) => {
+    setDescription(value);
+  }, 300), []);
+  
+
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     e.preventDefault();
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+  }, []);
+
+  const handleDescriptionChange = useCallback((value:string) => {
+    setDebouncedDescription(value);
+  }, [setDebouncedDescription]);
+
+  const handleSkillChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setCurrentSkill(event.target.value);
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && currentSkill) {
+      event.preventDefault();
+      setSkills(prevSkills => [...prevSkills, currentSkill]);
+      setCurrentSkill('');
+    }
+  };
+
+  const quillModules = useMemo(() => ({
+    toolbar: true
+  }), []);
+
+  const quillFormats = useMemo(() => [
+    'bold', 'italic', 'underline', 'strike', 'list', 'bullet', 'link'
+  ], []);
+
+  const QuillComponent = useMemo(() => (
+    <ReactQuill
+      theme="snow"
+      value={description}
+      onChange={handleDescriptionChange}
+      modules={quillModules}
+      formats={quillFormats}
+      placeholder="Type Description here..."
+    />
+  ), [description, handleDescriptionChange, quillModules, quillFormats]);
+
+  const handleSubmit = useCallback(async (e:any) => {
     e?.preventDefault();
-
-    console.log("formData", formData);
-
     if (
       !formData.title ||
-      !formData.description ||
+      !description||
       !formData.location ||
       !formData.type ||
       !formData.industry ||
@@ -60,10 +103,15 @@ const page = () => {
       return;
     }
     setErrorMessage("");
-    localStorage.setItem("postJob", JSON.stringify(formData));
+    const data = {
+      ...formData,
+      description: description
+    };
+    localStorage.setItem("postJob", JSON.stringify(data));
     router.push("/admin/dashboard/previewJob");
-  };
-
+  }, [formData, description, router]);
+  console.log("re rendering ...........") 
+  console.log("The skills array >>>>",skills);
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%]">
@@ -202,10 +250,18 @@ const page = () => {
               id="default-input"
               name="skillsRequired"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-              value={formData.skillsRequired}
-              onChange={handleChange}
+              value={currentSkill}
+              onChange={handleSkillChange}
+              onKeyUp={handleKeyPress}
               required={true}
             />
+            <div className="mt-3">
+             {skills.map((skill, index) => (
+          <div key={index} className="inline-block bg-gray-200 text-gray-900 text-sm rounded px-4 py-2 mr-2 mb-2">
+            {skill}
+          </div>
+        ))}
+      </div>
           </div>
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
@@ -256,9 +312,9 @@ const page = () => {
                 value={formData.jobType}
                 onChange={handleChange}
               >
-                <option value="Hourly">Hour</option>
-                <option value="Monthly">Month</option>
-                <option value="Yearly">Year</option>
+                <option value="Hour">Hour</option>
+                <option value="Month">Month</option>
+                <option value="Year">Year</option>
               </select>
             </div>
             <div className="w-[32%]">
@@ -394,15 +450,7 @@ const page = () => {
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
           <h1 className="text-lg font-bold pb-2">Description*</h1>
           <div className="mb-2 w-[90%]">
-            <textarea
-              rows={4}
-              id="default-input"
-              placeholder="Type Description here..."
-              value={formData.description}
-              onChange={handleChange}
-              name="description"
-              className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-            />
+          {QuillComponent}
           </div>
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">

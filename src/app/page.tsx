@@ -1,4 +1,5 @@
-import React from "react";
+'use client';
+import React, { useEffect, useRef } from "react";
 import Navbar from "@/components/landing/navbar/navbar";
 import HeroSection from "@/components/landing/heroSection/heroSection";
 import Service from "@/components/landing/services/services";
@@ -14,6 +15,7 @@ import ORRTeam from "@/components/landing/orrTeam/orrTeam";
 import Specialization from "@/components/landing/specialization/specialization";
 
 const page = () => {
+  const myRef = useRef<HTMLDivElement>(null);
   const iconImages = [
     "/hero-icon1.svg",
     "/hero-icon2.svg",
@@ -21,13 +23,25 @@ const page = () => {
     "/hero-icon4.svg",
     "/hero-icon5.svg",
   ];
+
+
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
+  
+  const scrollToBottom = () =>{
+    if (myRef.current) {
+    myRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+  
   return (
     <div>
       {/* <div className="flex justify-center bg-blue-300 h-12 text-center text-blue-950 text-sm items-center">
         Our website is under maintenance. Please check back later.
       </div> */}
       <Cookie />
-      <Navbar />
+      <Navbar scrollToBottom={scrollToBottom} />
       <HeroSection
         heading={"Revolutionize Your Hiring"}
         paragraph={`Elevate your hiring process with our AI-powered platform tailored for work. Connect seamlessly with top talent, streamline recruitment, and effortlessly build your dream team.`}
@@ -57,7 +71,7 @@ const page = () => {
       />
       <Features />
       <Specialization />
-      <div id="contactUs">
+      <div ref={myRef} id="contactUs">
         <ContactUs />
       </div>
       <FAQs />

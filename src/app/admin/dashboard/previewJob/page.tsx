@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import SuccessModal from "../successModal/successModal";
 import { postJob as postJobApi } from "@/api/jobs/postJob";
 import { useMutation } from "@tanstack/react-query";
-
+import DOMPurify from 'dompurify';
 interface PreviewData {
   title: string;
   type: string;
@@ -43,6 +43,10 @@ const page = () => {
 
     await postJobMutation.mutateAsync(previewData);
     localStorage.removeItem("postJob");
+  };
+
+  const createMarkup = (htmlContent:any) => {
+    return { __html: DOMPurify.sanitize(htmlContent) };
   };
   return (
     <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
@@ -105,8 +109,7 @@ const page = () => {
           </div>
 
           <h2 className="text-lg font-semibold mb-4">Job Description</h2>
-          <p className="text-gray-700 mb-8">{previewData.description}</p>
-
+          <p className="text-gray-700 mb-8 job-description-content" dangerouslySetInnerHTML={createMarkup(previewData.description)} />
           <h3 className="text-lg font-semibold mb-3">Responsibilities</h3>
           <ul className="list-disc list-inside text-gray-700 mb-8 lg:w-[70%] xl:w-[50%]">
             <p>{previewData.responsibilities}</p>

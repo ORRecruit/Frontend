@@ -5,3 +5,28 @@
 html {
   scroll-behavior: smooth;
 }
+
+.react-quill {
+  height: 250px;
+}
+
+.ql-editor {
+  min-height: 200px; 
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.job-description-content ul {
+    @apply list-disc ml-5 pl-4;
+}
+
+.job-description-content ol {
+  @apply list-decimal ml-5 pl-4;
+}
+
+.job-description-content ul li,
+.job-description-content ol li {
+    @apply mb-2;
+}
+
+
