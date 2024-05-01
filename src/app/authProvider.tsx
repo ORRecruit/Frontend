@@ -18,7 +18,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   React.useEffect(() => {
     const token = localStorage.getItem("authToken");
-    const role = localStorage.getItem("role");
+    const role = localStorage.getItem("roles");
     if (
       path === "/" ||
       path === "/job-board" ||
@@ -41,13 +41,13 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         path === "/admin/dashboard/previewJob" ||
         path === "/admin/dashboard/overview"
       ) {
-        if (role === "Admin" && !isAuthTokenExpired(token!)) {
+        if (role === "admin" && !isAuthTokenExpired(token!)) {
           router.push(path);
         } else {
           router.push("/auth/signin");
         }
       } else {
-        if (path.includes("talent") && role === "Candidate") {
+        if (path.includes("talent") && role === "candidate") {
           router.push(path);
         } else {
           router.push("/auth/signin");

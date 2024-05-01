@@ -2,12 +2,12 @@ export interface LoginResponse {
   success: boolean;
   message: string;
   token: string;
-  User: UserInfo;
+  user: UserInfo;
 }
 
 interface UserInfo {
   userId: string;
-  role: string;
+  roles: string;
   email: string;
   isProfile: boolean;
 }

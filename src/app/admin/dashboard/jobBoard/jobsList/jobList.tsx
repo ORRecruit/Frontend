@@ -61,7 +61,7 @@ const jobList = () => {
   // });
 
   useEffect(() => {
-    console.log("data....", allJobsResponse.data?.jobs);
+    console.log("data....", allJobsResponse.data?.data);
   }, [allJobsResponse.data]);
 
   const handleRowClick = (item: any) => {
@@ -520,7 +520,7 @@ const jobList = () => {
                   </thead>
                   <tbody>
                     {allJobsResponse.data &&
-                      allJobsResponse.data?.jobs?.map(
+                      allJobsResponse.data?.data?.map(
                         (item: any, index: any) => {
                           return (
                             <tr

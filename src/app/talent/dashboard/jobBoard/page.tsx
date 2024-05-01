@@ -31,14 +31,14 @@ const page = () => {
     //   router.push("/dashboard/talentForm/resume-upload");
     //   return;
     // }
-    console.log("data....", data?.jobs);
+    console.log("data....", data?.data);
     if (params) {
-      const queryJobData = data?.jobs?.filter((item: any) => item.id == params);
+      const queryJobData = data?.data?.filter((item: any) => item.id == params);
       queryJobData?.length
         ? setSelectedValue(queryJobData[0])
-        : setSelectedValue(data?.jobs[0]);
+        : setSelectedValue(data?.data[0]);
     } else {
-      setSelectedValue(data?.jobs[0]);
+      setSelectedValue(data?.data[0]);
     }
   }, [data]);
 
@@ -72,7 +72,7 @@ const page = () => {
           ""
         )}
         <div className="sm:w-[29%] h-[350px] sm:h-auto overflow-auto mt-12 max-h-[65rem]">
-          {data?.jobs?.map((item: any, index: any) => {
+          {data?.data?.map((item: any, index: any) => {
             return (
               <div
                 key={index}
