@@ -35,15 +35,15 @@ const page = () => {
           setResponseMessage("");
         }, 3000);
         localStorage.setItem("authToken", response.token);
-        localStorage.setItem("role", response.User.role);
-        if (response.User?.role == "Candidate") {
-          if (response?.User?.isProfile === true) {
+        localStorage.setItem("roles", response?.user.roles);
+        if (response.user?.roles == "candidate") {
+          if (response?.user?.isProfile === true) {
             router.replace("/talent/dashboard");
-            localStorage.setItem("candidateId", response?.User?.userId);
+            localStorage.setItem("candidateId", response?.user?.userId);
           } else {
             router.push("/talentForm/resume-upload");
           }
-        } else if (response.User.role == "Admin") {
+        } else if (response.user.roles == "admin") {
           router.push("/admin/dashboard");
         }
       } else if (response.success === false) {

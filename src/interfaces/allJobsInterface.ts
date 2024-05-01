@@ -1,6 +1,6 @@
 export interface AllJobsInterface {
   message: string;
-  jobs: JobDetail[];
+  data: JobDetail[];
 }
 
 interface JobDetail {
@@ -12,7 +12,7 @@ interface JobDetail {
   industry: string;
   companyName: string;
   qualification: string;
-  saleryOffered: string; // Consider using "salaryOffered" if "saleryOffered" is a typo
+  salaryOffered: string; // Consider using "salaryOffered" if "saleryOffered" is a typo
   requirements: string;
   responsibilities: string;
   skillsRequired: string;

@@ -29,21 +29,21 @@ const page = () => {
       if (response.success === true) {
         setErrorMessage("");
         console.log("response....", response);
-        if (response.User.role === "Admin") {
+        if (response.user.roles === "Admin") {
           toast.error("Use Admin Route to Sign Admin In!");
           return;
         }
         toast.success(response?.message);
         localStorage.setItem("authToken", response.token);
-        if (response.User?.role == "Candidate") {
-          if (response?.User?.isProfile === true) {
+        if (response.user?.roles == "candidate") {
+          if (response?.user?.isProfile === true) {
             router.replace("/talent/dashboard");
-            localStorage.setItem("candidateId", response?.User?.userId);
-            localStorage.setItem("role", response?.User?.role);
+            localStorage.setItem("candidateId", response?.user?.userId);
+            localStorage.setItem("role", response?.user?.roles);
           } else {
             router.push("/talentForm/resume-upload");
           }
-        } else if (response.User.role == "Admin") {
+        } else if (response.user.roles == "admin") {
           router.push("/admin/dashboard");
         }
       } else if (response.success === false) {

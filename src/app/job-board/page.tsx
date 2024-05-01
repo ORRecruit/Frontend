@@ -19,8 +19,8 @@ const page = () => {
   });
 
   useEffect(() => {
-    console.log("data....", data?.jobs);
-    setSelectedValue(data?.jobs[0]);
+    console.log("data....", data?.data);
+    setSelectedValue(data?.data[0]);
   }, [data]);
 
   const selectedJob = (item: any) => {
@@ -64,7 +64,7 @@ const page = () => {
         ) : (
           <div className="max-w-screen-xl sm:flex sm:items-start sm:justify-between mx-auto p-4">
             <div className="sm:w-[29%] h-[350px] sm:h-auto overflow-auto mt-12 max-h-[65rem]">
-              {data?.jobs?.map((item: any, index: any) => {
+              {data?.data?.map((item: any, index: any) => {
                 return (
                   <div
                     key={index}
@@ -81,7 +81,7 @@ const page = () => {
                       {item.location}
                     </div>
                     <div className="text-lg font-extrabold text-gray-900 dark:text-white">
-                      {item.saleryOffered + " "} {item.currencyType} /{" "}
+                      {item.salaryOffered + " "} {item.currencyType} /{" "}
                       {item.jobType?.slice(0, item?.jobType?.length - 2)}
                     </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
@@ -146,7 +146,7 @@ const page = () => {
               <div className="mb-5">
                 <p className="text-gray-600">{selectedValue?.location}</p>
                 <p className="text-lg font-extrabold text-gray-900 dark:text-white">
-                  {selectedValue?.saleryOffered + " "}{" "}
+                  {selectedValue?.salaryOffered + " "}{" "}
                   {selectedValue?.currencyType} /{" "}
                   {selectedValue?.jobType?.slice(
                     0,
