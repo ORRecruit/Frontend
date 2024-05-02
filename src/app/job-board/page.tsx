@@ -56,6 +56,21 @@ const page = () => {
     }
   };
 
+  function formatString(str: string): string {
+    const capitalizeWords = (s: string): string => 
+      s.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+  
+      const splitCamelCase = (s: string): string => 
+      capitalizeWords(s.replace(/([a-z])([A-Z])/g, '$1 $2'));
+  
+    return str.split('-').map((part: string) => 
+      splitCamelCase(part.trim())
+    ).join(' - ');
+  }
+  
+  
+  
+
   return (
     <div>
       <div>
@@ -80,7 +95,7 @@ const page = () => {
                       ORR-{item?.industry?.slice(0, 4)}-00{item?.id}
                     </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
-                      {item.jobVenue} - {item.contractType}
+                    {formatString(`${item.jobVenue} - ${item.contractType}`)}
                     </div>
                     <div className="text-lg font-extrabold text-gray-900 dark:text-white">
                       {item.salaryOffered?.replace(/"/g, "") + " "}{" "}
@@ -153,7 +168,7 @@ const page = () => {
                     selectedValue?.jobType?.length - 2
                   )} */}
                   {/* {staticSalary[selectedValue?.id - 1]} */}
-                  {selectedValue?.jobVenue} - {selectedValue?.contractType}
+                  {formatString(`${selectedValue?.jobVenue} - ${selectedValue?.contractType}`)}
                 </p>
                 <p className="font-light text-gray-500 dark:text-gray-400">
                   {selectedValue?.qualification}
