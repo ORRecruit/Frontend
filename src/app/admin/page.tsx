@@ -35,7 +35,7 @@ const page = () => {
           setResponseMessage("");
         }, 3000);
         localStorage.setItem("authToken", response.token);
-        localStorage.setItem("roles", response?.user.roles);
+        localStorage.setItem("role", response?.user.roles[0]);
         if (response.user?.roles == "candidate") {
           if (response?.user?.isProfile === true) {
             router.replace("/talent/dashboard");
@@ -43,7 +43,7 @@ const page = () => {
           } else {
             router.push("/talentForm/resume-upload");
           }
-        } else if (response.user.roles == "admin") {
+        } else if (response.user.roles[0] == "admin") {
           router.push("/admin/dashboard");
         }
       } else if (response.success === false) {

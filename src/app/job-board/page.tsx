@@ -76,23 +76,19 @@ const page = () => {
                     <div className="mb-0 text-xl font-semibold text-gray-900 dark:text-white">
                       {item?.title}{" "}
                     </div>
-                    <div className="font-light text-lg font-semibold text-gray-500 dark:text-gray-400">
+                    <div className="font-light text-lg text-gray-500 dark:text-gray-400">
                       ORR-{item?.industry?.slice(0, 4)}-00{item?.id}
                     </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
-                      {item.type} - {item.location}
+                      {item.jobVenue} - {item.contractType}
                     </div>
                     <div className="text-lg font-extrabold text-gray-900 dark:text-white">
-                      {/* {item.salaryOffered + " "} {item.currencyType} /{" "}
-                      {item.jobType?.slice(0, item?.jobType?.length - 2)} */}
-                      {staticSalary[index]}
+                      {item.salaryOffered.replace(/"/g, '') + " "} {item.currencyType} /{" "}
+                      {item.jobType}
                     </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
                       {item.qualification}
                     </div>
-                    <p className="font-light text-gray-500 dark:text-gray-400">
-                      {item?.contractType}
-                    </p>
                     <div className="mb-4 font-light text-gray-500 dark:text-gray-400">
                       {item.experienceRequired} Yrs
                     </div>
@@ -102,13 +98,13 @@ const page = () => {
                         type="button"
                         className="text-black-400 hover:text-white border border-gray-800 bg-white hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-3xl text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
                       >
-                        {item.type}
+                        {item.jobVenue}
                       </button>
                       <button
                         type="button"
                         className="text-black-400 hover:text-white border border-gray-800 bg-white hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-3xl text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
                       >
-                        {item.location}
+                        {item.contractType}
                       </button>
                     </div>
 
@@ -145,17 +141,19 @@ const page = () => {
               </div>
 
               <div className="mb-5">
-                <p className="text-gray-600">
-                  {selectedValue?.type} - {selectedValue?.location}
+              <p className="text-lg font-extrabold text-gray-900 dark:text-white">
+                      {selectedValue?.salaryOffered.replace(/"/g, '') + " "} {selectedValue?.currencyType} /{" "}
+                      {selectedValue?.jobType}
                 </p>
-                <p className="text-lg font-extrabold text-gray-900 dark:text-white">
+                <p className="font-light text-gray-500 dark:text-gray-400">
                   {/* {selectedValue?.salaryOffered + " "}{" "}
                   {selectedValue?.currencyType} /{" "}
                   {selectedValue?.jobType?.slice(
                     0,
                     selectedValue?.jobType?.length - 2
                   )} */}
-                  {staticSalary[selectedValue?.id - 1]}
+                  {/* {staticSalary[selectedValue?.id - 1]} */}
+                  {selectedValue?.jobVenue} - {selectedValue?.contractType}
                 </p>
                 <p className="font-light text-gray-500 dark:text-gray-400">
                   {selectedValue?.qualification}

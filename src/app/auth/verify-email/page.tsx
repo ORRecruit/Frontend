@@ -19,7 +19,7 @@ const page = () => {
           if (response.data) {
             console.log(response.data.message);
             toast.success(response.data.message);
-            router.push("/dashboard/auth/signin");
+            router.push("/auth/signin");
           } else {
             toast.error(response.data.error || "Could not verify email.");
           }

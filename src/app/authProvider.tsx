@@ -18,7 +18,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   React.useEffect(() => {
     const token = localStorage.getItem("authToken");
-    const role = localStorage.getItem("roles");
+    const role = localStorage.getItem("role");
     if (
       path === "/" ||
       path === "/job-board" ||
