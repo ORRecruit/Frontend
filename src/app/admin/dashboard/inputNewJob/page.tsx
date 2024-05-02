@@ -1,117 +1,146 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useCallback, useMemo, ChangeEvent,KeyboardEvent  } from "react";
+import React, {
+  useState,
+  useCallback,
+  useMemo,
+  ChangeEvent,
+  KeyboardEvent,
+} from "react";
 import { useRouter } from "next/navigation";
-import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css';
-import { debounce } from 'lodash';
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import dynamic from "next/dynamic";
+import "react-quill/dist/quill.snow.css";
+import { debounce } from "lodash";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const page = () => {
   const router = useRouter();
-  const [errorMessage, setErrorMessage] = useState("");  
+  const [errorMessage, setErrorMessage] = useState("");
   const [description, setDescription] = useState("");
-  const [skills, setSkills] = useState<string[]>([]);
-  const [currentSkill, setCurrentSkill] = useState('');
+  const [skillsRequired, setSkills] = useState<string[]>([]);
+  const [currentSkill, setCurrentSkill] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     location: "",
-    type: "",
-    industry: "",
-    skillsRequired: "",
+    industry: "Technology",
     experienceRequired: "4",
     companyName: "",
-    qualification: "",
-    saleryOffered: "5",
+    qualification: "Bachelor",
+    salaryOffered: "5",
     requirements: "",
     responsibilities: "",
-    jobType: "",
-    currencyType: "",
-    contractType: "",
+    jobType: "Hour",
+    currencyType: "USD",
+    contractType: "fullTime",
+    jobVenue: "",
   });
 
+  const setDebouncedDescription = useCallback(
+    debounce((value) => {
+      setDescription(value);
+    }, 300),
+    []
+  );
 
-  const setDebouncedDescription = useCallback(debounce((value) => {
-    setDescription(value);
-  }, 300), []);
-  
+  const handleChange = useCallback(
+    (
+      e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    ) => {
+      e.preventDefault();
+      const { name, value } = e.target;
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    },
+    []
+  );
 
-  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  }, []);
-
-  const handleDescriptionChange = useCallback((value:string) => {
-    setDebouncedDescription(value);
-  }, [setDebouncedDescription]);
+  const handleDescriptionChange = useCallback(
+    (value: string) => {
+      setDebouncedDescription(value);
+    },
+    [setDebouncedDescription]
+  );
 
   const handleSkillChange = (event: ChangeEvent<HTMLInputElement>) => {
+    console.log("event", skillsRequired);
     setCurrentSkill(event.target.value);
   };
 
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && currentSkill) {
+    if (event.key === "Enter" && currentSkill) {
       event.preventDefault();
-      setSkills(prevSkills => [...prevSkills, currentSkill]);
-      setCurrentSkill('');
+      setSkills((prevSkills) => [...prevSkills, currentSkill]);
+      setCurrentSkill("");
+      console.log("event", skillsRequired);
     }
   };
 
-  const quillModules = useMemo(() => ({
-    toolbar: true
-  }), []);
+  const quillModules = useMemo(
+    () => ({
+      toolbar: true,
+    }),
+    []
+  );
 
-  const quillFormats = useMemo(() => [
-    'bold', 'italic', 'underline', 'strike', 'list', 'bullet', 'link'
-  ], []);
+  const quillFormats = useMemo(
+    () => ["bold", "italic", "underline", "strike", "list", "bullet", "link"],
+    []
+  );
 
-  const QuillComponent = useMemo(() => (
-    <ReactQuill
-      theme="snow"
-      value={description}
-      onChange={handleDescriptionChange}
-      modules={quillModules}
-      formats={quillFormats}
-      placeholder="Type Description here..."
-    />
-  ), [description, handleDescriptionChange, quillModules, quillFormats]);
+  const QuillComponent = useMemo(
+    () => (
+      <ReactQuill
+        theme="snow"
+        value={description}
+        onChange={handleDescriptionChange}
+        modules={quillModules}
+        formats={quillFormats}
+        placeholder="Type Description here..."
+      />
+    ),
+    [description, handleDescriptionChange, quillModules, quillFormats]
+  );
 
-  const handleSubmit = useCallback(async (e:any) => {
-    e?.preventDefault();
-    if (
-      !formData.title ||
-      !description||
-      !formData.location ||
-      !formData.type ||
-      !formData.industry ||
-      !formData.skillsRequired ||
-      !formData.experienceRequired ||
-      !formData.companyName ||
-      !formData.qualification ||
-      !formData.saleryOffered ||
-      !formData.requirements ||
-      !formData.responsibilities ||
-      !formData.currencyType ||
-      !formData.jobType
-    ) {
-      setErrorMessage("Please provide all details to post the job!");
-      return;
-    }
-    setErrorMessage("");
-    const data = {
-      ...formData,
-      description: description
-    };
-    localStorage.setItem("postJob", JSON.stringify(data));
-    router.push("/admin/dashboard/previewJob");
-  }, [formData, description, router]);
-  console.log("re rendering ...........") 
-  console.log("The skills array >>>>",skills);
+  const handleSubmit = useCallback(
+    async (e: any) => {
+      e?.preventDefault();
+      console.log("formData...", formData, skillsRequired, description);
+      if (
+        !formData.title ||
+        !description ||
+        !formData.location ||
+        !formData.industry ||
+        !skillsRequired ||
+        !formData.experienceRequired ||
+        !formData.companyName ||
+        !formData.qualification ||
+        !formData.salaryOffered ||
+        !formData.requirements ||
+        !formData.responsibilities ||
+        !formData.currencyType ||
+        !formData.jobType ||
+        !formData.contractType ||
+        !formData.jobVenue
+      ) {
+        setErrorMessage("Please provide all details to post the job!");
+        return;
+      }
+      setErrorMessage("");
+      const data = {
+        ...formData,
+        description: description,
+        skillsRequired,
+      };
+      localStorage.setItem("postJob", JSON.stringify(data));
+      router.push("/admin/dashboard/previewJob");
+    },
+    [formData, description, router]
+  );
+  console.log("re rendering ...........");
+  console.log("The skillsRequired array >>>>", skillsRequired);
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%]">
@@ -256,12 +285,15 @@ const page = () => {
               required={true}
             />
             <div className="mt-3">
-             {skills.map((skill, index) => (
-          <div key={index} className="inline-block bg-gray-200 text-gray-900 text-sm rounded px-4 py-2 mr-2 mb-2">
-            {skill}
-          </div>
-        ))}
-      </div>
+              {skillsRequired.map((skill, index) => (
+                <div
+                  key={index}
+                  className="inline-block bg-gray-200 text-gray-900 text-sm rounded px-4 py-2 mr-2 mb-2"
+                >
+                  {skill}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
@@ -339,11 +371,11 @@ const page = () => {
               </label>
               <input
                 type="text"
-                name="saleryOffered"
+                name="salaryOffered"
                 id="brand"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Input text"
-                value={formData.saleryOffered}
+                value={formData.salaryOffered}
                 onChange={handleChange}
                 required={true}
               />
@@ -359,8 +391,8 @@ const page = () => {
                 id="inline-radio"
                 type="radio"
                 className="w-4 h-4 bg-gray-100 border-gray-300"
-                name="type"
-                value="Hybrid"
+                name="jobVenue"
+                value="hybrid"
                 onChange={handleChange}
                 required={true}
               />
@@ -378,8 +410,8 @@ const page = () => {
                 id="inline-2-radio"
                 type="radio"
                 className="w-4 h-4 bg-gray-100 border-gray-300"
-                name="type"
-                value="Remote"
+                name="jobVenue"
+                value="remote"
                 onChange={handleChange}
               />
               <div>
@@ -396,8 +428,8 @@ const page = () => {
                 id="inline-checked-radio"
                 type="radio"
                 className="w-4 h-4 bg-gray-100 border-gray-300"
-                name="type"
-                value="On Site"
+                name="jobVenue"
+                value="onsite"
                 onChange={handleChange}
               />
               <div>
@@ -420,7 +452,7 @@ const page = () => {
                 type="radio"
                 className="w-4 h-4 bg-gray-100 border-gray-300"
                 name="contractType"
-                value="FullTime"
+                value="fullTime"
                 onChange={handleChange}
                 required={true}
               />
@@ -436,7 +468,7 @@ const page = () => {
                 type="radio"
                 className="w-4 h-4 bg-gray-100 border-gray-300"
                 name="contractType"
-                value="PartTime"
+                value="partTime"
                 onChange={handleChange}
               />
               <div>
@@ -449,9 +481,7 @@ const page = () => {
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
           <h1 className="text-lg font-bold pb-2">Description*</h1>
-          <div className="mb-2 w-[90%]">
-          {QuillComponent}
-          </div>
+          <div className="mb-2 w-[90%]">{QuillComponent}</div>
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
           <h1 className="text-lg font-bold pb-2">
