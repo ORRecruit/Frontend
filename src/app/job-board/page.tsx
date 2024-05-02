@@ -18,6 +18,8 @@ const page = () => {
     queryFn: () => getAllJobs(),
   });
 
+  const staticSalary = ["20 - 40 CAD / Hour", "60K AED / Month"];
+
   useEffect(() => {
     console.log("data....", data?.data);
     setSelectedValue(data?.data[0]);
@@ -78,11 +80,12 @@ const page = () => {
                       ORR-{item?.industry?.slice(0, 4)}-00{item?.id}
                     </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
-                      {item.location}
+                      {item.type} - {item.location}
                     </div>
                     <div className="text-lg font-extrabold text-gray-900 dark:text-white">
-                      {item.salaryOffered + " "} {item.currencyType} /{" "}
-                      {item.jobType?.slice(0, item?.jobType?.length - 2)}
+                      {/* {item.salaryOffered + " "} {item.currencyType} /{" "}
+                      {item.jobType?.slice(0, item?.jobType?.length - 2)} */}
+                      {staticSalary[index]}
                     </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
                       {item.qualification}
@@ -122,10 +125,7 @@ const page = () => {
             <div className="bg-white rounded-lg mt-4 sm:w-[68%] sm:p-8">
               <div className="mb-5">
                 <div className="flex justify-between">
-                  <h1 className="text-3xl font-bold">
-                    ORR-{selectedValue?.industry?.slice(0, 4)}-00
-                    {selectedValue?.id}
-                  </h1>
+                  <h1 className="text-3xl font-bold">{selectedValue?.title}</h1>
                   <button
                     type="button"
                     className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[135px] h-[40px] mt-[20px] sm:w-fit sm:h-fit sm:mt-0"
@@ -135,23 +135,27 @@ const page = () => {
                   </button>
                 </div>
                 <div className="font-light text-xl font-semibold text-gray-500 dark:text-gray-400">
-                  {selectedValue?.title}
+                  ORR-{selectedValue?.industry?.slice(0, 4)}-00
+                  {selectedValue?.id}
                 </div>
 
-                <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
+                {/* <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
                   {selectedValue?.type}
-                </span>
+                </span> */}
               </div>
 
               <div className="mb-5">
-                <p className="text-gray-600">{selectedValue?.location}</p>
+                <p className="text-gray-600">
+                  {selectedValue?.type} - {selectedValue?.location}
+                </p>
                 <p className="text-lg font-extrabold text-gray-900 dark:text-white">
-                  {selectedValue?.salaryOffered + " "}{" "}
+                  {/* {selectedValue?.salaryOffered + " "}{" "}
                   {selectedValue?.currencyType} /{" "}
                   {selectedValue?.jobType?.slice(
                     0,
                     selectedValue?.jobType?.length - 2
-                  )}
+                  )} */}
+                  {staticSalary[selectedValue?.id - 1]}
                 </p>
                 <p className="font-light text-gray-500 dark:text-gray-400">
                   {selectedValue?.qualification}
