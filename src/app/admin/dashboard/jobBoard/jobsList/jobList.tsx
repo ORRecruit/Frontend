@@ -32,7 +32,7 @@ const jobList = () => {
     experienceRequired: "4",
     companyName: "",
     qualification: "Middle",
-    saleryOffered: "5",
+    salaryOffered: "5",
     requirements: "",
     responsibilities: "",
     jobType: "Hourly",
@@ -92,7 +92,7 @@ const jobList = () => {
       !formData.experienceRequired ||
       !formData.companyName ||
       !formData.qualification ||
-      !formData.saleryOffered ||
+      !formData.salaryOffered ||
       !formData.requirements ||
       !formData.responsibilities ||
       !formData.currencyType ||
@@ -132,7 +132,7 @@ const jobList = () => {
       experienceRequired: item?.experienceRequired,
       companyName: item?.companyName,
       qualification: item?.companyName,
-      saleryOffered: item?.saleryOffered,
+      salaryOffered: item?.salaryOffered,
       requirements: item?.requirements,
       responsibilities: item?.responsibilities,
       jobType: item?.jobType,
@@ -655,7 +655,7 @@ const jobList = () => {
                                           {selectedItem?.location}
                                         </p>
                                         <p className="text-lg font-extrabold text-gray-900 dark:text-white">
-                                          {selectedItem.saleryOffered + " "}
+                                          {selectedItem.salaryOffered + " "}
                                           {selectedItem.currencyType} /{" "}
                                           {selectedItem.jobType?.slice(
                                             0,
@@ -916,13 +916,13 @@ const jobList = () => {
                                                 value={formData.jobType}
                                                 onChange={handleChange}
                                               >
-                                                <option value="Hourly">
+                                                <option value="Hour">
                                                   Hour
                                                 </option>
-                                                <option value="Monthly">
+                                                <option value="Month">
                                                   Month
                                                 </option>
-                                                <option value="Yearly">
+                                                <option value="Year">
                                                   Year
                                                 </option>
                                               </select>
@@ -949,11 +949,11 @@ const jobList = () => {
                                               </label>
                                               <input
                                                 type="text"
-                                                name="saleryOffered"
+                                                name="salaryOffered"
                                                 id="brand"
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 placeholder="Input text"
-                                                value={formData.saleryOffered}
+                                                value={formData.salaryOffered}
                                                 onChange={handleChange}
                                                 required={true}
                                               />
