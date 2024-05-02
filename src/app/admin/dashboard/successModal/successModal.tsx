@@ -49,7 +49,7 @@ const successModal = () => {
     console.log("response....", response);
     if (response) {
       toast.success(response?.message);
-      if (response?.job) {
+      if (response?.data) {
         router.push("/admin/dashboard/jobBoard");
         localStorage.removeItem("postJob");
       }
