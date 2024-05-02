@@ -26,7 +26,7 @@ const page = () => {
   const [verifyEmail, setVerifyEmail] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("Candidate");
+  const [role, setRole] = useState("candidate");
   const [full_name, setFullName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -164,8 +164,8 @@ const page = () => {
                       onChange={handleRoleChange}
                     >
                       <option>Choose a Role</option>
-                      <option value="Recruiter">Recruiter</option>
-                      <option value="Candidate">Candidate</option>
+                      <option value="recruiter">Recruiter</option>
+                      <option value="candidate">Candidate</option>
                     </select>
                   </div>
                   <div>

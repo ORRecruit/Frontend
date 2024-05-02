@@ -12,6 +12,14 @@ const page = () => {
   const router = useRouter();
   const signInMutation = useMutation({
     mutationFn: (body: any) => loginUser(email, password),
+    onSuccess: (data) => {
+      console.log("Login success response >>>>>", data);
+      // Additional success handling here
+    },
+    onError: (error) => {
+      console.error("Login failed response >>>>>", error);
+      // Additional error handling here
+    }
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -22,33 +30,36 @@ const page = () => {
   const handleSubmit = async (e: any) => {
     e?.preventDefault();
     if (email && password) {
+      try {
       const response = await signInMutation.mutateAsync({
         email,
         password,
       });
-      if (response.success === true) {
-        setErrorMessage("");
-        console.log("response....", response);
-        if (response.user.roles === "Admin") {
-          toast.error("Use Admin Route to Sign Admin In!");
-          return;
-        }
-        toast.success(response?.message);
-        localStorage.setItem("authToken", response.token);
-        if (response.user?.roles == "candidate") {
-          if (response?.user?.isProfile === true) {
-            router.replace("/talent/dashboard");
-            localStorage.setItem("candidateId", response?.user?.userId);
-            localStorage.setItem("role", response?.user?.roles);
-          } else {
-            router.push("/talentForm/resume-upload");
-          }
-        } else if (response.user.roles == "admin") {
-          router.push("/admin/dashboard");
-        }
-      } else if (response.success === false) {
-        toast.error("Please provide correct information");
+      console.log("response here inside Try >>>>>", response);
+      if(response.success){
+      if(response.user.roles[0] === 'admin'){
+        toast.error("Use Admin Route to Sign Admin In!");
+        return;
       }
+      else if(response.user.roles[0] === 'candidate'){
+        toast.success(response?.message);
+        console.log("Inside Candidate")
+        if (response?.user?.isProfile === true) {
+          console.log("Inside Candidate if")
+          localStorage.setItem("authToken", response.token);
+          localStorage.setItem("candidateId", response.user.userId);
+          localStorage.setItem("role", response.user.roles[0]);
+          router.replace("/talent/dashboard");
+        } else {
+          console.log("Inside Candidate Else")
+          router.push("/talentForm/resume-upload");
+        }
+      }
+      }
+    } catch (error:any) {
+      console.log('Login Error >>>>>', error.response.data.message);
+      toast.error(error.response.data.message);
+    }
     }
   };
 

@@ -12,6 +12,7 @@ const dashboardNavbar = () => {
   const logout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("role");
+    localStorage.removeItem('candidateId');
     router.push("/auth/signin");
   };
 
