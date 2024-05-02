@@ -83,8 +83,8 @@ const page = () => {
                       {item.jobVenue} - {item.contractType}
                     </div>
                     <div className="text-lg font-extrabold text-gray-900 dark:text-white">
-                      {item.salaryOffered.replace(/"/g, '') + " "} {item.currencyType} /{" "}
-                      {item.jobType}
+                      {item.salaryOffered?.replace(/"/g, "") + " "}{" "}
+                      {item.currencyType} / {item.jobType}
                     </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
                       {item.qualification}
@@ -124,7 +124,7 @@ const page = () => {
                   <h1 className="text-3xl font-bold">{selectedValue?.title}</h1>
                   <button
                     type="button"
-                    className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[135px] h-[40px] mt-[20px] sm:w-fit sm:h-fit sm:mt-0"
+                    className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[135px] h-[40px] mt-[20px] sm:w-fit sm:h-fit sm:mt-0 sm:w-[150px]"
                     onClick={() => applyJob(selectedValue)}
                   >
                     Apply Now
@@ -141,9 +141,9 @@ const page = () => {
               </div>
 
               <div className="mb-5">
-              <p className="text-lg font-extrabold text-gray-900 dark:text-white">
-                      {selectedValue?.salaryOffered.replace(/"/g, '') + " "} {selectedValue?.currencyType} /{" "}
-                      {selectedValue?.jobType}
+                <p className="text-lg font-extrabold text-gray-900 dark:text-white">
+                  {selectedValue?.salaryOffered?.replace(/"/g, "") + " "}{" "}
+                  {selectedValue?.currencyType} / {selectedValue?.jobType}
                 </p>
                 <p className="font-light text-gray-500 dark:text-gray-400">
                   {/* {selectedValue?.salaryOffered + " "}{" "}
