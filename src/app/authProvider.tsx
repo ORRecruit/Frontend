@@ -46,6 +46,20 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         } else {
           router.push("/auth/signin");
         }
+      } else if (
+        path === "/talentForm/resume-upload" ||
+        path === "/talentForm/personalInfo" ||
+        path === "/talentForm/tools-tech-info" ||
+        path === "/talentForm/experience-info" ||
+        path === "/talentForm/education-info" ||
+        path === "/talentForm/socialMedia-info"
+      ) {
+        console.log(path);
+        if (role === "candidate" && !isAuthTokenExpired(token!)) {
+          router.push(path);
+        } else {
+          router.push("/auth/signin");
+        }
       } else {
         if (path.includes("talent") && role === "candidate") {
           router.push(path);
