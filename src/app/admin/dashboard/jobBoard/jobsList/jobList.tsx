@@ -68,6 +68,10 @@ const jobList = () => {
     console.log("data....", allJobsResponse.data?.data);
   }, [allJobsResponse.data]);
 
+  useEffect(() => {
+    console.log("Updated formData:", formData);
+  }, [formData]);
+
   const handleRowClick = (item: any) => {
     setSelectedItem(item);
     setIsDialogOpen(!isDialogOpen);
@@ -155,12 +159,13 @@ const jobList = () => {
   const handleChange = (e: any) => {
     e.preventDefault();
     const { name, value } = e.target;
+    console.log("formdata...name, value", name, value);
     setFormData((prevData: any) => ({
       ...prevData,
       [name]: value,
     }));
-    console.log("formdata...", formData?.contractType);
   };
+  console.log("formdata...", formData);
 
   const closeDeleteDialog = async (job: any) => {
     const response = await deleteJobMutation.mutateAsync(job.id);
@@ -980,7 +985,10 @@ const jobList = () => {
                                             Work Environment*
                                           </h1>
 
-                                          <div className="flex">
+                                          <div
+                                            key={formData.jobVenue}
+                                            className="flex"
+                                          >
                                             <div className="flex me-4 mr-16">
                                               <input
                                                 id="inline-radio"
@@ -1053,7 +1061,10 @@ const jobList = () => {
                                           <h1 className="text-lg font-bold pb-2">
                                             Contract Type*
                                           </h1>
-                                          <div className="flex">
+                                          <div
+                                            key={formData.contractType}
+                                            className="flex"
+                                          >
                                             <div className="flex me-4 mr-16">
                                               <input
                                                 id="inline-radio"
