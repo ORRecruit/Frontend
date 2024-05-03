@@ -46,6 +46,7 @@ const jobList = () => {
   const [editId, setEditId] = useState<any>(null);
   const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
   const [filterString, setFilterString] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
 
   const deleteJobMutation = useMutation({
     mutationFn: (id: any) => DeleteJob(id),
@@ -56,7 +57,7 @@ const jobList = () => {
 
   const allJobsResponse = useQuery({
     queryKey: ["get all naukrian"],
-    queryFn: () => getAllJobs(),
+    queryFn: () => getAllJobs(`title=${title}`),
   });
 
   // const filterJobsResponse = useQuery({
@@ -179,16 +180,10 @@ const jobList = () => {
   const openEditConfirmation = () => {
     setConfirmationDialog(!confirmationDialog);
   };
-  const filterJobsFunction = async (e: any) => {
-    setFilterString(e.target.value);
-    if (filterString.length >= 1) {
-      filterJobs(filterString).then((jobs) => {
-        console.log("jobs.....", jobs);
-        allJobsResponse.data = jobs;
-      });
-    } else {
-      allJobsResponse.refetch();
-    }
+  const filterJobsFunction = (e: any) => {
+    console.log("e.target", e.target.value);
+    setTitle(e.target.value);
+    allJobsResponse.refetch();
   };
 
   return (
@@ -226,6 +221,7 @@ const jobList = () => {
                           className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                           placeholder="Search..."
                           onChange={filterJobsFunction}
+                          value={title}
                         />
                         <button
                           type="submit"

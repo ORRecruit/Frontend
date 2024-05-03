@@ -11,9 +11,11 @@ const page = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const router = useRouter();
   const [selectedValue, setSelectedValue] = useState<any>({});
+  const [title, setTitle] = useState<string>("");
+
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all naukrian"],
-    queryFn: () => getAllJobs(),
+    queryFn: () => getAllJobs(`title=${title}`),
   });
 
   const searchParams = useSearchParams();
