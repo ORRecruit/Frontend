@@ -10,15 +10,15 @@ import React, {
 } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import "react-quill/dist/quill.snow.css";
-import { debounce } from "lodash";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import "react-quill/dist/quill.snow.css";;
+import QuillTextEditor from "@/components/dashboard/quilEditor/QuillTextEditor";
+import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
 
 const page = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
-  const [description, setDescription] = useState("");
-  const [skillsRequired, setSkills] = useState<string[]>([]);
+  const [skills, setSkills] = useState<string[]>([]);
+  // const [skillsRequired, setSkills] = useState<string[]>([]);
   const [currentSkill, setCurrentSkill] = useState("");
   const [formData, setFormData] = useState({
     title: "",
@@ -34,14 +34,10 @@ const page = () => {
     currencyType: "USD",
     contractType: "fullTime",
     jobVenue: "",
+    description: "",
   });
 
-  const setDebouncedDescription = useCallback(
-    debounce((value) => {
-      setDescription(value);
-    }, 300),
-    []
-  );
+  console.log("The skills inside parent componnet >>>",skills);
 
   const handleChange = useCallback(
     (
@@ -57,63 +53,18 @@ const page = () => {
     []
   );
 
-  const handleDescriptionChange = useCallback(
-    (value: string) => {
-      setDebouncedDescription(value);
-    },
-    [setDebouncedDescription]
-  );
-
-  const handleSkillChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log("event", skillsRequired);
-    setCurrentSkill(event.target.value);
+  const handleSkillsChange = (newSkills: string[]) => {
+    setSkills(newSkills);
   };
-
-  const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && currentSkill) {
-      event.preventDefault();
-      setSkills((prevSkills) => [...prevSkills, currentSkill]);
-      setCurrentSkill("");
-      console.log("event", skillsRequired);
-    }
-  };
-
-  const quillModules = useMemo(
-    () => ({
-      toolbar: true,
-    }),
-    []
-  );
-
-  const quillFormats = useMemo(
-    () => ["bold", "italic", "underline", "strike", "list", "bullet", "link"],
-    []
-  );
-
-  const QuillComponent = useMemo(
-    () => (
-      <ReactQuill
-        theme="snow"
-        value={description}
-        onChange={handleDescriptionChange}
-        modules={quillModules}
-        formats={quillFormats}
-        placeholder="Type Description here..."
-      />
-    ),
-    [description, handleDescriptionChange, quillModules, quillFormats]
-  );
-
   const handleSubmit = useCallback(
     async (e: any) => {
       e?.preventDefault();
-      console.log("formData...", formData, skillsRequired, description);
       if (
         !formData.title ||
-        !description ||
+        !formData.description ||
         !formData.location ||
         !formData.industry ||
-        !skillsRequired ||
+        !skills ||
         !formData.experienceRequired ||
         !formData.companyName ||
         !formData.qualification ||
@@ -131,16 +82,15 @@ const page = () => {
       setErrorMessage("");
       const data = {
         ...formData,
-        description: description,
-        skillsRequired,
+        skills,
       };
       localStorage.setItem("postJob", JSON.stringify(data));
       router.push("/admin/dashboard/previewJob");
     },
-    [formData, description, router]
+    [formData, router]
   );
   console.log("re rendering ...........");
-  console.log("The skillsRequired array >>>>", skillsRequired);
+  console.log("The skillsRequired array >>>>", skills);
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%]">
@@ -274,26 +224,7 @@ const page = () => {
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
           <h1 className="text-lg font-bold pb-2">Skills Required*</h1>
           <div className="mb-2 w-[90%]">
-            <input
-              type="text"
-              id="default-input"
-              name="skillsRequired"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-              value={currentSkill}
-              onChange={handleSkillChange}
-              onKeyUp={handleKeyPress}
-              required={true}
-            />
-            <div className="mt-3">
-              {skillsRequired.map((skill, index) => (
-                <div
-                  key={index}
-                  className="inline-block bg-gray-200 text-gray-900 text-sm rounded px-4 py-2 mr-2 mb-2"
-                >
-                  {skill}
-                </div>
-              ))}
-            </div>
+          <SkillsInput onSkillsChange={handleSkillsChange} initialSkills={skills} />
           </div>
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
@@ -481,7 +412,12 @@ const page = () => {
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
           <h1 className="text-lg font-bold pb-2">Description*</h1>
-          <div className="mb-2 w-[90%]">{QuillComponent}</div>
+          <QuillTextEditor
+            value={formData.description}
+            onChange={(value) => setFormData({...formData, description: value})}
+            placeholder="Description..."
+          />
+          {/* <div className="mb-2 w-[90%]">{QuillComponent}</div> */}
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
           <h1 className="text-lg font-bold pb-2">
@@ -492,31 +428,21 @@ const page = () => {
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Requirements*
               </label>
-              <textarea
-                id="brand"
-                rows={4}
-                className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Input text"
-                value={formData.requirements}
-                onChange={handleChange}
-                name="requirements"
-                required={true}
-              />
+              <QuillTextEditor
+                 value={formData.requirements}
+                 onChange={(value) => setFormData({...formData, requirements: value})}
+                 placeholder="Requirements..."
+                 />
             </div>
             <div className="w-[48%]">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Responsibilities*
               </label>
-              <textarea
-                name="responsibilities"
-                id="responsibilities"
-                rows={4}
-                className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Input Text"
+              <QuillTextEditor
                 value={formData.responsibilities}
-                onChange={handleChange}
-                required={true}
-              />
+                onChange={(value) => setFormData({...formData, responsibilities: value})}
+                placeholder="Responsibilities..."
+                />
             </div>
           </div>
         </div>

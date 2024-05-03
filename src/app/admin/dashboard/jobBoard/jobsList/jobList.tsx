@@ -11,6 +11,8 @@ import { editJob as editJobApi } from "@/api/jobs/editJob";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { filterJobs } from "@/api/jobs/filterJobs";
+import QuillTextEditor from "@/components/dashboard/quilEditor/QuillTextEditor";
+import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
 
 const jobList = () => {
   const router = useRouter();
@@ -20,6 +22,7 @@ const jobList = () => {
   const [activeOptionsIndex, setActiveOptionsIndex] = useState<number | null>(
     null
   );
+  const [skills, setSkills] = useState<string[]>([]);
   const [deleteDialog, setDeleteDialog] = useState<any>(false);
   const [editDialog, setEditDialog] = useState<any>(false);
   const [formData, setFormData] = useState<any>({
@@ -68,6 +71,11 @@ const jobList = () => {
     setSelectedItem(item);
     setIsDialogOpen(!isDialogOpen);
   };
+  console.log("skills inside my parent component >>>>",skills);
+
+  const handleSkillsChange = (newSkills: string[]) => {
+    setSkills(newSkills);
+  };
 
   const closeDialog = () => {
     setIsDialogOpen(!isDialogOpen);
@@ -88,7 +96,7 @@ const jobList = () => {
       !formData.location ||
       !formData.type ||
       !formData.industry ||
-      !formData.skillsRequired ||
+      !skills ||
       !formData.experienceRequired ||
       !formData.companyName ||
       !formData.qualification ||
@@ -139,6 +147,7 @@ const jobList = () => {
       currencyType: item?.currencyType,
       contractType: item?.contractType,
     });
+    setSkills(item?.skillsRequired);
     setEditDialog(!editDialog);
   };
   const handleChange = (e: any) => {
@@ -849,7 +858,8 @@ const jobList = () => {
                                             Skills Required*
                                           </h1>
                                           <div className="mb-2 w-[90%]">
-                                            <input
+                                          <SkillsInput onSkillsChange={handleSkillsChange} initialSkills={skills} />
+                                            {/* <input
                                               type="text"
                                               id="default-input"
                                               name="skillsRequired"
@@ -857,7 +867,7 @@ const jobList = () => {
                                               value={formData.skillsRequired}
                                               onChange={handleChange}
                                               required={true}
-                                            />
+                                            /> */}
                                           </div>
                                         </div>
                                         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
@@ -1068,15 +1078,11 @@ const jobList = () => {
                                             Description*
                                           </h1>
                                           <div className="mb-2 w-[90%]">
-                                            <textarea
-                                              rows={4}
-                                              id="default-input"
-                                              placeholder="Type Description here..."
-                                              value={formData.description}
-                                              onChange={handleChange}
-                                              name="description"
-                                              className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                                            />
+                                          <QuillTextEditor
+                                             value={formData.description}
+                                             onChange={(value) => setFormData({...formData, description: value})}
+                                             placeholder="Type Description here..."
+                                             />
                                           </div>
                                         </div>
                                         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
@@ -1088,33 +1094,21 @@ const jobList = () => {
                                               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                 Requirements*
                                               </label>
-                                              <textarea
-                                                id="brand"
-                                                rows={4}
-                                                className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                placeholder="Input text"
-                                                value={formData.requirements}
-                                                onChange={handleChange}
-                                                name="requirements"
-                                                required={true}
-                                              />
+                                              <QuillTextEditor
+                                                  value={formData.requirements}
+                                                  onChange={(value) => setFormData({...formData, requirements: value})}
+                                                  placeholder="Specify the job requirements..."
+                                                  />
                                             </div>
                                             <div className="w-[48%]">
                                               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                 Responsibilities*
                                               </label>
-                                              <textarea
-                                                name="responsibilities"
-                                                id="responsibilities"
-                                                rows={4}
-                                                className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                placeholder="Input Text"
-                                                value={
-                                                  formData.responsibilities
-                                                }
-                                                onChange={handleChange}
-                                                required={true}
-                                              />
+                                              <QuillTextEditor
+                                                 value={formData.responsibilities}
+                                                 onChange={(value) => setFormData({...formData, responsibilities: value})}
+                                                 placeholder="List the responsibilities..."
+                                                 />
                                             </div>
                                           </div>
                                         </div>

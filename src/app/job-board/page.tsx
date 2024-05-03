@@ -187,14 +187,20 @@ const page = () => {
               />
 
               <h3 className="text-lg font-semibold mb-3">Responsibilities</h3>
-              <ul className="list-disc list-inside text-gray-700 mb-8">
-                <p>{selectedValue?.responsibilities}</p>
-              </ul>
+              <div
+                className="text-gray-700 mb-8 job-description-content"
+                dangerouslySetInnerHTML={createMarkup(
+                  selectedValue?.responsibilities
+                )}
+              />
               <div className="text-gray-700 mb-8">
                 <h3 className="text-lg font-semibold mb-3">Requirements</h3>
-                <ul className="list-disc list-inside text-gray-700 mb-8">
-                  {selectedValue?.requirements}
-                </ul>
+                <div
+                className="text-gray-700 mb-8 job-description-content"
+                dangerouslySetInnerHTML={createMarkup(
+                  selectedValue?.requirements
+                )}
+               />
               </div>
             </div>
           </div>
