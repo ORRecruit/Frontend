@@ -57,19 +57,22 @@ const page = () => {
   };
 
   function formatString(str: string): string {
-    const capitalizeWords = (s: string): string => 
-      s.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-  
-      const splitCamelCase = (s: string): string => 
-      capitalizeWords(s.replace(/([a-z])([A-Z])/g, '$1 $2'));
-  
-    return str.split('-').map((part: string) => 
-      splitCamelCase(part.trim())
-    ).join(' - ');
+    const capitalizeWords = (s: string): string =>
+      s
+        .split(" ")
+        .map(
+          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        )
+        .join(" ");
+
+    const splitCamelCase = (s: string): string =>
+      capitalizeWords(s.replace(/([a-z])([A-Z])/g, "$1 $2"));
+
+    return str
+      .split("-")
+      .map((part: string) => splitCamelCase(part.trim()))
+      .join(" - ");
   }
-  
-  
-  
 
   return (
     <div>
@@ -95,7 +98,7 @@ const page = () => {
                       ORR-{item?.industry?.slice(0, 4)}-00{item?.id}
                     </div>
                     <div className="font-light text-gray-500 dark:text-gray-400">
-                    {formatString(`${item.jobVenue} - ${item.contractType}`)}
+                      {formatString(`${item.jobVenue} - ${item.contractType}`)}
                     </div>
                     <div className="text-lg font-extrabold text-gray-900 dark:text-white">
                       {item.salaryOffered?.replace(/"/g, "") + " "}{" "}
@@ -126,7 +129,7 @@ const page = () => {
                     <p
                       className="text-sm text-gray-500 dark:text-gray-400"
                       dangerouslySetInnerHTML={createMarkup(
-                        selectedValue?.description?.slice(0, 200)
+                        item?.description?.slice(0, 200)
                       )}
                     />
                   </div>
@@ -168,7 +171,9 @@ const page = () => {
                     selectedValue?.jobType?.length - 2
                   )} */}
                   {/* {staticSalary[selectedValue?.id - 1]} */}
-                  {formatString(`${selectedValue?.jobVenue} - ${selectedValue?.contractType}`)}
+                  {formatString(
+                    `${selectedValue?.jobVenue} - ${selectedValue?.contractType}`
+                  )}
                 </p>
                 <p className="font-light text-gray-500 dark:text-gray-400">
                   {selectedValue?.qualification}
@@ -196,11 +201,11 @@ const page = () => {
               <div className="text-gray-700 mb-8">
                 <h3 className="text-lg font-semibold mb-3">Requirements</h3>
                 <div
-                className="text-gray-700 mb-8 job-description-content"
-                dangerouslySetInnerHTML={createMarkup(
-                  selectedValue?.requirements
-                )}
-               />
+                  className="text-gray-700 mb-8 job-description-content"
+                  dangerouslySetInnerHTML={createMarkup(
+                    selectedValue?.requirements
+                  )}
+                />
               </div>
             </div>
           </div>
