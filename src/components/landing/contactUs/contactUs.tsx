@@ -1,7 +1,40 @@
-import React from "react";
+import { useState } from "react";
 import Image from "next/image";
-
+import CaptchaTest from "../captcha/captcha";
+import toast from "react-hot-toast";
+import { validateCaptcha } from "react-simple-captcha";
 const contactUs = () => {
+  const [captchaInput, setCaptchaInput] = useState("");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleCaptchaChange = (value: string) => {
+    setCaptchaInput(value);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+      if (!validateCaptcha(captchaInput)) {
+    toast.error("Captcha Does Not Match");
+    setCaptchaInput("");
+    return;
+  }
+    console.log("Form Data:", formData);
+  };
+
   return (
     <>
       <div className="w-full mx-auto py-14 mt-20" id="contactPageId">
@@ -26,7 +59,7 @@ const contactUs = () => {
                   Do you have questions? Talk to our team today by dropping a
                   message below
                 </p>
-                <form className="mt-8 space-y-6 bg-white shadow-lg rounded-lg p-8">
+                <form onSubmit={handleSubmit} className="mt-8 space-y-6 bg-white shadow-lg rounded-lg p-8">
                   <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
                     <div>
                       <label htmlFor="first-name" className="sr-only">
@@ -34,11 +67,13 @@ const contactUs = () => {
                       </label>
                       <input
                         type="text"
-                        name="first-name"
+                        name="firstName"
                         id="first-name"
                         autoComplete="given-name"
                         placeholder="First name"
                         className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                        value={formData.firstName}
+                        onChange={handleChange}
                       />
                     </div>
                     <div>
@@ -47,11 +82,13 @@ const contactUs = () => {
                       </label>
                       <input
                         type="text"
-                        name="last-name"
+                        name="lastName"
                         id="last-name"
                         autoComplete="family-name"
                         placeholder="Last name"
                         className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                        value={formData.lastName}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="sm:col-span-2">
@@ -65,6 +102,8 @@ const contactUs = () => {
                         autoComplete="email"
                         placeholder="Email"
                         className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                        value={formData.email}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="sm:col-span-2">
@@ -78,6 +117,8 @@ const contactUs = () => {
                         autoComplete="tel"
                         placeholder="Phone number"
                         className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                        value={formData.phone}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -91,7 +132,12 @@ const contactUs = () => {
                       rows={4}
                       placeholder="Your message"
                       className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border border-gray-300 rounded-md"
+                      value={formData.message}
+                      onChange={handleChange}
                     ></textarea>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <CaptchaTest onCaptchaChange={handleCaptchaChange} />
                   </div>
                   <div className="sm:col-span-2 sm:flex sm:justify-between lg:block">
                     <div className="flex items-start">

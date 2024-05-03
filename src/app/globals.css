@@ -29,4 +29,11 @@ html {
     @apply mb-2;
 }
 
+#reload_href{
+    color: #EA580C !important;
+    font-size: 14px;
+    font-weight: 600;
+    padding-left: 17px;
+}
+
 
