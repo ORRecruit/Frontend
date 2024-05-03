@@ -112,11 +112,11 @@ const page = () => {
           <p className="text-gray-700 mb-8 job-description-content" dangerouslySetInnerHTML={createMarkup(previewData.description)} />
           <h3 className="text-lg font-semibold mb-3">Responsibilities</h3>
           <ul className="list-disc list-inside text-gray-700 mb-8 lg:w-[70%] xl:w-[50%]">
-            <p>{previewData.responsibilities}</p>
+          <p className="text-gray-700 mb-8 job-description-content" dangerouslySetInnerHTML={createMarkup(previewData.responsibilities)}/>
           </ul>
           <h3 className="text-lg font-semibold mb-3">Requirements</h3>
           <ul className="list-disc list-inside text-gray-700 mb-8 lg:w-[70%] xl:w-[50%]">
-            <p>{previewData.requirements}</p>
+          <p className="text-gray-700 mb-8 job-description-content" dangerouslySetInnerHTML={createMarkup(previewData.requirements)}/>
           </ul>
         </div>
       )}
