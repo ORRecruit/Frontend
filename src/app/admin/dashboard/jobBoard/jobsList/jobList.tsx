@@ -41,6 +41,7 @@ const jobList = () => {
     jobType: "Hourly",
     currencyType: "USD",
     contractType: "",
+    jobVenue: "",
   });
   const [editId, setEditId] = useState<any>(null);
   const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
@@ -71,7 +72,7 @@ const jobList = () => {
     setSelectedItem(item);
     setIsDialogOpen(!isDialogOpen);
   };
-  console.log("skills inside my parent component >>>>",skills);
+  console.log("skills inside my parent component >>>>", skills);
 
   const handleSkillsChange = (newSkills: string[]) => {
     setSkills(newSkills);
@@ -94,9 +95,8 @@ const jobList = () => {
       !formData.title ||
       !formData.description ||
       !formData.location ||
-      !formData.type ||
       !formData.industry ||
-      !skills ||
+      !formData.skillsRequired ||
       !formData.experienceRequired ||
       !formData.companyName ||
       !formData.qualification ||
@@ -107,6 +107,7 @@ const jobList = () => {
       !formData.jobType ||
       !formData.contractType
     ) {
+      console.log("Please Provide All Details");
       toast.error("Please Provide All Details");
       return;
     }
@@ -140,12 +141,13 @@ const jobList = () => {
       experienceRequired: item?.experienceRequired,
       companyName: item?.companyName,
       qualification: item?.companyName,
-      salaryOffered: item?.salaryOffered,
+      salaryOffered: item?.salaryOffered?.replace(/"/g, ""),
       requirements: item?.requirements,
       responsibilities: item?.responsibilities,
       jobType: item?.jobType,
       currencyType: item?.currencyType,
       contractType: item?.contractType,
+      jobVenue: item?.jobVenue,
     });
     setSkills(item?.skillsRequired);
     setEditDialog(!editDialog);
@@ -157,6 +159,7 @@ const jobList = () => {
       ...prevData,
       [name]: value,
     }));
+    console.log("formdata...", formData?.contractType);
   };
 
   const closeDeleteDialog = async (job: any) => {
@@ -666,10 +669,7 @@ const jobList = () => {
                                         <p className="text-lg font-extrabold text-gray-900 dark:text-white">
                                           {selectedItem.salaryOffered + " "}
                                           {selectedItem.currencyType} /{" "}
-                                          {selectedItem.jobType?.slice(
-                                            0,
-                                            selectedItem?.jobType?.length - 2
-                                          )}
+                                          {selectedItem.jobType}
                                         </p>
                                         <p className="font-light text-gray-500 dark:text-gray-400">
                                           {selectedItem?.qualification}
@@ -858,7 +858,12 @@ const jobList = () => {
                                             Skills Required*
                                           </h1>
                                           <div className="mb-2 w-[90%]">
-                                          <SkillsInput onSkillsChange={handleSkillsChange} initialSkills={skills} />
+                                            <SkillsInput
+                                              onSkillsChange={
+                                                handleSkillsChange
+                                              }
+                                              initialSkills={skills}
+                                            />
                                             {/* <input
                                               type="text"
                                               id="default-input"
@@ -981,10 +986,13 @@ const jobList = () => {
                                                 id="inline-radio"
                                                 type="radio"
                                                 className="w-4 h-4 bg-gray-100 border-gray-300"
-                                                name="type"
-                                                value="Hybrid"
+                                                name="jobVenue"
+                                                value="hybrid"
                                                 onChange={handleChange}
                                                 required={true}
+                                                checked={
+                                                  formData.jobVenue === "hybrid"
+                                                }
                                               />
                                               <div>
                                                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -1000,9 +1008,12 @@ const jobList = () => {
                                                 id="inline-2-radio"
                                                 type="radio"
                                                 className="w-4 h-4 bg-gray-100 border-gray-300"
-                                                name="type"
-                                                value="Remote"
+                                                name="jobVenue"
+                                                value="remote"
                                                 onChange={handleChange}
+                                                checked={
+                                                  formData.jobVenue === "remote"
+                                                }
                                               />
                                               <div>
                                                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -1019,9 +1030,12 @@ const jobList = () => {
                                                 id="inline-checked-radio"
                                                 type="radio"
                                                 className="w-4 h-4 bg-gray-100 border-gray-300"
-                                                name="type"
-                                                value="On Site"
+                                                name="jobVenue"
+                                                value="onsite"
                                                 onChange={handleChange}
+                                                checked={
+                                                  formData.jobVenue === "onsite"
+                                                }
                                               />
                                               <div>
                                                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -1046,9 +1060,13 @@ const jobList = () => {
                                                 type="radio"
                                                 className="w-4 h-4 bg-gray-100 border-gray-300"
                                                 name="contractType"
-                                                value="FullTime"
+                                                value="fullTime"
                                                 onChange={handleChange}
                                                 required={true}
+                                                checked={
+                                                  formData.contractType ===
+                                                  "fullTime"
+                                                }
                                               />
                                               <div>
                                                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -1062,8 +1080,12 @@ const jobList = () => {
                                                 type="radio"
                                                 className="w-4 h-4 bg-gray-100 border-gray-300"
                                                 name="contractType"
-                                                value="PartTime"
+                                                value="partTime"
                                                 onChange={handleChange}
+                                                checked={
+                                                  formData.contractType ===
+                                                  "partTime"
+                                                }
                                               />
                                               <div>
                                                 <p className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -1078,11 +1100,16 @@ const jobList = () => {
                                             Description*
                                           </h1>
                                           <div className="mb-2 w-[90%]">
-                                          <QuillTextEditor
-                                             value={formData.description}
-                                             onChange={(value) => setFormData({...formData, description: value})}
-                                             placeholder="Type Description here..."
-                                             />
+                                            <QuillTextEditor
+                                              value={formData.description}
+                                              onChange={(value) =>
+                                                setFormData({
+                                                  ...formData,
+                                                  description: value,
+                                                })
+                                              }
+                                              placeholder="Type Description here..."
+                                            />
                                           </div>
                                         </div>
                                         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
@@ -1095,20 +1122,32 @@ const jobList = () => {
                                                 Requirements*
                                               </label>
                                               <QuillTextEditor
-                                                  value={formData.requirements}
-                                                  onChange={(value) => setFormData({...formData, requirements: value})}
-                                                  placeholder="Specify the job requirements..."
-                                                  />
+                                                value={formData.requirements}
+                                                onChange={(value) =>
+                                                  setFormData({
+                                                    ...formData,
+                                                    requirements: value,
+                                                  })
+                                                }
+                                                placeholder="Specify the job requirements..."
+                                              />
                                             </div>
                                             <div className="w-[48%]">
                                               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                 Responsibilities*
                                               </label>
                                               <QuillTextEditor
-                                                 value={formData.responsibilities}
-                                                 onChange={(value) => setFormData({...formData, responsibilities: value})}
-                                                 placeholder="List the responsibilities..."
-                                                 />
+                                                value={
+                                                  formData.responsibilities
+                                                }
+                                                onChange={(value) =>
+                                                  setFormData({
+                                                    ...formData,
+                                                    responsibilities: value,
+                                                  })
+                                                }
+                                                placeholder="List the responsibilities..."
+                                              />
                                             </div>
                                           </div>
                                         </div>

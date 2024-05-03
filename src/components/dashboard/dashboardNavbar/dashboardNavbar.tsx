@@ -12,7 +12,7 @@ const dashboardNavbar = () => {
   const logout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("role");
-    localStorage.removeItem('candidateId');
+    localStorage.removeItem("candidateId");
     router.push("/auth/signin");
   };
 
@@ -21,7 +21,7 @@ const dashboardNavbar = () => {
       <nav className="bg-white px-4 lg:px-6 py-2.5">
         <div className="flex flex-wrap justify-between items-center relative">
           <div className="flex justify-start items-center ml-10 sm:ml-0">
-            <Link href="https://flowbite.com" className="flex mr-4">
+            <Link href="https://onlineremoterecruit.com" className="flex mr-4">
               <Image
                 width={50}
                 height={50}

@@ -10,14 +10,14 @@ import React, {
 } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import "react-quill/dist/quill.snow.css";;
+import "react-quill/dist/quill.snow.css";
 import QuillTextEditor from "@/components/dashboard/quilEditor/QuillTextEditor";
 import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
 
 const page = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
-  const [skills, setSkills] = useState<string[]>([]);
+  const [skillsRequired, setSkills] = useState<string[]>([]);
   // const [skillsRequired, setSkills] = useState<string[]>([]);
   const [currentSkill, setCurrentSkill] = useState("");
   const [formData, setFormData] = useState({
@@ -37,7 +37,7 @@ const page = () => {
     description: "",
   });
 
-  console.log("The skills inside parent componnet >>>",skills);
+  console.log("The skills inside parent componnet >>>", skillsRequired);
 
   const handleChange = useCallback(
     (
@@ -64,7 +64,7 @@ const page = () => {
         !formData.description ||
         !formData.location ||
         !formData.industry ||
-        !skills ||
+        !skillsRequired ||
         !formData.experienceRequired ||
         !formData.companyName ||
         !formData.qualification ||
@@ -82,7 +82,7 @@ const page = () => {
       setErrorMessage("");
       const data = {
         ...formData,
-        skills,
+        skillsRequired,
       };
       localStorage.setItem("postJob", JSON.stringify(data));
       router.push("/admin/dashboard/previewJob");
@@ -90,7 +90,7 @@ const page = () => {
     [formData, router]
   );
   console.log("re rendering ...........");
-  console.log("The skillsRequired array >>>>", skills);
+  console.log("The skillsRequired array >>>>", skillsRequired);
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%]">
@@ -224,7 +224,10 @@ const page = () => {
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
           <h1 className="text-lg font-bold pb-2">Skills Required*</h1>
           <div className="mb-2 w-[90%]">
-          <SkillsInput onSkillsChange={handleSkillsChange} initialSkills={skills} />
+            <SkillsInput
+              onSkillsChange={handleSkillsChange}
+              initialSkills={skillsRequired}
+            />
           </div>
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
@@ -414,7 +417,9 @@ const page = () => {
           <h1 className="text-lg font-bold pb-2">Description*</h1>
           <QuillTextEditor
             value={formData.description}
-            onChange={(value) => setFormData({...formData, description: value})}
+            onChange={(value) =>
+              setFormData({ ...formData, description: value })
+            }
             placeholder="Description..."
           />
           {/* <div className="mb-2 w-[90%]">{QuillComponent}</div> */}
@@ -429,10 +434,12 @@ const page = () => {
                 Requirements*
               </label>
               <QuillTextEditor
-                 value={formData.requirements}
-                 onChange={(value) => setFormData({...formData, requirements: value})}
-                 placeholder="Requirements..."
-                 />
+                value={formData.requirements}
+                onChange={(value) =>
+                  setFormData({ ...formData, requirements: value })
+                }
+                placeholder="Requirements..."
+              />
             </div>
             <div className="w-[48%]">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -440,9 +447,11 @@ const page = () => {
               </label>
               <QuillTextEditor
                 value={formData.responsibilities}
-                onChange={(value) => setFormData({...formData, responsibilities: value})}
+                onChange={(value) =>
+                  setFormData({ ...formData, responsibilities: value })
+                }
                 placeholder="Responsibilities..."
-                />
+              />
             </div>
           </div>
         </div>
