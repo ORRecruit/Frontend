@@ -43,9 +43,13 @@ const successModal = () => {
     if (!previewData) {
       return;
     }
-
+    
+    const jobDataToSend = {
+      ...previewData,
+      isPublished: true
+    };
     console.log("previewDAta", previewData);
-    const response = await postJobMutation.mutateAsync(previewData);
+    const response = await postJobMutation.mutateAsync(jobDataToSend);
     console.log("response....", response);
     if (response) {
       toast.success(response?.message);
@@ -63,7 +67,7 @@ const successModal = () => {
         className="bg-primary-orange text-sm text-white w-40 py-2 rounded-xl hover:shadow-xl"
         onClick={() => setModalOpen(true)}
       >
-        POST NOW
+        Publish
       </button>
 
       {isModalOpen && (
@@ -93,7 +97,7 @@ const successModal = () => {
                 className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
                 onClick={postJob}
               >
-                Post
+                Publish Now
               </button>
               {/* </Link> */}
             </div>

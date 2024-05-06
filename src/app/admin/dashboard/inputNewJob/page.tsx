@@ -7,6 +7,7 @@ import React, {
   useMemo,
   ChangeEvent,
   KeyboardEvent,
+  useEffect,
 } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
@@ -18,8 +19,6 @@ const page = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
   const [skillsRequired, setSkills] = useState<string[]>([]);
-  // const [skillsRequired, setSkills] = useState<string[]>([]);
-  const [currentSkill, setCurrentSkill] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     location: "",
@@ -38,6 +37,18 @@ const page = () => {
   });
 
   console.log("The skills inside parent componnet >>>", skillsRequired);
+
+  useEffect(() => {
+    const storedJob = localStorage.getItem("postJob");
+    if (storedJob) {
+      const jobData = JSON.parse(storedJob);
+      setFormData(jobData);
+      if (jobData.skillsRequired) {
+        setSkills(jobData.skillsRequired);
+      }
+    }
+  }, []);
+
 
   const handleChange = useCallback(
     (
