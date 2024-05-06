@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import { filterJobs } from "@/api/jobs/filterJobs";
 import QuillTextEditor from "@/components/dashboard/quilEditor/QuillTextEditor";
 import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
+import { formatString } from "@/utils/utils";
 
 const jobList = () => {
   const router = useRouter();
@@ -589,7 +590,7 @@ const jobList = () => {
                                 onClick={() => handleRowClick(item)}
                                 className="px-4 py-2 font-medium whitespace-nowrap"
                               >
-                                <span>{item.jobType}</span>
+                                <span>{formatString(`${item.jobVenue}`)}</span>
                               </td>
                               <td
                                 onClick={() => handleRowClick(item)}
