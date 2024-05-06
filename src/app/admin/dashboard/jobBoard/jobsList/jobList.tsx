@@ -31,7 +31,7 @@ const jobList = () => {
     location: "",
     type: "",
     industry: "Technology",
-    skillsRequired: "",
+    skillsRequired: [],
     experienceRequired: "4",
     companyName: "",
     qualification: "Middle",
@@ -80,6 +80,7 @@ const jobList = () => {
   console.log("skills inside my parent component >>>>", skills);
 
   const handleSkillsChange = (newSkills: string[]) => {
+    console.log("newSKills", newSkills);
     setSkills(newSkills);
   };
 
@@ -94,7 +95,10 @@ const jobList = () => {
   const handleSubmit = async (e: any) => {
     e?.preventDefault();
 
-    console.log("formData", editId, formData);
+    setFormData((prevFormData: any) => ({
+      ...prevFormData,
+      skillsRequired: skills,
+    }));
 
     if (
       !formData.title ||
@@ -116,6 +120,8 @@ const jobList = () => {
       toast.error("Please Provide All Details");
       return;
     }
+    console.log("formData-----", skills, formData);
+
     const response = await editJobMutation.mutateAsync(formData);
     if (response) {
       toast.success("You have updated the Job Successfully.");
@@ -145,7 +151,7 @@ const jobList = () => {
       skillsRequired: item?.skillsRequired,
       experienceRequired: item?.experienceRequired,
       companyName: item?.companyName,
-      qualification: item?.companyName,
+      qualification: item?.qualification,
       salaryOffered: item?.salaryOffered?.replace(/"/g, ""),
       requirements: item?.requirements,
       responsibilities: item?.responsibilities,
@@ -583,7 +589,7 @@ const jobList = () => {
                                 onClick={() => handleRowClick(item)}
                                 className="px-4 py-2 font-medium whitespace-nowrap"
                               >
-                                <span>{item.type}</span>
+                                <span>{item.jobType}</span>
                               </td>
                               <td
                                 onClick={() => handleRowClick(item)}
@@ -835,7 +841,7 @@ const jobList = () => {
                                                 Req. Qualification*
                                               </label>
                                               <select
-                                                id="category"
+                                                id="qualification"
                                                 name="qualification"
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 value={formData.qualification}
