@@ -6,6 +6,8 @@ import SuccessModal from "../successModal/successModal";
 import { postJob as postJobApi } from "@/api/jobs/postJob";
 import { useMutation } from "@tanstack/react-query";
 import DOMPurify from 'dompurify';
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 interface PreviewData {
   title: string;
   type: string;
@@ -23,8 +25,16 @@ interface PreviewData {
 
 const page = () => {
   const [previewData, setPreviewData] = useState<PreviewData | null>(null);
+  const router=useRouter();
   const postJobMutation = useMutation({
     mutationFn: (data: any) => postJobApi(data),
+    onSuccess: (data) => {
+      // toast.success(data?.message)
+      console.log("data", data);
+    },
+    onError: (error) => {
+      console.log("error", error);
+    },
   });
 
   useEffect(() => {
@@ -36,13 +46,39 @@ const page = () => {
     }
   }, []);
 
+  // const postJob = async (e: any) => {
+  //   if (!previewData) {
+  //     return;
+  //   }
+
+  //   await postJobMutation.mutateAsync(previewData);
+  //   localStorage.removeItem("postJob");
+  // };
+
+  const handleClick = () =>{
+    localStorage.removeItem('postJob');
+    router.back();
+  }
+
+  const handleEditClick = () =>{
+    router.back();
+  }
+
   const postJob = async (e: any) => {
     if (!previewData) {
       return;
     }
 
-    await postJobMutation.mutateAsync(previewData);
-    localStorage.removeItem("postJob");
+    console.log("previewDAta", previewData);
+    const response = await postJobMutation.mutateAsync(previewData);
+    console.log("response....", response);
+    if (response) {
+      toast.success(response?.message);
+      if (response?.data) {
+        router.push("/admin/dashboard/jobBoard");
+        localStorage.removeItem("postJob");
+      }
+    }
   };
 
   const createMarkup = (htmlContent:any) => {
@@ -52,23 +88,25 @@ const page = () => {
     <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] pt-4">
         <div className="p-4">
-          <div>
-            <Link href="/admin/dashboard/inputNewJob">
+          <div className="">
+            {/* <Link href="/admin/dashboard/inputNewJob"> */}
               <Image
                 src="/arrowLeft.svg"
                 alt="back-icon"
+                className="cursor-pointer"
                 width={20}
                 height={20}
+                onClick={handleClick}
               />
-            </Link>
+            {/* </Link> */}
           </div>
           <div className="absolute right-2 top-6 flex">
-            <Link href="/admin/dashboard/previewJob">
-              <button className="text-sm border border-gray-500 mr-6 text-black w-20 py-2 rounded-xl hover:shadow-xl">
+          {/* <Link href="/admin/dashboard/inputNewJob"> */}
+              <button onClick={handleEditClick} className="text-sm border border-gray-500 mr-6 text-black w-20 py-2 rounded-xl hover:shadow-xl">
                 Edit
               </button>
-            </Link>
-            <Link href="/admin/dashboard/previewJob">
+          {/* </Link> */}
+            {/* <Link href="/admin/dashboard/previewJob">
               <Image
                 src="/forwardIcon.svg"
                 alt="back-icon"
@@ -76,7 +114,10 @@ const page = () => {
                 height={24}
                 className="inline mr-6"
               />
-            </Link>
+            </Link> */}
+            <button onClick={postJob} className="w-24 text-sm border border-gray-500 mr-6 text-black py-2 rounded-xl hover:shadow-xl">
+                Save Draft
+              </button>
             {/* <div onClick={postJob}> */}
             <SuccessModal />
             {/* </div> */}

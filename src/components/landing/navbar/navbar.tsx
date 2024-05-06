@@ -19,7 +19,7 @@ const Navbar = ({scrollToBottom}:NavbarProps) => {
     if(pathname === "/"){
       scrollToBottom();
     } else {
-      router.push("/")
+      router.push("/");
     }
   }
 

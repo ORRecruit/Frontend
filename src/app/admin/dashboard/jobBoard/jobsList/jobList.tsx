@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { getAllJobs } from "@/api/jobs/getAllJobs";
+import { getAllJobs, getAllJobsForAdmin } from "@/api/jobs/getAllJobs";
 import { useQuery } from "@tanstack/react-query";
 import CustomLoader from "@/components/customLoader";
 import { DeleteJob } from "@/api/jobs/deleteJob";
@@ -57,7 +57,7 @@ const jobList = () => {
 
   const allJobsResponse = useQuery({
     queryKey: ["get all naukrian"],
-    queryFn: () => getAllJobs(`title=${title}`),
+    queryFn: () => getAllJobsForAdmin(`title=${title}`),
   });
 
   // const filterJobsResponse = useQuery({
