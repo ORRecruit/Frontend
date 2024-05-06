@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import CustomLoader from "@/components/customLoader";
 import { isAuthTokenExpired } from "../isAuthTokenExpired";
 import DOMPurify from "dompurify";
+import { formatString } from "@/utils/utils";
 const page = () => {
   const router = useRouter();
   const [title, setTitle] = useState<string>("");
@@ -56,24 +57,6 @@ const page = () => {
       myRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
-
-  function formatString(str: string): string {
-    const capitalizeWords = (s: string): string =>
-      s
-        .split(" ")
-        .map(
-          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-        )
-        .join(" ");
-
-    const splitCamelCase = (s: string): string =>
-      capitalizeWords(s.replace(/([a-z])([A-Z])/g, "$1 $2"));
-
-    return str
-      .split("-")
-      .map((part: string) => splitCamelCase(part.trim()))
-      .join(" - ");
-  }
 
   const filterJobs = (e: any) => {
     console.log("e.target", e.target.value);
@@ -276,7 +259,7 @@ const page = () => {
                   </div>
                 </div>
                 <div className="flex flex-wrap pt-1 pb-4 border-t dark:border-gray-700">
-                  <div className="items-center hidden mt-3 mr-4 text-sm font-medium text-gray-900 md:flex dark:text-white">
+                  {/* <div className="items-center hidden mt-3 mr-4 text-sm font-medium text-gray-900 md:flex dark:text-white">
                     Show only:
                   </div>
 
@@ -329,7 +312,7 @@ const page = () => {
                         Inactive products
                       </label>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -373,7 +356,7 @@ const page = () => {
                       {item.experienceRequired} Yrs
                     </div>
 
-                    <div className="mb-5">
+                    {/* <div className="mb-5">
                       <button
                         type="button"
                         className="text-black-400 hover:text-white border border-gray-800 bg-white hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-3xl text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
@@ -386,7 +369,7 @@ const page = () => {
                       >
                         {formatString(item.contractType)}
                       </button>
-                    </div>
+                    </div> */}
 
                     <p
                       className="text-sm text-gray-500 dark:text-gray-400"
