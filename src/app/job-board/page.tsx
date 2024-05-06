@@ -372,13 +372,13 @@ const page = () => {
                         type="button"
                         className="text-black-400 hover:text-white border border-gray-800 bg-white hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-3xl text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
                       >
-                        {item.jobVenue}
+                        {formatString(item.jobVenue)}
                       </button>
                       <button
                         type="button"
                         className="text-black-400 hover:text-white border border-gray-800 bg-white hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-3xl text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
                       >
-                        {item.contractType}
+                        {formatString(item.contractType)}
                       </button>
                     </div>
 
@@ -392,78 +392,86 @@ const page = () => {
                 );
               })}
             </div>
-            <div className="bg-white rounded-lg mt-4 sm:w-[68%] sm:p-8">
-              <div className="mb-5">
-                <div className="flex justify-between">
-                  <h1 className="text-3xl font-bold">{selectedValue?.title}</h1>
-                  <button
-                    type="button"
-                    className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[135px] h-[40px] mt-[20px] sm:w-fit sm:h-fit sm:mt-0 sm:w-[150px]"
-                    onClick={() => applyJob(selectedValue)}
-                  >
-                    Apply Now
-                  </button>
+            {
+              selectedValue ? (
+                <div className="bg-white rounded-lg mt-4 sm:w-[68%] sm:p-8">
+                <div className="mb-5">
+                  <div className="flex justify-between">
+                    <h1 className="text-3xl font-bold">{selectedValue?.title}</h1>
+                    <button
+                      type="button"
+                      className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[135px] h-[40px] mt-[20px] sm:w-fit sm:h-fit sm:mt-0 sm:w-[150px]"
+                      onClick={() => applyJob(selectedValue)}
+                    >
+                      Apply Now
+                    </button>
+                  </div>
+                  <div className="font-light text-xl font-semibold text-gray-500 dark:text-gray-400">
+                    ORR-{selectedValue?.industry?.slice(0, 4)}-00
+                    {selectedValue?.id}
+                  </div>
+  
+                  {/* <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
+                    {selectedValue?.type}
+                  </span> */}
                 </div>
-                <div className="font-light text-xl font-semibold text-gray-500 dark:text-gray-400">
-                  ORR-{selectedValue?.industry?.slice(0, 4)}-00
-                  {selectedValue?.id}
+  
+                <div className="mb-5">
+                  <p className="text-lg font-extrabold text-gray-900 dark:text-white">
+                    {selectedValue?.salaryOffered?.replace(/"/g, "") + " "}{" "}
+                    {selectedValue?.currencyType} / {selectedValue?.jobType}
+                  </p>
+                  <p className="font-light text-gray-500 dark:text-gray-400">
+                    {/* {selectedValue?.salaryOffered + " "}{" "}
+                    {selectedValue?.currencyType} /{" "}
+                    {selectedValue?.jobType?.slice(
+                      0,
+                      selectedValue?.jobType?.length - 2
+                    )} */}
+                    {/* {staticSalary[selectedValue?.id - 1]} */}
+                    {formatString(
+                      `${selectedValue?.jobVenue} - ${selectedValue?.contractType}`
+                    )}
+                  </p>
+                  <p className="font-light text-gray-500 dark:text-gray-400">
+                    {selectedValue?.qualification}
+                  </p>
+                  <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
+                    {selectedValue?.experienceRequired} Yrs
+                  </p>
                 </div>
-
-                {/* <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
-                  {selectedValue?.type}
-                </span> */}
-              </div>
-
-              <div className="mb-5">
-                <p className="text-lg font-extrabold text-gray-900 dark:text-white">
-                  {selectedValue?.salaryOffered?.replace(/"/g, "") + " "}{" "}
-                  {selectedValue?.currencyType} / {selectedValue?.jobType}
-                </p>
-                <p className="font-light text-gray-500 dark:text-gray-400">
-                  {/* {selectedValue?.salaryOffered + " "}{" "}
-                  {selectedValue?.currencyType} /{" "}
-                  {selectedValue?.jobType?.slice(
-                    0,
-                    selectedValue?.jobType?.length - 2
-                  )} */}
-                  {/* {staticSalary[selectedValue?.id - 1]} */}
-                  {formatString(
-                    `${selectedValue?.jobVenue} - ${selectedValue?.contractType}`
-                  )}
-                </p>
-                <p className="font-light text-gray-500 dark:text-gray-400">
-                  {selectedValue?.qualification}
-                </p>
-                <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
-                  {selectedValue?.experienceRequired} Yrs
-                </p>
-              </div>
-
-              <h2 className="text-lg font-semibold mb-4">Job Description</h2>
-              <div
-                className="text-gray-700 mb-8 job-description-content"
-                dangerouslySetInnerHTML={createMarkup(
-                  selectedValue?.description
-                )}
-              />
-
-              <h3 className="text-lg font-semibold mb-3">Responsibilities</h3>
-              <div
-                className="text-gray-700 mb-8 job-description-content"
-                dangerouslySetInnerHTML={createMarkup(
-                  selectedValue?.responsibilities
-                )}
-              />
-              <div className="text-gray-700 mb-8">
-                <h3 className="text-lg font-semibold mb-3">Requirements</h3>
+  
+                <h2 className="text-lg font-semibold mb-4">Job Description</h2>
                 <div
                   className="text-gray-700 mb-8 job-description-content"
                   dangerouslySetInnerHTML={createMarkup(
-                    selectedValue?.requirements
+                    selectedValue?.description
                   )}
                 />
+  
+                <h3 className="text-lg font-semibold mb-3">Responsibilities</h3>
+                <div
+                  className="text-gray-700 mb-8 job-description-content"
+                  dangerouslySetInnerHTML={createMarkup(
+                    selectedValue?.responsibilities
+                  )}
+                />
+                <div className="text-gray-700 mb-8">
+                  <h3 className="text-lg font-semibold mb-3">Requirements</h3>
+                  <div
+                    className="text-gray-700 mb-8 job-description-content"
+                    dangerouslySetInnerHTML={createMarkup(
+                      selectedValue?.requirements
+                    )}
+                  />
+                </div>
               </div>
-            </div>
+              ) :(
+                <div className="w-full mt-20">
+                  <p className="text-2xl font-semibold my-3 text-center text-black">No job found.</p>
+                </div>
+              )
+            }
           </div>
         )}
         <About height="473px" backgroundImage="" />
