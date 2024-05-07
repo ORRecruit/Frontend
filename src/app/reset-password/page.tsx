@@ -24,7 +24,7 @@ const page = () => {
   const [responseMessage, setResponseMessage] = useState("");
 
   const [token, setToken] = useState<string>("");
-  const searchParams = useSearchParams();
+  const searchParams: any = useSearchParams();
 
   const resetPassTokenMutation = useMutation({
     mutationFn: (data: any) => ResetPassToken(data),
@@ -34,12 +34,13 @@ const page = () => {
   });
 
   useEffect(() => {
-    setToken(searchParams.get("token") || "mail");
+    setToken(searchParams.get("token"));
+    console.log("token", token);
   }, [token]);
 
   const submitEmail = async (e: any) => {
     e?.preventDefault();
-    if (email) {
+    try {
       const response = await resetPassTokenMutation.mutateAsync(email);
       console.log("email", response, email);
       if (response) {
@@ -47,6 +48,9 @@ const page = () => {
       } else {
         toast.error("Something went wrong, Please try again");
       }
+    } catch (error: any) {
+      console.log("error here >>>", error);
+      toast.error(error.response.data.message);
     }
   };
   const resetPasswordApi = async (e: any) => {

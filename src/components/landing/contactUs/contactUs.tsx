@@ -1,23 +1,38 @@
+"use client";
 import { useState } from "react";
 import Image from "next/image";
 import CaptchaTest from "../captcha/captcha";
 import toast from "react-hot-toast";
 import { validateCaptcha } from "react-simple-captcha";
+import { useMutation } from "@tanstack/react-query";
+import { contactUsApi } from "@/api/contactUs/saveContactUs";
+
 const contactUs = () => {
+  const contactUsMutation = useMutation({
+    mutationFn: (data: any) => contactUsApi(data),
+    onSuccess: (data) => {
+      console.log("data", data);
+    },
+    onError: (error) => {
+      console.log("error", error);
+    },
+  });
   const [captchaInput, setCaptchaInput] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
+    phoneNo: "",
     message: "",
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = event.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -25,14 +40,34 @@ const contactUs = () => {
     setCaptchaInput(value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-      if (!validateCaptcha(captchaInput)) {
-    toast.error("Captcha Does Not Match");
-    setCaptchaInput("");
-    return;
-  }
+    if (!validateCaptcha(captchaInput)) {
+      toast.error("Captcha Does Not Match");
+      setCaptchaInput("");
+      return;
+    }
     console.log("Form Data:", formData);
+    if (
+      !formData?.email ||
+      !formData?.firstName ||
+      !formData?.lastName ||
+      !formData?.message ||
+      !formData?.phoneNo
+    ) {
+      toast.error("Please Provide All Details");
+      return;
+    }
+    try {
+      const response = await contactUsMutation.mutateAsync(formData);
+      console.log("response", response);
+      if (response?.success) {
+        toast.success(response?.message);
+      }
+    } catch (error: any) {
+      console.log("error", error);
+      // toast.error(error?.message);
+    }
   };
 
   return (
@@ -59,7 +94,10 @@ const contactUs = () => {
                   Do you have questions? Talk to our team today by dropping a
                   message below
                 </p>
-                <form onSubmit={handleSubmit} className="mt-8 space-y-6 bg-white shadow-lg rounded-lg p-8">
+                <form
+                  onSubmit={handleSubmit}
+                  className="mt-8 space-y-6 bg-white shadow-lg rounded-lg p-8"
+                >
                   <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
                     <div>
                       <label htmlFor="first-name" className="sr-only">
@@ -70,7 +108,7 @@ const contactUs = () => {
                         name="firstName"
                         id="first-name"
                         autoComplete="given-name"
-                        placeholder="First name"
+                        placeholder="First name*"
                         className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                         value={formData.firstName}
                         onChange={handleChange}
@@ -85,7 +123,7 @@ const contactUs = () => {
                         name="lastName"
                         id="last-name"
                         autoComplete="family-name"
-                        placeholder="Last name"
+                        placeholder="Last Name*"
                         className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                         value={formData.lastName}
                         onChange={handleChange}
@@ -100,24 +138,24 @@ const contactUs = () => {
                         name="email"
                         id="email"
                         autoComplete="email"
-                        placeholder="Email"
+                        placeholder="Email*"
                         className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                         value={formData.email}
                         onChange={handleChange}
                       />
                     </div>
                     <div className="sm:col-span-2">
-                      <label htmlFor="phone" className="sr-only">
+                      <label htmlFor="phoneNo" className="sr-only">
                         Phone number
                       </label>
                       <input
-                        type="tel"
-                        name="phone"
-                        id="phone"
+                        type="number"
+                        name="phoneNo"
+                        id="phoneNo"
                         autoComplete="tel"
-                        placeholder="Phone number"
+                        placeholder="Phone Number*"
                         className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-                        value={formData.phone}
+                        value={formData.phoneNo}
                         onChange={handleChange}
                       />
                     </div>
@@ -130,7 +168,7 @@ const contactUs = () => {
                       id="message"
                       name="message"
                       rows={4}
-                      placeholder="Your message"
+                      placeholder="Your Message*"
                       className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border border-gray-300 rounded-md"
                       value={formData.message}
                       onChange={handleChange}

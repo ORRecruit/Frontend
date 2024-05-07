@@ -1,3 +1,5 @@
+import DOMPurify from "dompurify";
+
 export function formatString(str: string): string {
   const capitalizeWords = (s: string): string =>
     s
@@ -12,4 +14,8 @@ export function formatString(str: string): string {
     .split("-")
     .map((part: string) => splitCamelCase(part.trim()))
     .join(" - ");
+}
+
+export function createMarkup(htmlContent: any) {
+  return { __html: DOMPurify.sanitize(htmlContent) };
 }

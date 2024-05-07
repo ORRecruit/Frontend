@@ -99,9 +99,10 @@ const page = () => {
             ""
           )}
           {verifyEmail ? (
-            <p className="absolute top-5 px-8 py-2 rounded-2xl shadow-lg mt-4 text-white bg-green-500">
-              Registration successful, Please check your email to verify your
-              account.
+            // className="absolute top-5 px-8 py-2 rounded-2xl shadow-lg mt-4 text-white bg-green-500"
+            <p>
+              {/* Registration successful, Please check your email to verify your
+              account. */}
             </p>
           ) : (
             ""
