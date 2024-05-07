@@ -15,6 +15,9 @@ import QuillTextEditor from "@/components/dashboard/quilEditor/QuillTextEditor";
 import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
 import { createMarkup, formatString } from "@/utils/utils";
 import { RiCloseLine } from "react-icons/ri";
+import { jobPublishApi } from "@/api/jobs/isPublishApi";
+import { jobCompleteApi } from "@/api/jobs/markComplete";
+
 const jobList = () => {
   const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -25,6 +28,10 @@ const jobList = () => {
   );
   const [skills, setSkills] = useState<string[]>([]);
   const [deleteDialog, setDeleteDialog] = useState<any>(false);
+  const [publishDialog, setPublishDialog] = useState<any>(false);
+  const [completeDialog, setCompleteDialog] = useState<any>(false);
+  const [publishItem, setPublishItem] = useState<any>(null);
+  const [completeItem, setCompleteItem] = useState<any>(null);
   const [editDialog, setEditDialog] = useState<any>(false);
   const [formData, setFormData] = useState<any>({
     title: "",
@@ -56,6 +63,13 @@ const jobList = () => {
   });
   const editJobMutation = useMutation({
     mutationFn: (data: any) => editJobApi(editId, data),
+  });
+
+  const jobPublish = useMutation({
+    mutationFn: (data: any) => jobPublishApi(data),
+  });
+  const jobComplete = useMutation({
+    mutationFn: (data: any) => jobCompleteApi(data),
   });
 
   const allJobsResponse = useQuery({
@@ -199,12 +213,16 @@ const jobList = () => {
     setEditDialog(!editDialog);
   };
 
-  const handlePublishJob = (item: any) => {
+  const handlePublishJob = async (item: any) => {
     console.log("This Job is going to Publish >>>", item);
+    setPublishItem(item);
+    setPublishDialog(!publishDialog);
   };
 
   const handleCompleteJob = (item: any) => {
     console.log("inside handle complete Job>>", item);
+    setCompleteItem(item);
+    setCompleteDialog(!completeDialog);
   };
   const handleChange = (e: any) => {
     e.preventDefault();
@@ -226,6 +244,43 @@ const jobList = () => {
       allJobsResponse.refetch();
     }
   };
+  const closePublishDialog = async (job: any) => {
+    console.log("job", publishItem?.id);
+    const obj = {
+      isPublished: true,
+      jobId: publishItem?.id,
+    };
+    const response = await jobPublish.mutateAsync(obj);
+    console.log("response....", response);
+
+    if (response?.success) {
+      console.log("responlse.....", response);
+
+      setPublishDialog(!publishDialog);
+      allJobsResponse.refetch();
+
+      setPublishItem(null);
+    }
+  };
+  const closeCompleteDialog = async (job: any) => {
+    console.log("job", completeItem?.id);
+    const obj = {
+      isCompleted: true,
+      jobId: completeItem?.id,
+    };
+    const response = await jobComplete.mutateAsync(obj);
+    console.log("response....", response);
+
+    if (response?.success) {
+      console.log("responlse.....", response);
+
+      setCompleteDialog(!completeDialog);
+      allJobsResponse.refetch();
+
+      setCompleteItem(null);
+    }
+  };
+
   const openEditConfirmation = () => {
     setConfirmationDialog(!confirmationDialog);
   };
@@ -895,6 +950,62 @@ const jobList = () => {
                                     <div>
                                       <button
                                         onClick={() => closeDeleteDialog(item)}
+                                        className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
+                                      >
+                                        Yes
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                            {publishDialog && (
+                              <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                                <div className="relative bg-white p-5 rounded-lg max-w-lg w-full border border-black-400">
+                                  <div className="absolute top-2 right-3">
+                                    <RiCloseLine
+                                      size={25}
+                                      onClick={() =>
+                                        setPublishDialog(!publishDialog)
+                                      }
+                                    />
+                                  </div>
+                                  <div className="bg-white rounded-lg flex flex-col items-center">
+                                    <p className="text-gray-600 text-xl mb-4">
+                                      Are You Sure Want To Publish The Job?
+                                    </p>
+                                    <div>
+                                      <button
+                                        onClick={() => closePublishDialog(item)}
+                                        className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
+                                      >
+                                        Yes
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                            {completeDialog && (
+                              <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                                <div className="relative bg-white p-5 rounded-lg max-w-lg w-full border border-black-400">
+                                  <div className="absolute top-2 right-3">
+                                    <RiCloseLine
+                                      size={25}
+                                      onClick={() =>
+                                        setCompleteDialog(!completeDialog)
+                                      }
+                                    />
+                                  </div>
+                                  <div className="bg-white rounded-lg flex flex-col items-center">
+                                    <p className="text-gray-600 text-xl mb-4">
+                                      Are You Sure Want To Complete The Job?
+                                    </p>
+                                    <div>
+                                      <button
+                                        onClick={() =>
+                                          closeCompleteDialog(item)
+                                        }
                                         className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
                                       >
                                         Yes
