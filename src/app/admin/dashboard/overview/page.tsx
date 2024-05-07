@@ -1,19 +1,27 @@
+"use client";
 import React from "react";
 import DashboardNavbar from "@/components/dashboard/dashboardNavbar/dashboardNavbar";
 import DashboardSidebar from "@/components/dashboard/dashboardSidebar/dashboardSidebar";
 import DashboardContent from "@/components/dashboard/dashboardContent/dashboardContent";
+import { useQuery } from "@tanstack/react-query";
+import { jobOverview } from "@/api/jobs/jobsOverview";
 
 const page = () => {
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ["get overview details"],
+    queryFn: () => jobOverview(),
+  });
+  console.log("data", data);
   const details = [
     {
       iconUrl: "/overviewAdmin1.svg",
       heading: "Open Positions",
-      rating: "123",
+      rating: data?.data?.openPositions || 0,
     },
     {
       iconUrl: "/overviewAdmin2.svg",
       heading: "Closed Positions",
-      rating: "2134",
+      rating: data?.data?.closedPositions || 0,
     },
     {
       iconUrl: "/overviewAdmin3.svg",
