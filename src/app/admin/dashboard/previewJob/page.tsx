@@ -69,8 +69,15 @@ const page = () => {
       return;
     }
 
+
+    const jobDataToSend = {
+      ...previewData,
+      isPublished: true,
+      jobStatus: 'PENDING'
+    };
+
     console.log("previewDAta", previewData);
-    const response = await postJobMutation.mutateAsync(previewData);
+    const response = await postJobMutation.mutateAsync(jobDataToSend);
     console.log("response....", response);
     if (response) {
       toast.success(response?.message);

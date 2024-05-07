@@ -46,7 +46,8 @@ const successModal = () => {
     
     const jobDataToSend = {
       ...previewData,
-      isPublished: true
+      isPublished: true,
+      jobStatus: 'PUBLISHED'
     };
     console.log("previewDAta", previewData);
     const response = await postJobMutation.mutateAsync(jobDataToSend);
