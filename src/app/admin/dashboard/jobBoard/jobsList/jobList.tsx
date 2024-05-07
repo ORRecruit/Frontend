@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getAllJobs, getAllJobsForAdmin } from "@/api/jobs/getAllJobs";
 import { useQuery } from "@tanstack/react-query";
 import CustomLoader from "@/components/customLoader";
@@ -14,7 +14,7 @@ import { filterJobs } from "@/api/jobs/filterJobs";
 import QuillTextEditor from "@/components/dashboard/quilEditor/QuillTextEditor";
 import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
 import { formatString } from "@/utils/utils";
-
+import { RiCloseLine } from "react-icons/ri";
 const jobList = () => {
   const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -48,6 +48,8 @@ const jobList = () => {
   const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
   const [filterString, setFilterString] = useState<string>("");
   const [title, setTitle] = useState<string>("");
+  const [selectedFilter, setSelectedFilter] = useState("ALL"); 
+  const dropdownRef = useRef<HTMLDivElement>(null);  
 
   const deleteJobMutation = useMutation({
     mutationFn: (id: any) => DeleteJob(id),
@@ -61,11 +63,6 @@ const jobList = () => {
     queryFn: () => getAllJobsForAdmin(`title=${title}`),
   });
 
-  // const filterJobsResponse = useQuery({
-  //   queryKey: ["get all naukrian"],
-  //   queryFn: () => filterJobs("sa"),
-  // });
-
   useEffect(() => {
     console.log("data....", allJobsResponse.data?.data);
   }, [allJobsResponse.data]);
@@ -73,6 +70,19 @@ const jobList = () => {
   useEffect(() => {
     console.log("Updated formData:", formData);
   }, [formData]);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setActiveOptionsIndex(null);
+      }
+    }
+  
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
 
   const handleRowClick = (item: any) => {
     setSelectedItem(item);
@@ -164,6 +174,14 @@ const jobList = () => {
     setSkills(item?.skillsRequired);
     setEditDialog(!editDialog);
   };
+
+  const handlePublishJob = (item: any) => {
+    console.log("This Job is going to Publish >>>", item);
+  };
+
+  const handleCompleteJob = (item: any) => {
+    console.log("inside handle complete Job>>", item);
+  };
   const handleChange = (e: any) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -192,6 +210,24 @@ const jobList = () => {
     setTitle(e.target.value);
     allJobsResponse.refetch();
   };
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedFilter(e.target.value);
+  };
+
+  const filteredJobs = allJobsResponse.data?.data?.filter((job: any) => {
+    switch (selectedFilter) {
+      case 'PENDING':
+        return job.jobStatus === 'PENDING';
+      case 'PUBLISHED':
+        return job.jobStatus === 'PUBLISHED';
+      case 'COMPLETED':
+        return job.jobStatus === 'COMPLETED';
+      default:
+        return true;
+    }
+  });
+  console.log("The value id filteredJobs >>>",filteredJobs);
 
   return (
     <>
@@ -463,8 +499,10 @@ const jobList = () => {
                     <input
                       id="all-tasks"
                       type="radio"
-                      value=""
+                      value="ALL"
                       name="show-only"
+                      onChange={handleFilterChange}
+                      checked={selectedFilter === 'ALL'}
                       className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
                     <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -475,12 +513,29 @@ const jobList = () => {
                     <input
                       id="in-progress"
                       type="radio"
-                      value=""
+                      value="PENDING"
                       name="show-only"
+                      onChange={handleFilterChange}
+                      checked={selectedFilter === 'PENDING'}
                       className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
                     <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                      Active
+                      Pending/Draft
+                    </label>
+                  </div>
+
+                  <div className="flex items-center mr-4 mt-3">
+                    <input
+                      id="publish"
+                      type="radio"
+                      value="PUBLISHED"
+                      name="show-only"
+                      onChange={handleFilterChange}
+                      checked={selectedFilter === 'PUBLISHED'}
+                      className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      Published
                     </label>
                   </div>
 
@@ -488,8 +543,10 @@ const jobList = () => {
                     <input
                       id="completed"
                       type="radio"
-                      value=""
+                      value="COMPLETED"
                       name="show-only"
+                      onChange={handleFilterChange}
+                      checked={selectedFilter === 'COMPLETED'}
                       className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
                     <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -539,8 +596,8 @@ const jobList = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {allJobsResponse.data &&
-                      allJobsResponse.data?.data?.map(
+                    {filteredJobs &&
+                      filteredJobs?.map(
                         (item: any, index: any) => {
                           return (
                             <tr
@@ -627,24 +684,88 @@ const jobList = () => {
                                 {activeOptionsIndex === index && (
                                   <div
                                     id="-dropdown"
+                                    ref={dropdownRef} 
                                     className="cursor-pointer z-10 w-44 bg-white rounded divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                                   >
-                                    <div
-                                      className="py-1"
-                                      onClick={() => deleteJob(item)}
-                                    >
-                                      <p className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                        Delete
-                                      </p>
-                                    </div>
-                                    <div
-                                      className="py-1"
-                                      onClick={() => editJob(item)}
-                                    >
-                                      <p className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                        Edit
-                                      </p>
-                                    </div>
+                                    {(() => {
+                                      switch (item.jobStatus) {
+                                        case "PENDING":
+                                          return (
+                                            <>
+                                              <div
+                                                onClick={() => editJob(item)}
+                                                className="py-1"
+                                              >
+                                                <p className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                  Edit
+                                                </p>
+                                              </div>
+                                              <div
+                                                onClick={() => deleteJob(item)}
+                                                className="py-1"
+                                              >
+                                                <p className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                  Delete
+                                                </p>
+                                              </div>
+                                              <div
+                                                onClick={() =>
+                                                  handlePublishJob(item)
+                                                }
+                                                className="py-1"
+                                              >
+                                                <p className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                  Publish
+                                                </p>
+                                              </div>
+                                            </>
+                                          );
+                                        case "PUBLISHED":
+                                          return (
+                                            <>
+                                              <div
+                                                onClick={() => editJob(item)}
+                                                className="py-1"
+                                              >
+                                                <p className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                  Edit
+                                                </p>
+                                              </div>
+                                              <div
+                                                onClick={() => deleteJob(item)}
+                                                className="py-1"
+                                              >
+                                                <p className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                  Delete
+                                                </p>
+                                              </div>
+                                              <div
+                                                onClick={() =>
+                                                  handleCompleteJob(item)
+                                                }
+                                                className="py-1"
+                                              >
+                                                <p className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                  Mark as Complete
+                                                </p>
+                                              </div>
+                                            </>
+                                          );
+                                        case "COMPLETED":
+                                          return (
+                                            <div
+                                              onClick={() => deleteJob(item)}
+                                              className="py-1"
+                                            >
+                                              <p className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                Delete
+                                              </p>
+                                            </div>
+                                          );
+                                        default:
+                                          return null;
+                                      }
+                                    })()}
                                   </div>
                                 )}
                               </td>
@@ -724,7 +845,10 @@ const jobList = () => {
                               )}
                               {deleteDialog && (
                                 <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
-                                  <div className="relative bg-white p-5 rounded-lg max-w-lg w-full border border-black-400">
+                                  <div className= "relative bg-white p-5 rounded-lg max-w-lg w-full border border-black-400">
+                                    <div className="absolute top-2 right-3">
+                                    <RiCloseLine size={25} onClick={()=>setDeleteDialog(!deleteDialog)} />
+                                    </div>
                                     <div className="bg-white rounded-lg flex flex-col items-center">
                                       <p className="text-gray-600 text-xl mb-4">
                                         Are You Sure Want To Delete The Job?
