@@ -50,7 +50,7 @@ const page = () => {
       }
     } catch (error: any) {
       console.log("error here >>>", error);
-      toast.error(error.response.data.message);
+      toast.error("Something went wrong. Try again");
     }
   };
   const resetPasswordApi = async (e: any) => {
