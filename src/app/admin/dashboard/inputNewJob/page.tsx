@@ -18,7 +18,7 @@ import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
 const page = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
-  const [skillsRequired, setSkills] = useState<string[]>([]);
+  const [skillsRequired, setSkillsRequired] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     title: "",
     location: "",
@@ -39,15 +39,27 @@ const page = () => {
   console.log("The skills inside parent componnet >>>", skillsRequired);
 
   useEffect(() => {
-    const storedJob = localStorage.getItem("postJob");
-    if (storedJob) {
-      const jobData = JSON.parse(storedJob);
-      setFormData(jobData);
-      if (jobData.skillsRequired) {
-        setSkills(jobData.skillsRequired);
+    // Function to load job data
+    function loadJobData() {
+      const storedJob = localStorage.getItem("postJob");
+      if (storedJob) {
+        const jobData = JSON.parse(storedJob);
+        console.log("JOB Data Get from the local storage >>>>", jobData);
+        setFormData(jobData);
+        if (jobData.skillsRequired) {
+          setSkillsRequired(jobData.skillsRequired);
+        }
       }
     }
+  
+    // Call load function on mount
+    loadJobData();
   }, []);
+
+
+
+  console.log("The data inside skills array >>>>>>>>",skillsRequired);
+  
 
   const handleChange = useCallback(
     (
@@ -64,7 +76,7 @@ const page = () => {
   );
 
   const handleSkillsChange = (newSkills: string[]) => {
-    setSkills(newSkills);
+    setSkillsRequired(newSkills);
   };
   const handleSubmit = useCallback(
     async (e: any) => {
@@ -90,10 +102,12 @@ const page = () => {
         return;
       }
       setErrorMessage("");
+      console.log("skillsRequired just before From data >>>>>>",skillsRequired);
       const data = {
         ...formData,
         skillsRequired,
       };
+      console.log("The data Object JUst before saving to local storage >>>>",data);
       localStorage.setItem("postJob", JSON.stringify(data));
       router.push("/admin/dashboard/previewJob");
     },
@@ -233,7 +247,7 @@ const page = () => {
         </div>
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
           <h1 className="text-lg font-bold pb-2">Skills Required*</h1>
-          <div className="mb-2 w-[90%]">
+          <div key={skillsRequired.length} className="mb-2 w-[90%]">
             <SkillsInput
               onSkillsChange={handleSkillsChange}
               initialSkills={skillsRequired}
@@ -337,6 +351,7 @@ const page = () => {
                 className="w-4 h-4 bg-gray-100 border-gray-300"
                 name="jobVenue"
                 value="hybrid"
+                checked={formData.jobVenue === 'hybrid'}
                 onChange={handleChange}
                 required={true}
               />
@@ -356,6 +371,7 @@ const page = () => {
                 className="w-4 h-4 bg-gray-100 border-gray-300"
                 name="jobVenue"
                 value="remote"
+                checked={formData.jobVenue === 'remote'}
                 onChange={handleChange}
               />
               <div>
@@ -374,6 +390,7 @@ const page = () => {
                 className="w-4 h-4 bg-gray-100 border-gray-300"
                 name="jobVenue"
                 value="onsite"
+                checked={formData.jobVenue === 'onsite'}
                 onChange={handleChange}
               />
               <div>
@@ -398,6 +415,7 @@ const page = () => {
                 name="contractType"
                 value="fullTime"
                 onChange={handleChange}
+                checked={formData.contractType === 'fullTime'}
                 required={true}
               />
               <div>
@@ -413,6 +431,7 @@ const page = () => {
                 className="w-4 h-4 bg-gray-100 border-gray-300"
                 name="contractType"
                 value="partTime"
+                checked={formData.contractType === 'partTime'}
                 onChange={handleChange}
               />
               <div>

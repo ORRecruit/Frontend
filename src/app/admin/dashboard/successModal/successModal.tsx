@@ -52,6 +52,7 @@ const successModal = () => {
     console.log("previewDAta", previewData);
     const response = await postJobMutation.mutateAsync(jobDataToSend);
     console.log("response....", response);
+    localStorage.removeItem('postJob');
     if (response) {
       toast.success(response?.message);
       if (response?.data) {

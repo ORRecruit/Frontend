@@ -61,7 +61,7 @@ const page = () => {
   }
 
   const handleEditClick = () =>{
-    router.back();
+    router.replace("/admin/dashboard/inputNewJob");
   }
 
   const postJob = async (e: any) => {
@@ -75,10 +75,10 @@ const page = () => {
       isPublished: true,
       jobStatus: 'PENDING'
     };
-
     console.log("previewDAta", previewData);
     const response = await postJobMutation.mutateAsync(jobDataToSend);
     console.log("response....", response);
+    localStorage.removeItem('postJob');
     if (response) {
       toast.success(response?.message);
       if (response?.data) {
