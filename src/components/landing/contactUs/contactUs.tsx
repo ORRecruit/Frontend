@@ -63,6 +63,14 @@ const contactUs = () => {
       console.log("response", response);
       if (response?.success) {
         toast.success(response?.message);
+        setCaptchaInput("")
+;        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phoneNo: "",
+          message: "",
+        })
       }
     } catch (error: any) {
       console.log("error", error);
