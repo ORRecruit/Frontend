@@ -146,9 +146,9 @@ const page = () => {
                         </label>
                       </div>
                     </div>
-                    <div className="text-[14px] m-0 text-primary-color">
+                    {/* <div className="text-[14px] m-0 text-primary-color">
                       Forgot Password?
-                    </div>
+                    </div> */}
                   </div>
                   <button
                     type="submit"

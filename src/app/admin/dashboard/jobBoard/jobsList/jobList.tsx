@@ -889,7 +889,7 @@ const jobList = () => {
                                       </p>
                                     </div>
 
-                                    <h2 className="text-lg font-semibold mb-2">
+                                    <h2 className="text-lg text-gray-700 font-bold mb-2">
                                       Job Description
                                     </h2>
                                     <div className="text-gray-700 mb-2">
@@ -901,7 +901,7 @@ const jobList = () => {
                                       <br />
                                     </div>
 
-                                    <h3 className="text-lg font-semibold mb-2">
+                                    <h3 className="text-lg text-gray-700 font-bold mb-2">
                                       Responsibilities
                                     </h3>
                                     <ul className="list-disc list-inside text-gray-700 mb-2">
@@ -912,7 +912,7 @@ const jobList = () => {
                                       />
                                     </ul>
                                     <div className="text-gray-700 mb-2">
-                                      <h3 className="text-lg font-semibold mb-2">
+                                      <h3 className="text-lg font-bold mb-2">
                                         Requirements
                                       </h3>
                                       <p

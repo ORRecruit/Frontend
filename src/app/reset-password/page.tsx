@@ -64,6 +64,7 @@ const page = () => {
       console.log("email", response, obj);
       if (response) {
         toast.success(response?.message);
+        router.push("/auth/signin");
       } else {
         toast.error("Something went wrong, Please try again");
       }
@@ -104,7 +105,7 @@ const page = () => {
                     action="#"
                   >
                     <div className="grid gap-6 sm:grid-cols-2">
-                      <div>
+                      <div className="w-[210%]">
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                           Email
                         </label>
@@ -120,7 +121,15 @@ const page = () => {
                         />
                       </div>
                     </div>
-                    <div className="space-y-3 flex justify-between items-center"></div>
+
+                    <Link
+                      href="/auth/signin"
+                      className="flex justify-between items-center float-right"
+                    >
+                      <div className="text-[14px] m-0 text-primary-color mr-4">
+                        Login Here
+                      </div>
+                    </Link>
                     <button
                       type="submit"
                       className="w-full bg-primary-orange focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white"
@@ -174,7 +183,14 @@ const page = () => {
                         />
                       </div>
                     </div>
-                    <div className="space-y-3 flex justify-between items-center"></div>
+                    <Link
+                      href="/auth/signin"
+                      className="flex justify-between items-center float-right"
+                    >
+                      <div className="text-[14px] m-0 text-primary-color mr-4">
+                        Login Here
+                      </div>
+                    </Link>
                     <button
                       type="submit"
                       className="w-full bg-primary-orange focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white"

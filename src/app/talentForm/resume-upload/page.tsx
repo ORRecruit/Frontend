@@ -1,14 +1,32 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const page = () => {
   const router = useRouter();
-  const submitResume = (e: any) => {
+  const [resumeBool, setResumeBool] = useState<boolean>(false);
+  const routeTalentDetails = (e: any) => {
     e.preventDefault();
     router.push("/talentForm/personalInfo");
+  };
+
+  const [file, setFile] = useState(null);
+
+  // Handles file selection
+  const handleFileChange = (event: any) => {
+    setFile(event.target.files[0]); // Update the state with the selected file
+    console.log("file", file);
+  };
+
+  const submitResume = (e: any) => {
+    console.log("e", e);
+    // toast.success(
+    //   "Your resume has been saved. You will be notified after review."
+    // );
+    // router.push("/");
   };
   return (
     <>
@@ -19,10 +37,10 @@ const page = () => {
               Personal Info
             </h1>
             <p className="text-sm font-light text-gray-500 dark:text-gray-300">
-              Please upload your resume. You may skip this and add all the
-              information manually{" "}
+              You can upload you resume or can fill the details manually. Please
+              Choose
             </p>
-            <form onSubmit={submitResume} className="mt-4" action="#">
+            <div className="">
               <div>
                 <div className="flex items-start">
                   <div className="text-sm w-full mb-[20px]">
@@ -30,53 +48,64 @@ const page = () => {
                       By signing up, you are creating a Sendinblue account, and
                       you agree to Sendinblue's
                     </label>
-                    <div className="flex items-center justify-center w-full">
-                      <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                          <svg
-                            className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 20 16"
-                          >
-                            <path
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                            />
-                          </svg>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
-                            <span className="font-semibold">
-                              Upload Your Photo
-                            </span>
-                          </p>
-                          <Link
-                            href="#"
-                            className="text-sm text-gray-500 dark:text-gray-400 text-blue-700"
-                          >
-                            or browse for files
-                          </Link>
-                        </div>
-                        <input
-                          id="dropzone-file"
-                          type="file"
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
+                    {resumeBool && (
+                      <div className="flex items-center justify-center w-full">
+                        <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                            <svg
+                              className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 20 16"
+                            >
+                              <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                              />
+                            </svg>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                              <span className="font-semibold">
+                                Upload Your Resume
+                              </span>
+                            </p>
+                            <Link
+                              href="#"
+                              className="text-sm text-gray-500 dark:text-gray-400 text-blue-700"
+                            >
+                              or browse for files
+                            </Link>
+                          </div>
+                          <input
+                            id="dropzone-file"
+                            type="file"
+                            className="hidden"
+                            onClick={handleFileChange}
+                          />
+                        </label>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-              <button
-                type="submit"
-                className="w-full bg-primary-orange focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white"
-              >
-                Continue
-              </button>
-            </form>
+              <div className="flex mt-2">
+                <button
+                  className="w-[47%] mx-auto bg-primary-orange focus:ring-4 focus:outline-none focus:ring-primary-300 font-base rounded-lg text-sm px-5 py-2.5 text-center text-white"
+                  onClick={() => setResumeBool(true)}
+                >
+                  Upload Your Resume
+                </button>
+                <button
+                  onClick={routeTalentDetails}
+                  className="w-[47%] mx-auto bg-primary-orange focus:ring-4 focus:outline-none focus:ring-primary-300 font-base rounded-lg text-sm px-5 py-2.5 text-center text-white"
+                >
+                  Fill Form Manually
+                </button>
+              </div>
+            </div>
           </div>
           <div className="mr-auto place-self-center lg:col-span-6">
             <Image
