@@ -4,24 +4,24 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 interface NavbarProps {
-  scrollToBottom: () => void;
+  scrollToBottom?: () => void;
 }
-const Navbar = ({scrollToBottom}:NavbarProps) => {
+const Navbar = ({ scrollToBottom }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleNavigation = () =>{
-    if(pathname === "/"){
+  const handleNavigation = () => {
+    if (pathname === "/" && scrollToBottom) {
       scrollToBottom();
     } else {
       router.push("/");
     }
-  }
+  };
 
   return (
     <nav className="bg-white h-24 lg:w-[100%] mx-auto 2xl:mb-10 xl:mb-6">
