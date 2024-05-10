@@ -218,8 +218,8 @@ function Page() {
                       </div>
                     </div>
                     <div className="sm:col-span-2">
-                      <label htmlFor="contact-method" className="sr-only">
-                        Preferred Contact Method
+                      <label htmlFor="contact-method" className="text-gray-500">
+                        Preferred Contact Method*
                       </label>
                       <select
                         id="contact-method"
@@ -278,8 +278,8 @@ function Page() {
                       </div>
                     </div>
                     <div className="sm:col-span-2">
-                      <label htmlFor="education" className="sr-only">
-                        Highest Education
+                      <label htmlFor="education" className="text-gray-500">
+                        Highest Education*
                       </label>
                       <select
                         id="education"
