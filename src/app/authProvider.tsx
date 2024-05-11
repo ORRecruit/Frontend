@@ -41,7 +41,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         path === "/admin/dashboard/newJob" ||
         path === "/admin/dashboard/inputNewJob" ||
         path === "/admin/dashboard/previewJob" ||
-        path === "/admin/dashboard/overview"
+        path === "/admin/dashboard/overview" ||
+        path === "/admin/dashboard/talents"
       ) {
         if (role === "admin" && !isAuthTokenExpired(token!)) {
           router.push(path);
