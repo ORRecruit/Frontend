@@ -2,8 +2,12 @@
 import React, { useState } from "react";
 import Navbar from "@/components/landing/navbar/navbar";
 import Footer from "@/components/landing/footer/footer";
+import { useSearchParams } from "next/navigation";
 
 function Page() {
+  const param = useSearchParams();
+  const jobId = param.get("jobId");
+
   const [formData, setFormData] = useState({
     firstName: "",
     middleName: "",
@@ -51,6 +55,11 @@ function Page() {
     e.preventDefault();
     console.log(formData);
   };
+
+  if (jobId) {
+    console.log("jobId", jobId);
+  }
+
   return (
     <>
       <Navbar />
@@ -64,7 +73,7 @@ function Page() {
                 </p>
                 <form
                   onSubmit={handleSubmit}
-                  className="mt-8 space-y-6 bg-white shadow-lg rounded-lg p-8"
+                  className="mt-8 bg-white shadow-lg rounded-lg p-8 w-full"
                 >
                   <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
                     <div>

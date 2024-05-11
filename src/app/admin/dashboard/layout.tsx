@@ -28,8 +28,8 @@ export default function RootLayout({
     },
     {
       iconUrl: "/adminSidebar3.svg",
-      text: "Users",
-      href: "#",
+      text: "Talents",
+      href: "/admin/dashboard/talents",
     },
     {
       iconUrl: "/adminSidebar4.svg",

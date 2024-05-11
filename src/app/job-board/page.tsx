@@ -19,6 +19,7 @@ const page = () => {
     queryKey: ["get all naukrian"],
     queryFn: () => getAllJobs(`title=${title}`),
   });
+  const [showOptions, setShowOptions] = useState(false);
 
   const staticSalary = ["20 - 40 CAD / Hour", "60K AED / Month"];
 
@@ -35,11 +36,14 @@ const page = () => {
   const applyJob = (item: any) => {
     const role = localStorage.getItem("role");
     const authToken = localStorage.getItem("authToken");
-    if (role === "Candidate" && !isAuthTokenExpired(authToken!)) {
+    if (role === "candidate" && !isAuthTokenExpired(authToken!)) {
       router.push("/talent/dashboard");
     } else {
       router.push(`/auth/signin`);
     }
+  };
+  const easyApply = (jobId: any) => {
+    router.push(`/easy-apply?jobId=${jobId}`);
   };
 
   const createMarkup = (htmlContent: any) => {
@@ -384,17 +388,37 @@ const page = () => {
             {selectedValue ? (
               <div className="bg-white rounded-lg mt-4 sm:w-[68%] sm:p-8">
                 <div className="mb-5">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between relative">
                     <h1 className="text-3xl font-bold">
                       {selectedValue?.title}
                     </h1>
                     <button
                       type="button"
                       className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[135px] h-[40px] mt-[20px] sm:w-fit sm:h-fit sm:mt-0 sm:w-[150px]"
-                      onClick={() => applyJob(selectedValue)}
+                      onClick={() => setShowOptions(!showOptions)}
                     >
                       Apply Now
                     </button>
+                    {showOptions && (
+                      <div className="absolute right-0 mt-2 w-fit top-[45px]">
+                        <button
+                          type="button"
+                          className="text-white font-medium rounded-lg text-sm px-5 py-2 text-center bg-orange-600 w-full mb-1"
+                          onClick={() => easyApply(selectedValue?.id)}
+                        >
+                          Easy Apply
+                        </button>
+                        <button
+                          type="button"
+                          className="text-white font-medium rounded-lg text-sm px-5 py-2 text-center bg-orange-600 w-full"
+                          onClick={() => {
+                            applyJob(selectedValue);
+                          }}
+                        >
+                          Apply from Account
+                        </button>
+                      </div>
+                    )}
                   </div>
                   <div className="font-light text-xl font-semibold text-gray-500 dark:text-gray-400">
                     ORR-{selectedValue?.industry?.slice(0, 4)}-00
