@@ -1,7 +1,16 @@
+"use client";
 import Image from "next/image";
 import React from "react";
+import { getAllTalents } from "@/api/talent/getAllTalents";
+import { useQuery } from "@tanstack/react-query";
 
 const page = () => {
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ["get all talents"],
+    queryFn: () => getAllTalents(),
+  });
+  console.log("data", data);
+
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
       <div className="mx-auto w-full px-4 lg:px-12">
@@ -49,7 +58,7 @@ const page = () => {
                       id="filterDropdownButton"
                       data-dropdown-toggle="filterDropdown"
                       type="button"
-                      className="bg-orange-500 w-[100px] sm:w-full md:w-auto flex items-center justify-center py-2 px-2 sm:px-4 text-sm font-medium text-white focus:outline-none bg-white rounded-lg border border-gray-200 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white"
+                      className="bg-orange-400 w-[100px] sm:w-full md:w-auto flex items-center justify-center py-2 px-2 sm:px-4 text-sm font-medium text-white focus:outline-none bg-white rounded-lg border border-gray-200 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -280,65 +289,65 @@ const page = () => {
                 </tr>
               </thead>
               <tbody>
-                {/* {filteredJobs &&
-                      filteredJobs?.map((item: any, index: any) => {
-                        return ( */}
-                <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
-                  <td className="px-4 py-2 w-4">
-                    <div className="flex items-center">
-                      <input
-                        id="checkbox-table-search-1"
-                        type="checkbox"
-                        className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      />
-                      <label className="sr-only">checkbox</label>
-                    </div>
-                  </td>
-                  <th
-                    scope="row"
-                    className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
-                  >
-                    Name
-                  </th>
-                  <td className="px-4 py-2 whitespace-nowrap">
-                    <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                      Email
-                    </span>
-                  </td>
-                  <td className="px-4 py-2 whitespace-nowrap">
-                    <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                      Industry
-                    </span>
-                  </td>
-                  <td className="px-4 py-2 whitespace-nowrap">
-                    <span>Total Hires</span>
-                  </td>
-                  <td className="px-4 py-2 font-medium whitespace-nowrap">
-                    <span>Jobs Posted</span>
-                  </td>
-                  <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <span>Active Jobs</span>
-                  </td>
-                  <td className="px-4 py-2 relative">
-                    <button
-                      id="-dropdown-button"
-                      type="button"
-                      data-dropdown-toggle="-dropdown"
-                      className="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                      </svg>
-                    </button>
-                  </td>
-                </tr>
-                {/* );
-                      })} */}
+                {data &&
+                  data?.data?.map((item: any, index: any) => {
+                    return (
+                      <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+                        <td className="px-4 py-2 w-4">
+                          <div className="flex items-center">
+                            <input
+                              id="checkbox-table-search-1"
+                              type="checkbox"
+                              className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            />
+                            <label className="sr-only">checkbox</label>
+                          </div>
+                        </td>
+                        <th
+                          scope="row"
+                          className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
+                        >
+                          Name
+                        </th>
+                        <td className="px-4 py-2 whitespace-nowrap">
+                          <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                            Email
+                          </span>
+                        </td>
+                        <td className="px-4 py-2 whitespace-nowrap">
+                          <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                            Industry
+                          </span>
+                        </td>
+                        <td className="px-4 py-2 whitespace-nowrap">
+                          <span>Total Hires</span>
+                        </td>
+                        <td className="px-4 py-2 font-medium whitespace-nowrap">
+                          <span>Jobs Posted</span>
+                        </td>
+                        <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          <span>Active Jobs</span>
+                        </td>
+                        <td className="px-4 py-2 relative">
+                          <button
+                            id="-dropdown-button"
+                            type="button"
+                            data-dropdown-toggle="-dropdown"
+                            className="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                          >
+                            <svg
+                              className="w-5 h-5"
+                              aria-hidden="true"
+                              fill="currentColor"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
           </div>
