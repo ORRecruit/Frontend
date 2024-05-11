@@ -11,7 +11,8 @@ function Page() {
   const param = useSearchParams();
   const jobId = param.get("jobId");
 
-  const postJobMutation = useMutation({
+  const [policyAccepted, setPolicyAccepted] = useState<boolean>(false);
+  const easyApplyMutation = useMutation({
     mutationFn: (data: any) => easyApply(data),
     onSuccess: (data) => {
       // toast.success(data?.message)
@@ -41,7 +42,6 @@ function Page() {
     workExperience: "",
     coverLetter: null,
     resumePath: null,
-    policyAccepted: false,
   });
 
   const handleChange = (
@@ -65,7 +65,7 @@ function Page() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("formData000", formData);
 
@@ -85,16 +85,16 @@ function Page() {
       !formData.indeedProfile ||
       !formData.glassdoorProfile ||
       !formData.highestEducation ||
-      !formData.workExperience
-      // !formData.coverLetter ||
-      // !formData.resumePath
+      !formData.workExperience ||
+      !formData.coverLetter ||
+      !formData.resumePath
     ) {
       toast.error("Please Provide All Details");
       return;
     }
 
     console.log("formData", formData);
-    // const response = await postJobMutation.mutateAsync(jobDataToSend);
+    const response = await easyApplyMutation.mutateAsync(formData);
   };
 
   if (jobId) {
@@ -379,8 +379,8 @@ function Page() {
                       </label>
                       <input
                         type="file"
-                        name="resume"
-                        id="resume"
+                        name="resumePath"
+                        id="resumePath"
                         accept=".pdf,.doc,.docx"
                         onChange={handleChange}
                         className="block w-full text-sm text-gray-500 my-5  cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
@@ -389,19 +389,14 @@ function Page() {
                     <div className="sm:col-span-2 flex items-start">
                       <div
                         className="flex items-center"
-                        onClick={() =>
-                          setFormData((prev) => ({
-                            ...prev,
-                            policyAccepted: !prev.policyAccepted,
-                          }))
-                        }
+                        onClick={() => setPolicyAccepted(!policyAccepted)}
                       >
                         <input
-                          id="policy"
-                          name="policy"
+                          id="policyAccepted"
+                          name="policyAccepted"
                           type="checkbox"
                           required
-                          checked={formData.policyAccepted}
+                          checked={policyAccepted}
                           onChange={handleChange}
                           className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded cursor-pointer"
                         />
