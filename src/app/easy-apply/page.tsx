@@ -3,10 +3,25 @@ import React, { useState } from "react";
 import Navbar from "@/components/landing/navbar/navbar";
 import Footer from "@/components/landing/footer/footer";
 import { useSearchParams } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { easyApply } from "@/api/applicants/createApplicants";
+import toast from "react-hot-toast";
 
 function Page() {
   const param = useSearchParams();
   const jobId = param.get("jobId");
+
+  const [policyAccepted, setPolicyAccepted] = useState<boolean>(false);
+  const easyApplyMutation = useMutation({
+    mutationFn: (data: any) => easyApply(data),
+    onSuccess: (data) => {
+      // toast.success(data?.message)
+      console.log("data", data);
+    },
+    onError: (error) => {
+      console.log("error", error);
+    },
+  });
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -19,15 +34,14 @@ function Page() {
     countryCode: "",
     areaCode: "",
     phoneNumber: "",
-    contactMethod: "",
-    linkedin: "",
-    indeed: "",
-    glassdoor: "",
-    education: "",
-    experience: "",
+    preferredContactMethod: "",
+    linkedinProfile: "",
+    indeedProfile: "",
+    glassdoorProfile: "",
+    highestEducation: "",
+    workExperience: "",
     coverLetter: null,
-    resume: null,
-    policyAccepted: false,
+    resumePath: null,
   });
 
   const handleChange = (
@@ -51,9 +65,36 @@ function Page() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    console.log("formData000", formData);
+
+    if (
+      !formData.firstName ||
+      !formData.middleName ||
+      !formData.lastName ||
+      !formData.email ||
+      !formData.country ||
+      !formData.city ||
+      !formData.address ||
+      !formData.countryCode ||
+      !formData.areaCode ||
+      !formData.phoneNumber ||
+      !formData.preferredContactMethod ||
+      !formData.linkedinProfile ||
+      !formData.indeedProfile ||
+      !formData.glassdoorProfile ||
+      !formData.highestEducation ||
+      !formData.workExperience ||
+      !formData.coverLetter ||
+      !formData.resumePath
+    ) {
+      toast.error("Please Provide All Details");
+      return;
+    }
+
+    console.log("formData", formData);
+    const response = await easyApplyMutation.mutateAsync(formData);
   };
 
   if (jobId) {
@@ -232,8 +273,8 @@ function Page() {
                       </label>
                       <select
                         id="contact-method"
-                        name="contactMethod"
-                        value={formData.contactMethod}
+                        name="preferredContactMethod"
+                        value={formData.preferredContactMethod}
                         onChange={handleChange}
                         className="block w-full mt-1 py-3 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
@@ -249,10 +290,10 @@ function Page() {
                         </label>
                         <input
                           type="url"
-                          name="linkedin"
-                          id="linkedin"
+                          name="linkedinProfile"
+                          id="linkedinProfile"
                           placeholder="LinkedIn Profile"
-                          value={formData.linkedin}
+                          value={formData.linkedinProfile}
                           onChange={handleChange}
                           className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                         />
@@ -263,10 +304,10 @@ function Page() {
                         </label>
                         <input
                           type="url"
-                          name="indeed"
-                          id="indeed"
+                          name="indeedProfile"
+                          id="indeedProfile"
                           placeholder="Indeed Profile"
-                          value={formData.indeed}
+                          value={formData.indeedProfile}
                           onChange={handleChange}
                           className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                         />
@@ -277,10 +318,10 @@ function Page() {
                         </label>
                         <input
                           type="url"
-                          name="glassdoor"
-                          id="glassdoor"
+                          name="glassdoorProfile"
+                          id="glassdoorProfile"
                           placeholder="Glassdoor Profile"
-                          value={formData.glassdoor}
+                          value={formData.glassdoorProfile}
                           onChange={handleChange}
                           className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                         />
@@ -291,9 +332,9 @@ function Page() {
                         Highest Education*
                       </label>
                       <select
-                        id="education"
-                        name="education"
-                        value={formData.education}
+                        id="highestEducation"
+                        name="highestEducation"
+                        value={formData.highestEducation}
                         onChange={handleChange}
                         className="block w-full mt-1 py-3 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
@@ -311,10 +352,10 @@ function Page() {
                       </label>
                       <input
                         type="number"
-                        name="experience"
-                        id="experience"
+                        name="workExperience"
+                        id="workExperience"
                         placeholder="Work Experience in Years*"
-                        value={formData.experience}
+                        value={formData.workExperience}
                         onChange={handleChange}
                         className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                       />
@@ -338,8 +379,8 @@ function Page() {
                       </label>
                       <input
                         type="file"
-                        name="resume"
-                        id="resume"
+                        name="resumePath"
+                        id="resumePath"
                         accept=".pdf,.doc,.docx"
                         onChange={handleChange}
                         className="block w-full text-sm text-gray-500 my-5  cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
@@ -348,19 +389,14 @@ function Page() {
                     <div className="sm:col-span-2 flex items-start">
                       <div
                         className="flex items-center"
-                        onClick={() =>
-                          setFormData((prev) => ({
-                            ...prev,
-                            policyAccepted: !prev.policyAccepted,
-                          }))
-                        }
+                        onClick={() => setPolicyAccepted(!policyAccepted)}
                       >
                         <input
-                          id="policy"
-                          name="policy"
+                          id="policyAccepted"
+                          name="policyAccepted"
                           type="checkbox"
                           required
-                          checked={formData.policyAccepted}
+                          checked={policyAccepted}
                           onChange={handleChange}
                           className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded cursor-pointer"
                         />
