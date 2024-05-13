@@ -33,8 +33,8 @@ export default function RootLayout({
     },
     {
       iconUrl: "/adminSidebar4.svg",
-      text: "Activity Tracking",
-      href: "#",
+      text: "Clients",
+      href: "",
     },
     {
       iconUrl: "/adminSidebar5.svg",
