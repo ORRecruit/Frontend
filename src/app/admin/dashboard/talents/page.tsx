@@ -1,15 +1,26 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { getAllTalents } from "@/api/talent/getAllTalents";
 import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const page = () => {
+  const [name, setName] = useState<string>("");
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all talents"],
-    queryFn: () => getAllTalents(),
+    queryFn: () => getAllTalents(`Candidate%20Name=${name}`),
   });
   console.log("data", data);
+
+  const filterCandidateFunction = (e: any) => {
+    console.log("e.target", e.target.value);
+    setName(e.target.value);
+    refetch();
+    if (!data?.data?.length) {
+      toast.success("No Talents Found");
+    }
+  };
 
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
@@ -41,8 +52,8 @@ const page = () => {
                       id="default-search"
                       className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                       placeholder="Search..."
-                      //   onChange={filterJobsFunction}
-                      //   value={title}
+                      onChange={filterCandidateFunction}
+                      value={name}
                     />
                     <button
                       type="submit"
@@ -292,7 +303,10 @@ const page = () => {
                 {data &&
                   data?.data?.map((item: any, index: any) => {
                     return (
-                      <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+                      <tr
+                        key={index}
+                        className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                      >
                         <td className="px-4 py-2 w-4">
                           <div className="flex items-center">
                             <input
