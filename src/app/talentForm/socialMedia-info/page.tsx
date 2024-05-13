@@ -38,22 +38,27 @@ const page = () => {
       data.twitter = formData.twitter?.length ? formData.twitter : null;
       console.log("data", data);
       if (data) {
-        const response = await profileMutation.mutateAsync({
-          ...data,
-          location: "Canada",
-          industry: "IT Industry",
-          // desiredRoles: ["Full Stack"],
-        });
-        console.log(response);
-        if (response.success === true) {
-          console.log("res here>>>", response);
-          toast.success(response?.message);
-          localStorage.setItem("candidateId", response?.profile?.userId);
-          // localStorage.removeItem("candidateInfo");
-          router.push("/talent/dashboard/overview");
-        } else if (response.success === false) {
-          toast.error(response?.message);
-          router.push("/dashboard/auth/signin");
+        try {
+          const response = await profileMutation.mutateAsync({
+            ...data,
+            location: "Canada",
+            industry: "IT Industry",
+            // desiredRoles: ["Full Stack"],
+          });
+          console.log(response);
+          if (response.success === true) {
+            console.log("res here>>>", response);
+            toast.success(response?.message);
+            localStorage.setItem("candidateId", response?.profile?.userId);
+            // localStorage.removeItem("candidateInfo");
+            router.push("/talent/dashboard/overview");
+          } else if (response.success === false) {
+            toast.error(response?.message);
+            router.push("/dashboard/auth/signin");
+          }
+        } catch (error) {
+          console.log("error", error);
+          toast.error("Please Login if you have account.");
         }
       }
     }
