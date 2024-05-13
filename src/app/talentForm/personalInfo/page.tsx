@@ -3,13 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import about from "@/components/landing/about/about";
+import toast from "react-hot-toast";
 
 const page = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     country: "Canada",
-    sector: "IT Industry",
+    industry: "IT Industry",
     about: "",
   });
 
@@ -30,12 +32,18 @@ const page = () => {
       !formData.firstName ||
       !formData.lastName ||
       !formData.country ||
-      !formData.sector ||
+      !formData.industry ||
       !formData.about
     ) {
+      toast.error("Please provide all details");
       return;
     }
-    localStorage.setItem("candidateInfo", JSON.stringify(formData));
+    const obj = {
+      country: formData.country,
+      industry: formData.industry,
+      about: formData.about,
+    };
+    localStorage.setItem("candidateInfo", JSON.stringify(obj));
     router.push("/talentForm/tools-tech-info");
   };
   return (
@@ -103,20 +111,24 @@ const page = () => {
                 </div>
                 <div className="w-[100%]">
                   <label className="block text-sm font-medium text-gray-900 dark:text-gray-400">
-                    Sector*
+                    Industry*
                   </label>
                   <select
-                    id="countries"
-                    name="sector"
+                    id="industry"
+                    name="industry"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    value={formData.sector}
+                    value={formData.industry}
                     onChange={handleChange}
                   >
-                    <option>IT Industry</option>
-                    <option value="US">Medical Industry</option>
-                    <option value="CA">Agriculture Industry</option>
-                    <option value="FR">Space Industry</option>
-                    <option value="DE">Mechanical Industry</option>
+                    <option value="IT Industry">IT Industry</option>
+                    <option value="Medical Industry">Medical Industry</option>
+                    <option value="Agriculture Industry">
+                      Agriculture Industry
+                    </option>
+                    <option value="Space Industry">Space Industry</option>
+                    <option value="Mechanical Industry">
+                      Mechanical Industry
+                    </option>
                   </select>
                 </div>
                 <div>
