@@ -307,26 +307,26 @@ const page = () => {
                           scope="row"
                           className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
                         >
-                          Name
+                          {item?.fullName}
                         </th>
                         <td className="px-4 py-2 whitespace-nowrap">
                           <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                            Email
+                            {item?.email}
                           </span>
                         </td>
                         <td className="px-4 py-2 whitespace-nowrap">
                           <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                            Industry
+                            {item?.industry}
                           </span>
                         </td>
                         <td className="px-4 py-2 whitespace-nowrap">
-                          <span>Total Hires</span>
+                          <span>{item?.userId}</span>
                         </td>
                         <td className="px-4 py-2 font-medium whitespace-nowrap">
-                          <span>Jobs Posted</span>
+                          <span>Job Posted</span>
                         </td>
                         <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          <span>Active Jobs</span>
+                          <span>{item?.country}</span>
                         </td>
                         <td className="px-4 py-2 relative">
                           <button
