@@ -32,17 +32,17 @@ const page = () => {
 
     if (candidateInfo !== null) {
       const data = JSON.parse(candidateInfo);
-      data.website = formData.website;
-      data.linkedIn = formData.linkedIn;
-      data.github = formData.github;
-      data.twitter = formData.twitter;
+      data.website = formData.website?.length ? formData.website : null;
+      data.linkedIn = formData.linkedIn?.length ? formData.linkedIn : null;
+      data.github = formData.github?.length ? formData.github : null;
+      data.twitter = formData.twitter?.length ? formData.twitter : null;
       console.log("data", data);
       if (data) {
         const response = await profileMutation.mutateAsync({
           ...data,
-          location: "",
-          industry: "",
-          desiredRoles: ["Full Stack"],
+          location: "Canada",
+          industry: "IT Industry",
+          // desiredRoles: ["Full Stack"],
         });
         console.log(response);
         if (response.success === true) {

@@ -23,7 +23,7 @@ function Page() {
     },
   });
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<any>({
     firstName: "",
     middleName: "",
     lastName: "",
@@ -34,12 +34,12 @@ function Page() {
     countryCode: "",
     areaCode: "",
     phoneNumber: "",
-    preferredContactMethod: "",
+    preferredContactMethod: "email",
     linkedinProfile: "",
     indeedProfile: "",
     glassdoorProfile: "",
     highestEducation: "",
-    workExperience: "",
+    workExperience: 0,
     coverLetter: null,
     resumePath: null,
   });
@@ -53,15 +53,18 @@ function Page() {
     const { name, value, type } = target;
 
     if (type === "checkbox") {
-      setFormData((prev) => ({ ...prev, [name]: target.checked }));
+      setFormData((prev: any) => ({ ...prev, [name]: target.checked }));
     } else if (type === "file") {
       const fileTarget = e.target as HTMLInputElement;
-      setFormData((prev) => ({
+      setFormData((prev: any) => ({
         ...prev,
         [name]: fileTarget.files ? fileTarget.files[0] : null,
       }));
+    } else if (type === "number") {
+      const numberValue = value === "" ? "" : Number(value);
+      setFormData((prev: any) => ({ ...prev, [name]: numberValue }));
     } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+      setFormData((prev: any) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -94,6 +97,12 @@ function Page() {
     }
 
     console.log("formData", formData);
+    formData.resumePath = formData.resumePath?.name
+      ? formData.resumePath?.name
+      : "";
+    formData.coverLetter = formData.coverLetter?.name
+      ? formData.coverLetter?.name
+      : "";
     const response = await easyApplyMutation.mutateAsync(formData);
   };
 
@@ -278,9 +287,9 @@ function Page() {
                         onChange={handleChange}
                         className="block w-full mt-1 py-3 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
-                        <option>Email</option>
-                        <option>Phone</option>
-                        <option>Both</option>
+                        <option value="email">email</option>
+                        <option value="phone">phone</option>
+                        <option value="both">both</option>
                       </select>
                     </div>
                     <div className="sm:col-span-2 grid grid-cols-3 gap-x-4">
