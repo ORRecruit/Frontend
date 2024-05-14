@@ -8,10 +8,10 @@ import CustomLoader from "@/components/customLoader";
 import toast from "react-hot-toast";
 const page = () => {
   const [formData, setFormData] = useState({
-    website: "https://",
-    linkedIn: "https://",
-    github: "https://",
-    twitter: "https://",
+    website: "",
+    linkedIn: "",
+    github: "",
+    twitter: "",
   });
   const profileMutation = useMutation({
     mutationFn: (data) => createProfile(data),
@@ -32,6 +32,15 @@ const page = () => {
 
     if (candidateInfo !== null) {
       const data = JSON.parse(candidateInfo);
+      if (
+        (formData.website?.length && !formData.website?.endsWith(".com")) ||
+        (formData.linkedIn?.length && !formData.linkedIn?.endsWith(".com")) ||
+        (formData.github?.length && !formData.github?.endsWith(".com")) ||
+        (formData.twitter?.length && !formData.twitter?.endsWith(".com"))
+      ) {
+        toast.error("Please provide correct link");
+        return;
+      }
       data.website = formData.website?.length ? formData.website : null;
       data.linkedIn = formData.linkedIn?.length ? formData.linkedIn : null;
       data.github = formData.github?.length ? formData.github : null;
