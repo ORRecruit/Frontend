@@ -60,7 +60,7 @@ const page = () => {
             toast.success(response?.message);
             localStorage.setItem("candidateId", response?.profile?.userId);
             // localStorage.removeItem("candidateInfo");
-            router.push("/talent/dashboard/overview");
+            router.push("/talent/dashboard/jobBoard");
           } else if (response.success === false) {
             toast.error(response?.message);
             router.push("/dashboard/auth/signin");
