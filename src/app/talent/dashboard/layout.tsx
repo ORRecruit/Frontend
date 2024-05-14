@@ -16,11 +16,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const sidebarDetails = [
-    {
-      iconUrl: "/talendSidebar1.svg",
-      text: "Overview",
-      href: "/talent/dashboard/overview",
-    },
+    // {
+    //   iconUrl: "/talendSidebar1.svg",
+    //   text: "Overview",
+    //   href: "/talent/dashboard/overview",
+    // },
     {
       iconUrl: "/talendSidebar2.svg",
       text: "Job Board",
