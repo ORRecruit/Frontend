@@ -5,13 +5,14 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import about from "@/components/landing/about/about";
 import toast from "react-hot-toast";
+import { countries } from "@/constants/countries";
 
 const page = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    country: "Canada",
-    industry: "IT Industry",
+    country: "United States",
+    industry: "Technology",
     about: "",
   });
 
@@ -102,6 +103,11 @@ const page = () => {
                     value={formData.country}
                     onChange={handleChange}
                   >
+                    {countries?.map((country: any, index: any) => (
+                      <option key={index} value={country}>
+                        {country}
+                      </option>
+                    ))}
                     <option>Canada</option>
                     <option value="US">USA</option>
                     <option value="CA">Brazil</option>
@@ -120,14 +126,11 @@ const page = () => {
                     value={formData.industry}
                     onChange={handleChange}
                   >
-                    <option value="IT Industry">IT Industry</option>
-                    <option value="Medical Industry">Medical Industry</option>
-                    <option value="Agriculture Industry">
-                      Agriculture Industry
-                    </option>
-                    <option value="Space Industry">Space Industry</option>
-                    <option value="Mechanical Industry">
-                      Mechanical Industry
+                    <option value="Technology">Technology</option>
+                    <option value="Tourism">Tourism</option>
+                    <option value="Hospitality">Hospitality</option>
+                    <option value="Staffing & Recruiting">
+                      Staffing & Recruiting
                     </option>
                   </select>
                 </div>
