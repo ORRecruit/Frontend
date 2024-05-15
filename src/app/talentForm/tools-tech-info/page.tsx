@@ -1,12 +1,17 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
 
 const page = () => {
   const [skills, setSkills] = useState("Software Engineering");
   const [tools, setTools] = useState("Front end development");
+  const [skillsRequired, setSkillsRequired] = useState<string[]>([]);
+
+  const handleSkillsChange = (newSkills: string[]) => {
+    setSkillsRequired(newSkills);
+  };
 
   const handleSkills = (e: any) => {
     e.preventDefault();
@@ -51,19 +56,12 @@ const page = () => {
                   <label className="block text-sm font-medium text-gray-900 dark:text-gray-400">
                     Skills
                   </label>
-                  <select
-                    id="countries"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    onChange={handleSkills}
-                  >
-                    <option value="Software Engineering">
-                      Software Engineering
-                    </option>
-                    <option value="IT Industry">IT Industry</option>
-                    <option value="Problem Solving">Problem Solving</option>
-                    <option value="Creativity">Creativity</option>
-                    <option value="Leadership">Leadership</option>
-                  </select>
+                  <div key={skillsRequired.length} className="mb-2 w-[100%]">
+                    <SkillsInput
+                      onSkillsChange={handleSkillsChange}
+                      initialSkills={skillsRequired}
+                    />
+                  </div>
                 </div>
                 <div className="w-[100%]">
                   <label className="block text-sm font-medium text-gray-900 dark:text-gray-400">
