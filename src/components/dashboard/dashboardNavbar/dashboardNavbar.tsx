@@ -2,20 +2,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
-const dashboardNavbar = () => {
+const DashboardNavbar = () => {
   const [notification, setNotification] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [avatar, setAvatar] = useState("");
-  const router = useRouter();
+  // const router = useRouter();
 
   const logout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("role");
     localStorage.removeItem("candidateId");
     localStorage.removeItem("avatarUrl");
-    router.push("/auth/signin");
+    // router.push("/auth/signin");
+    window.location.href = "/auth/signin";
   };
 
   useEffect(() => {
@@ -23,6 +24,9 @@ const dashboardNavbar = () => {
     if (avatar) {
       setAvatar(avatar);
     }
+    return () => {
+      // Cleanup code if needed
+    };
   }, []);
 
   return (
@@ -439,4 +443,4 @@ const dashboardNavbar = () => {
   );
 };
 
-export default dashboardNavbar;
+export default DashboardNavbar;
