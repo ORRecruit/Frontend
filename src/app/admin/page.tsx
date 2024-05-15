@@ -22,7 +22,7 @@ const page = () => {
   const handleSubmit = async (e: any) => {
     e?.preventDefault();
     if (email && password) {
-      const response = await signInMutation.mutateAsync({
+      const response: any = await signInMutation.mutateAsync({
         email,
         password,
       });

@@ -29,6 +29,7 @@ const page = () => {
   const submitForm = async (e: any) => {
     e.preventDefault();
     const candidateInfo = localStorage.getItem("candidateInfo");
+    const avatar = localStorage.getItem("avatarUrl");
 
     if (candidateInfo !== null) {
       const data = JSON.parse(candidateInfo);
@@ -52,6 +53,7 @@ const page = () => {
             ...data,
             location: "Canada",
             industry: "IT Industry",
+            profilePhoto: avatar,
             // desiredRoles: ["Full Stack"],
           });
           console.log(response);

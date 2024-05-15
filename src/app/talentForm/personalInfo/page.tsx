@@ -6,14 +6,32 @@ import { useRouter } from "next/navigation";
 import about from "@/components/landing/about/about";
 import toast from "react-hot-toast";
 import { countries } from "@/constants/countries";
+import { useMutation } from "@tanstack/react-query";
+import { uploadAvatar } from "@/api/talent/profileInfo";
+import { MdClose } from "react-icons/md";
 
 const page = () => {
+  const router = useRouter();
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     country: "United States",
     industry: "Technology",
     about: "",
+  });
+
+  const avatarMutation = useMutation({
+    mutationFn: (file: File) => uploadAvatar(file),
+    onSuccess: (response) => {
+      const imageUrl = response.url;
+      localStorage.setItem("avatarUrl", imageUrl);
+      // toast.success("Image uploaded successfully");
+    },
+    onError: () => {
+      toast.error("Image upload failed");
+    },
   });
 
   const handleChange = (e: any) => {
@@ -25,8 +43,22 @@ const page = () => {
     }));
   };
 
-  const router = useRouter();
-  const submitForm = (e: any) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setSelectedImage(file);
+      setPreviewImage(URL.createObjectURL(file));
+      // avatarMutation.mutate(file);
+    }
+  };
+
+  const handleRemoveImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedImage(null);
+    setPreviewImage(null);
+  };
+
+  const submitForm = async (e: any) => {
     e.preventDefault();
     console.log("formData....", formData);
     if (
@@ -38,6 +70,19 @@ const page = () => {
     ) {
       toast.error("Please provide all details");
       return;
+    }
+
+    // Upload avatar if an image is selected
+    if (selectedImage) {
+      try {
+        const response = await avatarMutation.mutateAsync(selectedImage);
+        if (response.url) {
+          localStorage.setItem("avatarUrl", response.url);
+        }
+      } catch (error) {
+        toast.error("Image upload failed");
+        return;
+      }
     }
     const obj = {
       country: formData.country,
@@ -52,7 +97,7 @@ const page = () => {
       <section className="h-screen flex justify-center items-center">
         <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-20 lg:py-16 lg:grid-cols-12">
           <div className="w-full p-6 mx-auto bg-white sm:max-w-xl lg:col-span-6 sm:p-8">
-            <h1 className="mb-2 text-4xl font-bold leading-tight tracking-tight text-gray-900 text-black font-sans">
+            <h1 className="mb-2 text-4xl font-bold leading-tight tracking-tight text-gray-900 font-sans">
               Personal Info
             </h1>
             <p className="text-sm font-light text-gray-500 dark:text-gray-300">
@@ -158,41 +203,61 @@ const page = () => {
                       you agree to Sendinblue's
                     </label>
                     <div className="flex items-center justify-center w-full">
-                      <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                          <svg
-                            className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 20 16"
+                      {previewImage ? (
+                        <div className="relative w-[60%]">
+                          <img
+                            src={previewImage}
+                            alt="Avatar Preview"
+                            className="w-full h-32 object-cover"
+                          />
+                          <button
+                            type="button"
+                            className="absolute top-0 right-0"
+                            onClick={handleRemoveImage}
                           >
-                            <path
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                            />
-                          </svg>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
-                            <span className="font-semibold">
-                              Upload Your Photo
-                            </span>
-                          </p>
-                          <Link
-                            href="#"
-                            className="text-sm text-gray-500 dark:text-gray-400 text-blue-700"
-                          >
-                            or browse for files
-                          </Link>
+                            <MdClose size={25} color="#FF6800" />
+                          </button>
                         </div>
-                        <input
-                          id="dropzone-file"
-                          type="file"
-                          className="hidden"
-                        />
-                      </label>
+                      ) : (
+                        <>
+                          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                              <svg
+                                className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 20 16"
+                              >
+                                <path
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                                />
+                              </svg>
+                              <p className="text-sm text-gray-500 dark:text-gray-400">
+                                <span className="font-semibold">
+                                  Upload Your Photo
+                                </span>
+                              </p>
+                              <Link
+                                href="#"
+                                className="text-sm text-gray-500 dark:text-gray-400 text-blue-700"
+                              >
+                                or browse for files
+                              </Link>
+                            </div>
+                            <input
+                              id="dropzone-file"
+                              type="file"
+                              className="hidden"
+                              onChange={handleImageChange}
+                            />
+                          </label>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
