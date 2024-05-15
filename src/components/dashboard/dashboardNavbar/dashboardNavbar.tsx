@@ -1,20 +1,29 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const dashboardNavbar = () => {
   const [notification, setNotification] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
+  const [avatar, setAvatar] = useState("");
   const router = useRouter();
 
   const logout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("role");
     localStorage.removeItem("candidateId");
+    localStorage.removeItem("avatarUrl");
     router.push("/auth/signin");
   };
+
+  useEffect(() => {
+    const avatar = localStorage.getItem("avatarUrl");
+    if (avatar) {
+      setAvatar(avatar);
+    }
+  }, []);
 
   return (
     <header className="antialiased">
@@ -295,8 +304,8 @@ const dashboardNavbar = () => {
                 width={50}
                 height={50}
                 className="w-8 h-8 rounded-full"
-                src="/defaultTalent.svg"
-                alt="user photo"
+                src={avatar ? avatar : "/defaultTalent.svg"}
+                alt="avatar"
               />
             </button>
             {userMenu && (

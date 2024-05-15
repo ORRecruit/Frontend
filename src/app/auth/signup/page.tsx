@@ -18,9 +18,9 @@ const page = () => {
       );
       // router.push("/dashboard/auth/signin");
     },
-    onError: (error) => {
-      toast.error(error.message);
-    },
+    // onError: (error) => {
+    //   toast.error(error.message);
+    // },
   });
 
   const [verifyEmail, setVerifyEmail] = useState(false);
@@ -63,12 +63,13 @@ const page = () => {
           // );
           // router.push("/dashboard/auth/signin");
         }
-      } catch (error) {
+      } catch (error: any) {
         console.log("error", error);
-        setErrorMessage("Something went wrong! Try Again");
-        setTimeout(() => {
-          setErrorMessage("");
-        }, 3000);
+        toast.error(error?.response?.data?.message);
+        // setErrorMessage("Something went wrong! Try Again");
+        // setTimeout(() => {
+        //   setErrorMessage("");
+        // }, 3000);
       }
     }
   };

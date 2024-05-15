@@ -5,9 +5,10 @@ export interface LoginResponse {
   user: UserInfo;
 }
 
-interface UserInfo {
+export interface UserInfo {
   userId: string;
-  roles: string;
+  roles: string[];
   email: string;
   isProfile: boolean;
+  profilePhoto?: string;
 }
