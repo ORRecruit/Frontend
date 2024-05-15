@@ -1,7 +1,6 @@
 "use client";
 import Navbar from "@/components/landing/navbar/navbar";
 import React, { useEffect, useRef, useState } from "react";
-import FilterHeaderJobBoard from "@/components/landing/filterHeaderJobBoard/filterHeaderJobBoard";
 import About from "@/components/landing/about/about";
 import Footer from "@/components/landing/footer/footer";
 import { getAllJobs } from "@/api/jobs/getAllJobs";
@@ -15,13 +14,19 @@ const page = () => {
   const router = useRouter();
   const [title, setTitle] = useState<string>("");
   const [selectedValue, setSelectedValue] = useState<any>({});
+  const [filter, setFilter] = useState<boolean>(false);
+  const [jobType, setJobType] = useState<string>("");
+  const [contractType, setContractType] = useState<string>("");
   const { data, error, isLoading, refetch } = useQuery({
-    queryKey: ["get all naukrian"],
-    queryFn: () => getAllJobs(`title=${title}`),
+    queryKey: ["get all naukrian", title, contractType, jobType],
+    queryFn: () =>
+      getAllJobs(
+        `title=${title}`,
+        `contractType=${contractType}`,
+        `jobType=${jobType}`
+      ),
   });
   const [showOptions, setShowOptions] = useState(false);
-
-  const staticSalary = ["20 - 40 CAD / Hour", "60K AED / Month"];
 
   useEffect(() => {
     console.log("data....", data?.data);
@@ -129,7 +134,8 @@ const page = () => {
                           id="filterDropdownButton"
                           data-dropdown-toggle="filterDropdown"
                           type="button"
-                          className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                          className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                          onClick={() => setFilter(!filter)}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -145,64 +151,34 @@ const page = () => {
                           </svg>
                           Filter
                         </button>
-                        <div
-                          id="filterDropdown"
-                          className="z-10 hidden w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700"
-                        >
-                          <h6 className="mb-3 text-sm font-medium text-gray-900 dark:text-white">
-                            Category
-                          </h6>
-                          <ul
-                            className="space-y-2 text-sm"
-                            aria-labelledby="dropdownDefault"
-                          >
-                            <li className="flex items-center">
-                              <input
-                                id="apple"
-                                type="checkbox"
-                                value=""
-                                className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                              />
-                              <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                                Apple (56)
-                              </label>
-                            </li>
-                            <li className="flex items-center">
-                              <input
-                                id="fitbit"
-                                type="checkbox"
-                                value=""
-                                className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                              />
-                              <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                                Fitbit (56)
-                              </label>
-                            </li>
-                            <li className="flex items-center">
-                              <input
-                                id="dell"
-                                type="checkbox"
-                                value=""
-                                className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                              />
-                              <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                                Dell (56)
-                              </label>
-                            </li>
-                            <li className="flex items-center">
-                              <input
-                                id="asus"
-                                type="checkbox"
-                                value=""
-                                className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                              />
-                              <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                                Asus (97)
-                              </label>
-                            </li>
-                          </ul>
-                        </div>
                       </div>
+                      {filter && (
+                        <div className="flex">
+                          <select
+                            id="countries"
+                            name="contractType"
+                            className="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            value={contractType}
+                            onChange={(e) => setContractType(e.target.value)}
+                          >
+                            <option value="">Contract Type</option>
+                            <option value="partTime">Part Time</option>
+                            <option value="fullTime">Full Time</option>
+                          </select>
+                          <select
+                            id="countries"
+                            name="jobType"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            value={jobType}
+                            onChange={(e) => setJobType(e.target.value)}
+                          >
+                            <option value="">Job Type</option>
+                            <option value="Hour">Hour</option>
+                            <option value="Month">Month</option>
+                            <option value="Year">Year</option>
+                          </select>
+                        </div>
+                      )}
                       <div>
                         <div
                           id="configurationDropdown"
@@ -262,62 +238,7 @@ const page = () => {
                     </button>
                   </div>
                 </div>
-                <div className="flex flex-wrap pt-1 pb-4 border-t dark:border-gray-700">
-                  {/* <div className="items-center hidden mt-3 mr-4 text-sm font-medium text-gray-900 md:flex dark:text-white">
-                    Show only:
-                  </div>
-
-                  <div className="flex flex-wrap">
-                    <div className="flex items-center mt-3 mr-4">
-                      <input
-                        id="all-products"
-                        type="radio"
-                        value=""
-                        name="show-only"
-                        className="w-4 h-4 bg-gray-100 border-gray-300 text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      />
-                      <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                        All
-                      </label>
-                    </div>
-                    <div className="flex items-center mt-3 mr-4">
-                      <input
-                        id="active"
-                        type="radio"
-                        value=""
-                        name="show-only"
-                        className="w-4 h-4 bg-gray-100 border-gray-300 text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      />
-                      <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                        Active products
-                      </label>
-                    </div>
-                    <div className="flex items-center mt-3 mr-4">
-                      <input
-                        id="pending"
-                        type="radio"
-                        value=""
-                        name="show-only"
-                        className="w-4 h-4 bg-gray-100 border-gray-300 text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      />
-                      <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                        Pending products
-                      </label>
-                    </div>
-                    <div className="flex items-center mt-3 mr-4">
-                      <input
-                        id="inactive"
-                        type="radio"
-                        value=""
-                        name="show-only"
-                        className="w-4 h-4 bg-gray-100 border-gray-300 text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      />
-                      <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                        Inactive products
-                      </label>
-                    </div>
-                  </div> */}
-                </div>
+                <div className="flex flex-wrap pt-1 pb-4 border-t dark:border-gray-700"></div>
               </div>
             </div>
           </section>
@@ -394,7 +315,7 @@ const page = () => {
                     </h1>
                     <button
                       type="button"
-                      className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[135px] h-[40px] mt-[20px] sm:w-fit sm:h-fit sm:mt-0 sm:w-[150px]"
+                      className="text-white font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[135px] h-[40px] mt-[20px] sm:w-fit sm:h-fit sm:mt-0 sm:w-[150px]"
                       onClick={() => setShowOptions(!showOptions)}
                     >
                       Apply Now
@@ -424,10 +345,6 @@ const page = () => {
                     ORR-{selectedValue?.industry?.slice(0, 4)}-00
                     {selectedValue?.id}
                   </div>
-
-                  {/* <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
-                    {selectedValue?.type}
-                  </span> */}
                 </div>
 
                 <div className="mb-5">
