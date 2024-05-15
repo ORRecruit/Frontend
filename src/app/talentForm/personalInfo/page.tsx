@@ -177,6 +177,7 @@ const page = () => {
                     <option value="Staffing & Recruiting">
                       Staffing & Recruiting
                     </option>
+                    <option value="Others">Others</option>
                   </select>
                 </div>
                 <div>

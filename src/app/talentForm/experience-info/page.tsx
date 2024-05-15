@@ -1,17 +1,9 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const page = () => {
-  // const [formData, setFormData] = useState({
-  //   companyName: "",
-  //   role: "",
-  //   startDate: "",
-  //   endDate: "",
-  //   description: "",
-  // });
   const [formData, setFormData] = useState({
     experiences: [
       {
@@ -24,14 +16,6 @@ const page = () => {
     ],
   });
 
-  // const handleChange = (e: any) => {
-  //   e.preventDefault();
-  //   const { name, value } = e.target;
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value,
-  //   }));
-  // };
   const handleChange = (e: any, index: any) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -44,27 +28,6 @@ const page = () => {
     setFormData({ experiences: newExperiences });
   };
 
-  // const router = useRouter();
-  // const submitForm = (e: any) => {
-  //   e.preventDefault();
-  //   const candidateInfo = localStorage.getItem("candidateInfo");
-
-  //   if (candidateInfo !== null) {
-  //     const data = JSON.parse(candidateInfo);
-  //     data.experiences = [
-  //       {
-  //         companyName: formData.companyName,
-  //         role: formData.role,
-  //         startDate: formData.startDate,
-  //         endDate: formData.endDate,
-  //         description: formData.description,
-  //       },
-  //     ];
-  //     localStorage.setItem("candidateInfo", JSON.stringify(data));
-  //     console.log("data", data);
-  //   }
-  //   router.push("/talentForm/education-info");
-  // };
   const router = useRouter();
   const submitForm = (e: any) => {
     e.preventDefault();
@@ -106,7 +69,7 @@ const page = () => {
             </p>
             <form
               onSubmit={submitForm}
-              className="mt-4 max-h-[450px] overflow-auto"
+              className="mt-4 max-h-[480px] overflow-auto"
               action="#"
             >
               {formData.experiences.map((experience, index) => (
@@ -172,6 +135,24 @@ const page = () => {
                         value={experience.endDate}
                         onChange={(e) => handleChange(e, index)}
                       />
+                      <div className="mt-2 flex items-center">
+                        <input
+                          id="currentlyWorking"
+                          name="endDate"
+                          aria-describedby="currentlyWorking"
+                          type="checkbox"
+                          className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                          required={false}
+                          value="Currently Working"
+                          onChange={(e) => handleChange(e, index)}
+                        />
+                        <label
+                          htmlFor="currentlyWorking"
+                          className="text-sm text-gray-500 ml-2"
+                        >
+                          Currently Working
+                        </label>
+                      </div>
                     </div>
                   </div>
 
