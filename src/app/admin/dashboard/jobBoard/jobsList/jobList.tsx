@@ -692,13 +692,15 @@ const jobList = () => {
                                 <label className="sr-only">checkbox</label>
                               </div>
                             </td>
-                            <th
-                              scope="row"
-                              className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
+                            <td
+                              // scope="row"
+                              className="px-4 py-2 whitespace-nowrap"
                               onClick={() => handleRowClick(item)}
                             >
-                              {item.title}
-                            </th>
+                              <span className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center">
+                                {item.title}
+                              </span>
+                            </td>
                             <td
                               onClick={() => handleRowClick(item)}
                               className="px-4 py-2 whitespace-nowrap"
