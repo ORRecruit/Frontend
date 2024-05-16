@@ -9,6 +9,7 @@ import { countries } from "@/constants/countries";
 import { useMutation } from "@tanstack/react-query";
 import { uploadAvatar } from "@/api/talent/profileInfo";
 import { MdClose } from "react-icons/md";
+import { FiArrowLeft } from "react-icons/fi";
 
 const page = () => {
   const router = useRouter();
@@ -92,9 +93,17 @@ const page = () => {
     localStorage.setItem("candidateInfo", JSON.stringify(obj));
     router.push("/talentForm/tools-tech-info");
   };
+
   return (
     <>
       <section className="h-screen flex justify-center items-center">
+        <button
+          className="absolute top-10 left-10 flex items-center mb-4 text-[#FF6800]"
+          onClick={() => router.back()}
+        >
+          <FiArrowLeft className="mr-2" size={24} color="#FF6800" />
+          Back
+        </button>
         <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-20 lg:py-16 lg:grid-cols-12">
           <div className="w-full p-6 mx-auto bg-white sm:max-w-xl lg:col-span-6 sm:p-8">
             <h1 className="mb-2 text-4xl font-bold leading-tight tracking-tight text-gray-900 font-sans">

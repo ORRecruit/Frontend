@@ -7,6 +7,7 @@ import { loginUser } from "@/api/auth/login";
 import { useRouter } from "next/navigation";
 import CustomLoader from "@/components/customLoader";
 import toast from "react-hot-toast";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const page = () => {
   const router = useRouter();
@@ -17,8 +18,12 @@ const page = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const handleSubmit = async (e: any) => {
     e?.preventDefault();
     if (email && password) {
@@ -117,16 +122,28 @@ const page = () => {
                       <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         Password
                       </label>
-                      <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="••••••••"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        required={true}
-                        value={password}
-                        onChange={handlePasswordChange}
-                      />
+                      <div className="relative">
+                        <input
+                          type={showPassword ? "text" : "password"}
+                          name="password"
+                          id="password"
+                          placeholder="••••••••"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          required={true}
+                          value={password}
+                          onChange={handlePasswordChange}
+                        />
+                        <div
+                          className="absolute inset-y-0 right-0 flex items-center px-2 cursor-pointer"
+                          onClick={togglePasswordVisibility}
+                        >
+                          {showPassword ? (
+                            <AiFillEye size={20} />
+                          ) : (
+                            <AiFillEyeInvisible size={20} color="#b0b0b0" />
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div className="space-y-3 flex justify-between items-center">

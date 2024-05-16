@@ -4,10 +4,11 @@ import { AllJobsInterface } from "@/interfaces/allJobsInterface";
 export const getAllJobs = (
   title: any = "",
   contractType: any = "",
-  jobType: any = ""
+  jobType: any = "",
+  location:any = "",
 ) => {
   return client.get<AllJobsInterface, AllJobsInterface>(
-    `/jobs/getAllJobs?${title}&${contractType}&${jobType}`
+    `/jobs/getAllJobs?${title}&${contractType}&${jobType}&${location}`
   );
 };
 
