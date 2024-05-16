@@ -17,17 +17,21 @@ const page = () => {
   const [filter, setFilter] = useState<boolean>(false);
   const [jobType, setJobType] = useState<string>("");
   const [contractType, setContractType] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
+  const locations = ["USA", "Canada", "Dubai"];
+
   const { data, error, isLoading, refetch } = useQuery({
-    queryKey: ["get all naukrian", title, contractType, jobType],
+    queryKey: ["get all naukrian", title, contractType, jobType, location],
     queryFn: () =>
       getAllJobs(
         `title=${title}`,
         `contractType=${contractType}`,
-        `jobType=${jobType}`
+        `jobType=${jobType}`,
+        `location=${location}`
       ),
   });
   const [showOptions, setShowOptions] = useState(false);
-
+  console.log("The valute seclected for location is >>", location);
   useEffect(() => {
     console.log("data....", data?.data);
     setSelectedValue(data?.data[0]);
@@ -47,6 +51,7 @@ const page = () => {
       router.push(`/auth/signin`);
     }
   };
+
   const easyApply = (jobId: any) => {
     router.push(`/easy-apply?jobId=${jobId}`);
   };
@@ -73,11 +78,15 @@ const page = () => {
     refetch();
   };
 
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLocation(e.target.value);
+    refetch();
+  };
+
   return (
     <div>
       <div>
         <Navbar scrollToBottom={scrollToBottom} />
-        {/* <FilterHeaderJobBoard /> */}
         <div>
           <section className="flex">
             <div className="w-full max-w-screen-xl px-4 mx-auto">
@@ -89,7 +98,7 @@ const page = () => {
                     </h5>
                   </div>
                 </div>
-                <div className="flex flex-col-reverse items-stretch justify-between pb-4 space-y-3 md:flex-row md:items-center md:space-y-0">
+                <div className="flex flex-col items-stretch justify-between pb-4 space-y-3 md:flex-row md:items-center md:space-y-0">
                   <div className="flex flex-col w-full space-y-3 lg:w-2/3 md:space-y-0 md:flex-row md:items-center">
                     <form className="flex-1 w-full md:max-w-sm md:mr-4">
                       <label className="text-sm font-medium text-gray-900 sr-only dark:text-white">
@@ -152,69 +161,6 @@ const page = () => {
                           Filter
                         </button>
                       </div>
-                      {filter && (
-                        <div className="flex">
-                          <select
-                            id="countries"
-                            name="contractType"
-                            className="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            value={contractType}
-                            onChange={(e) => setContractType(e.target.value)}
-                          >
-                            <option value="">Contract Type</option>
-                            <option value="partTime">Part Time</option>
-                            <option value="fullTime">Full Time</option>
-                          </select>
-                          <select
-                            id="countries"
-                            name="jobType"
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            value={jobType}
-                            onChange={(e) => setJobType(e.target.value)}
-                          >
-                            <option value="">Job Type</option>
-                            <option value="Hour">Hour</option>
-                            <option value="Month">Month</option>
-                            <option value="Year">Year</option>
-                          </select>
-                        </div>
-                      )}
-                      <div>
-                        <div
-                          id="configurationDropdown"
-                          className="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
-                        >
-                          <ul
-                            className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                            aria-labelledby="configurationDropdownButton"
-                          >
-                            <li>
-                              <a
-                                href="#"
-                                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                              >
-                                By Category
-                              </a>
-                            </li>
-                            <li>
-                              <a
-                                href="#"
-                                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                              >
-                                By Brand
-                              </a>
-                            </li>
-                          </ul>
-                          <div className="py-1">
-                            <a
-                              href="#"
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                            >
-                              Reset
-                            </a>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                   <div className="flex flex-col items-stretch justify-end flex-shrink-0 w-full pb-4 md:pb-0 md:w-auto md:flex-row md:items-center md:space-x-3">
@@ -238,6 +184,80 @@ const page = () => {
                     </button>
                   </div>
                 </div>
+                {filter && (
+                  <div className="flex mt-2 mb-2 space-y-2">
+                    <div className="flex items-center">
+                      <label className="mr-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Job Type:
+                      </label>
+                      <div className="flex flex-wrap">
+                        <label className="mr-4">
+                          <input
+                            type="radio"
+                            name="jobType"
+                            value="Hour"
+                            checked={jobType === "Hour"}
+                            onChange={(e) => setJobType(e.target.value)}
+                          />
+                          Hour
+                        </label>
+                        <label className="mr-4">
+                          <input
+                            type="radio"
+                            name="jobType"
+                            value="Month"
+                            checked={jobType === "Month"}
+                            onChange={(e) => setJobType(e.target.value)}
+                          />
+                          Month
+                        </label>
+                        <label className="mr-4">
+                          <input
+                            type="radio"
+                            name="jobType"
+                            value="Year"
+                            checked={jobType === "Year"}
+                            onChange={(e) => setJobType(e.target.value)}
+                          />
+                          Year
+                        </label>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <select
+                        id="contractType"
+                        name="contractType"
+                        className="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        value={contractType}
+                        onChange={(e) => setContractType(e.target.value)}
+                      >
+                        <option disabled value="">
+                          Contract Type
+                        </option>
+                        <option value="partTime">Part Time</option>
+                        <option value="fullTime">Full Time</option>
+                      </select>
+                    </div>
+                    <div className="flex items-center">
+                      <select
+                        id="location"
+                        name="location"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        value={location}
+                        onChange={handleLocationChange}
+                      >
+                        <option disabled value="">
+                          Location
+                        </option>
+                        {locations.map((loc, index) => (
+                          <option key={index} value={loc}>
+                            {loc}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                )}
                 <div className="flex flex-wrap pt-1 pb-4 border-t dark:border-gray-700"></div>
               </div>
             </div>
@@ -267,9 +287,6 @@ const page = () => {
                     <div className="inline-block font-light text-gray-500 dark:text-gray-400 bg-primary-orange text-white w-fit px-2 py-1 rounded-2xl my-2">
                       {formatString(`${item.contractType}`)}
                     </div>
-                    {/* <div className="inline-block font-light text-gray-500 dark:text-gray-400 bg-primary-orange text-white w-fit px-2 py-1 rounded-2xl my-2">
-                      {formatString(`${item.contractType} - ${item.jobVenue}`)}
-                    </div> */}
                     <div className="text-lg font-extrabold text-gray-900 dark:text-white">
                       {item.salaryOffered?.replace(/"/g, "") + " "}{" "}
                       {item.currencyType} / {item.jobType}
@@ -280,22 +297,6 @@ const page = () => {
                     <div className="mb-4 font-light text-gray-500 dark:text-gray-400">
                       {item.experienceRequired} Yrs
                     </div>
-
-                    {/* <div className="mb-5">
-                      <button
-                        type="button"
-                        className="text-black-400 hover:text-white border border-gray-800 bg-white hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-3xl text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
-                      >
-                        {formatString(item.jobVenue)}
-                      </button>
-                      <button
-                        type="button"
-                        className="text-black-400 hover:text-white border border-gray-800 bg-white hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-3xl text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
-                      >
-                        {formatString(item.contractType)}
-                      </button>
-                    </div> */}
-
                     <p
                       className="text-sm text-gray-500 dark:text-gray-400"
                       dangerouslySetInnerHTML={createMarkup(
@@ -346,7 +347,6 @@ const page = () => {
                     {selectedValue?.id}
                   </div>
                 </div>
-
                 <div className="mb-5">
                   <p className="text-lg font-extrabold text-gray-900 dark:text-white">
                     {selectedValue?.salaryOffered?.replace(/"/g, "") + " "}{" "}
@@ -368,7 +368,6 @@ const page = () => {
                     {selectedValue?.experienceRequired} Yrs
                   </p>
                 </div>
-
                 <h2 className="text-lg font-semibold mb-4">Job Description</h2>
                 <div
                   className="text-gray-700 mb-8 job-description-content"
@@ -376,7 +375,6 @@ const page = () => {
                     selectedValue?.description
                   )}
                 />
-
                 <h3 className="text-lg font-semibold mb-3">Responsibilities</h3>
                 <div
                   className="text-gray-700 mb-8 job-description-content"
