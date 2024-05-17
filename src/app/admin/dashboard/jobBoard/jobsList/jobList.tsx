@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
-import { getAllJobs, getAllJobsForAdmin } from "@/api/jobs/getAllJobs";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { getAllJobsForAdmin } from "@/api/jobs/getAllJobs";
 import { useQuery } from "@tanstack/react-query";
 import CustomLoader from "@/components/customLoader";
 import { DeleteJob } from "@/api/jobs/deleteJob";
@@ -10,13 +10,13 @@ import { useMutation } from "@tanstack/react-query";
 import { editJob as editJobApi } from "@/api/jobs/editJob";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { filterJobs } from "@/api/jobs/filterJobs";
-import QuillTextEditor from "@/components/dashboard/quilEditor/QuillTextEditor";
-import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
-import { createMarkup, formatString } from "@/utils/utils";
+import { debounce } from "lodash";
 import { RiCloseLine } from "react-icons/ri";
 import { jobPublishApi } from "@/api/jobs/isPublishApi";
 import { jobCompleteApi } from "@/api/jobs/markComplete";
+import QuillTextEditor from "@/components/dashboard/quilEditor/QuillTextEditor";
+import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
+import { createMarkup, formatString } from "@/utils/utils";
 
 const jobList = () => {
   const router = useRouter();
@@ -55,7 +55,13 @@ const jobList = () => {
   const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
   const [filterString, setFilterString] = useState<string>("");
   const [title, setTitle] = useState<string>("");
+  const [localTitle, setLocalTitle] = useState<string>("");
   const [selectedFilter, setSelectedFilter] = useState("ALL");
+  const [filter, setFilter] = useState<boolean>(false);
+  const [jobType, setJobType] = useState<string>("");
+  const [contractType, setContractType] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
+  const locations = ["USA", "Canada", "Dubai"];
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const deleteJobMutation = useMutation({
@@ -72,14 +78,20 @@ const jobList = () => {
     mutationFn: (data: any) => jobCompleteApi(data),
   });
 
-  const allJobsResponse = useQuery({
-    queryKey: ["get all naukrian"],
-    queryFn: () => getAllJobsForAdmin(`title=${title}`),
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ["get all naukrian", title, contractType, jobType, location],
+    queryFn: () =>
+      getAllJobsForAdmin(
+        `title=${title}`,
+        `contractType=${contractType}`,
+        `jobType=${jobType}`,
+        `location=${location}`
+      ),
   });
 
   useEffect(() => {
-    console.log("data....", allJobsResponse.data?.data);
-  }, [allJobsResponse.data]);
+    console.log("data....", data?.data);
+  }, [data]);
 
   useEffect(() => {
     console.log("Updated formData:", formData);
@@ -140,13 +152,6 @@ const jobList = () => {
 
   const handleSubmit = async (e: any) => {
     e?.preventDefault();
-
-    // console.log("formDAtaaaaa here>>>", formData, "and >>", skills);
-    console.log("Form Data  just before if skills >>>>", skills);
-    // setFormData((prevFormData: any) => ({
-    //   ...prevFormData,
-    //   skillsRequired: skills,
-    // }));
 
     console.log("Form Data just before if>>>>", formData);
     if (
@@ -241,7 +246,7 @@ const jobList = () => {
       console.log("responlse.....", response);
 
       setDeleteDialog(!deleteDialog);
-      allJobsResponse.refetch();
+      refetch();
     }
   };
   const closePublishDialog = async (job: any) => {
@@ -257,7 +262,7 @@ const jobList = () => {
       console.log("responlse.....", response);
 
       setPublishDialog(!publishDialog);
-      allJobsResponse.refetch();
+      refetch();
 
       setPublishItem(null);
     }
@@ -275,7 +280,7 @@ const jobList = () => {
       console.log("responlse.....", response);
 
       setCompleteDialog(!completeDialog);
-      allJobsResponse.refetch();
+      refetch();
 
       setCompleteItem(null);
     }
@@ -284,17 +289,29 @@ const jobList = () => {
   const openEditConfirmation = () => {
     setConfirmationDialog(!confirmationDialog);
   };
-  const filterJobsFunction = (e: any) => {
-    console.log("e.target", e.target.value);
-    setTitle(e.target.value);
-    allJobsResponse.refetch();
+
+  // Handle input change immediately
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocalTitle(e.target.value);
+    debouncedFetchJobs(e.target.value);
   };
+
+  // Debounced function for fetching jobs
+  const debouncedFetchJobs = useCallback(
+    debounce((value: string) => {
+      setTitle(value);
+      refetch();
+    }, 500),
+    []
+  );
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedFilter(e.target.value);
+    refetch();
   };
 
-  const filteredJobs = allJobsResponse.data?.data?.filter((job: any) => {
+  console.log("response get from the API", data?.data);
+  const filteredJobs = data?.data?.filter((job: any) => {
     switch (selectedFilter) {
       case "PENDING":
         return job.jobStatus === "PENDING";
@@ -306,11 +323,16 @@ const jobList = () => {
         return true;
     }
   });
-  console.log("The value id filteredJobs >>>", filteredJobs);
+  console.log("The value of filteredJobs >>>", filteredJobs);
+
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLocation(e.target.value);
+    refetch();
+  };
 
   return (
     <>
-      {allJobsResponse.isLoading ? (
+      {isLoading ? (
         <CustomLoader />
       ) : (
         <section className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
@@ -323,228 +345,307 @@ const jobList = () => {
                   </div>
                 </div>
                 <div className="flex flex-col-reverse md:flex-row items-center justify-between md:space-x-4 py-3 relative">
-                  <div className="w-full lg:w-2/3 flex flex-col space-y-3 md:space-y-0 md:flex-row md:items-center">
-                    <div className="w-full md:max-w-sm flex-1 md:mr-4">
-                      <label className="text-sm font-medium text-gray-900 sr-only dark:text-white">
-                        Search
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                          <Image
-                            src="/search-icon.svg"
-                            width={15}
-                            height={15}
-                            alt="search-icon"
-                          />
-                        </div>
-                        <input
-                          type="search"
-                          id="default-search"
-                          className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                          placeholder="Search..."
-                          onChange={filterJobsFunction}
-                          value={title}
-                        />
-                        <button
-                          type="submit"
-                          className="text-white absolute right-0 bottom-0 top-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-r-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                        >
+                  <div className="w-full">
+                    <div className="w-full lg:w-2/3 flex flex-col space-y-3 md:space-y-0 md:flex-row md:items-center">
+                      <div className="w-full md:max-w-sm flex-1 md:mr-4">
+                        <label className="text-sm font-medium text-gray-900 sr-only dark:text-white">
                           Search
-                        </button>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-0 sm:space-x-4">
-                      <div>
-                        <button
-                          id="filterDropdownButton"
-                          data-dropdown-toggle="filterDropdown"
-                          type="button"
-                          className="w-[100px] sm:w-full md:w-auto flex items-center justify-center py-2 px-2 sm:px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            aria-hidden="true"
-                            className="h-4 w-4 mr-2 text-gray-400"
-                            fill="currentColor"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <Image
+                              src="/search-icon.svg"
+                              width={15}
+                              height={15}
+                              alt="search-icon"
                             />
-                          </svg>
-                          Filter
-                          <svg
-                            className="-mr-1 ml-1.5 w-5 h-5"
-                            fill="currentColor"
-                            xmlns="http://www.w3.org/2000/svg"
-                            aria-hidden="true"
+                          </div>
+                          <input
+                            type="search"
+                            id="default-search"
+                            className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="Search..."
+                            onChange={handleInputChange}
+                            value={localTitle}
+                          />
+                          <button
+                            type="submit"
+                            className="text-white absolute right-0 bottom-0 top-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-r-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                           >
-                            <path
-                              clipRule="evenodd"
-                              fillRule="evenodd"
-                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            />
-                          </svg>
-                        </button>
-                        {/* These are some filter options */}
-                        <div
-                          id="filterDropdown"
-                          className="z-10 hidden p-3 bg-white rounded-lg shadow w-56 dark:bg-gray-700"
-                        >
-                          <h6 className="mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            By status
-                          </h6>
-                          <ul
-                            className="space-y-2 text-sm"
-                            aria-labelledby="filterDropdownButton"
-                          >
-                            <li>
-                              <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                                <input
-                                  type="checkbox"
-                                  value=""
-                                  className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                                />
-                                In progress
-                              </label>
-                            </li>
-                            <li>
-                              <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                                <input
-                                  type="checkbox"
-                                  value=""
-                                  className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                                />
-                                In review
-                              </label>
-                            </li>
-                            <li>
-                              <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                                <input
-                                  type="checkbox"
-                                  value=""
-                                  className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                                />
-                                Completed
-                              </label>
-                            </li>
-                            <li>
-                              <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                                <input
-                                  type="checkbox"
-                                  value=""
-                                  className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                                />
-                                Canceled
-                              </label>
-                            </li>
-                          </ul>
-                          <h6 className="mt-4 mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            By number of users
-                          </h6>
-                          <ul
-                            className="space-y-2 text-sm"
-                            aria-labelledby="dropdownDefault"
-                          >
-                            <li>
-                              <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                                <input
-                                  type="checkbox"
-                                  value=""
-                                  className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                                />
-                                5-10 peoples
-                              </label>
-                            </li>
-                            <li>
-                              <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                                <input
-                                  type="checkbox"
-                                  value=""
-                                  className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                                />
-                                10+ peoples
-                              </label>
-                            </li>
-                            <li>
-                              <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                                <input
-                                  type="checkbox"
-                                  value=""
-                                  className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                                />
-                                More than 10 peoples
-                              </label>
-                            </li>
-                          </ul>
-                          <a
-                            href="#"
-                            className="flex items-center text-sm font-medium text-primary-600 dark:text-primary-500 hover:underline mt-4 ml-1.5"
-                          >
-                            Apply to all projects
-                          </a>
+                            Search
+                          </button>
                         </div>
                       </div>
-                      <div>
-                        <button
-                          id="configurationDropdownButton"
-                          data-dropdown-toggle="configurationDropdown"
-                          type="button"
-                          className="w-34 sm:w-full md:w-auto flex items-center justify-center py-2 px-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                        >
-                          <Image
-                            src="/talendSidebar4.svg"
-                            width={15}
-                            height={15}
-                            alt="search-icon"
-                            className="mr-2"
-                          />
-                          Export CSV
-                        </button>
-                        {/* filtered options from Export CSV */}
-                        <div
-                          id="configurationDropdown"
-                          className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                        >
-                          <ul
-                            className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                            aria-labelledby="configurationDropdownButton"
+                      <div className="borer-2 border-black flex items-center space-x-0 sm:space-x-4">
+                        <div className="border- border-green-500">
+                          <button
+                            id="filterDropdownButton"
+                            data-dropdown-toggle="filterDropdown"
+                            type="button"
+                            className="w-[100px] sm:w-full md:w-auto flex items-center justify-center py-2 px-2 sm:px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                            onClick={() => setFilter(!filter)}
                           >
-                            <li>
-                              <a
-                                href="#"
-                                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                              >
-                                By Category
-                              </a>
-                            </li>
-                            <li>
-                              <a
-                                href="#"
-                                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                              >
-                                By Brand
-                              </a>
-                            </li>
-                          </ul>
-                          <div className="py-1">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              aria-hidden="true"
+                              className="h-4 w-4 mr-2 text-gray-400"
+                              fill="currentColor"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
+                              />
+                            </svg>
+                            Filter
+                            <svg
+                              className="-mr-1 ml-1.5 w-5 h-5"
+                              fill="currentColor"
+                              xmlns="http://www.w3.org/2000/svg"
+                              aria-hidden="true"
+                            >
+                              <path
+                                clipRule="evenodd"
+                                fillRule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                              />
+                            </svg>
+                          </button>
+                          {/* These are some filter options */}
+                          <div
+                            id="filterDropdown"
+                            className="z-10 hidden p-3 bg-white rounded-lg shadow w-56 dark:bg-gray-700"
+                          >
+                            <h6 className="mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                              By status
+                            </h6>
+                            <ul
+                              className="space-y-2 text-sm"
+                              aria-labelledby="filterDropdownButton"
+                            >
+                              <li>
+                                <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
+                                  <input
+                                    type="checkbox"
+                                    value=""
+                                    className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                  />
+                                  In progress
+                                </label>
+                              </li>
+                              <li>
+                                <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
+                                  <input
+                                    type="checkbox"
+                                    value=""
+                                    className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                  />
+                                  In review
+                                </label>
+                              </li>
+                              <li>
+                                <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
+                                  <input
+                                    type="checkbox"
+                                    value=""
+                                    className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                  />
+                                  Completed
+                                </label>
+                              </li>
+                              <li>
+                                <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
+                                  <input
+                                    type="checkbox"
+                                    value=""
+                                    className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                  />
+                                  Canceled
+                                </label>
+                              </li>
+                            </ul>
+                            <h6 className="mt-4 mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                              By number of users
+                            </h6>
+                            <ul
+                              className="space-y-2 text-sm"
+                              aria-labelledby="dropdownDefault"
+                            >
+                              <li>
+                                <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
+                                  <input
+                                    type="checkbox"
+                                    value=""
+                                    className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                  />
+                                  5-10 peoples
+                                </label>
+                              </li>
+                              <li>
+                                <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
+                                  <input
+                                    type="checkbox"
+                                    value=""
+                                    className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                  />
+                                  10+ peoples
+                                </label>
+                              </li>
+                              <li>
+                                <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
+                                  <input
+                                    type="checkbox"
+                                    value=""
+                                    className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                  />
+                                  More than 10 peoples
+                                </label>
+                              </li>
+                            </ul>
                             <a
                               href="#"
-                              className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                              className="flex items-center text-sm font-medium text-primary-600 dark:text-primary-500 hover:underline mt-4 ml-1.5"
                             >
-                              Reset
+                              Apply to all projects
                             </a>
                           </div>
                         </div>
-                      </div>
-                      <div className="absolute right-0">
-                        <Link href="/admin/dashboard/newJob">
-                          <button className="bg-primary-orange text-sm text-white w-24 sm:w-40 py-2 rounded-xl hover:shadow-xl">
-                            Post New Job
+                        <div>
+                          <button
+                            id="configurationDropdownButton"
+                            data-dropdown-toggle="configurationDropdown"
+                            type="button"
+                            className="w-34 sm:w-full md:w-auto flex items-center justify-center py-2 px-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                          >
+                            <Image
+                              src="/talendSidebar4.svg"
+                              width={15}
+                              height={15}
+                              alt="search-icon"
+                              className="mr-2"
+                            />
+                            Export CSV
                           </button>
-                        </Link>
+                          {/* filtered options from Export CSV */}
+                          <div
+                            id="configurationDropdown"
+                            className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                          >
+                            <ul
+                              className="py-1 text-sm text-gray-700 dark:text-gray-200"
+                              aria-labelledby="configurationDropdownButton"
+                            >
+                              <li>
+                                <a
+                                  href="#"
+                                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                >
+                                  By Category
+                                </a>
+                              </li>
+                              <li>
+                                <a
+                                  href="#"
+                                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                >
+                                  By Brand
+                                </a>
+                              </li>
+                            </ul>
+                            <div className="py-1">
+                              <a
+                                href="#"
+                                className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                              >
+                                Reset
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="absolute right-0">
+                          <Link href="/admin/dashboard/newJob">
+                            <button className="bg-primary-orange text-sm text-white w-24 sm:w-40 py-2 rounded-xl hover:shadow-xl">
+                              Post New Job
+                            </button>
+                          </Link>
+                        </div>
                       </div>
+                    </div>
+                    <div className="">
+                      {filter && (
+                        <div className="flex items-center mt-6 mb-2">
+                          <div className="flex items-center">
+                            <label className="mr-2 text-sm font-medium text-gray-900 dark:text-white">
+                              Job Type:
+                            </label>
+                            <div className="flex flex-wrap">
+                              <label className="mr-4">
+                                <input
+                                  type="radio"
+                                  name="jobType"
+                                  value="Hour"
+                                  checked={jobType === "Hour"}
+                                  onChange={(e) => setJobType(e.target.value)}
+                                />
+                                Hour
+                              </label>
+                              <label className="mr-4">
+                                <input
+                                  type="radio"
+                                  name="jobType"
+                                  value="Month"
+                                  checked={jobType === "Month"}
+                                  onChange={(e) => setJobType(e.target.value)}
+                                />
+                                Month
+                              </label>
+                              <label className="mr-4">
+                                <input
+                                  type="radio"
+                                  name="jobType"
+                                  value="Year"
+                                  checked={jobType === "Year"}
+                                  onChange={(e) => setJobType(e.target.value)}
+                                />
+                                Year
+                              </label>
+                            </div>
+                          </div>
+                          <div className="flex items-center">
+                            <select
+                              id="contractType"
+                              name="contractType"
+                              className="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              value={contractType}
+                              onChange={(e) => setContractType(e.target.value)}
+                            >
+                              <option disabled value="">
+                                Contract Type
+                              </option>
+                              <option value="partTime">Part Time</option>
+                              <option value="fullTime">Full Time</option>
+                            </select>
+                          </div>
+                          <div className="flex items-center">
+                            <select
+                              id="location"
+                              name="location"
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              value={location}
+                              onChange={handleLocationChange}
+                            >
+                              <option disabled value="">
+                                Location
+                              </option>
+                              {locations.map((loc, index) => (
+                                <option key={index} value={loc}>
+                                  {loc}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="w-full md:w-auto flex flex-col md:flex-row mb-3 md:mb-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
@@ -649,6 +750,9 @@ const jobList = () => {
                         </div>
                       </th>
                       <th scope="col" className="px-4 py-3">
+                        Job ID
+                      </th>
+                      <th scope="col" className="px-4 py-3">
                         Opportunity
                       </th>
                       <th scope="col" className="px-4 py-3">
@@ -691,6 +795,15 @@ const jobList = () => {
                                 />
                                 <label className="sr-only">checkbox</label>
                               </div>
+                            </td>
+                            <td
+                              // scope="row"
+                              className="px-4 py-2 whitespace-nowrap"
+                              onClick={() => handleRowClick(item)}
+                            >
+                              <span className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center">
+                                {item.id}
+                              </span>
                             </td>
                             <td
                               // scope="row"

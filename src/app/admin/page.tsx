@@ -27,36 +27,41 @@ const page = () => {
   const handleSubmit = async (e: any) => {
     e?.preventDefault();
     if (email && password) {
-      const response: any = await signInMutation.mutateAsync({
-        email,
-        password,
-      });
-      if (response.success === true) {
-        setErrorMessage("");
-        console.log("response....", response);
-        toast.success(response?.message);
-        setResponseMessage(response?.message);
-        setTimeout(() => {
-          setResponseMessage("");
-        }, 3000);
-        localStorage.setItem("authToken", response.token);
-        localStorage.setItem("role", response?.user.roles[0]);
-        if (response.user?.roles == "candidate") {
-          if (response?.user?.isProfile === true) {
-            router.replace("/talent/dashboard");
-            localStorage.setItem("candidateId", response?.user?.userId);
-          } else {
-            router.push("/talentForm/resume-upload");
-          }
-        } else if (response.user.roles[0] == "admin") {
-          router.push("/admin/dashboard");
-        }
-      } else if (response.success === false) {
-        console.log("response undef");
-        setErrorMessage("Please provide correct information");
-        setTimeout(() => {
+      try {
+        const response: any = await signInMutation.mutateAsync({
+          email,
+          password,
+        });
+        if (response.success === true) {
           setErrorMessage("");
-        }, 3000);
+          console.log("response....", response);
+          toast.success(response?.message);
+          setResponseMessage(response?.message);
+          setTimeout(() => {
+            setResponseMessage("");
+          }, 3000);
+          localStorage.setItem("authToken", response.token);
+          localStorage.setItem("role", response?.user.roles[0]);
+          if (response.user?.roles == "candidate") {
+            if (response?.user?.isProfile === true) {
+              router.replace("/talent/dashboard");
+              localStorage.setItem("candidateId", response?.user?.userId);
+            } else {
+              router.push("/talentForm/resume-upload");
+            }
+          } else if (response.user.roles[0] == "admin") {
+            router.push("/admin/dashboard");
+          }
+        } else if (response.success === false) {
+          console.log("response undef");
+          setErrorMessage("Please provide correct information");
+          setTimeout(() => {
+            setErrorMessage("");
+          }, 3000);
+        }
+      } catch (error: any) {
+        console.log("Login Error >>>>>", error.response.data.message);
+        toast.error(error.response.data.message);
       }
     }
   };

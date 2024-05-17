@@ -5,15 +5,20 @@ export const getAllJobs = (
   title: any = "",
   contractType: any = "",
   jobType: any = "",
-  location:any = "",
+  location: any = ""
 ) => {
   return client.get<AllJobsInterface, AllJobsInterface>(
     `/jobs/getAllJobs?${title}&${contractType}&${jobType}&${location}`
   );
 };
 
-export const getAllJobsForAdmin = (title: any) => {
+export const getAllJobsForAdmin = (
+  title: any,
+  contractType: any = "",
+  jobType: any = "",
+  location: any = ""
+) => {
   return client.get<AllJobsInterface, AllJobsInterface>(
-    `/jobs/admin/getAllJobs?${title}`
+    `/jobs/admin/getAllJobs?${title}&${contractType}&${jobType}&${location}`
   );
 };
