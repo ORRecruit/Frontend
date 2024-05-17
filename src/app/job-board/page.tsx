@@ -185,7 +185,7 @@ const page = () => {
                   </div>
                 </div>
                 {filter && (
-                  <div className="flex mt-2 mb-2 space-y-2">
+                  <div className="flex mt-2 mb-2">
                     <div className="flex items-center">
                       <label className="mr-2 text-sm font-medium text-gray-900 dark:text-white">
                         Job Type:

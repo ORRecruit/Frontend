@@ -280,6 +280,9 @@ const page = () => {
                     </div>
                   </th>
                   <th scope="col" className="px-4 py-3">
+                    Talent ID
+                  </th>
+                  <th scope="col" className="px-4 py-3">
                     Name
                   </th>
                   <th scope="col" className="px-4 py-3">
@@ -316,6 +319,11 @@ const page = () => {
                             />
                             <label className="sr-only">checkbox</label>
                           </div>
+                        </td>
+                        <td className="px-4 py-2 whitespace-nowrap">
+                          <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                            {item?.id}
+                          </span>
                         </td>
                         <th
                           scope="row"

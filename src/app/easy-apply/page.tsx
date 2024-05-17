@@ -39,7 +39,7 @@ function Page() {
     indeedProfile: "",
     glassdoorProfile: "",
     highestEducation: "",
-    workExperience: 0,
+    workExperience: "",
     coverLetter: null,
     resumePath: null,
   });
@@ -287,9 +287,9 @@ function Page() {
                         onChange={handleChange}
                         className="block w-full mt-1 py-3 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
-                        <option value="email">email</option>
-                        <option value="phone">phone</option>
-                        <option value="both">both</option>
+                        <option value="email">Email</option>
+                        <option value="phone">Phone</option>
+                        <option value="both">Both</option>
                       </select>
                     </div>
                     <div className="sm:col-span-2 grid grid-cols-3 gap-x-4">
