@@ -57,6 +57,13 @@ const page = () => {
     });
   };
 
+  const handleRemoveExperience = (index: number) => {
+    const updatedExperiences = formData.experiences.filter(
+      (_, i) => i !== index
+    );
+    setFormData({ experiences: updatedExperiences });
+  };
+
   return (
     <>
       <section className="h-screen flex justify-center items-center">
@@ -77,11 +84,18 @@ const page = () => {
             </p>
             <form
               onSubmit={submitForm}
-              className="mt-4 max-h-[480px] overflow-auto"
+              className="mt-4 max-h-[480px] overflow-auto pr-[15px]"
               action="#"
             >
               {formData.experiences.map((experience, index) => (
-                <div key={index} className="grid gap-6 mb-8">
+                <div key={index} className="grid gap-6 mb-8 relative">
+                  <button
+                    onClick={() => handleRemoveExperience(index)}
+                    className="absolute right-[15px] top-[-5px] text-red-500"
+                  >
+                    x
+                  </button>
+
                   <div className="grid sm:grid-cols-2">
                     <div className="w-[96%]">
                       <label className="block text-sm font-medium text-gray-900 dark:text-gray-400 mb-2">
@@ -164,7 +178,7 @@ const page = () => {
                     </div>
                   </div>
 
-                  <div className="w-[100%]">
+                  <div className="w-[98%]">
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Details
                     </label>
