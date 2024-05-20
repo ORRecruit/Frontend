@@ -186,7 +186,7 @@ const page = () => {
                 </div>
                 {filter && (
                   <div className="flex mt-2 mb-2">
-                    <div className="flex items-center">
+                    {/* <div className="flex items-center">
                       <label className="mr-2 text-sm font-medium text-gray-900 dark:text-white">
                         Job Type:
                       </label>
@@ -222,6 +222,22 @@ const page = () => {
                           Year
                         </label>
                       </div>
+                    </div> */}
+                    <div className="flex items-center">
+                      <select
+                        id="jobPreference"
+                        name="jobPreference"
+                        className="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        // value={jobPreference}
+                        // onChange={(e) => setContractType(e.target.value)}
+                      >
+                        <option disabled value="">
+                          Job Type
+                        </option>
+                        <option value="onSite">On Site</option>
+                        <option value="remote">Remote</option>
+                        <option value="hybrid">Hybrid</option>
+                      </select>
                     </div>
                     <div className="flex items-center">
                       <select
@@ -256,6 +272,13 @@ const page = () => {
                         ))}
                       </select>
                     </div>
+                    <button
+                      type="button"
+                      className="text-white font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[135px] h-[40px] ml-2 mt-[20px] sm:w-fit sm:mt-0 sm:w-[150px]"
+                      // onClick={() => setShowOptions(!showOptions)}
+                    >
+                      Reset Filters
+                    </button>
                   </div>
                 )}
                 <div className="flex flex-wrap pt-1 pb-4 border-t dark:border-gray-700"></div>

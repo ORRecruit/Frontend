@@ -798,16 +798,16 @@ const jobList = () => {
                             </td>
                             <td
                               // scope="row"
-                              className="px-4 py-2 whitespace-nowrap"
+                              className="pr-4 py-2 whitespace-nowrap"
                               onClick={() => handleRowClick(item)}
                             >
                               <span className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center">
-                                {item.id}
+                                ORR-{item?.industry?.slice(0, 4)}-00{item?.id}
                               </span>
                             </td>
                             <td
                               // scope="row"
-                              className="px-4 py-2 whitespace-nowrap"
+                              className="pr-4 py-2 whitespace-nowrap"
                               onClick={() => handleRowClick(item)}
                             >
                               <span className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center">
