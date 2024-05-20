@@ -13,3 +13,13 @@ export const uploadAvatar = (file: File) => {
     },
   });
 };
+
+export const uploadResume = (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  return client.post<any, any>("/applicants/upload-resume", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
