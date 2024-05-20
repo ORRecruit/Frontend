@@ -10,23 +10,25 @@ import CustomLoader from "@/components/customLoader";
 import { isAuthTokenExpired } from "../isAuthTokenExpired";
 import DOMPurify from "dompurify";
 import { formatString } from "@/utils/utils";
+
 const page = () => {
   const router = useRouter();
   const [title, setTitle] = useState<string>("");
   const [selectedValue, setSelectedValue] = useState<any>({});
   const [filter, setFilter] = useState<boolean>(false);
-  const [jobType, setJobType] = useState<string>("");
+  // const [jobType, setJobType] = useState<string>("");
+  const [jobVenue, setJobVenue] = useState<string>("");
   const [contractType, setContractType] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const locations = ["USA", "Canada", "Dubai"];
 
   const { data, error, isLoading, refetch } = useQuery({
-    queryKey: ["get all naukrian", title, contractType, jobType, location],
+    queryKey: ["get all naukrian", title, contractType, jobVenue, location],
     queryFn: () =>
       getAllJobs(
         `title=${title}`,
         `contractType=${contractType}`,
-        `jobType=${jobType}`,
+        `jobVenue=${jobVenue}`,
         `location=${location}`
       ),
   });
@@ -46,7 +48,7 @@ const page = () => {
     const role = localStorage.getItem("role");
     const authToken = localStorage.getItem("authToken");
     if (role === "candidate" && !isAuthTokenExpired(authToken!)) {
-      router.push("/talent/dashboard");
+      router.push(`/talent/dashboard/jobBoard?jobId=${item?.id}`);
     } else {
       router.push(`/auth/signin`);
     }
@@ -81,6 +83,14 @@ const page = () => {
   const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLocation(e.target.value);
     refetch();
+  };
+
+  const resetFilters = () => {
+    setTitle("");
+    setContractType("");
+    setJobVenue("");
+    setLocation("");
+    // refetch();
   };
 
   return (
@@ -225,16 +235,16 @@ const page = () => {
                     </div> */}
                     <div className="flex items-center">
                       <select
-                        id="jobPreference"
-                        name="jobPreference"
+                        id="jobVenue"
+                        name="jobVenue"
                         className="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        // value={jobPreference}
-                        // onChange={(e) => setContractType(e.target.value)}
+                        value={jobVenue}
+                        onChange={(e) => setJobVenue(e.target.value)}
                       >
                         <option disabled value="">
-                          Job Type
+                          Job Venue
                         </option>
-                        <option value="onSite">On Site</option>
+                        <option value="onsite">On Site</option>
                         <option value="remote">Remote</option>
                         <option value="hybrid">Hybrid</option>
                       </select>
@@ -275,7 +285,7 @@ const page = () => {
                     <button
                       type="button"
                       className="text-white font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[135px] h-[40px] ml-2 mt-[20px] sm:w-fit sm:mt-0 sm:w-[150px]"
-                      // onClick={() => setShowOptions(!showOptions)}
+                      onClick={resetFilters}
                     >
                       Reset Filters
                     </button>
