@@ -31,7 +31,10 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       isPublicBlogDetail(path) ||
       path.includes("/reset-password") ||
       path.includes("easy-apply") ||
-      path === "/privacy-policy"
+      path === "/privacy-policy" ||
+      path === "/talentForm/experience-info" ||
+      path === "/talentForm/education-info" ||
+      path === "/talentForm/tools-tech-info"
     ) {
       router.push(path);
     } else {
