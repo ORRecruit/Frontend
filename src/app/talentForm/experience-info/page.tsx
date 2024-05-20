@@ -13,16 +13,16 @@ const page = () => {
         startDate: "",
         endDate: "",
         description: "",
+        currentlyWorking: false,
       },
     ],
   });
 
   const handleChange = (e: any, index: any) => {
-    e.preventDefault();
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     const newExperiences = formData.experiences.map((exp, expIndex) => {
       if (index === expIndex) {
-        return { ...exp, [name]: value };
+        return { ...exp, [name]: type === "checkbox" ? checked : value };
       }
       return exp;
     });
@@ -32,10 +32,30 @@ const page = () => {
   const router = useRouter();
   const submitForm = (e: any) => {
     e.preventDefault();
+    const experiences: any[] = [];
+    formData.experiences?.map((item) => {
+      if (item?.currentlyWorking) {
+        const obj = {
+          companyName: item.companyName,
+          description: item.description,
+          startDate: item.startDate,
+          endDate: "",
+        };
+        experiences.push(obj);
+      } else {
+        const obj = {
+          companyName: item.companyName,
+          description: item.description,
+          startDate: item.startDate,
+          endDate: item.endDate,
+        };
+        experiences.push(obj);
+      }
+    });
     const candidateInfo = localStorage.getItem("candidateInfo");
     if (candidateInfo !== null) {
       const data = JSON.parse(candidateInfo);
-      data.experiences = formData.experiences;
+      data.experiences = experiences;
       localStorage.setItem("candidateInfo", JSON.stringify(data));
       console.log("data", data);
     }
@@ -52,6 +72,7 @@ const page = () => {
           startDate: "",
           endDate: "",
           description: "",
+          currentlyWorking: false,
         },
       ],
     });
@@ -156,16 +177,17 @@ const page = () => {
                         placeholder="Select date end"
                         value={experience.endDate}
                         onChange={(e) => handleChange(e, index)}
+                        disabled={experience.currentlyWorking}
                       />
                       <div className="mt-2 flex items-center">
                         <input
                           id="currentlyWorking"
-                          name="endDate"
+                          name="currentlyWorking"
                           aria-describedby="currentlyWorking"
                           type="checkbox"
                           className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                           required={false}
-                          value="Currently Working"
+                          checked={experience.currentlyWorking}
                           onChange={(e) => handleChange(e, index)}
                         />
                         <label

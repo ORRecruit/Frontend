@@ -13,16 +13,17 @@ const page = () => {
         startYear: "",
         endYear: "",
         description: "",
+        currentlyStudying: false,
       },
     ],
   });
 
   const handleChange = (e: any, index: any) => {
     e.preventDefault();
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     const newEducations = formData.educations.map((edu, expIndex) => {
       if (index === expIndex) {
-        return { ...edu, [name]: value };
+        return { ...edu, [name]: type === "checkbox" ? checked : value };
       }
       return edu;
     });
@@ -32,10 +33,33 @@ const page = () => {
   const router = useRouter();
   const submitForm = (e: any) => {
     e.preventDefault();
+    const educations: any[] = [];
+    formData.educations?.map((item) => {
+      if (item?.currentlyStudying) {
+        const obj = {
+          school: item.school,
+          degree: item.degree,
+          description: item.description,
+          startYear: item.startYear,
+          endYear: "",
+        };
+        educations.push(obj);
+      } else {
+        const obj = {
+          school: item.school,
+          degree: item.degree,
+          description: item.description,
+          startYear: item.startYear,
+          endYear: item.endYear,
+        };
+        educations.push(obj);
+      }
+    });
+
     const candidateInfo = localStorage.getItem("candidateInfo");
     if (candidateInfo !== null) {
       const data = JSON.parse(candidateInfo);
-      data.educations = formData.educations;
+      data.educations = educations;
       localStorage.setItem("candidateInfo", JSON.stringify(data));
       console.log("data", data);
     }
@@ -52,6 +76,7 @@ const page = () => {
           startYear: "",
           endYear: "",
           description: "",
+          currentlyStudying: false,
         },
       ],
     });
@@ -153,16 +178,18 @@ const page = () => {
                         placeholder="Select date end"
                         value={education.endYear}
                         onChange={(e) => handleChange(e, index)}
+                        disabled={education.currentlyStudying}
                       />
                       <div className="mt-2 flex items-center">
                         <input
                           id="currentlyStudying"
-                          name="endDate"
+                          name="currentlyStudying"
                           aria-describedby="currentlyStudying"
                           type="checkbox"
                           className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                           required={false}
                           value="Currently Studying"
+                          checked={education.currentlyStudying}
                           onChange={(e) => handleChange(e, index)}
                         />
                         <label
