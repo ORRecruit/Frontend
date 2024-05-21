@@ -7,6 +7,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { applyJob as applyJobApi } from "@/api/talent/applyJob";
 import CustomLoader from "@/components/customLoader";
 import { createMarkup, formatString } from "@/utils/utils";
+import { RiCloseLine } from "react-icons/ri";
+import toast from "react-hot-toast";
 
 const page = () => {
   const [appliedRes, setAppliedRes] = useState(false);
@@ -14,12 +16,12 @@ const page = () => {
   const router = useRouter();
   const [selectedValue, setSelectedValue] = useState<any>({});
   const [title, setTitle] = useState<string>("");
+  const [publishDialog, setPublishDialog] = useState<any>(false);
 
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all naukrian"],
     queryFn: () => getAllJobs(`title=${title}`),
   });
-  const [showOptions, setShowOptions] = useState(false);
 
   const searchParams = useSearchParams();
 
@@ -48,15 +50,11 @@ const page = () => {
   };
 
   const applyJob = async (jobId: any) => {
-    const response = await applyJobMutation.mutateAsync(jobId);
+    const response = await applyJobMutation.mutateAsync(jobId?.id);
     if (response) {
       console.log("response", response);
-      setAppliedRes(true);
-      setSuccessMessage(response.message);
-      setTimeout(() => {
-        setAppliedRes(false);
-        setSuccessMessage("");
-      }, 2000);
+      setPublishDialog(!publishDialog);
+      toast.success("You have applied to the job successfully.");
     }
   };
 
@@ -125,35 +123,42 @@ const page = () => {
                     <button
                       type="button"
                       className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[135px] h-[40px] mt-[20px] sm:w-fit sm:h-fit sm:mt-0 sm:w-[150px]"
-                      onClick={() => setShowOptions(!showOptions)}
+                      onClick={() => setPublishDialog(!publishDialog)}
                     >
                       Apply Now
                     </button>
-                    {showOptions && (
-                      <div className="absolute right-0 mt-2 w-fit top-[45px]">
-                        <button
-                          type="button"
-                          className="text-white font-medium rounded-lg text-sm px-5 py-2 text-center bg-orange-600 w-full mb-1"
-                        >
-                          Easy Apply
-                        </button>
-                        <button
-                          type="button"
-                          className="text-white font-medium rounded-lg text-sm px-5 py-2 text-center bg-orange-600 w-full"
-                          onClick={() => {
-                            applyJob(selectedValue);
-                          }}
-                        >
-                          Apply from Account
-                        </button>
-                      </div>
-                    )}
                   </div>
                   <div className="font-light text-xl font-semibold text-gray-500 dark:text-gray-400">
                     ORR-{selectedValue?.industry?.slice(0, 4)}-00
                     {selectedValue?.id}
                   </div>
                 </div>
+
+                {publishDialog && (
+                  <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                    <div className="relative bg-white p-5 rounded-lg max-w-lg w-full border border-black-400">
+                      <div className="absolute top-2 right-3">
+                        <RiCloseLine
+                          size={25}
+                          onClick={() => setPublishDialog(!publishDialog)}
+                        />
+                      </div>
+                      <div className="bg-white rounded-lg flex flex-col items-center">
+                        <p className="text-gray-600 text-xl mb-4">
+                          Are You Sure Want To Apply For The Job?
+                        </p>
+                        <div>
+                          <button
+                            onClick={() => applyJob(selectedValue)}
+                            className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
+                          >
+                            Yes
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div className="mb-5">
                   <p className="text-lg font-extrabold text-gray-900 dark:text-white">

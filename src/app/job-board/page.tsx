@@ -96,7 +96,6 @@ const page = () => {
   return (
     <div>
       <div>
-        <Navbar scrollToBottom={scrollToBottom} />
         <div>
           <section className="flex">
             <div className="w-full max-w-screen-xl px-4 mx-auto">

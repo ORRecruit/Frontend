@@ -119,7 +119,6 @@ const page = () => {
 
   return (
     <>
-      <Navbar scrollToBottom={scrollToBottom} />
       <BlogHeader />
       <BlogGrid articles={articles} />
       <Footer />
