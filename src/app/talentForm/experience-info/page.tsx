@@ -1,64 +1,41 @@
+// page.tsx
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FiArrowLeft } from "react-icons/fi";
+import useStore from "@/app/store";
 
-const page = () => {
-  const [formData, setFormData] = useState({
-    experiences: [
-      {
-        companyName: "",
-        role: "",
-        startDate: "",
-        endDate: "",
-        description: "",
-        currentlyWorking: false,
-      },
-    ],
+const Page = () => {
+  const experiences = useStore((state) => state.stepData.step3);
+  const setStepData = useStore((state) => state.setStepData);
+  const [formData, setFormData] = useState<{ experiences: any[] }>({
+    experiences: experiences,
   });
 
-  const handleChange = (e: any, index: any) => {
+  useEffect(() => {
+    setStepData("step3", formData.experiences);
+  }, [formData.experiences, setStepData]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const { name, value, type, checked } = e.target;
-    const newExperiences = formData.experiences.map((exp, expIndex) => {
-      if (index === expIndex) {
-        return { ...exp, [name]: type === "checkbox" ? checked : value };
+    const newExperiences = formData?.experiences?.map(
+      (exp: any, expIndex: any) => {
+        if (index === expIndex) {
+          return { ...exp, [name]: type === "checkbox" ? checked : value };
+        }
+        return exp;
       }
-      return exp;
-    });
+    );
     setFormData({ experiences: newExperiences });
   };
 
   const router = useRouter();
-  const submitForm = (e: any) => {
+  const submitForm = (e: React.FormEvent) => {
     e.preventDefault();
-    const experiences: any[] = [];
-    formData.experiences?.map((item) => {
-      if (item?.currentlyWorking) {
-        const obj = {
-          companyName: item.companyName,
-          description: item.description,
-          startDate: item.startDate,
-          endDate: "",
-        };
-        experiences.push(obj);
-      } else {
-        const obj = {
-          companyName: item.companyName,
-          description: item.description,
-          startDate: item.startDate,
-          endDate: item.endDate,
-        };
-        experiences.push(obj);
-      }
-    });
-    const candidateInfo = localStorage.getItem("candidateInfo");
-    if (candidateInfo !== null) {
-      const data = JSON.parse(candidateInfo);
-      data.experiences = experiences;
-      localStorage.setItem("candidateInfo", JSON.stringify(data));
-      console.log("data", data);
-    }
     router.push("/talentForm/education-info");
   };
 
@@ -108,9 +85,10 @@ const page = () => {
               className="mt-4 max-h-[480px] overflow-auto pr-[15px]"
               action="#"
             >
-              {formData.experiences.map((experience, index) => (
+              {formData?.experiences?.map((experience: any, index: any) => (
                 <div key={index} className="grid gap-6 mb-8 relative">
                   <button
+                    type="button"
                     onClick={() => handleRemoveExperience(index)}
                     className="absolute right-[15px] top-[-5px] text-red-500"
                   >
@@ -125,7 +103,6 @@ const page = () => {
                       <input
                         type="text"
                         name="companyName"
-                        id="countries"
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Company"
                         required={true}
@@ -140,7 +117,6 @@ const page = () => {
                       <input
                         type="text"
                         name="role"
-                        id="countries"
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Role"
                         required={true}
@@ -150,12 +126,11 @@ const page = () => {
                     </div>
                   </div>
 
-                  <div date-rangepicker="true" className="grid sm:grid-cols-2">
+                  <div className="grid sm:grid-cols-2">
                     <div className="relative w-[96%]">
                       <label className="block text-sm font-medium text-gray-900 dark:text-gray-400 mb-2">
                         From
                       </label>
-                      <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"></div>
                       <input
                         name="startDate"
                         type="date"
@@ -169,11 +144,10 @@ const page = () => {
                       <label className="block text-sm font-medium text-gray-900 dark:text-gray-400 mb-2">
                         Till
                       </label>
-                      <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"></div>
                       <input
                         name="endDate"
                         type="date"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Select date end"
                         value={experience.endDate}
                         onChange={(e) => handleChange(e, index)}
@@ -186,7 +160,6 @@ const page = () => {
                           aria-describedby="currentlyWorking"
                           type="checkbox"
                           className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                          required={false}
                           checked={experience.currentlyWorking}
                           onChange={(e) => handleChange(e, index)}
                         />
@@ -207,7 +180,6 @@ const page = () => {
                     <input
                       type="text"
                       name="description"
-                      id="about"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="What did you do here?"
                       required={true}
@@ -257,4 +229,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

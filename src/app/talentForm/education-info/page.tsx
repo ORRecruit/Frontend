@@ -1,28 +1,29 @@
+// page.tsx
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FiArrowLeft } from "react-icons/fi";
+import useStore from "@/app/store";
 
-const page = () => {
-  const [formData, setFormData] = useState({
-    educations: [
-      {
-        school: "",
-        degree: "",
-        startYear: "",
-        endYear: "",
-        description: "",
-        currentlyStudying: false,
-      },
-    ],
+const Page = () => {
+  const educations = useStore((state) => state.stepData.step4);
+  const setStepData = useStore((state) => state.setStepData);
+  const [formData, setFormData] = useState<{ educations: any[] }>({
+    educations: educations,
   });
 
-  const handleChange = (e: any, index: any) => {
-    e.preventDefault();
+  useEffect(() => {
+    setStepData("step4", formData.educations);
+  }, [formData.educations, setStepData]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const { name, value, type, checked } = e.target;
-    const newEducations = formData.educations.map((edu, expIndex) => {
-      if (index === expIndex) {
+    const newEducations = formData.educations.map((edu, eduIndex) => {
+      if (index === eduIndex) {
         return { ...edu, [name]: type === "checkbox" ? checked : value };
       }
       return edu;
@@ -31,42 +32,12 @@ const page = () => {
   };
 
   const router = useRouter();
-  const submitForm = (e: any) => {
+  const submitForm = (e: React.FormEvent) => {
     e.preventDefault();
-    const educations: any[] = [];
-    formData.educations?.map((item) => {
-      if (item?.currentlyStudying) {
-        const obj = {
-          school: item.school,
-          degree: item.degree,
-          description: item.description,
-          startYear: item.startYear,
-          endYear: "",
-        };
-        educations.push(obj);
-      } else {
-        const obj = {
-          school: item.school,
-          degree: item.degree,
-          description: item.description,
-          startYear: item.startYear,
-          endYear: item.endYear,
-        };
-        educations.push(obj);
-      }
-    });
-
-    const candidateInfo = localStorage.getItem("candidateInfo");
-    if (candidateInfo !== null) {
-      const data = JSON.parse(candidateInfo);
-      data.educations = educations;
-      localStorage.setItem("candidateInfo", JSON.stringify(data));
-      console.log("data", data);
-    }
     router.push("/talentForm/socialMedia-info");
   };
 
-  const addEducations = () => {
+  const addEducation = () => {
     setFormData({
       educations: [
         ...formData.educations,
@@ -113,6 +84,7 @@ const page = () => {
               {formData.educations.map((education, index) => (
                 <div key={index} className="grid gap-6 mb-8 relative">
                   <button
+                    type="button"
                     onClick={() => handleRemoveEducation(index)}
                     className="absolute right-[15px] top-[-5px] text-red-500"
                   >
@@ -126,7 +98,6 @@ const page = () => {
                       <input
                         type="text"
                         name="degree"
-                        id="countries"
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Degree"
                         required={true}
@@ -141,7 +112,6 @@ const page = () => {
                       <input
                         type="text"
                         name="school"
-                        id="countries"
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="School"
                         required={true}
@@ -151,16 +121,15 @@ const page = () => {
                     </div>
                   </div>
 
-                  <div date-rangepicker="true" className="grid sm:grid-cols-2">
+                  <div className="grid sm:grid-cols-2">
                     <div className="relative w-[96%]">
                       <label className="block text-sm font-medium text-gray-900 dark:text-gray-400 mb-2">
                         From*
                       </label>
-                      <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"></div>
                       <input
                         name="startYear"
                         type="date"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Select date start"
                         value={education.startYear}
                         onChange={(e) => handleChange(e, index)}
@@ -170,35 +139,32 @@ const page = () => {
                       <label className="block text-sm font-medium text-gray-900 dark:text-gray-400 mb-2">
                         Till*
                       </label>
-                      <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"></div>
                       <input
                         name="endYear"
                         type="date"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Select date end"
                         value={education.endYear}
                         onChange={(e) => handleChange(e, index)}
                         disabled={education.currentlyStudying}
                       />
-                      <div className="mt-2 flex items-center">
-                        <input
-                          id="currentlyStudying"
-                          name="currentlyStudying"
-                          aria-describedby="currentlyStudying"
-                          type="checkbox"
-                          className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                          required={false}
-                          value="Currently Studying"
-                          checked={education.currentlyStudying}
-                          onChange={(e) => handleChange(e, index)}
-                        />
-                        <label
-                          htmlFor="currentlyStudying"
-                          className="text-sm text-gray-500 ml-2"
-                        >
-                          Currently Studying
-                        </label>
-                      </div>
+                    </div>
+                    <div className="mt-2 flex items-center">
+                      <input
+                        id="currentlyStudying"
+                        name="currentlyStudying"
+                        aria-describedby="currentlyStudying"
+                        type="checkbox"
+                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                        checked={education.currentlyStudying}
+                        onChange={(e) => handleChange(e, index)}
+                      />
+                      <label
+                        htmlFor="currentlyStudying"
+                        className="text-sm text-gray-500 ml-2"
+                      >
+                        Currently Studying
+                      </label>
                     </div>
                   </div>
 
@@ -209,7 +175,6 @@ const page = () => {
                     <input
                       type="text"
                       name="description"
-                      id="about"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="What did you do here?"
                       required={true}
@@ -222,7 +187,7 @@ const page = () => {
               <button
                 type="button"
                 className="focus:outline-none text-primary-color bg-light-gray font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4 hover:bg-primary-orange hover:text-white"
-                onClick={addEducations}
+                onClick={addEducation}
               >
                 Add Another
               </button>
@@ -259,4 +224,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

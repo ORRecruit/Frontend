@@ -20,7 +20,19 @@ export default function RootLayout({
 }>) {
   const myRef = useRef<HTMLDivElement>(null);
   let path = usePathname();
-  const noNavbarRoutes = ["/auth/signin", "/auth/signup"];
+  const noNavbarRoutes = [
+    "/auth/signin",
+    "/auth/signup",
+    "/talentForm/resume-upload",
+    "/talentForm/personalInfo",
+    "/talentForm/tools-tech-info",
+    "/talentForm/experience-info",
+    "/talentForm/education-info",
+    "/talentForm/socialMedia-info",
+    "/auth/verify-email",
+    "/talent/dashboard/jobBoard",
+    "/admin",
+  ];
   const showNavbar = !noNavbarRoutes.includes(path);
 
   useEffect(() => {
