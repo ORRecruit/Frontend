@@ -30,7 +30,6 @@ const page = () => {
 
   return (
     <>
-      <Navbar scrollToBottom={scrollToBottom} />
       <HeroSection
         heading={"Hire Here From Anywhere"}
         paragraph={`Create job listings that our AI system comprehensively analyzes, ensuring they reach the most suitable candidates. `}

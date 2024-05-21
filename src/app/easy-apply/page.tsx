@@ -112,7 +112,6 @@ function Page() {
 
   return (
     <>
-      <Navbar />
       <div className="w-full mx-auto pt-4 pb-8">
         <div className="w-[94%] mx-auto 2xl:w-3/4">
           <div className="bg-white">

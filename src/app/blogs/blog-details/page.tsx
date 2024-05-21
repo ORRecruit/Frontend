@@ -26,7 +26,6 @@ const page = () => {
   return (
     <>
       <Suspense fallback={<SearchBarFallback />}>
-        <Navbar scrollToBottom={scrollToBottom} />
         <BlogDetailsHeader />
         <BlogDetailsText />
         <Footer />

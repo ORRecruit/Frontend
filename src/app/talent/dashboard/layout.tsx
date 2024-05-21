@@ -36,11 +36,11 @@ export default function RootLayout({
       text: "Application Status",
       href: "/talent/dashboard/appliedJobs",
     },
-    {
-      iconUrl: "/talendSidebar5.svg",
-      text: "Interviews",
-      href: "#",
-    },
+    // {
+    //   iconUrl: "/talendSidebar5.svg",
+    //   text: "Interviews",
+    //   href: "#",
+    // },
   ];
   return (
     <html lang="en">

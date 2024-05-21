@@ -30,7 +30,6 @@ const page = () => {
 
   return (
     <>
-      <Navbar scrollToBottom={scrollToBottom} />
       <HeroSection
         heading={"Find your Dream Job Today!"}
         paragraph={`Experience a guided process that helps you land a job that propels your career forward.`}
