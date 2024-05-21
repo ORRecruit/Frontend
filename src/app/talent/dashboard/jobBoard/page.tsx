@@ -50,11 +50,18 @@ const page = () => {
   };
 
   const applyJob = async (jobId: any) => {
-    const response = await applyJobMutation.mutateAsync(jobId?.id);
-    if (response) {
-      console.log("response", response);
-      setPublishDialog(!publishDialog);
-      toast.success("You have applied to the job successfully.");
+    try {
+      const response = await applyJobMutation.mutateAsync(jobId?.id);
+      if (response) {
+        console.log("response", response);
+        setPublishDialog(!publishDialog);
+        toast.success("You have applied to the job successfully.");
+      }
+    } catch (err: any) {
+      if (err?.message) {
+        console.log("err.message", err);
+        toast.error(err?.response?.data?.message);
+      }
     }
   };
 
