@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { appliedJobs } from "@/api/talent/showAppliedJobs";
 import { useQuery } from "@tanstack/react-query";
+import { fetchCandidateJobs } from "@/api/jobs/fetchCandidateJobs";
 
 const jobsList = () => {
   const [jobsData, setJobsData] = React.useState<any>();
@@ -16,6 +17,12 @@ const jobsList = () => {
   // useEffect(() => {
   //   console.log("data....", candidateId, data?.applications);
   // }, [data]);
+  const candidateId = localStorage.getItem("candidateId");
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ["get jobs for candidates"],
+    queryFn: () => fetchCandidateJobs(`${candidateId}`),
+  });
+  console.log("data", data);
 
   React.useEffect(() => {
     (async () => {
@@ -160,7 +167,7 @@ const jobsList = () => {
                 </tr>
               </thead>
               <tbody>
-                {jobsData?.applications?.map((item: any, index: any) => {
+                {data?.applications?.map((item: any, index: any) => {
                   return (
                     <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
                       <td className="px-4 py-2 w-4">
@@ -177,18 +184,18 @@ const jobsList = () => {
                         scope="row"
                         className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
-                        {item?.job?.title}
+                        {item.title}
                       </th>
                       <td className="px-4 py-2 whitespace-nowrap">
                         <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                          {item?.job?.companyName}
+                          {item.companyName}
                         </span>
                       </td>
                       <td className="px-4 py-2 whitespace-nowrap">
-                        <span>{item?.job?.jobStatus}</span>
+                        <span>{item.jobStatus}</span>
                       </td>
                       <td className="px-4 py-2 font-medium whitespace-nowrap">
-                        <span>{item?.job?.location}</span>
+                        <span>{item.location}</span>
                       </td>
                       <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <span>13/02/2024</span>

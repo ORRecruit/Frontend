@@ -36,7 +36,7 @@ const page = () => {
     e?.preventDefault();
     if (email && password) {
       try {
-        const response = await signInMutation.mutateAsync({
+        const response: any = await signInMutation.mutateAsync({
           email,
           password,
         });
@@ -49,9 +49,9 @@ const page = () => {
             toast.success(response?.message);
             console.log("Inside Candidate");
             if (response?.user?.isProfile === true) {
-              console.log("Inside Candidate if");
+              console.log("Inside Candidate if", response.user);
               localStorage.setItem("authToken", response.token);
-              localStorage.setItem("candidateId", response.user.userId);
+              localStorage.setItem("candidateId", response.user.candidateId);
               localStorage.setItem("role", response.user.roles[0]);
               if (response?.user?.profilePhoto) {
                 localStorage.setItem("avatarUrl", response?.user?.profilePhoto);
@@ -60,7 +60,7 @@ const page = () => {
             } else {
               console.log("Inside Candidate Else");
               localStorage.setItem("authToken", response.token);
-              localStorage.setItem("candidateId", response.user.userId);
+              localStorage.setItem("candidateId", response.user.candidateId);
               localStorage.setItem("role", response.user.roles[0]);
               router.push("/talentForm/resume-upload");
             }
