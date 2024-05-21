@@ -29,6 +29,9 @@ export default function RootLayout({
     "/talentForm/experience-info",
     "/talentForm/education-info",
     "/talentForm/socialMedia-info",
+    "/auth/verify-email",
+    "/talent/dashboard/jobBoard",
+    "/admin",
   ];
   const showNavbar = !noNavbarRoutes.includes(path);
 

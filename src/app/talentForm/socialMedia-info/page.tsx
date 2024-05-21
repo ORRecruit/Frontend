@@ -1,22 +1,34 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { createProfile } from "@/api/talent/profileInfo";
 import CustomLoader from "@/components/customLoader";
 import toast from "react-hot-toast";
 import { FiArrowLeft } from "react-icons/fi";
-const page = () => {
+import useStore from "@/app/store";
+
+const Page = () => {
+  const socialMedia = useStore((state) => state.stepData.step5);
+  const setStepData = useStore((state) => state.setStepData);
+  const stepData = useStore((state) => state.stepData);
+  const resetData = useStore((state) => state.resetData);
   const [formData, setFormData] = useState({
-    website: "",
-    linkedIn: "",
-    github: "",
-    twitter: "",
+    website: socialMedia?.website || "",
+    linkedIn: socialMedia?.linkedIn || "",
+    github: socialMedia?.github || "",
+    twitter: socialMedia?.twitter || "",
   });
+
+  useEffect(() => {
+    setStepData("step5", formData);
+  }, [formData, setStepData]);
+
   const profileMutation = useMutation({
     mutationFn: (data) => createProfile(data),
   });
+
   const handleChange = (e: any) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -29,55 +41,91 @@ const page = () => {
   const router = useRouter();
   const submitForm = async (e: any) => {
     e.preventDefault();
-    const candidateInfo = localStorage.getItem("candidateInfo");
+    // const candidateInfo = localStorage.getItem("candidateInfo");
+    // const avatar = localStorage.getItem("avatarUrl");
+
+    // if (candidateInfo !== null) {
+    //   const data = JSON.parse(candidateInfo);
+    //   data.website = formData.website?.length ? formData.website : null;
+    //   data.linkedIn = formData.linkedIn?.length ? formData.linkedIn : null;
+    //   data.github = formData.github?.length ? formData.github : null;
+    //   data.twitter = formData.twitter?.length ? formData.twitter : null;
+    //   console.log("data", data);
+    //   if (data) {
+    //     try {
+    //       const response = await profileMutation.mutateAsync({
+    //         ...data,
+    //         location: "Canada",
+    //         industry: "IT Industry",
+    //         profilePhoto: avatar,
+    //       });
+    //       console.log(response);
+    //       if (response.success === true) {
+    //         console.log("res here>>>", response);
+    //         toast.success(response?.message);
+    //         localStorage.setItem("candidateId", response?.profile?.userId);
+    //         resetData();
+    //         router.push("/talent/dashboard/jobBoard");
+    //       } else if (response.success === false) {
+    //         toast.error(response?.message);
+    //         router.push("/dashboard/auth/signin");
+    //       }
+    //     } catch (error) {
+    //       console.log("error", error);
+    //       toast.error("Please Login if you have an account.");
+    //     }
+    //   }
+    // }
     const avatar = localStorage.getItem("avatarUrl");
 
-    if (candidateInfo !== null) {
-      const data = JSON.parse(candidateInfo);
-      // if (
-      //   (formData.website?.length && !formData.website?.endsWith(".com")) ||
-      //   (formData.linkedIn?.length && !formData.linkedIn?.endsWith(".com")) ||
-      //   (formData.github?.length && !formData.github?.endsWith(".com")) ||
-      //   (formData.twitter?.length && !formData.twitter?.endsWith(".com"))
-      // ) {
-      //   toast.error("Please provide correct link");
-      //   return;
-      // }
-      data.website = formData.website?.length ? formData.website : null;
-      data.linkedIn = formData.linkedIn?.length ? formData.linkedIn : null;
-      data.github = formData.github?.length ? formData.github : null;
-      data.twitter = formData.twitter?.length ? formData.twitter : null;
-      console.log("data", data);
-      if (data) {
-        try {
-          const response = await profileMutation.mutateAsync({
-            ...data,
-            location: "Canada",
-            industry: "IT Industry",
-            profilePhoto: avatar,
-            // desiredRoles: ["Full Stack"],
-          });
-          console.log(response);
-          if (response.success === true) {
-            console.log("res here>>>", response);
-            toast.success(response?.message);
-            localStorage.setItem("candidateId", response?.profile?.userId);
-            // localStorage.removeItem("candidateInfo");
-            router.push("/talent/dashboard/jobBoard");
-          } else if (response.success === false) {
-            toast.error(response?.message);
-            router.push("/dashboard/auth/signin");
-          }
-        } catch (error) {
-          console.log("error", error);
-          toast.error("Please Login if you have account.");
-        }
+    const cleanEducations = stepData?.step4.map((education) => {
+      const { currentlyStudying, ...rest } = education;
+      return rest;
+    });
+    const cleanExperiences = stepData?.step3.map((experience) => {
+      const { currentlyWorking, ...rest } = experience;
+      return rest;
+    });
+
+    const data: any = {
+      country: stepData?.step1?.country,
+      industry: stepData?.step1?.industry,
+      about: stepData?.step1?.about,
+      skills: stepData?.step2?.skills,
+      tools: stepData?.step2?.tools,
+      experiences: cleanExperiences,
+      educations: cleanEducations,
+      website: socialMedia?.website?.length || "",
+      linkedIn: socialMedia?.linkedIn?.length || "",
+      github: socialMedia?.github?.length || "",
+      twitter: socialMedia?.twitter?.length || "",
+      profilePhoto: avatar,
+      location: "Canada",
+    };
+
+    console.log("datadatadata", data);
+
+    try {
+      const response = await profileMutation.mutateAsync(data);
+      console.log(response);
+      if (response.success === true) {
+        console.log("res here>>>", response);
+        toast.success(response?.message);
+        localStorage.setItem("candidateId", response?.profile?.userId);
+        resetData();
+        router.push("/talent/dashboard/jobBoard");
+      } else if (response.success === false) {
+        toast.error(response?.message);
+        router.push("/dashboard/auth/signin");
       }
+    } catch (error) {
+      console.log("error", error);
+      toast.error("Please Login if you have an account.");
     }
   };
+
   return (
     <>
-      {" "}
       {profileMutation.isPending ? (
         <CustomLoader />
       ) : (
@@ -95,7 +143,7 @@ const page = () => {
                 Internet Presence
               </h1>
               <p className="text-sm font-light text-gray-500 dark:text-gray-300">
-                Selec your website and social media links (optional).
+                Select your website and social media links (optional).
               </p>
               <form onSubmit={submitForm} className="mt-4" action="#">
                 <div className="flex justify-between space-x-4 py-4">
@@ -164,40 +212,6 @@ const page = () => {
                       <path
                         fillRule="evenodd"
                         d="M22 5.892a8.178 8.178 0 0 1-2.355.635 4.074 4.074 0 0 0 1.8-2.235 8.343 8.343 0 0 1-2.605.981A4.13 4.13 0 0 0 15.85 4a4.068 4.068 0 0 0-4.1 4.038c0 .31.035.618.105.919A11.705 11.705 0 0 1 3.4 4.734a4.006 4.006 0 0 0 1.268 5.392 4.165 4.165 0 0 1-1.859-.5v.05A4.057 4.057 0 0 0 6.1 13.635a4.192 4.192 0 0 1-1.856.07 4.108 4.108 0 0 0 3.831 2.807A8.36 8.36 0 0 1 2 18.184 11.732 11.732 0 0 0 8.291 20 11.502 11.502 0 0 0 19.964 8.5c0-.177 0-.349-.012-.523A8.143 8.143 0 0 0 22 5.892Z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <div className="bg-gray-200 p-2 rounded-lg">
-                    <svg
-                      className="w-[32px] h-[32px] text-gray-800 dark:text-white"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <div className="bg-gray-200 p-2 rounded-lg">
-                    <svg
-                      className="w-[32px] h-[32px] text-gray-800 dark:text-white"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M12.037 21.998a10.313 10.313 0 0 1-7.168-3.049 9.888 9.888 0 0 1-2.868-7.118 9.947 9.947 0 0 1 3.064-6.949A10.37 10.37 0 0 1 12.212 2h.176a9.935 9.935 0 0 1 6.614 2.564L16.457 6.88a6.187 6.187 0 0 0-4.131-1.566 6.9 6.9 0 0 0-4.794 1.913 6.618 6.618 0 0 0-2.045 4.657 6.608 6.608 0 0 0 1.882 4.723 6.891 6.891 0 0 0 4.725 2.07h.143c1.41.072 2.8-.354 3.917-1.2a5.77 5.77 0 0 0 2.172-3.41l.043-.117H12.22v-3.41h9.678c.075.617.109 1.238.1 1.859-.099 5.741-4.017 9.6-9.746 9.6l-.215-.002Z"
                         clipRule="evenodd"
                       />
                     </svg>
@@ -355,4 +369,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -1,13 +1,21 @@
+// page.tsx
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
 import { FiArrowLeft } from "react-icons/fi";
+import useStore from "@/app/store";
 
-const page = () => {
-  const [skillsRequired, setSkillsRequired] = useState<string[]>([]);
-  const [techRequired, setTechRequired] = useState<string[]>([]);
+const Page = () => {
+  const { skills, tools } = useStore((state) => state.stepData.step2);
+  const setStepData = useStore((state) => state.setStepData);
+  const [skillsRequired, setSkillsRequired] = useState<string[]>(skills);
+  const [techRequired, setTechRequired] = useState<string[]>(tools);
+
+  useEffect(() => {
+    setStepData("step2", { skills: skillsRequired, tools: techRequired });
+  }, [skillsRequired, techRequired, setStepData]);
 
   const handleSkillsChange = (newSkills: string[]) => {
     setSkillsRequired(newSkills);
@@ -17,19 +25,11 @@ const page = () => {
   };
 
   const router = useRouter();
-  const submitForm = (e: any) => {
+  const submitForm = (e: React.FormEvent) => {
     e.preventDefault();
-    const candidateInfo = localStorage.getItem("candidateInfo");
-
-    if (candidateInfo !== null) {
-      const data = JSON.parse(candidateInfo);
-      data.skills = skillsRequired;
-      data.tools = techRequired;
-      localStorage.setItem("candidateInfo", JSON.stringify(data));
-      console.log("data", data);
-    }
     router.push("/talentForm/experience-info");
   };
+
   return (
     <>
       <section className="h-screen flex justify-center items-center">
@@ -97,4 +97,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
