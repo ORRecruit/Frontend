@@ -92,7 +92,7 @@ const page = () => {
                 <h1 className="mb-2 text-2xl font-bold leading-tight tracking-tight text-gray-900 text-black">
                   Welcome Back
                 </h1>
-                <p className="text-sm font-light text-gray-500 dark:text-gray-300">
+                <p className="text-sm font-light text-gray-500 dark:text-gray-300 mb-6">
                   Don’t have an account?
                   <Link
                     href="/auth/signup"
@@ -107,13 +107,6 @@ const page = () => {
                   className="mt-4 space-y-6 sm:mt-6"
                   action="#"
                 >
-                  <div className="flex items-center">
-                    <div className="w-full h-0.5 bg-gray-200"></div>
-                    <div className="px-5 text-center text-gray-500 dark:text-gray-400">
-                      or
-                    </div>
-                    <div className="w-full h-0.5 bg-gray-200"></div>
-                  </div>
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div>
                       <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">

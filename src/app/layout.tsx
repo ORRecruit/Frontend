@@ -32,6 +32,7 @@ export default function RootLayout({
     "/auth/verify-email",
     "/talent/dashboard/jobBoard",
     "/admin",
+    "/talent/dashboard/appliedJobs",
   ];
   const showNavbar = !noNavbarRoutes.includes(path);
 
