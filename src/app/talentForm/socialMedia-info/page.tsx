@@ -87,14 +87,16 @@ const Page = () => {
       return rest;
     });
 
+    console.log("stepdata....", stepData?.step3, stepData?.step4);
+
     const data: any = {
       country: stepData?.step1?.country,
       industry: stepData?.step1?.industry,
       about: stepData?.step1?.about,
       skills: stepData?.step2?.skills,
       tools: stepData?.step2?.tools,
-      experiences: cleanExperiences,
-      educations: cleanEducations,
+      experiences: stepData?.step3,
+      educations: stepData?.step4,
       website: socialMedia?.website?.length || "",
       linkedIn: socialMedia?.linkedIn?.length || "",
       github: socialMedia?.github?.length || "",

@@ -29,7 +29,7 @@ export default function RootLayout({
     {
       iconUrl: "/talendSidebar3.svg",
       text: "My Resume",
-      href: "#",
+      href: "/talent/dashboard/edit-resume",
     },
     {
       iconUrl: "/talendSidebar4.svg",
