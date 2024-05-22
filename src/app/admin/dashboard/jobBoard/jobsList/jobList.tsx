@@ -511,7 +511,7 @@ const jobList = () => {
                           </div>
                         </div>
                         <div>
-                          <button
+                          {/* <button
                             id="configurationDropdownButton"
                             data-dropdown-toggle="configurationDropdown"
                             type="button"
@@ -525,7 +525,7 @@ const jobList = () => {
                               className="mr-2"
                             />
                             Export CSV
-                          </button>
+                          </button> */}
                           {/* filtered options from Export CSV */}
                           <div
                             id="configurationDropdown"

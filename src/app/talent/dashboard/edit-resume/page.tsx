@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { countries } from "@/constants/countries";
 import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getTalentById } from "@/api/talent/getTalentById";
+import { updateTalent as updateTalentApi } from "@/api/talent/updateTalent";
+import toast from "react-hot-toast";
 
 const page = () => {
   const [skillsRequired, setSkillsRequired] = useState<string[]>([]);
@@ -28,6 +30,10 @@ const page = () => {
     queryKey: ["get talent by id"],
     queryFn: () => getTalentById(`${candId}`),
   });
+  const updateTalent = useMutation({
+    mutationFn: (data: any) => updateTalentApi(candId, formData),
+  });
+
   console.log("data", data);
 
   useEffect(() => {
@@ -36,16 +42,27 @@ const page = () => {
       setTechRequired(data?.tools);
       const educations: any[] = [];
       data?.educations?.map((item: any) => {
-        item.startYear = formatDate(item.startYear);
-        item.endYear = formatDate(item.endYear);
-        educations.push(item);
+        const objItem: any = {};
+        objItem.startYear = formatDate(item?.startYear);
+        objItem.endYear = formatDate(item?.endYear);
+        objItem.degree = item?.degree;
+        objItem.school = item?.school;
+        objItem.description = item?.description;
+        objItem.currentlyStudying = item?.currentlyStudying;
+        educations.push(objItem);
       });
 
       const experiences: any[] = [];
       data?.experiences?.map((item: any) => {
-        item.startDate = formatDate(item.startDate);
-        item.endDate = formatDate(item.endDate);
-        experiences.push(item);
+        const objItem: any = {};
+        objItem.startDate = formatDate(item?.startDate);
+        objItem.endDate = formatDate(item?.endDate);
+        objItem.companyName = item?.companyName;
+        objItem.role = item?.role;
+        objItem.description = item?.description;
+        objItem.currentlyWorking = item?.currentlyWorking;
+
+        experiences.push(objItem);
       });
 
       setFormData({
@@ -60,7 +77,7 @@ const page = () => {
         website: data?.website,
         twitter: data?.twitter,
         skills: skillsRequired,
-        tech: techRequired,
+        tools: techRequired,
       });
     }
   }, [data]);
@@ -90,7 +107,8 @@ const page = () => {
   };
 
   const addEducation = () => {
-    setFormData({
+    setFormData((prev: any) => ({
+      ...prev,
       educations: [
         ...formData.educations,
         {
@@ -102,10 +120,11 @@ const page = () => {
           currentlyStudying: false,
         },
       ],
-    });
+    }));
   };
   const addExperience = () => {
-    setFormData({
+    setFormData((prev: any) => ({
+      ...prev,
       experiences: [
         ...formData.experiences,
         {
@@ -117,7 +136,7 @@ const page = () => {
           currentlyWorking: false,
         },
       ],
-    });
+    }));
   };
 
   const handleChange = (
@@ -166,20 +185,32 @@ const page = () => {
     }));
   };
 
-  const submitData = () => {
+  const submitData = async () => {
     console.log("formData", formData);
+    try {
+      const response = await updateTalent.mutateAsync(candId, formData);
+      console.log("response..", response);
+      if (response) {
+        toast.success(response?.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (err: any) {
+      console.log("error", err.message);
+      toast.error(err?.response?.data?.message);
+    }
   };
 
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
-      <div className="border border-red-400 w-[60%] mx-auto px-[2%]">
+      <div className="w-[60%] mx-auto px-[2%]">
         <div>
           {/* Personal Info */}
           <div className="mt-4">
             <h1 className="mb-2 text-4xl font-bold leading-tight tracking-tight text-gray-900 font-sans">
               Personal Info
             </h1>
-            <div className="grid gap-6 sm:grid-cols-1">
+            <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
               <div className="grid gap-6">
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -236,7 +267,7 @@ const page = () => {
                 </select>
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label className="block text-sm font-medium text-gray-900 dark:text-white">
                   About You*
                 </label>
                 <input
@@ -376,7 +407,7 @@ const page = () => {
                         placeholder="Degree"
                         required={true}
                         value={education.degree}
-                        // onChange={(e) => handleChange(e, index)}
+                        onChange={(e) => handleChangeEducation(e, index)}
                       />
                     </div>
                     <div className="w-[96%]">
