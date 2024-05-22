@@ -33,6 +33,7 @@ export default function RootLayout({
     "/talent/dashboard/jobBoard",
     "/admin",
     "/talent/dashboard/appliedJobs",
+    "/talent/dashboard/edit-resume",
   ];
   const showNavbar = !noNavbarRoutes.includes(path);
 
