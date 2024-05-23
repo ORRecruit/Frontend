@@ -7,7 +7,6 @@ import { useSearchParams } from "next/navigation";
 import React from "react";
 
 const page = () => {
-  const candidates: any = {};
   const param = useSearchParams();
   const jobId = param.get("jobId");
 
@@ -91,50 +90,6 @@ const page = () => {
                   All
                 </label>
               </div>
-              {/* <div className="flex items-center mr-4 mt-3">
-              <input
-                id="in-progress"
-                type="radio"
-                value="PENDING"
-                name="show-only"
-                //   onChange={handleFilterChange}
-                //   checked={selectedFilter === "PENDING"}
-                className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-              <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                Pending/Draft
-              </label>
-            </div>
-
-            <div className="flex items-center mr-4 mt-3">
-              <input
-                id="publish"
-                type="radio"
-                value="PUBLISHED"
-                name="show-only"
-                //   onChange={handleFilterChange}
-                //   checked={selectedFilter === "PUBLISHED"}
-                className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-              <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                Published
-              </label>
-            </div> */}
-
-              {/* <div className="flex items-center mr-4 mt-3">
-              <input
-                id="completed"
-                type="radio"
-                value="COMPLETED"
-                name="show-only"
-                //   onChange={handleFilterChange}
-                //   checked={selectedFilter === "COMPLETED"}
-                className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-              <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                Completed
-              </label>
-            </div> */}
             </div>
           </div>
           <div className="overflow-x-auto">
@@ -167,7 +122,7 @@ const page = () => {
                     Location
                   </th>
                   <th scope="col" className="px-4 py-3 min-w-[6rem]">
-                    Matching Score
+                    AI Matching
                   </th>
                   <th scope="col" className="px-4 py-3">
                     Recomended
@@ -222,23 +177,6 @@ const page = () => {
                         <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                           <span>{item?.recommended}</span>
                         </td>
-                        {/* <td className="px-4 py-2 relative">
-                          <button
-                            id="-dropdown-button"
-                            type="button"
-                            data-dropdown-toggle="-dropdown"
-                            className="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                          >
-                            <svg
-                              className="w-5 h-5"
-                              aria-hidden="true"
-                              fill="currentColor"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                            </svg>
-                          </button>
-                        </td> */}
                       </tr>
                     );
                   })}

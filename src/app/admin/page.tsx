@@ -50,7 +50,7 @@ const page = () => {
               router.push("/talentForm/resume-upload");
             }
           } else if (response.user.roles[0] == "admin") {
-            router.push("/admin/dashboard");
+            router.push("/admin/dashboard/overview");
           }
         } else if (response.success === false) {
           console.log("response undef");
