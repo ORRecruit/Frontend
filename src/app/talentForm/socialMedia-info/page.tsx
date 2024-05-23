@@ -8,6 +8,7 @@ import CustomLoader from "@/components/customLoader";
 import toast from "react-hot-toast";
 import { FiArrowLeft } from "react-icons/fi";
 import useStore from "@/app/store";
+import { RiCloseLine } from "react-icons/ri";
 
 const Page = () => {
   const socialMedia = useStore((state) => state.stepData.step5);
@@ -20,6 +21,7 @@ const Page = () => {
     github: socialMedia?.github || "",
     twitter: socialMedia?.twitter || "",
   });
+  const [publishDialog, setPublishDialog] = useState<any>(false);
 
   useEffect(() => {
     setStepData("step5", formData);
@@ -113,8 +115,9 @@ const Page = () => {
       if (response.success === true) {
         console.log("res here>>>", response);
         toast.success(response?.message);
-        localStorage.setItem("candidateId", response?.profile?.userId);
+        localStorage.setItem("candidateId", response?.data?.id);
         resetData();
+        setPublishDialog(!publishDialog);
         router.push("/talent/dashboard/jobBoard");
       } else if (response.success === false) {
         toast.error(response?.message);
@@ -147,7 +150,7 @@ const Page = () => {
               <p className="text-sm font-light text-gray-500 dark:text-gray-300">
                 Select your website and social media links (optional).
               </p>
-              <form onSubmit={submitForm} className="mt-4" action="#">
+              <div className="mt-4">
                 <div className="flex justify-between space-x-4 py-4">
                   <div className="bg-gray-200 p-2 rounded-lg">
                     <svg
@@ -348,12 +351,12 @@ const Page = () => {
                   </div>
                 </div>
                 <button
-                  type="submit"
+                  onClick={() => setPublishDialog(!publishDialog)}
                   className="w-full bg-primary-orange focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white"
                 >
                   Continue
                 </button>
-              </form>
+              </div>
             </div>
             <div className="mr-auto place-self-center lg:col-span-6">
               <Image
@@ -364,6 +367,31 @@ const Page = () => {
                 alt="illustration"
               />
             </div>
+            {publishDialog && (
+              <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                <div className="relative bg-white p-5 rounded-lg max-w-lg w-full border border-black-400">
+                  <div className="absolute top-2 right-3">
+                    <RiCloseLine
+                      size={25}
+                      onClick={() => setPublishDialog(!publishDialog)}
+                    />
+                  </div>
+                  <div className="bg-white rounded-lg flex flex-col items-center">
+                    <p className="text-gray-600 text-xl mb-4">
+                      Are You Sure Want To Create Talent Profile?
+                    </p>
+                    <div>
+                      <button
+                        onClick={submitForm}
+                        className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
+                      >
+                        Yes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </section>
       )}

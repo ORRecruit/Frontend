@@ -6,8 +6,11 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getTalentById } from "@/api/talent/getTalentById";
 import { updateTalent as updateTalentApi } from "@/api/talent/updateTalent";
 import toast from "react-hot-toast";
+import { RiCloseLine } from "react-icons/ri";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
   const [skillsRequired, setSkillsRequired] = useState<string[]>([]);
   const [techRequired, setTechRequired] = useState<string[]>([]);
   const [formData, setFormData] = useState<any>({
@@ -25,7 +28,8 @@ const page = () => {
     tools: [],
   });
   const candId = localStorage?.getItem("candidateId");
-  console.log("candId..", candId);
+  const [publishDialog, setPublishDialog] = useState<any>(false);
+
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get talent by id"],
     queryFn: () => getTalentById(`${candId}`),
@@ -192,6 +196,9 @@ const page = () => {
       console.log("response..", response);
       if (response) {
         toast.success(response?.message);
+        setPublishDialog(!publishDialog);
+        toast.success(response?.message);
+        router.push("/talent/dashboard/jobBoard");
       } else {
         toast.error("Something went wrong");
       }
@@ -289,63 +296,6 @@ const page = () => {
                     By signing up, you are creating a Sendinblue account, and
                     you agree to Sendinblue's
                   </label>
-                  <div className="flex items-center justify-center w-full">
-                    {/* {previewImage ? (
-                      <div className="relative w-[60%]">
-                        <img
-                          src={previewImage}
-                          alt="Avatar Preview"
-                          className="w-full h-32 object-cover"
-                        />
-                        <button
-                          type="button"
-                          className="absolute top-0 right-0"
-                          onClick={handleRemoveImage}
-                        >
-                          <MdClose size={25} color="#FF6800" />
-                        </button>
-                      </div>
-                    ) : (
-                      <>
-                        <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                            <svg
-                              className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 20 16"
-                            >
-                              <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                              />
-                            </svg>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                              <span className="font-semibold">
-                                Upload Your Photo
-                              </span>
-                            </p>
-                            <Link
-                              href="#"
-                              className="text-sm text-gray-500 dark:text-gray-400 text-blue-700"
-                            >
-                              or browse for files
-                            </Link>
-                          </div>
-                          <input
-                            id="dropzone-file"
-                            type="file"
-                            className="hidden"
-                            onChange={handleImageChange}
-                          />
-                        </label>
-                      </>
-                    )} */}
-                  </div>
                 </div>
               </div>
             </div>
@@ -744,11 +694,36 @@ const page = () => {
             </div>
           </div>
           <button
-            onClick={submitData}
+            onClick={() => setPublishDialog(!publishDialog)}
             className="w-full bg-primary-orange focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white"
           >
             Update Profile
           </button>
+          {publishDialog && (
+            <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+              <div className="relative bg-white p-5 rounded-lg max-w-lg w-full border border-black-400">
+                <div className="absolute top-2 right-3">
+                  <RiCloseLine
+                    size={25}
+                    onClick={() => setPublishDialog(!publishDialog)}
+                  />
+                </div>
+                <div className="bg-white rounded-lg flex flex-col items-center">
+                  <p className="text-gray-600 text-xl mb-4">
+                    Are You Sure Want To Publish The Job?
+                  </p>
+                  <div>
+                    <button
+                      onClick={() => submitData()}
+                      className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
+                    >
+                      Yes
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
