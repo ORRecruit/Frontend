@@ -61,6 +61,7 @@ const jobList = () => {
   const [jobType, setJobType] = useState<string>("");
   const [contractType, setContractType] = useState<string>("");
   const [location, setLocation] = useState<string>("");
+  const [jobVenue, setJobVenue] = useState<string>("");
   const locations = ["USA", "Canada", "Dubai"];
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -330,6 +331,14 @@ const jobList = () => {
     refetch();
   };
 
+  const resetFilters = () => {
+    setTitle("");
+    setContractType("");
+    setJobVenue("");
+    setLocation("");
+    // refetch();
+  };
+
   return (
     <>
       {isLoading ? (
@@ -572,7 +581,7 @@ const jobList = () => {
                       </div>
                     </div>
                     <div className="">
-                      {filter && (
+                      {/* {filter && (
                         <div className="flex items-center mt-6 mb-2">
                           <div className="flex items-center">
                             <label className="mr-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -644,6 +653,66 @@ const jobList = () => {
                               ))}
                             </select>
                           </div>
+                        </div>
+                      )} */}
+                      {filter && (
+                        <div className="flex mt-2 mb-2">
+                          <div className="flex items-center">
+                            <select
+                              id="jobVenue"
+                              name="jobVenue"
+                              className="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              value={jobVenue}
+                              onChange={(e) => setJobVenue(e.target.value)}
+                            >
+                              <option disabled value="">
+                                Job Venue
+                              </option>
+                              <option value="onsite">On Site</option>
+                              <option value="remote">Remote</option>
+                              <option value="hybrid">Hybrid</option>
+                            </select>
+                          </div>
+                          <div className="flex items-center">
+                            <select
+                              id="contractType"
+                              name="contractType"
+                              className="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              value={contractType}
+                              onChange={(e) => setContractType(e.target.value)}
+                            >
+                              <option disabled value="">
+                                Contract Type
+                              </option>
+                              <option value="partTime">Part Time</option>
+                              <option value="fullTime">Full Time</option>
+                            </select>
+                          </div>
+                          <div className="flex items-center">
+                            <select
+                              id="location"
+                              name="location"
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              value={location}
+                              onChange={handleLocationChange}
+                            >
+                              <option disabled value="">
+                                Location
+                              </option>
+                              {locations.map((loc, index) => (
+                                <option key={index} value={loc}>
+                                  {loc}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <button
+                            type="button"
+                            className="text-white font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[135px] h-[40px] ml-2 mt-[20px] sm:w-fit sm:mt-0 sm:w-[150px]"
+                            onClick={resetFilters}
+                          >
+                            Reset Filters
+                          </button>
                         </div>
                       )}
                     </div>
