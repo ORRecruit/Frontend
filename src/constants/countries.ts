@@ -40,7 +40,6 @@ export const countries = [
   "Chile",
   "Romania",
   "Vietnam",
-  "Israel",
   "Austria",
   "Hungary",
   "Singapore",
