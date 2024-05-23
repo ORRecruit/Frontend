@@ -9,6 +9,7 @@ import CustomLoader from "@/components/customLoader";
 import { createMarkup, formatString } from "@/utils/utils";
 import { RiCloseLine } from "react-icons/ri";
 import toast from "react-hot-toast";
+import { LuLoader } from "react-icons/lu";
 
 const page = () => {
   const [appliedRes, setAppliedRes] = useState(false);
@@ -17,6 +18,7 @@ const page = () => {
   const [selectedValue, setSelectedValue] = useState<any>({});
   const [title, setTitle] = useState<string>("");
   const [publishDialog, setPublishDialog] = useState<any>(false);
+  const [applyNow, setApplyNow] = useState<boolean>(false);
 
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all naukrian"],
@@ -51,10 +53,12 @@ const page = () => {
 
   const applyJob = async (jobId: any) => {
     try {
+      setApplyNow(!applyNow);
       const response = await applyJobMutation.mutateAsync(jobId?.id);
       if (response) {
         console.log("response", response);
         setPublishDialog(!publishDialog);
+        setApplyNow(!applyNow);
         toast.success("You have applied to the job successfully.");
       }
     } catch (err: any) {
@@ -155,12 +159,18 @@ const page = () => {
                           Are You Sure Want To Apply For The Job?
                         </p>
                         <div>
-                          <button
-                            onClick={() => applyJob(selectedValue)}
-                            className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
-                          >
-                            Yes
-                          </button>
+                          {!applyNow ? (
+                            <button
+                              onClick={() => applyJob(selectedValue)}
+                              className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
+                            >
+                              Yes
+                            </button>
+                          ) : (
+                            <div className="mt-4">
+                              <LuLoader />
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>

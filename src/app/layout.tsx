@@ -41,6 +41,8 @@ export default function RootLayout({
     "/admin/dashboard/newJob",
     "/admin/dashboard/talents",
     "/admin/dashboard/overview",
+    "/admin/dashboard/inputNewJob",
+    "/admin/dashboard/previewJob",
   ];
   const showNavbar = !noNavbarRoutes.includes(path);
 
