@@ -25,18 +25,18 @@ const page = () => {
     },
     {
       iconUrl: "/overviewAdmin3.svg",
-      heading: "Time to Fill",
-      rating: "10h, 2m",
+      heading: "Covered Countries",
+      rating: "Canada, USA",
     },
     {
       iconUrl: "/overviewAdmin4.svg",
-      heading: "Acceptance Rate",
-      rating: "34%",
+      heading: "Industries",
+      rating: "IT, Tourism",
     },
     {
       iconUrl: "/overviewAdmin5.svg",
-      heading: "Revenue Generate",
-      rating: "230k",
+      heading: "Total Candidates",
+      rating: "50+",
     },
   ];
   const sidebarDetails = [
