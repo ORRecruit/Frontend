@@ -34,6 +34,9 @@ export default function RootLayout({
     "/admin",
     "/talent/dashboard/appliedJobs",
     "/talent/dashboard/edit-resume",
+    "/admin/dashboard/jobBoard",
+    "/admin/dashboard/jobBoard/ai-matching",
+    "/admin/dashboard/newJob",
   ];
   const showNavbar = !noNavbarRoutes.includes(path);
 

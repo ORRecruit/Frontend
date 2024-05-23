@@ -80,12 +80,12 @@ const jobList = () => {
   });
 
   const { data, error, isLoading, refetch } = useQuery({
-    queryKey: ["get all naukrian", title, contractType, jobType, location],
+    queryKey: ["get all naukrian", title, contractType, jobVenue, location],
     queryFn: () =>
       getAllJobsForAdmin(
         `title=${title}`,
         `contractType=${contractType}`,
-        `jobType=${jobType}`,
+        `jobVenue=${jobVenue}`,
         `location=${location}`
       ),
   });

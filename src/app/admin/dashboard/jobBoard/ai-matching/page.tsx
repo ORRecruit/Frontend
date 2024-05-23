@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const page = () => {
@@ -10,6 +11,16 @@ const page = () => {
       <div className="mx-auto w-full px-4 lg:px-12">
         <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
           <div className="border-b dark:border-gray-700 mx-4">
+            <div className="mt-4">
+              <Link href="/admin/dashboard/jobBoard">
+                <Image
+                  src="/arrowLeft.svg"
+                  alt="back-icon"
+                  width={20}
+                  height={20}
+                />
+              </Link>
+            </div>
             <div className="flex items-center justify-between space-x-4 pt-3">
               <div className="flex-1 flex items-center space-x-3">
                 <h5 className="dark:text-white font-semibold">

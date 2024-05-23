@@ -15,10 +15,10 @@ export const getAllJobs = (
 export const getAllJobsForAdmin = (
   title: any,
   contractType: any = "",
-  jobType: any = "",
+  jobVenue: any = "",
   location: any = ""
 ) => {
   return client.get<AllJobsInterface, AllJobsInterface>(
-    `/jobs/admin/getAllJobs?${title}&${contractType}&${jobType}&${location}`
+    `/jobs/admin/getAllJobs?${title}&${contractType}&${jobVenue}&${location}`
   );
 };
