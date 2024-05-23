@@ -43,53 +43,7 @@ const Page = () => {
   const router = useRouter();
   const submitForm = async (e: any) => {
     e.preventDefault();
-    // const candidateInfo = localStorage.getItem("candidateInfo");
-    // const avatar = localStorage.getItem("avatarUrl");
-
-    // if (candidateInfo !== null) {
-    //   const data = JSON.parse(candidateInfo);
-    //   data.website = formData.website?.length ? formData.website : null;
-    //   data.linkedIn = formData.linkedIn?.length ? formData.linkedIn : null;
-    //   data.github = formData.github?.length ? formData.github : null;
-    //   data.twitter = formData.twitter?.length ? formData.twitter : null;
-    //   console.log("data", data);
-    //   if (data) {
-    //     try {
-    //       const response = await profileMutation.mutateAsync({
-    //         ...data,
-    //         location: "Canada",
-    //         industry: "IT Industry",
-    //         profilePhoto: avatar,
-    //       });
-    //       console.log(response);
-    //       if (response.success === true) {
-    //         console.log("res here>>>", response);
-    //         toast.success(response?.message);
-    //         localStorage.setItem("candidateId", response?.profile?.userId);
-    //         resetData();
-    //         router.push("/talent/dashboard/jobBoard");
-    //       } else if (response.success === false) {
-    //         toast.error(response?.message);
-    //         router.push("/dashboard/auth/signin");
-    //       }
-    //     } catch (error) {
-    //       console.log("error", error);
-    //       toast.error("Please Login if you have an account.");
-    //     }
-    //   }
-    // }
     const avatar = localStorage.getItem("avatarUrl");
-
-    const cleanEducations = stepData?.step4.map((education) => {
-      const { currentlyStudying, ...rest } = education;
-      return rest;
-    });
-    const cleanExperiences = stepData?.step3.map((experience) => {
-      const { currentlyWorking, ...rest } = experience;
-      return rest;
-    });
-
-    console.log("stepdata....", stepData?.step3, stepData?.step4);
 
     const data: any = {
       country: stepData?.step1?.country,
@@ -99,21 +53,17 @@ const Page = () => {
       tools: stepData?.step2?.tools,
       experiences: stepData?.step3,
       educations: stepData?.step4,
-      website: socialMedia?.website?.length || "",
-      linkedIn: socialMedia?.linkedIn?.length || "",
-      github: socialMedia?.github?.length || "",
-      twitter: socialMedia?.twitter?.length || "",
+      website: socialMedia?.website?.length ? socialMedia?.website : "",
+      linkedIn: socialMedia?.linkedIn?.length ? socialMedia?.linkedIn : "",
+      github: socialMedia?.github?.length ? socialMedia?.github : "",
+      twitter: socialMedia?.twitter?.length ? socialMedia?.twitter : "",
       profilePhoto: avatar,
       location: "Canada",
     };
 
-    console.log("datadatadata", data);
-
     try {
       const response = await profileMutation.mutateAsync(data);
-      console.log(response);
       if (response.success === true) {
-        console.log("res here>>>", response);
         toast.success(response?.message);
         localStorage.setItem("candidateId", response?.data?.id);
         resetData();
@@ -124,7 +74,6 @@ const Page = () => {
         router.push("/dashboard/auth/signin");
       }
     } catch (error) {
-      console.log("error", error);
       toast.error("Please Login if you have an account.");
     }
   };
