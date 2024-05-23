@@ -76,8 +76,8 @@ const page = () => {
         linkedIn: data?.linkedIn,
         website: data?.website,
         twitter: data?.twitter,
-        skills: skillsRequired,
-        tools: techRequired,
+        skills: data?.skills,
+        tools: data?.tools,
       });
     }
   }, [data]);

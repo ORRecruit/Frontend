@@ -336,6 +336,7 @@ const jobList = () => {
     setContractType("");
     setJobVenue("");
     setLocation("");
+  };
 
   const routeToAiMatching = (jobId: any) => {
     console.log("joBId...", jobId);
@@ -1310,9 +1311,11 @@ const jobList = () => {
                                               <option value="Bachelor">
                                                 Bachelor
                                               </option>
-                                              <option value="
+                                              <option
+                                                value="
                                                              
-                                                             ">
+                                                             "
+                                              >
                                                 Master
                                               </option>
                                               <option value="Ph.D">Ph.D</option>

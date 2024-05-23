@@ -30,13 +30,17 @@ export default function RootLayout({
     "/talentForm/education-info",
     "/talentForm/socialMedia-info",
     "/auth/verify-email",
+    "/talent/dashboard",
     "/talent/dashboard/jobBoard",
-    "/admin",
     "/talent/dashboard/appliedJobs",
     "/talent/dashboard/edit-resume",
+    "/admin",
+    "/admin/dashboard",
     "/admin/dashboard/jobBoard",
     "/admin/dashboard/jobBoard/ai-matching",
     "/admin/dashboard/newJob",
+    "/admin/dashboard/talents",
+    "/admin/dashboard/overview",
   ];
   const showNavbar = !noNavbarRoutes.includes(path);
 
