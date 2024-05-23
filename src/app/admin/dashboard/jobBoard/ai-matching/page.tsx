@@ -1,9 +1,19 @@
 "use client";
+import { aiJobMatching } from "@/api/jobs/aiMatchingCandidates";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 
 const page = () => {
-  const data: any = {};
+  const candidates: any = {};
+  const param = useSearchParams();
+  const jobId = param.get("jobId");
+
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ["get jobs for candidates"],
+    queryFn: () => aiJobMatching(`${jobId}`),
+  });
 
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
@@ -143,13 +153,13 @@ const page = () => {
                     Industry
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    Total Hires
+                    Location
                   </th>
                   <th scope="col" className="px-4 py-3 min-w-[6rem]">
-                    Job Posted
+                    Matching Score
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    Active Jobs
+                    Recomended
                   </th>
                 </tr>
               </thead>
@@ -193,15 +203,15 @@ const page = () => {
                           </span>
                         </td>
                         <td className="px-4 py-2 whitespace-nowrap">
-                          <span>{item?.userId}</span>
+                          <span>{item?.location}</span>
                         </td>
                         <td className="px-4 py-2 font-medium whitespace-nowrap">
-                          <span>Job Posted</span>
+                          <span>{item?.relevancy}%</span>
                         </td>
                         <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          <span>{item?.country}</span>
+                          <span>{item?.recommended}</span>
                         </td>
-                        <td className="px-4 py-2 relative">
+                        {/* <td className="px-4 py-2 relative">
                           <button
                             id="-dropdown-button"
                             type="button"
@@ -217,7 +227,7 @@ const page = () => {
                               <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                             </svg>
                           </button>
-                        </td>
+                        </td> */}
                       </tr>
                     );
                   })}
