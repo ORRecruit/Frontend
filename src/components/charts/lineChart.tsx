@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import {
   LineChart,
   Line,
@@ -44,7 +45,7 @@ const salesData = [
   },
 ];
 
-const LineChartComponent = () => {
+const LineChartComponent: React.FC = () => {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart
@@ -69,7 +70,19 @@ const LineChartComponent = () => {
 
 export default LineChartComponent;
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: {
+    value: number;
+  }[];
+  label?: string;
+}
+
+const CustomTooltip: React.FC<CustomTooltipProps> = ({
+  active,
+  payload,
+  label,
+}) => {
   if (active && payload && payload.length) {
     return (
       <div className="p-4 bg-slate-900 flex flex-col gap-4 rounded-md">
@@ -85,4 +98,6 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       </div>
     );
   }
+
+  return null;
 };
