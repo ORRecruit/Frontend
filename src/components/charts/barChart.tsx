@@ -1,6 +1,7 @@
 "use client";
-
-import React from "react";
+import { jobsPubClosThreeMonths } from "@/api/adminStats/jobsPubClosThreeMonths";
+import { useQuery } from "@tanstack/react-query";
+import React, { useMemo } from "react";
 import {
   BarChart,
   Bar,
@@ -11,64 +12,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-
-const salesData = [
-  {
-    name: "Jan",
-    revenue: 4000,
-    profit: 2400,
-  },
-  {
-    name: "Feb",
-    revenue: 3000,
-    profit: 1398,
-  },
-  {
-    name: "Mar",
-    revenue: 9800,
-    profit: 2000,
-  },
-  {
-    name: "Apr",
-    revenue: 3908,
-    profit: 2780,
-  },
-  {
-    name: "May",
-    revenue: 4800,
-    profit: 1890,
-  },
-  {
-    name: "Jun",
-    revenue: 3800,
-    profit: 2390,
-  },
-];
-
-const BarChartComponent: React.FC = () => {
-  return (
-    <ResponsiveContainer width="100%" height="100%">
-      <BarChart
-        width={500}
-        height={300}
-        data={salesData}
-        margin={{
-          right: 30,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip content={<CustomTooltip />} />
-        <Legend />
-        <Bar dataKey="revenue" fill="#2563eb" />
-        <Bar dataKey="profit" fill="#8b5cf6" />
-      </BarChart>
-    </ResponsiveContainer>
-  );
-};
-
-export default BarChartComponent;
 
 interface CustomTooltipProps {
   active?: boolean;
@@ -85,15 +28,15 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
 }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="p-4 bg-slate-900 flex flex-col gap-4 rounded-md">
+      <div className="p-4 bg-white shadow-lg flex flex-col gap-4 rounded-md">
         <p className="text-medium text-lg">{label}</p>
         <p className="text-sm text-blue-400">
-          Revenue:
-          <span className="ml-2">${payload[0].value}</span>
+          Published Jobs:
+          <span className="ml-2">{payload[0].value}</span>
         </p>
         <p className="text-sm text-indigo-400">
-          Profit:
-          <span className="ml-2">${payload[1].value}</span>
+          Completed Jobs:
+          <span className="ml-2">{payload[1].value}</span>
         </p>
       </div>
     );
@@ -101,3 +44,53 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
 
   return null;
 };
+
+const BarChartComponent: React.FC = () => {
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ["get jobs posted and closed"],
+    queryFn: () => jobsPubClosThreeMonths(),
+  });
+
+  const salesData = useMemo(() => {
+    if (!data || !data.data) {
+      return [];
+    }
+
+    return Object.keys(data.data).map((key) => ({
+      name: key,
+      publishedJobs: data.data[key].publishedJobs,
+      completedJobs: data.data[key].completedJobs,
+    }));
+  }, [data]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  return (
+    <ResponsiveContainer width="100%" height={300}>
+      <BarChart
+        width={500}
+        height={300}
+        data={salesData}
+        margin={{
+          right: 30,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip content={<CustomTooltip />} />
+        <Legend />
+        <Bar dataKey="publishedJobs" fill="#2563eb" />
+        <Bar dataKey="completedJobs" fill="#8b5cf6" />
+      </BarChart>
+    </ResponsiveContainer>
+  );
+};
+
+export default BarChartComponent;

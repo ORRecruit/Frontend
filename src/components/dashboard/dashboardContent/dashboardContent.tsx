@@ -1,7 +1,8 @@
-import AreaChart from "@/components/charts/areaCharts";
+// import AreaChart from "@/components/charts/areaCharts";
+// import LineChart from "@/components/charts/lineChart";
 import BarChart from "@/components/charts/barChart";
-import LineChart from "@/components/charts/lineChart";
 import PieChart from "@/components/charts/pieChart";
+import TierChart from "@/components/charts/tierChart";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -41,11 +42,11 @@ const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
       </div>
       <div className="w-[99%] flex justify-between flex-wrap">
         <div className="w-[49%] mt-4">
-          <GridItem title="Bar Chart">
+          <GridItem title="Job Posted/Closed & Talent Enrolled">
             <BarChart />
           </GridItem>
         </div>
-        <div className="w-[49%] mt-4">
+        {/* <div className="w-[49%] mt-4">
           <GridItem title="Area Chart">
             <AreaChart />
           </GridItem>
@@ -54,9 +55,14 @@ const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
           <GridItem title="Line Chart">
             <LineChart />
           </GridItem>
+        </div> */}
+        <div className="w-[49%] mt-4">
+          <GridItem title="Enrollment per Tiers">
+            <TierChart />
+          </GridItem>
         </div>
         <div className="w-[49%] mt-4">
-          <GridItem title="Pie Chart">
+          <GridItem title="Jobs based on Industries">
             <PieChart />
           </GridItem>
         </div>
