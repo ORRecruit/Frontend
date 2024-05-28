@@ -59,7 +59,7 @@ const carouselComponent = () => {
         {carouselData[activeIndex].text}
       </p>
       <div className="flex space-x-2">
-        {carouselData.map((_, index) => (
+        {carouselData?.map((_, index) => (
           <button
             key={index}
             className={`h-2 w-2 rounded-full ${

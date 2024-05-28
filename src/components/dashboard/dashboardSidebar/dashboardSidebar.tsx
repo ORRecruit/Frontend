@@ -21,7 +21,7 @@ const dashboardSidebar: React.FC<sidebarInterface> = ({
   const logout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("role");
-    localStorage.removeItem('candidateId');
+    localStorage.removeItem("candidateId");
     router.push("/auth/signin");
   };
 
@@ -60,7 +60,7 @@ const dashboardSidebar: React.FC<sidebarInterface> = ({
       >
         <div className="relative overflow-y-auto py-5 px-3 h-full bg-white">
           <ul className="space-y-2">
-            {sidebarDetails.map((item: any, index: any) => {
+            {sidebarDetails?.map((item: any, index: any) => {
               return (
                 <li key={index}>
                   <Link

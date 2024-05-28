@@ -650,7 +650,7 @@ const jobList = () => {
                               <option disabled value="">
                                 Location
                               </option>
-                              {locations.map((loc, index) => (
+                              {locations?.map((loc, index) => (
                                 <option key={index} value={loc}>
                                   {loc}
                                 </option>
@@ -703,7 +703,7 @@ const jobList = () => {
                               <option disabled value="">
                                 Location
                               </option>
-                              {locations.map((loc, index) => (
+                              {locations?.map((loc, index) => (
                                 <option key={index} value={loc}>
                                   {loc}
                                 </option>

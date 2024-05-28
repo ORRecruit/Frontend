@@ -18,7 +18,7 @@ const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] h-[90%] overflow-auto">
       <div className="flex w-[99%] gap-4 flex-wrap lg:flex-nowrap">
-        {details.map((item, index) => (
+        {details?.map((item, index) => (
           <div
             key={index}
             className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex-1"

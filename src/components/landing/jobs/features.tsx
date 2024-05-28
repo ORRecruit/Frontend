@@ -26,7 +26,7 @@ const features = () => {
             </p>
           </div>
           <div className="flex flex-wrap justify-between">
-            {paragraphs.map((paragraph, index) => (
+            {paragraphs?.map((paragraph, index) => (
               <JobCard
                 key={index}
                 paragraphText={paragraph}

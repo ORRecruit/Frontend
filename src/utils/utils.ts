@@ -4,7 +4,9 @@ export function formatString(str: string): string {
   const capitalizeWords = (s: string): string =>
     s
       .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      ?.map(
+        (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+      )
       .join(" ");
 
   const splitCamelCase = (s: string): string =>
@@ -12,7 +14,7 @@ export function formatString(str: string): string {
 
   return str
     .split("-")
-    .map((part: string) => splitCamelCase(part.trim()))
+    ?.map((part: string) => splitCamelCase(part.trim()))
     .join(" - ");
 }
 
