@@ -22,7 +22,7 @@ const Page = () => {
     index: number
   ) => {
     const { name, value, type, checked } = e.target;
-    const newEducations = formData.educations.map((edu, eduIndex) => {
+    const newEducations = formData.educations?.map((edu, eduIndex) => {
       if (index === eduIndex) {
         return { ...edu, [name]: type === "checkbox" ? checked : value };
       }
@@ -81,7 +81,7 @@ const Page = () => {
               className="mt-4 max-h-[480px] overflow-auto pr-[15px]"
               action="#"
             >
-              {formData.educations.map((education, index) => (
+              {formData.educations?.map((education, index) => (
                 <div key={index} className="grid gap-6 mb-8 relative">
                   <button
                     type="button"

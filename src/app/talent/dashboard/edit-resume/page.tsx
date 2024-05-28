@@ -158,12 +158,14 @@ const page = () => {
     index: number
   ) => {
     const { name, value, type, checked } = e.target;
-    const newEducations = formData.educations.map((edu: any, eduIndex: any) => {
-      if (index === eduIndex) {
-        return { ...edu, [name]: type === "checkbox" ? checked : value };
+    const newEducations = formData.educations?.map(
+      (edu: any, eduIndex: any) => {
+        if (index === eduIndex) {
+          return { ...edu, [name]: type === "checkbox" ? checked : value };
+        }
+        return edu;
       }
-      return edu;
-    });
+    );
     setFormData((prevFormData: any) => ({
       ...prevFormData,
       educations: newEducations,
