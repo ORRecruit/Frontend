@@ -1,7 +1,7 @@
 import AreaChart from "@/components/charts/areaCharts";
 import BarChart from "@/components/charts/barChart";
 import LineChart from "@/components/charts/lineChart";
-// import PieChart from "@/components/charts/pieChart";
+import PieChart from "@/components/charts/pieChart";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -55,11 +55,11 @@ const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
             <LineChart />
           </GridItem>
         </div>
-        {/* <div className="w-[49%] mt-4">
+        <div className="w-[49%] mt-4">
           <GridItem title="Pie Chart">
             <PieChart />
           </GridItem>
-        </div> */}
+        </div>
       </div>
     </div>
   );
