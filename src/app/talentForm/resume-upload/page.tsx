@@ -52,7 +52,9 @@ const Page = () => {
 
     setLoading(true);
     try {
-      await resumeMutation.mutateAsync(selectedResume);
+      const response = await resumeMutation.mutateAsync(selectedResume);
+      localStorage.setItem("candidateId", response?.data.id);
+      localStorage.setItem("role", "candidate");
     } catch (error) {
       console.error("Error uploading resume:", error);
       setLoading(false);
