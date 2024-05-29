@@ -81,7 +81,7 @@ const BarChartComponent: React.FC = () => {
         <YAxis />
         <Tooltip content={<CustomTooltip />} />
         <Legend />
-        <Bar dataKey="newCandidates" fill="#2563eb" />
+        <Bar dataKey="newCandidates" fill="#F97316" />
       </BarChart>
     </ResponsiveContainer>
   );

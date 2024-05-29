@@ -14,10 +14,10 @@ const colors = ["#1f77b4", "#ff7f0e", "#c7c7c7", "#ffbb78", "#1f77b4"];
 const CustomBarChart = () => {
   return (
     <div className="flex justify-center items-center h-screen w-full">
-      <div className="flex space-x-2">
+      <div className="flex space-x-4">
         <div className="flex flex-col items-center">
           <p
-            className="bg-blue-500 text-white font-bold py-4 px-6 flex justify-center items-center w-24 h-24"
+            className="bg-[#87207D] text-white font-bold py-4 px-6 flex justify-center items-center w-24 h-24"
             id="application"
           >
             6
@@ -35,7 +35,7 @@ const CustomBarChart = () => {
         </div>
         <div className="flex flex-col items-center">
           <p
-            className="bg-gray-400 text-white font-bold py-4 px-6 flex justify-center items-center w-24 h-24"
+            className="bg-[#16BDCA] text-white font-bold py-4 px-6 flex justify-center items-center w-24 h-24"
             id="mgr-interview"
           >
             8

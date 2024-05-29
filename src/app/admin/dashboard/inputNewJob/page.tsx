@@ -51,15 +51,12 @@ const page = () => {
         }
       }
     }
-  
+
     // Call load function on mount
     loadJobData();
   }, []);
 
-
-
-  console.log("The data inside skills array >>>>>>>>",skillsRequired);
-  
+  console.log("The data inside skills array >>>>>>>>", skillsRequired);
 
   const handleChange = useCallback(
     (
@@ -102,12 +99,18 @@ const page = () => {
         return;
       }
       setErrorMessage("");
-      console.log("skillsRequired just before From data >>>>>>",skillsRequired);
+      console.log(
+        "skillsRequired just before From data >>>>>>",
+        skillsRequired
+      );
       const data = {
         ...formData,
         skillsRequired,
       };
-      console.log("The data Object JUst before saving to local storage >>>>",data);
+      console.log(
+        "The data Object JUst before saving to local storage >>>>",
+        data
+      );
       localStorage.setItem("postJob", JSON.stringify(data));
       router.push("/admin/dashboard/previewJob");
     },
@@ -222,9 +225,10 @@ const page = () => {
                 <option value="Technology">Technology</option>
                 <option value="Tourism">Tourism</option>
                 <option value="Hospitality">Hospitality</option>
-                <option value="Staffing & Recruiting">
+                <option value="Other">Other</option>
+                {/* <option value="Staffing & Recruiting">
                   Staffing & Recruiting
-                </option>
+                </option> */}
               </select>
             </div>
             <div className="w-[32%]">
@@ -351,7 +355,7 @@ const page = () => {
                 className="w-4 h-4 bg-gray-100 border-gray-300"
                 name="jobVenue"
                 value="hybrid"
-                checked={formData.jobVenue === 'hybrid'}
+                checked={formData.jobVenue === "hybrid"}
                 onChange={handleChange}
                 required={true}
               />
@@ -371,7 +375,7 @@ const page = () => {
                 className="w-4 h-4 bg-gray-100 border-gray-300"
                 name="jobVenue"
                 value="remote"
-                checked={formData.jobVenue === 'remote'}
+                checked={formData.jobVenue === "remote"}
                 onChange={handleChange}
               />
               <div>
@@ -390,7 +394,7 @@ const page = () => {
                 className="w-4 h-4 bg-gray-100 border-gray-300"
                 name="jobVenue"
                 value="onsite"
-                checked={formData.jobVenue === 'onsite'}
+                checked={formData.jobVenue === "onsite"}
                 onChange={handleChange}
               />
               <div>
@@ -415,7 +419,7 @@ const page = () => {
                 name="contractType"
                 value="fullTime"
                 onChange={handleChange}
-                checked={formData.contractType === 'fullTime'}
+                checked={formData.contractType === "fullTime"}
                 required={true}
               />
               <div>
@@ -431,7 +435,7 @@ const page = () => {
                 className="w-4 h-4 bg-gray-100 border-gray-300"
                 name="contractType"
                 value="partTime"
-                checked={formData.contractType === 'partTime'}
+                checked={formData.contractType === "partTime"}
                 onChange={handleChange}
               />
               <div>

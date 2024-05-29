@@ -21,7 +21,7 @@ export default function PieChart() {
 
   if (data) {
     for (const [key, value] of Object.entries(data)) {
-      pieChartData.push([key, value, `<div>${value}</div>`]);
+      pieChartData.push([key, value, `<div>${key} - ${value}</div>`]);
     }
   }
 

@@ -1,5 +1,6 @@
 // import AreaChart from "@/components/charts/areaCharts";
 // import LineChart from "@/components/charts/lineChart";
+"use client";
 import BarChart from "@/components/charts/barChart";
 import PieChart from "@/components/charts/pieChart";
 import TierChart from "@/components/charts/tierChart";
@@ -7,6 +8,7 @@ import BarChartCreatedClients from "@/components/charts/barChartCreatedCandidate
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { usePathname } from "next/navigation";
 
 interface OverviewInterface {
   details: {
@@ -17,6 +19,8 @@ interface OverviewInterface {
 }
 
 const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
+  const pathname = usePathname();
+
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] h-[90%] overflow-auto">
       <div className="flex w-[99%] gap-4 flex-wrap lg:flex-nowrap">
@@ -41,28 +45,32 @@ const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
           </div>
         ))}
       </div>
-      <div className="w-[99%] flex justify-between flex-wrap">
-        <div className="w-[49%] mt-4">
-          <GridItem title="Jobs Posted & Jobs Closed">
-            <BarChart />
-          </GridItem>
+      {pathname?.includes("talent/dashboard") ? (
+        <div></div>
+      ) : (
+        <div className="w-[99%] flex justify-between flex-wrap">
+          <div className="w-[49%] mt-4">
+            <GridItem title="Jobs Posted & Jobs Closed">
+              <BarChart />
+            </GridItem>
+          </div>
+          <div className="w-[49%] mt-4">
+            <GridItem title="Talents per Tiers">
+              <TierChart />
+            </GridItem>
+          </div>
+          <div className="w-[49%] mt-4">
+            <GridItem title="Jobs based on Industries">
+              <PieChart />
+            </GridItem>
+          </div>
+          <div className="w-[49%] mt-4">
+            <GridItem title="New Candidates Last Six Months">
+              <BarChartCreatedClients />
+            </GridItem>
+          </div>
         </div>
-        <div className="w-[49%] mt-4">
-          <GridItem title="Talents per Tiers">
-            <TierChart />
-          </GridItem>
-        </div>
-        <div className="w-[49%] mt-4">
-          <GridItem title="Jobs based on Industries">
-            <PieChart />
-          </GridItem>
-        </div>
-        <div className="w-[49%] mt-4">
-          <GridItem title="New Candidates Last Six Months">
-            <BarChartCreatedClients />
-          </GridItem>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
