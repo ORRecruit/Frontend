@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Navbar from "@/components/landing/navbar/navbar";
 import Footer from "@/components/landing/footer/footer";
 import { useSearchParams } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
@@ -15,7 +14,6 @@ function Page() {
   const easyApplyMutation = useMutation({
     mutationFn: (data: any) => easyApply(data),
     onSuccess: (data) => {
-      // toast.success(data?.message)
       console.log("data", data);
     },
     onError: (error) => {
@@ -126,7 +124,10 @@ function Page() {
                 >
                   <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
                     <div>
-                      <label htmlFor="first-name" className="sr-only">
+                      <label
+                        className="text-gray-500 text-sm"
+                        htmlFor="first-name"
+                      >
                         First Name
                       </label>
                       <input
@@ -141,7 +142,10 @@ function Page() {
                       />
                     </div>
                     <div>
-                      <label htmlFor="middle-name" className="sr-only">
+                      <label
+                        className="text-gray-500 text-sm"
+                        htmlFor="middle-name"
+                      >
                         Middle Name
                       </label>
                       <input
@@ -155,7 +159,10 @@ function Page() {
                       />
                     </div>
                     <div>
-                      <label htmlFor="last-name" className="sr-only">
+                      <label
+                        className="text-gray-500 text-sm"
+                        htmlFor="last-name"
+                      >
                         Last Name
                       </label>
                       <input
@@ -170,7 +177,7 @@ function Page() {
                       />
                     </div>
                     <div>
-                      <label htmlFor="email" className="sr-only">
+                      <label className="text-gray-500 text-sm" htmlFor="email">
                         Email Address
                       </label>
                       <input
@@ -185,7 +192,10 @@ function Page() {
                       />
                     </div>
                     <div className="sm:col-span-2">
-                      <label htmlFor="address-country" className="sr-only">
+                      <label
+                        className="text-gray-500 text-sm"
+                        htmlFor="address-country"
+                      >
                         Country
                       </label>
                       <input
@@ -200,7 +210,10 @@ function Page() {
                       />
                     </div>
                     <div className="sm:col-span-1">
-                      <label htmlFor="address-city" className="sr-only">
+                      <label
+                        className="text-gray-500 text-sm"
+                        htmlFor="address-city"
+                      >
                         City
                       </label>
                       <input
@@ -215,7 +228,10 @@ function Page() {
                       />
                     </div>
                     <div className="sm:col-span-1">
-                      <label htmlFor="address" className="sr-only">
+                      <label
+                        className="text-gray-500 text-sm"
+                        htmlFor="address"
+                      >
                         Address
                       </label>
                       <input
@@ -230,7 +246,10 @@ function Page() {
                     </div>
                     <div className="sm:col-span-2 grid grid-cols-3 gap-x-4">
                       <div>
-                        <label htmlFor="phone-country-code" className="sr-only">
+                        <label
+                          className="text-gray-500 text-sm"
+                          htmlFor="phone-country-code"
+                        >
                           Country Code
                         </label>
                         <input
@@ -245,7 +264,10 @@ function Page() {
                         />
                       </div>
                       <div>
-                        <label htmlFor="phone-area-code" className="sr-only">
+                        <label
+                          className="text-gray-500 text-sm"
+                          htmlFor="phone-area-code"
+                        >
                           Area Code
                         </label>
                         <input
@@ -260,7 +282,10 @@ function Page() {
                         />
                       </div>
                       <div>
-                        <label htmlFor="phone-number" className="sr-only">
+                        <label
+                          className="text-gray-500 text-sm"
+                          htmlFor="phone-number"
+                        >
                           Phone Number
                         </label>
                         <input
@@ -276,7 +301,10 @@ function Page() {
                       </div>
                     </div>
                     <div className="sm:col-span-2">
-                      <label htmlFor="contact-method" className="text-gray-500">
+                      <label
+                        htmlFor="contact-method"
+                        className="text-gray-500 text-sm"
+                      >
                         Preferred Contact Method*
                       </label>
                       <select
@@ -293,7 +321,10 @@ function Page() {
                     </div>
                     <div className="sm:col-span-2 grid grid-cols-3 gap-x-4">
                       <div>
-                        <label htmlFor="linkedin" className="sr-only">
+                        <label
+                          className="text-gray-500 text-sm"
+                          htmlFor="linkedin"
+                        >
                           LinkedIn
                         </label>
                         <input
@@ -307,7 +338,10 @@ function Page() {
                         />
                       </div>
                       <div>
-                        <label htmlFor="indeed" className="sr-only">
+                        <label
+                          className="text-gray-500 text-sm"
+                          htmlFor="indeed"
+                        >
                           Indeed
                         </label>
                         <input
@@ -321,7 +355,10 @@ function Page() {
                         />
                       </div>
                       <div>
-                        <label htmlFor="glassdoor" className="sr-only">
+                        <label
+                          className="text-gray-500 text-sm"
+                          htmlFor="glassdoor"
+                        >
                           Glassdoor
                         </label>
                         <input
@@ -336,7 +373,10 @@ function Page() {
                       </div>
                     </div>
                     <div className="sm:col-span-2">
-                      <label htmlFor="education" className="text-gray-500">
+                      <label
+                        htmlFor="education"
+                        className="text-gray-500 text-sm"
+                      >
                         Highest Education*
                       </label>
                       <select
@@ -355,7 +395,10 @@ function Page() {
                       </select>
                     </div>
                     <div className="sm:col-span-2">
-                      <label htmlFor="experience" className="sr-only">
+                      <label
+                        className="text-gray-500 text-sm"
+                        htmlFor="experience"
+                      >
                         Work Experience (Years)
                       </label>
                       <input
@@ -369,7 +412,10 @@ function Page() {
                       />
                     </div>
                     <div className="">
-                      <label htmlFor="cover-letter" className="">
+                      <label
+                        className="text-gray-500 text-sm"
+                        htmlFor="cover-letter"
+                      >
                         Cover Letter (PDF or Word)
                       </label>
                       <input
@@ -381,8 +427,8 @@ function Page() {
                         className="block w-full text-sm text-gray-500 my-5 cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
                       />
                     </div>
-                    <div className="">
-                      <label htmlFor="resume" className="">
+                    <div>
+                      <label className="text-gray-500 text-sm" htmlFor="resume">
                         Resume (PDF or Word)
                       </label>
                       <input
