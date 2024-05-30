@@ -11,7 +11,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   if (path && blogNo) {
     path = path + `?blogNo=${blogNo}`;
   }
-  if (path && path === "/talent" && jobId) {
+  if (path && path === "/easy-apply" && jobId) {
     path = path + `?jobId=${jobId}`;
   }
 

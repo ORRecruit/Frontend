@@ -5,10 +5,12 @@ import { useSearchParams } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { easyApply } from "@/api/applicants/createApplicants";
 import toast from "react-hot-toast";
+import { RiCloseLine } from "react-icons/ri";
 
 function Page() {
   const param = useSearchParams();
   const id = param.get("jobId");
+  const [publishDialog, setPublishDialog] = useState<any>(false);
   const [jobId, setJobId] = useState<string | null>(null);
   useEffect(() => {
     setJobId(id);
@@ -71,7 +73,7 @@ function Page() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | any) => {
     e.preventDefault();
     console.log("formData000", formData);
 
@@ -110,7 +112,16 @@ function Page() {
       ...formData,
       jobId,
     };
-    const response = await easyApplyMutation.mutateAsync(payload);
+
+    try {
+      const response = await easyApplyMutation.mutateAsync(payload);
+      if (response?.success) {
+        setPublishDialog(!publishDialog);
+        toast.success(response?.message);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 
   if (jobId) {
@@ -127,10 +138,7 @@ function Page() {
                 <p className="text-center text-gray-500">
                   Fill out the form below to apply
                 </p>
-                <form
-                  onSubmit={handleSubmit}
-                  className="mt-8 bg-white shadow-lg rounded-lg p-8 w-full"
-                >
+                <div className="mt-8 bg-white shadow-lg rounded-lg p-8 w-full">
                   <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
                     <div>
                       <label
@@ -482,14 +490,39 @@ function Page() {
                     </div>
                     <div className="sm:col-span-2">
                       <button
-                        type="submit"
+                        onClick={() => setPublishDialog(!publishDialog)}
                         className="mt-2 h-10 w-full bg-orange-600 inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
                       >
                         Submit Application
                       </button>
                     </div>
+                    {publishDialog && (
+                      <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                        <div className="relative bg-white p-5 rounded-lg max-w-lg w-full border border-black-400">
+                          <div className="absolute top-2 right-3">
+                            <RiCloseLine
+                              size={25}
+                              onClick={() => setPublishDialog(!publishDialog)}
+                            />
+                          </div>
+                          <div className="bg-white rounded-lg flex flex-col items-center">
+                            <p className="text-gray-600 text-xl mb-4">
+                              Are You Sure Want To Apply For The Job?
+                            </p>
+                            <div>
+                              <button
+                                onClick={handleSubmit}
+                                className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
+                              >
+                                Yes
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>
