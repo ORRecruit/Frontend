@@ -19,7 +19,7 @@ function Page() {
 
   const [policyAccepted, setPolicyAccepted] = useState<boolean>(false);
   const easyApplyMutation = useMutation({
-    mutationFn: (data) => easyApply(data),
+    mutationFn: (formData: FormData) => easyApply(formData, jobId),
     onSuccess: (data) => {
       console.log("data", data);
     },
@@ -129,19 +129,29 @@ function Page() {
       return;
     }
 
-    console.log("formData1111", formData);
-    formData.workExperience = formData?.workExperience.toString();
-    const payload = {
-      ...formData,
-      jobId,
-    };
+    const payloadData = new FormData();
 
-    delete payload?.policyAccepted;
+    payloadData.append('firstName', formData.firstName);
+    payloadData.append('middleName', formData.middleName);
+    payloadData.append('lastName', formData.lastName);
+    payloadData.append('email', formData.email);
+    payloadData.append('country', formData.country);
+    payloadData.append('city', formData.city);
+    payloadData.append('address', formData.address);
+    payloadData.append('countryCode', formData.countryCode);
+    payloadData.append('areaCode', formData.areaCode);
+    payloadData.append('phoneNumber', formData.phoneNumber);
+    payloadData.append('preferredContactMethod', formData.preferredContactMethod);
+    payloadData.append('linkedinProfile', formData.linkedinProfile);
+    payloadData.append('indeedProfile', formData.indeedProfile);
+    payloadData.append('glassdoorProfile', formData.glassdoorProfile);
+    payloadData.append('highestEducation', formData.highestEducation);
+    payloadData.append('workExperience', formData.workExperience);
+    payloadData.append('coverLetter', formData.coverLetter);
+    payloadData.append('resume', formData.resume);
 
     try {
-      console.log("formData22222", payload);
-
-      const response = await easyApplyMutation.mutateAsync(payload);
+      const response = await easyApplyMutation.mutateAsync(payloadData);
       if (response?.success) {
         setPublishDialog(!publishDialog);
         toast.success(response?.message);
@@ -149,11 +159,12 @@ function Page() {
     } catch (error: any) {
       toast.error(error.message);
     }
-  };
+  }
 
   if (jobId) {
     console.log("jobId", jobId);
   }
+
 
   return (
     <>
