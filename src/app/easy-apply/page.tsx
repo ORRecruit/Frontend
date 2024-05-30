@@ -46,19 +46,25 @@ function Page() {
     highestEducation: "",
     workExperience: "",
     coverLetter: null,
-    resumePath: null,
+    resume: null,
   });
+
+  useEffect(() => {
+    console.log("Updated formData:", formData);
+  }, [formData]);
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
-    const target = e.target as HTMLInputElement;
-    const { name, value, type } = target;
+    const { name, value, type } = e.target;
 
     if (type === "checkbox") {
-      setFormData((prev: any) => ({ ...prev, [name]: target.checked }));
+      setFormData((prev: any) => ({
+        ...prev,
+        [name]: (e.target as HTMLInputElement).checked,
+      }));
     } else if (type === "file") {
       const fileTarget = e.target as HTMLInputElement;
       setFormData((prev: any) => ({
@@ -73,9 +79,31 @@ function Page() {
     }
   };
 
+  const handleResumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setFormData((prev: any) => ({
+        ...prev,
+        resume: file,
+      }));
+      console.log("Selected resume:", file);
+    }
+  };
+
+  const handleCoverLetterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setFormData((prev: any) => ({
+        ...prev,
+        coverLetter: file,
+      }));
+      console.log("Selected cover letter:", file);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | any) => {
     e.preventDefault();
-    console.log("formData000", formData);
+    console.log("formData0000", formData);
 
     if (
       !formData.firstName ||
@@ -95,25 +123,24 @@ function Page() {
       !formData.highestEducation ||
       !formData.workExperience ||
       !formData.coverLetter ||
-      !formData.resumePath
+      !formData.resume
     ) {
       toast.error("Please Provide All Details");
       return;
     }
 
-    console.log("formData", formData);
-    formData.resumePath = formData.resumePath?.name
-      ? formData.resumePath?.name
-      : "";
-    formData.coverLetter = formData.coverLetter?.name
-      ? formData.coverLetter?.name
-      : "";
+    console.log("formData1111", formData);
+    formData.workExperience = formData?.workExperience.toString();
     const payload = {
       ...formData,
       jobId,
     };
 
+    delete payload?.policyAccepted;
+
     try {
+      console.log("formData22222", payload);
+
       const response = await easyApplyMutation.mutateAsync(payload);
       if (response?.success) {
         setPublishDialog(!publishDialog);
@@ -440,7 +467,7 @@ function Page() {
                         name="coverLetter"
                         id="cover-letter"
                         accept=".pdf,.doc,.docx"
-                        onChange={handleChange}
+                        onChange={handleCoverLetterChange}
                         className="block w-full text-sm text-gray-500 my-5 cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
                       />
                     </div>
@@ -450,10 +477,10 @@ function Page() {
                       </label>
                       <input
                         type="file"
-                        name="resumePath"
-                        id="resumePath"
+                        name="resume"
+                        id="resume"
                         accept=".pdf,.doc,.docx"
-                        onChange={handleChange}
+                        onChange={handleResumeChange}
                         className="block w-full text-sm text-gray-500 my-5  cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
                       />
                     </div>
