@@ -1,11 +1,10 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import SuccessModal from "../successModal/successModal";
 import { postJob as postJobApi } from "@/api/jobs/postJob";
 import { useMutation } from "@tanstack/react-query";
-import DOMPurify from 'dompurify';
+import DOMPurify from "dompurify";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 interface PreviewData {
@@ -25,11 +24,10 @@ interface PreviewData {
 
 const page = () => {
   const [previewData, setPreviewData] = useState<PreviewData | null>(null);
-  const router=useRouter();
+  const router = useRouter();
   const postJobMutation = useMutation({
     mutationFn: (data: any) => postJobApi(data),
     onSuccess: (data) => {
-      // toast.success(data?.message)
       console.log("data", data);
     },
     onError: (error) => {
@@ -46,39 +44,27 @@ const page = () => {
     }
   }, []);
 
-  // const postJob = async (e: any) => {
-  //   if (!previewData) {
-  //     return;
-  //   }
-
-  //   await postJobMutation.mutateAsync(previewData);
-  //   localStorage.removeItem("postJob");
-  // };
-
-  const handleClick = () =>{
-    localStorage.removeItem('postJob');
+  const handleClick = () => {
     router.back();
-  }
+  };
 
-  const handleEditClick = () =>{
+  const handleEditClick = () => {
     router.replace("/admin/dashboard/inputNewJob");
-  }
+  };
 
   const postJob = async (e: any) => {
     if (!previewData) {
       return;
     }
 
-
     const jobDataToSend = {
       ...previewData,
       isPublished: true,
-      jobStatus: 'PENDING'
+      jobStatus: "PENDING",
     };
     console.log("previewDAta", previewData);
     const response = await postJobMutation.mutateAsync(jobDataToSend);
     console.log("response....", response);
-    localStorage.removeItem('postJob');
     if (response) {
       toast.success(response?.message);
       if (response?.data) {
@@ -88,7 +74,7 @@ const page = () => {
     }
   };
 
-  const createMarkup = (htmlContent:any) => {
+  const createMarkup = (htmlContent: any) => {
     return { __html: DOMPurify.sanitize(htmlContent) };
   };
   return (
@@ -96,38 +82,29 @@ const page = () => {
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] pt-4">
         <div className="p-4">
           <div className="">
-            {/* <Link href="/admin/dashboard/inputNewJob"> */}
-              <Image
-                src="/arrowLeft.svg"
-                alt="back-icon"
-                className="cursor-pointer"
-                width={20}
-                height={20}
-                onClick={handleClick}
-              />
-            {/* </Link> */}
+            <Image
+              src="/arrowLeft.svg"
+              alt="back-icon"
+              className="cursor-pointer"
+              width={20}
+              height={20}
+              onClick={handleClick}
+            />
           </div>
           <div className="absolute right-2 top-6 flex">
-          {/* <Link href="/admin/dashboard/inputNewJob"> */}
-              <button onClick={handleEditClick} className="text-sm border border-gray-500 mr-6 text-black w-20 py-2 rounded-xl hover:shadow-xl">
-                Edit
-              </button>
-          {/* </Link> */}
-            {/* <Link href="/admin/dashboard/previewJob">
-              <Image
-                src="/forwardIcon.svg"
-                alt="back-icon"
-                width={24}
-                height={24}
-                className="inline mr-6"
-              />
-            </Link> */}
-            <button onClick={postJob} className="w-24 text-sm border border-gray-500 mr-6 text-black py-2 rounded-xl hover:shadow-xl">
-                Save Draft
-              </button>
-            {/* <div onClick={postJob}> */}
+            <button
+              onClick={handleEditClick}
+              className="text-sm border border-gray-500 mr-6 text-black w-20 py-2 rounded-xl hover:shadow-xl"
+            >
+              Edit
+            </button>
+            <button
+              onClick={postJob}
+              className="w-24 text-sm border border-gray-500 mr-6 text-black py-2 rounded-xl hover:shadow-xl"
+            >
+              Save Draft
+            </button>
             <SuccessModal />
-            {/* </div> */}
           </div>
         </div>
       </div>
@@ -157,14 +134,25 @@ const page = () => {
           </div>
 
           <h2 className="text-lg font-semibold mb-4">Job Description</h2>
-          <p className="text-gray-700 mb-8 job-description-content" dangerouslySetInnerHTML={createMarkup(previewData.description)} />
+          <p
+            className="text-gray-700 mb-8 job-description-content"
+            dangerouslySetInnerHTML={createMarkup(previewData.description)}
+          />
           <h3 className="text-lg font-semibold mb-3">Responsibilities</h3>
           <ul className="list-disc list-inside text-gray-700 mb-8 lg:w-[70%] xl:w-[50%]">
-          <p className="text-gray-700 mb-8 job-description-content" dangerouslySetInnerHTML={createMarkup(previewData.responsibilities)}/>
+            <p
+              className="text-gray-700 mb-8 job-description-content"
+              dangerouslySetInnerHTML={createMarkup(
+                previewData.responsibilities
+              )}
+            />
           </ul>
           <h3 className="text-lg font-semibold mb-3">Requirements</h3>
           <ul className="list-disc list-inside text-gray-700 mb-8 lg:w-[70%] xl:w-[50%]">
-          <p className="text-gray-700 mb-8 job-description-content" dangerouslySetInnerHTML={createMarkup(previewData.requirements)}/>
+            <p
+              className="text-gray-700 mb-8 job-description-content"
+              dangerouslySetInnerHTML={createMarkup(previewData.requirements)}
+            />
           </ul>
         </div>
       )}
