@@ -7,8 +7,12 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   let path = usePathname();
   const param = useSearchParams();
   const blogNo = param.get("blogNo");
+  const jobId = param.get("jobId");
   if (path && blogNo) {
     path = path + `?blogNo=${blogNo}`;
+  }
+  if (path && jobId) {
+    path = path + `?jobId=${jobId}`;
   }
 
   // Function to check if the path matches the blog details with a dynamic number

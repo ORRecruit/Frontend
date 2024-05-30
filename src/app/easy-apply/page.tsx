@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "@/components/landing/footer/footer";
 import { useSearchParams } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
@@ -8,11 +8,16 @@ import toast from "react-hot-toast";
 
 function Page() {
   const param = useSearchParams();
-  const jobId = param.get("jobId");
+  const id = param.get("jobId");
+  const [jobId, setJobId] = useState<string | null>(null);
+  useEffect(() => {
+    setJobId(id);
+    console.log("jobId", id);
+  }, [id]);
 
   const [policyAccepted, setPolicyAccepted] = useState<boolean>(false);
   const easyApplyMutation = useMutation({
-    mutationFn: (data: any) => easyApply(data),
+    mutationFn: (data) => easyApply(data),
     onSuccess: (data) => {
       console.log("data", data);
     },
@@ -101,7 +106,11 @@ function Page() {
     formData.coverLetter = formData.coverLetter?.name
       ? formData.coverLetter?.name
       : "";
-    const response = await easyApplyMutation.mutateAsync(formData);
+    const payload = {
+      ...formData,
+      jobId,
+    };
+    const response = await easyApplyMutation.mutateAsync(payload);
   };
 
   if (jobId) {
