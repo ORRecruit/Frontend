@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Footer from "@/components/landing/footer/footer";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { easyApply } from "@/api/applicants/createApplicants";
 import toast from "react-hot-toast";
@@ -12,6 +12,7 @@ function Page() {
   const id = param.get("jobId");
   const [publishDialog, setPublishDialog] = useState<any>(false);
   const [jobId, setJobId] = useState<string | null>(null);
+  const router = useRouter();
   useEffect(() => {
     setJobId(id);
     console.log("jobId", id);
@@ -131,40 +132,47 @@ function Page() {
 
     const payloadData = new FormData();
 
-    payloadData.append('firstName', formData.firstName);
-    payloadData.append('middleName', formData.middleName);
-    payloadData.append('lastName', formData.lastName);
-    payloadData.append('email', formData.email);
-    payloadData.append('country', formData.country);
-    payloadData.append('city', formData.city);
-    payloadData.append('address', formData.address);
-    payloadData.append('countryCode', formData.countryCode);
-    payloadData.append('areaCode', formData.areaCode);
-    payloadData.append('phoneNumber', formData.phoneNumber);
-    payloadData.append('preferredContactMethod', formData.preferredContactMethod);
-    payloadData.append('linkedinProfile', formData.linkedinProfile);
-    payloadData.append('indeedProfile', formData.indeedProfile);
-    payloadData.append('glassdoorProfile', formData.glassdoorProfile);
-    payloadData.append('highestEducation', formData.highestEducation);
-    payloadData.append('workExperience', formData.workExperience);
-    payloadData.append('coverLetter', formData.coverLetter);
-    payloadData.append('resume', formData.resume);
+    payloadData.append("firstName", formData.firstName);
+    payloadData.append("middleName", formData.middleName);
+    payloadData.append("lastName", formData.lastName);
+    payloadData.append("email", formData.email);
+    payloadData.append("country", formData.country);
+    payloadData.append("city", formData.city);
+    payloadData.append("address", formData.address);
+    payloadData.append("countryCode", formData.countryCode);
+    payloadData.append("areaCode", formData.areaCode);
+    payloadData.append("phoneNumber", formData.phoneNumber);
+    payloadData.append(
+      "preferredContactMethod",
+      formData.preferredContactMethod
+    );
+    payloadData.append("linkedinProfile", formData.linkedinProfile);
+    payloadData.append("indeedProfile", formData.indeedProfile);
+    payloadData.append("glassdoorProfile", formData.glassdoorProfile);
+    payloadData.append("highestEducation", formData.highestEducation);
+    payloadData.append("workExperience", formData.workExperience);
+    payloadData.append("coverLetter", formData.coverLetter);
+    payloadData.append("resume", formData.resume);
 
     try {
       const response = await easyApplyMutation.mutateAsync(payloadData);
       if (response?.success) {
         setPublishDialog(!publishDialog);
-        toast.success(response?.message);
+        toast.success("You've applied to  job successfully!");
+        router.push("/job-board");
+      } else {
+        toast.error(
+          "Some error occured while processing your request. Try again later"
+        );
       }
     } catch (error: any) {
       toast.error(error.message);
     }
-  }
+  };
 
   if (jobId) {
     console.log("jobId", jobId);
   }
-
 
   return (
     <>

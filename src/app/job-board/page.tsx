@@ -357,14 +357,14 @@ const page = () => {
                       <div className="absolute right-0 mt-2 w-[210px] top-[60px] sm:top-[45px]">
                         <button
                           type="button"
-                          className="text-white font-medium rounded-lg text-sm px-5 py-2 text-center bg-orange-600 w-[200px] mb-1"
+                          className="text-orange font-medium rounded-lg text-sm px-5 py-2 text-center border-2 border-orange-600 bg-gray-100 w-[200px] mb-1"
                           onClick={() => easyApply(selectedValue?.id)}
                         >
                           Easy Apply
                         </button>
                         <button
                           type="button"
-                          className="text-white font-medium rounded-lg text-sm px-5 py-2 text-center bg-orange-600 w-[200px]"
+                          className="text-orange font-medium rounded-lg text-sm px-5 py-2 text-center border-2 border-orange-600 bg-gray-100 w-[200px]"
                           onClick={() => {
                             applyJob(selectedValue);
                           }}

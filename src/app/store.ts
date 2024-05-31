@@ -56,8 +56,8 @@ const useStore = create<StoreState>((set, get) => ({
     step1: {
       firstName: "",
       lastName: "",
-      country: "",
-      industry: "",
+      country: "United States",
+      industry: "Tourism",
       about: "",
     },
     step2: {

@@ -301,7 +301,7 @@ const Page = () => {
                 </div>
                 <button
                   onClick={() => setPublishDialog(!publishDialog)}
-                  className="w-full bg-primary-orange focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white"
+                  className="w-full bg-primary-orange font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white"
                 >
                   Continue
                 </button>
