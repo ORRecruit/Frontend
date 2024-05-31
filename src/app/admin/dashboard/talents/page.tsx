@@ -292,13 +292,7 @@ const page = () => {
                     Industry
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    Total Hires
-                  </th>
-                  <th scope="col" className="px-4 py-3 min-w-[6rem]">
-                    Job Posted
-                  </th>
-                  <th scope="col" className="px-4 py-3">
-                    Active Jobs
+                    Location
                   </th>
                 </tr>
               </thead>
@@ -340,12 +334,6 @@ const page = () => {
                           <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
                             {item?.industry}
                           </span>
-                        </td>
-                        <td className="px-4 py-2 whitespace-nowrap">
-                          <span>{item?.userId}</span>
-                        </td>
-                        <td className="px-4 py-2 font-medium whitespace-nowrap">
-                          <span>Job Posted</span>
                         </td>
                         <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                           <span>{item?.country}</span>

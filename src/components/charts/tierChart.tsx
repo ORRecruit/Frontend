@@ -42,15 +42,6 @@ const CustomBarChart = () => {
           </p>
           <p className="text-lg mt-2 font-semibold text-black">Tier 3</p>
         </div>
-        <div className="flex flex-col items-center">
-          <p
-            className="bg-[#1A56DB] text-white font-bold py-4 px-6 flex justify-center items-center w-24 h-24"
-            id="mgr-interview"
-          >
-            12
-          </p>
-          <p className="text-lg mt-2 font-semibold text-black">Tier 3</p>
-        </div>
       </div>
     </div>
   );
