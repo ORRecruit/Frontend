@@ -6,11 +6,14 @@ import { useRouter } from "next/navigation";
 import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
 import { FiArrowLeft } from "react-icons/fi";
 import useStore from "@/app/store";
+import toast from "react-hot-toast";
 
 const Page = () => {
   const { skills, tools } = useStore((state) => state.stepData.step2);
   const setStepData = useStore((state) => state.setStepData);
-  const [skillsRequired, setSkillsRequired] = useState<string[]>(skills);
+  const [skillsRequired, setSkillsRequired] = useState<string[] | any[]>(
+    skills
+  );
   const [techRequired, setTechRequired] = useState<string[]>(tools);
 
   useEffect(() => {
@@ -27,6 +30,11 @@ const Page = () => {
   const router = useRouter();
   const submitForm = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!skillsRequired?.length || !techRequired?.length) {
+      toast.error("Please provide all details");
+      return;
+    }
     router.push("/talentForm/experience-info");
   };
 
@@ -76,7 +84,7 @@ const Page = () => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-primary-orange focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white mt-6"
+                className="w-full bg-primary-orange font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white mt-6"
               >
                 Continue
               </button>

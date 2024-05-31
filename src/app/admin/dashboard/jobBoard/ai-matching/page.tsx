@@ -123,6 +123,9 @@ const page = () => {
                       Industry
                     </th>
                     <th scope="col" className="px-4 py-3">
+                      Talent Type
+                    </th>
+                    <th scope="col" className="px-4 py-3">
                       Location
                     </th>
                     <th scope="col" className="px-4 py-3 min-w-[6rem]">
@@ -170,6 +173,11 @@ const page = () => {
                           <td className="px-4 py-2 whitespace-nowrap">
                             <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
                               {item?.industry}
+                            </span>
+                          </td>
+                          <td className="px-4 py-2 whitespace-nowrap">
+                            <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                              {item?.userType}
                             </span>
                           </td>
                           <td className="px-4 py-2 whitespace-nowrap">
