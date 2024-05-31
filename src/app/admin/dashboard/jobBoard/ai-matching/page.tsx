@@ -177,7 +177,8 @@ const page = () => {
                           </td>
                           <td className="px-4 py-2 whitespace-nowrap">
                             <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                              {item?.userType}
+                              {item?.userType?.charAt(0).toUpperCase() +
+                                item?.userType?.slice(1)}
                             </span>
                           </td>
                           <td className="px-4 py-2 whitespace-nowrap">
