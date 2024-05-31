@@ -14,6 +14,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   if (path && path === "/easy-apply" && jobId) {
     path = path + `?jobId=${jobId}`;
   }
+  if (path && path === "/admin/dashboard/jobBoard/ai-matching" && jobId) {
+    path = path + `?jobId=${jobId}`;
+  }
 
   // Function to check if the path matches the blog details with a dynamic number
   const isPublicBlogDetail = (path: string) => {
@@ -47,7 +50,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         path === "/admin/dashboard/previewJob" ||
         path === "/admin/dashboard/overview" ||
         path === "/admin/dashboard/talents" ||
-        path === "/admin/dashboard/jobBoard/ai-matching"
+        path.includes("/admin/dashboard/jobBoard/ai-matching")
       ) {
         if (role === "admin" && !isAuthTokenExpired(token!)) {
           router.push(path);
