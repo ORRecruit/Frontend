@@ -220,7 +220,10 @@ const page = () => {
                             onClick={() => handleRowClick(item)}
                             className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                           >
-                            <span>{item?.recommended}</span>
+                            <span>
+                              {item?.recommended?.charAt(0).toUpperCase() +
+                                item?.recommended?.slice(1)}
+                            </span>
                           </td>
                           {isDialogOpen && (
                             <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
