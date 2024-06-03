@@ -16,7 +16,7 @@ import { jobPublishApi } from "@/api/jobs/isPublishApi";
 import { jobCompleteApi } from "@/api/jobs/markComplete";
 import QuillTextEditor from "@/components/dashboard/quilEditor/QuillTextEditor";
 import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
-import { createMarkup, formatString } from "@/utils/utils";
+import { createMarkup, formatDate, formatString } from "@/utils/utils";
 
 const jobList = () => {
   const router = useRouter();
@@ -524,22 +524,6 @@ const jobList = () => {
                           </div>
                         </div>
                         <div>
-                          {/* <button
-                            id="configurationDropdownButton"
-                            data-dropdown-toggle="configurationDropdown"
-                            type="button"
-                            className="w-34 sm:w-full md:w-auto flex items-center justify-center py-2 px-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                          >
-                            <Image
-                              src="/talendSidebar4.svg"
-                              width={15}
-                              height={15}
-                              alt="search-icon"
-                              className="mr-2"
-                            />
-                            Export CSV
-                          </button> */}
-                          {/* filtered options from Export CSV */}
                           <div
                             id="configurationDropdown"
                             className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
@@ -585,80 +569,6 @@ const jobList = () => {
                       </div>
                     </div>
                     <div className="">
-                      {/* {filter && (
-                        <div className="flex items-center mt-6 mb-2">
-                          <div className="flex items-center">
-                            <label className="mr-2 text-sm font-medium text-gray-900 dark:text-white">
-                              Job Type:
-                            </label>
-                            <div className="flex flex-wrap">
-                              <label className="mr-4">
-                                <input
-                                  type="radio"
-                                  name="jobType"
-                                  value="Hour"
-                                  checked={jobType === "Hour"}
-                                  onChange={(e) => setJobType(e.target.value)}
-                                />
-                                Hour
-                              </label>
-                              <label className="mr-4">
-                                <input
-                                  type="radio"
-                                  name="jobType"
-                                  value="Month"
-                                  checked={jobType === "Month"}
-                                  onChange={(e) => setJobType(e.target.value)}
-                                />
-                                Month
-                              </label>
-                              <label className="mr-4">
-                                <input
-                                  type="radio"
-                                  name="jobType"
-                                  value="Year"
-                                  checked={jobType === "Year"}
-                                  onChange={(e) => setJobType(e.target.value)}
-                                />
-                                Year
-                              </label>
-                            </div>
-                          </div>
-                          <div className="flex items-center">
-                            <select
-                              id="contractType"
-                              name="contractType"
-                              className="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                              value={contractType}
-                              onChange={(e) => setContractType(e.target.value)}
-                            >
-                              <option disabled value="">
-                                Contract Type
-                              </option>
-                              <option value="partTime">Part Time</option>
-                              <option value="fullTime">Full Time</option>
-                            </select>
-                          </div>
-                          <div className="flex items-center">
-                            <select
-                              id="location"
-                              name="location"
-                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                              value={location}
-                              onChange={handleLocationChange}
-                            >
-                              <option disabled value="">
-                                Location
-                              </option>
-                              {locations?.map((loc, index) => (
-                                <option key={index} value={loc}>
-                                  {loc}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-                      )} */}
                       {filter && (
                         <div className="flex mt-2 mb-2">
                           <div className="flex items-center">
@@ -919,7 +829,7 @@ const jobList = () => {
                               onClick={() => handleRowClick(item)}
                               className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
-                              <span>13/02/2024</span>
+                              <span>{formatDate(item?.createdAt)}</span>
                             </td>
                             <td
                               onClick={() => handleRowClick(item)}
