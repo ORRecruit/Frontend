@@ -245,6 +245,7 @@ const page = () => {
                 <option value="Bachelor">Bachelor</option>
                 <option value="Master">Master</option>
                 <option value="Ph.D">Ph.D</option>
+                <option value="Diploma">Diploma</option>
               </select>
             </div>
           </div>
