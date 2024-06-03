@@ -20,7 +20,7 @@ const CustomBarChart = () => {
             className="bg-[#87207D] text-white font-bold py-4 px-6 flex justify-center items-center w-24 h-24"
             id="application"
           >
-            6
+            3
           </p>
           <p className="text-lg mt-2 font-semibold text-black">Tier 1</p>
         </div>
@@ -29,7 +29,7 @@ const CustomBarChart = () => {
             className="bg-orange-500 text-white font-bold py-4 px-6 flex justify-center items-center w-24 h-24"
             id="phone-screen"
           >
-            7
+            0
           </p>
           <p className="text-lg mt-2 font-semibold text-black">Tier 2</p>
         </div>
@@ -38,7 +38,7 @@ const CustomBarChart = () => {
             className="bg-[#16BDCA] text-white font-bold py-4 px-6 flex justify-center items-center w-24 h-24"
             id="mgr-interview"
           >
-            8
+            0
           </p>
           <p className="text-lg mt-2 font-semibold text-black">Tier 3</p>
         </div>

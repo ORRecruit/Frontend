@@ -50,22 +50,22 @@ const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
       ) : (
         <div className="w-[99%] flex justify-between flex-wrap">
           <div className="w-[49%] mt-4">
-            <GridItem title="Jobs Posted & Jobs Closed">
+            <GridItem title="Jobs Summary">
               <BarChart />
             </GridItem>
           </div>
           <div className="w-[49%] mt-4">
-            <GridItem title="Talents per Tiers">
+            <GridItem title="Jobs per Tiers">
               <TierChart />
             </GridItem>
           </div>
           <div className="w-[49%] mt-4">
-            <GridItem title="Jobs based on Industries">
+            <GridItem title="Jobs per Industries">
               <PieChart />
             </GridItem>
           </div>
           <div className="w-[49%] mt-4">
-            <GridItem title="New Candidates Last Six Months">
+            <GridItem title="Total Candidates Count">
               <BarChartCreatedClients />
             </GridItem>
           </div>

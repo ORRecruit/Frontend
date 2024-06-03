@@ -56,11 +56,13 @@ const BarChartComponent: React.FC = () => {
       return [];
     }
 
-    return Object.keys(data.data).map((key) => ({
-      name: key,
-      publishedJobs: data.data[key].publishedJobs,
-      completedJobs: data.data[key].completedJobs,
-    }));
+    return Object.keys(data.data)
+      ?.reverse()
+      .map((key) => ({
+        name: key,
+        publishedJobs: data.data[key].publishedJobs,
+        completedJobs: data.data[key].completedJobs,
+      }));
   }, [data]);
 
   if (isLoading) {
