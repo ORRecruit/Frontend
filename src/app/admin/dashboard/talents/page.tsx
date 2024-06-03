@@ -7,6 +7,17 @@ import toast from "react-hot-toast";
 
 const page = () => {
   const [name, setName] = useState<string>("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const handleRowClick = (item: any) => {
+    setSelectedItem(item);
+    setIsDialogOpen(!isDialogOpen);
+  };
+  const closeDialog = () => {
+    setIsDialogOpen(!isDialogOpen);
+    console.log("cloase", isDialogOpen);
+  };
+
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all talents"],
     queryFn: () => getAllTalents(`Candidate%20Name=${name}`),
@@ -314,28 +325,41 @@ const page = () => {
                             <label className="sr-only">checkbox</label>
                           </div>
                         </td>
-                        <td className="px-4 py-2 whitespace-nowrap">
+                        <td
+                          onClick={() => handleRowClick(item)}
+                          className="px-4 py-2 whitespace-nowrap"
+                        >
                           <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
                             {`ORR-USR-00${item?.id}`}
                           </span>
                         </td>
                         <th
+                          onClick={() => handleRowClick(item)}
                           scope="row"
                           className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
                         >
                           {item?.fullName}
                         </th>
-                        <td className="px-4 py-2 whitespace-nowrap">
+                        <td
+                          onClick={() => handleRowClick(item)}
+                          className="px-4 py-2 whitespace-nowrap"
+                        >
                           <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
                             {item?.email}
                           </span>
                         </td>
-                        <td className="px-4 py-2 whitespace-nowrap">
+                        <td
+                          onClick={() => handleRowClick(item)}
+                          className="px-4 py-2 whitespace-nowrap"
+                        >
                           <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
                             {item?.industry}
                           </span>
                         </td>
-                        <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <td
+                          onClick={() => handleRowClick(item)}
+                          className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
                           <span>{item?.country}</span>
                         </td>
                         <td className="px-4 py-2 relative">
@@ -355,6 +379,52 @@ const page = () => {
                             </svg>
                           </button>
                         </td>
+                        {isDialogOpen && (
+                          <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                            <div className="relative bg-white p-5 rounded-lg max-w-2xl w-full border border-black-400">
+                              <div className="bg-white rounded-lg">
+                                <div className="mb-5">
+                                  <div className="flex justify-between">
+                                    <h1 className="text-3xl font-bold">
+                                      {selectedItem?.fullName}
+                                    </h1>
+                                  </div>
+                                  <div className="font-light text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                    ORR-
+                                    {selectedItem?.industry?.slice(0, 4)}
+                                    -00
+                                    {selectedItem?.id}
+                                  </div>
+
+                                  <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
+                                    {selectedItem?.email}
+                                  </span>
+                                </div>
+
+                                <div className="mb-5">
+                                  <p className="text-gray-600">
+                                    {selectedItem?.country}
+                                  </p>
+                                  <p className="font-light text-gray-500 dark:text-gray-400">
+                                    {selectedItem?.location}
+                                  </p>
+
+                                  <p className="text-lg font-extrabold text-gray-900 dark:text-white">
+                                    {selectedItem?.skills?.map((item: any) => {
+                                      <span>{item}</span>;
+                                    })}
+                                  </p>
+                                </div>
+                              </div>
+                              <button
+                                onClick={closeDialog}
+                                className="absolute top-0 right-0 p-8 text-lg text-black bg-transparent text-2xl"
+                              >
+                                &times;{" "}
+                              </button>
+                            </div>
+                          </div>
+                        )}
                       </tr>
                     );
                   })}
