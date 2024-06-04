@@ -64,6 +64,7 @@ const jobList = () => {
   const [jobVenue, setJobVenue] = useState<string>("");
   const locations = ["USA", "Canada", "Dubai"];
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [deleteItem, setDeleteItem] = useState<any>(null);
 
   const deleteJobMutation = useMutation({
     mutationFn: (id: any) => DeleteJob(id),
@@ -191,7 +192,8 @@ const jobList = () => {
   };
 
   const deleteJob = async (item: any) => {
-    console.log("item...", item);
+    console.log("item...", item, selectedItem);
+    setDeleteItem(item);
     setDeleteDialog(!deleteDialog);
   };
   const editJob = (item: any) => {
@@ -241,8 +243,8 @@ const jobList = () => {
   };
   console.log("formdata...", formData);
 
-  const closeDeleteDialog = async (job: any) => {
-    const response = await deleteJobMutation.mutateAsync(job.id);
+  const closeDeleteDialog = async () => {
+    const response = await deleteJobMutation.mutateAsync(deleteItem?.id);
     if (response?.success) {
       console.log("responlse.....", response);
 
@@ -1047,7 +1049,7 @@ const jobList = () => {
                                     </p>
                                     <div>
                                       <button
-                                        onClick={() => closeDeleteDialog(item)}
+                                        onClick={() => closeDeleteDialog()}
                                         className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
                                       >
                                         Yes
