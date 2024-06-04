@@ -750,7 +750,7 @@ const jobList = () => {
                         Experience
                       </th>
                       <th scope="col" className="px-4 py-3 min-w-[6rem]">
-                        Job Type
+                        Industry
                       </th>
                       <th scope="col" className="px-4 py-3">
                         Date
@@ -825,7 +825,7 @@ const jobList = () => {
                               onClick={() => handleRowClick(item)}
                               className="px-4 py-2 font-medium whitespace-nowrap"
                             >
-                              <span>{formatString(`${item.jobVenue}`)}</span>
+                              <span>{formatString(`${item.industry}`)}</span>
                             </td>
                             <td
                               onClick={() => handleRowClick(item)}
