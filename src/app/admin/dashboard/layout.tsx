@@ -34,7 +34,7 @@ export default function RootLayout({
     {
       iconUrl: "/adminSidebar4.svg",
       text: "Clients",
-      href: "",
+      href: "/admin/dashboard/clients",
     },
     // {
     //   iconUrl: "/adminSidebar5.svg",

@@ -43,6 +43,8 @@ export default function RootLayout({
     "/admin/dashboard/overview",
     "/admin/dashboard/inputNewJob",
     "/admin/dashboard/previewJob",
+    "/admin/dashboard/clients",
+    "/admin/dashboard/clients/create-client",
   ];
   const showNavbar = !noNavbarRoutes.includes(path);
 
