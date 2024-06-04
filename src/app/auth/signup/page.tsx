@@ -172,7 +172,7 @@ const page = () => {
                       onChange={handleRoleChange}
                     >
                       <option>Choose a Role</option>
-                      <option value="recruiter">Recruiter</option>
+                      {/* <option value="recruiter">Recruiter</option> */}
                       <option value="candidate">Candidate</option>
                     </select>
                   </div>
