@@ -14,6 +14,8 @@ import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import QuillTextEditor from "@/components/dashboard/quilEditor/QuillTextEditor";
 import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
+import { useQuery } from "@tanstack/react-query";
+import { getAllClients } from "@/api/recruiter/getAllClients";
 
 const page = () => {
   const router = useRouter();
@@ -34,6 +36,10 @@ const page = () => {
     contractType: "fullTime",
     jobVenue: "",
     description: "",
+  });
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ["get all naukrian"],
+    queryFn: () => getAllClients(),
   });
 
   console.log("The skills inside parent componnet >>>", skillsRequired);
@@ -159,7 +165,7 @@ const page = () => {
       <form action="">
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
           <h1 className="text-lg font-bold pb-2">Company Info</h1>
-          <div className="flex justify-between w-[80%] sm:w-[60%]">
+          <div className="flex justify-between w-[80%] sm:w-[60%] flex-wrap">
             <div className="w-[48%]">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Company Name*
@@ -189,6 +195,40 @@ const page = () => {
                 onChange={handleChange}
                 required={true}
               />
+            </div>
+            <div className="w-[48%]">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Clients*
+              </label>
+              <select
+                // id="industry"
+                // name="industry"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                // value={formData.industry}
+                // onChange={handleChange}
+              >
+                {data?.map((client: any, index: any) => (
+                  <option key={index} value={client?.id}>
+                    {client?.companyName}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="w-[48%]">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Tier*
+              </label>
+              <select
+                // id="industry"
+                // name="industry"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                // value={formData.industry}
+                // onChange={handleChange}
+              >
+                <option value="Tier 1">Tier 1</option>
+                <option value="Tier 2">Tier 2</option>
+                <option value="Tier 3">Tier 3</option>
+              </select>
             </div>
           </div>
         </div>
@@ -226,9 +266,6 @@ const page = () => {
                 <option value="Tourism">Tourism</option>
                 <option value="Hospitality">Hospitality</option>
                 <option value="Other">Other</option>
-                {/* <option value="Staffing & Recruiting">
-                  Staffing & Recruiting
-                </option> */}
               </select>
             </div>
             <div className="w-[32%]">
