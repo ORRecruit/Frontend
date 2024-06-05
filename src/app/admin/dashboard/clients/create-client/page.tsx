@@ -1,5 +1,5 @@
 "use client";
-import { createClient } from "@/api/recruiter/createProfile";
+import { createProfile } from "@/api/recruiter/createProfile";
 import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -19,7 +19,7 @@ const page = () => {
   });
 
   const createCliMutation = useMutation({
-    mutationFn: (data: any) => createClient(data),
+    mutationFn: (data: any) => createProfile(data),
   });
 
   const handleChange = (
