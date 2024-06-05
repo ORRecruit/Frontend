@@ -11,21 +11,21 @@ const page = () => {
   const [industry, setIndustry] = useState("");
 
   const createProfileMutation = useMutation({
-    mutationFn: (body: any) => createProfile(companyName, location, industry),
+    mutationFn: (body: any) => createProfile(body),
   });
 
-  const handleSubmit = async (e: any) => {
-    console.log("submit.....", companyName, location, industry);
-    e?.preventDefault();
-    if (companyName && location && industry) {
-      const response = await createProfileMutation.mutateAsync({
-        companyName,
-        location,
-        industry,
-      });
-      console.log("response...", companyName, location, industry, response);
-    }
-  };
+  // const handleSubmit = async (e: any) => {
+  //   console.log("submit.....", companyName, location, industry);
+  //   e?.preventDefault();
+  //   if (companyName && location && industry) {
+  //     const response = await createProfileMutation.mutateAsync({
+  //       companyName,
+  //       location,
+  //       industry,
+  //     });
+  //     console.log("response...", companyName, location, industry, response);
+  //   }
+  // };
 
   const handleCompanyNameChange = (event: any) => {
     setCompanyName(event.target.value);
@@ -165,7 +165,7 @@ const page = () => {
               <button
                 type="submit"
                 className="w-full bg-primary-orange focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white"
-                onClick={handleSubmit}
+                // onClick={handleSubmit}
               >
                 Continue
               </button>
