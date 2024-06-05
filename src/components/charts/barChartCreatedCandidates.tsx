@@ -56,7 +56,7 @@ const BarChartComponent: React.FC = () => {
       ?.reverse()
       .map((key) => ({
         name: key?.slice(0, -4),
-        newCandidates: data.data[key].newCandidates,
+        Candidates: data.data[key].newCandidates,
       }));
   }, [data]);
 
@@ -83,7 +83,7 @@ const BarChartComponent: React.FC = () => {
         <YAxis />
         <Tooltip content={<CustomTooltip />} />
         <Legend />
-        <Bar dataKey="newCandidates" fill="#F97316" />
+        <Bar dataKey="Candidates" fill="#F97316" />
       </BarChart>
     </ResponsiveContainer>
   );

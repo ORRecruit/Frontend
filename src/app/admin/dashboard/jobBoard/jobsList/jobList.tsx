@@ -1204,8 +1204,8 @@ const jobList = () => {
                                               <option value="Hospitality">
                                                 Hospitality
                                               </option>
-                                              <option value="Staffing & Recruiting">
-                                                Staffing & Recruiting
+                                              <option value="Other">
+                                                Other
                                               </option>
                                             </select>
                                           </div>
@@ -1535,7 +1535,7 @@ const jobList = () => {
                                           onClick={openEditConfirmation}
                                           className="w-full mt-[20px] sm:mt-[0px] bg-orange-600 text-white font-medium rounded-lg px-5 py-2.5 text-center"
                                         >
-                                          Post Job
+                                          Edit Job
                                         </button>
                                       </div>
                                     </div>
@@ -1562,7 +1562,7 @@ const jobList = () => {
                                         className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
                                         onClick={handleSubmit}
                                       >
-                                        Post
+                                        Yes
                                       </button>
                                     </div>
                                   </div>

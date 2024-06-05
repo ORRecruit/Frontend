@@ -35,7 +35,7 @@ export default function PieChart() {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div>
+    <div className="w-full h-[100%] flex justify-center items-center">
       {isLoading ? (
         <CustomLoader />
       ) : (
@@ -44,7 +44,7 @@ export default function PieChart() {
           data={pieChartData}
           options={options}
           width={"100%"}
-          height={"300px"}
+          height={"500px"} // Increase the height
         />
       )}
     </div>
