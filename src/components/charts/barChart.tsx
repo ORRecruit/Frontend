@@ -60,8 +60,8 @@ const BarChartComponent: React.FC = () => {
       ?.reverse()
       .map((key) => ({
         name: key,
-        publishedJobs: data.data[key].publishedJobs,
-        completedJobs: data.data[key].completedJobs,
+        Published: data.data[key].publishedJobs,
+        Completed: data.data[key].completedJobs,
       }));
   }, [data]);
 
@@ -88,8 +88,8 @@ const BarChartComponent: React.FC = () => {
         <YAxis />
         <Tooltip content={<CustomTooltip />} />
         <Legend />
-        <Bar dataKey="publishedJobs" fill="#87207D" />
-        <Bar dataKey="completedJobs" fill="#F97316" />
+        <Bar dataKey="Published" fill="#87207D" />
+        <Bar dataKey="Completed" fill="#F97316" />
       </BarChart>
     </ResponsiveContainer>
   );

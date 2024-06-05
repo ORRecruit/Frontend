@@ -84,7 +84,7 @@ interface GridItemProps {
 
 const GridItem: React.FC<GridItemProps> = ({ title, children }) => {
   return (
-    <div className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg bg-white h-[400px]">
+    <div className="flex flex-col items-center justify-center overflow-hidden border border-gray-200 rounded-lg bg-white h-[400px] w-full p-[20px]">
       <h3 className="text-2xl font-semibold text-black mb-4">{title}</h3>
       {children}
     </div>

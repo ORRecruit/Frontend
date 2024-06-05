@@ -5,23 +5,51 @@ import DashboardSidebar from "@/components/dashboard/dashboardSidebar/dashboardS
 import DashboardContent from "@/components/dashboard/dashboardContent/dashboardContent";
 import { useQuery } from "@tanstack/react-query";
 import { jobOverview } from "@/api/jobs/jobsOverview";
+import { totalCandidates } from "@/api/adminStats/totalCandidates";
 
-const page = () => {
-  const { data, error, isLoading, refetch } = useQuery({
+const Page = () => {
+  const {
+    data: jobOverviewData,
+    error: jobOverviewError,
+    isLoading: isJobOverviewLoading,
+    refetch: refetchJobOverview,
+  } = useQuery({
     queryKey: ["get overview details"],
     queryFn: () => jobOverview(),
   });
-  console.log("data", data);
+
+  const {
+    data: totalCandidatesData,
+    error: totalCandidatesError,
+    isLoading: isTotalCandidatesLoading,
+    refetch: refetchTotalCandidates,
+  } = useQuery({
+    queryKey: ["get total candidates"],
+    queryFn: () => totalCandidates(),
+  });
+
+  if (isJobOverviewLoading || isTotalCandidatesLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (jobOverviewError || totalCandidatesError) {
+    return (
+      <div>
+        Error: {jobOverviewError?.message || totalCandidatesError?.message}
+      </div>
+    );
+  }
+
   const details = [
     {
       iconUrl: "/overviewAdmin1.svg",
       heading: "Open Positions",
-      rating: data?.data?.openPositions || 0,
+      rating: jobOverviewData?.data?.openPositions || 0,
     },
     {
       iconUrl: "/overviewAdmin2.svg",
       heading: "Closed Positions",
-      rating: data?.data?.closedPositions || 0,
+      rating: jobOverviewData?.data?.closedPositions || 0,
     },
     {
       iconUrl: "/overviewAdmin3.svg",
@@ -36,9 +64,10 @@ const page = () => {
     {
       iconUrl: "/overviewAdmin5.svg",
       heading: "Total Candidates",
-      rating: "50+",
+      rating: `${totalCandidatesData?.totalCandidates || 0}`,
     },
   ];
+
   const sidebarDetails = [
     {
       iconUrl: "/adminSidebar1.svg",
@@ -66,15 +95,16 @@ const page = () => {
       href: "#",
     },
   ];
+
   return (
     <div className="bg-dashboard w-full">
-      {/* <DashboardNavbar /> */}
+      <DashboardNavbar />
       <div className="flex">
-        {/* <DashboardSidebar sidebarDetails={sidebarDetails} /> */}
+        <DashboardSidebar sidebarDetails={sidebarDetails} />
         <DashboardContent details={details} />
       </div>
     </div>
   );
 };
 
-export default page;
+export default Page;
