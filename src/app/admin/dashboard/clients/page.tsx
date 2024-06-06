@@ -4,7 +4,7 @@ import { formatDate } from "@/utils/utils";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 const page = () => {
   const { data, error, isLoading, refetch } = useQuery({
@@ -12,6 +12,16 @@ const page = () => {
     queryFn: () => getAllClients(),
   });
   console.log("clientsclientsclietns", data);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
+
+  const handleRowClick = (item: any) => {
+    setSelectedItem(item);
+    setIsDialogOpen(!isDialogOpen);
+  };
+  const closeDialog = () => {
+    setIsDialogOpen(!isDialogOpen);
+  };
 
   return (
     <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
@@ -280,28 +290,35 @@ const page = () => {
                         <label className="sr-only">checkbox</label>
                       </div>
                     </td>
-                    <td className="pr-4 py-2 whitespace-nowrap">
+                    <td
+                      className="pr-4 py-2 whitespace-nowrap"
+                      onClick={() => handleRowClick(item)}
+                    >
                       <span className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center">
-                        ORR-SECT-00{item?.id}
+                        ORR-{item?.sector?.slice(0, 4).toUpperCase()}-00
+                        {item?.id}
                       </span>
                     </td>
                     <td
                       className="pr-4 py-2 whitespace-nowrap"
-                      // onClick={() => handleRowClick(item)}
+                      onClick={() => handleRowClick(item)}
                     >
                       <span className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center">
                         {item.sector}
                       </span>
                     </td>
                     <td
-                      // onClick={() => handleRowClick(item)}
+                      onClick={() => handleRowClick(item)}
                       className="px-4 py-2 whitespace-nowrap"
                     >
                       <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
                         {item.companyName}
                       </span>
                     </td>
-                    <td className="px-4 py-2 whitespace-nowrap">
+                    <td
+                      className="px-4 py-2 whitespace-nowrap"
+                      onClick={() => handleRowClick(item)}
+                    >
                       <span
                         // onClick={() => routeToAiMatching(item?.id)}
                         className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300"
@@ -310,17 +327,75 @@ const page = () => {
                       </span>
                     </td>
                     <td
-                      // onClick={() => handleRowClick(item)}
+                      onClick={() => handleRowClick(item)}
                       className="px-4 py-2 whitespace-nowrap"
                     >
                       <span>{item.email}</span>
                     </td>
                     <td
-                      // onClick={() => handleRowClick(item)}
+                      onClick={() => handleRowClick(item)}
                       className="px-4 py-2 font-medium whitespace-nowrap"
                     >
                       <span>{formatDate(item.created_at)}</span>
                     </td>
+                    {isDialogOpen && (
+                      <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                        <div className="relative bg-white p-5 rounded-lg max-w-2xl w-full border border-black-400">
+                          <div className="bg-white rounded-lg">
+                            <div className="mb-5">
+                              <div className="flex justify-between">
+                                <h1 className="text-3xl font-bold">
+                                  {selectedItem?.companyName}
+                                </h1>
+                              </div>
+                              <div className="font-light text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                ORR-
+                                {selectedItem?.sector?.slice(0, 4)}
+                                -00
+                                {selectedItem?.id}
+                              </div>
+                            </div>
+
+                            <div className="mb-5">
+                              <p className="font-light text-gray-500 dark:text-gray-400">
+                                {selectedItem?.firstName}
+                              </p>
+                              <p className="font-light text-gray-500 dark:text-gray-400">
+                                {selectedItem?.lastName}
+                              </p>
+                              <p className="text-gray-600">
+                                {selectedItem?.sector}
+                              </p>
+                              <p className="text-gray-600">
+                                Employees: {selectedItem?.numberOfEmployees}
+                              </p>
+                              <h1 className="text-xl font-bold my-3">
+                                Contact Information:
+                              </h1>
+                              <p className="font-light text-gray-500 dark:text-gray-400">
+                                Address: {selectedItem?.address}
+                              </p>
+
+                              <p className="font-light text-gray-500 dark:text-gray-400">
+                                {selectedItem?.email}
+                              </p>
+                              <p className="font-light text-gray-500 dark:text-gray-400">
+                                {selectedItem?.phoneNumber}
+                              </p>
+                              <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
+                                {selectedItem?.website} Yrs
+                              </p>
+                            </div>
+                          </div>
+                          <button
+                            onClick={closeDialog} // This closes the modal when clicked
+                            className="absolute top-0 right-0 p-8 text-lg text-black bg-transparent text-2xl"
+                          >
+                            &times;{" "}
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </tr>
                 );
               })}

@@ -1,6 +1,7 @@
 "use client";
 import { createProfile } from "@/api/recruiter/createProfile";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -17,6 +18,7 @@ const page = () => {
     website: "",
     address: "",
   });
+  const router = useRouter();
 
   const createCliMutation = useMutation({
     mutationFn: (data: any) => createProfile(data),
@@ -50,14 +52,13 @@ const page = () => {
       }
       const response = await createCliMutation.mutateAsync(formData);
       console.log("response..", response);
-      // if (response) {
-      //   toast.success(response?.message);
-      //   setPublishDialog(!publishDialog);
-      //   toast.success(response?.message);
-      //   router.push("/talent/dashboard/jobBoard");
-      // } else {
-      //   toast.error("Something went wrong");
-      // }
+      if (response) {
+        toast.success("Client Created Successfully!");
+        router.push("/admin/dashboard/clients");
+      } else {
+        toast.error("Something went wrong");
+        setOpenConfirmation(!openConfirmation);
+      }
     } catch (err: any) {
       console.log("error", err.message);
       toast.error(err?.response?.data?.message);

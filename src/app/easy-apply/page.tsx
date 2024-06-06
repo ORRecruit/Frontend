@@ -108,7 +108,6 @@ function Page() {
 
     if (
       !formData.firstName ||
-      !formData.middleName ||
       !formData.lastName ||
       !formData.email ||
       !formData.country ||
@@ -118,13 +117,9 @@ function Page() {
       !formData.areaCode ||
       !formData.phoneNumber ||
       !formData.preferredContactMethod ||
-      !formData.linkedinProfile ||
-      !formData.indeedProfile ||
-      !formData.glassdoorProfile ||
       !formData.highestEducation ||
       !formData.workExperience ||
-      !formData.coverLetter ||
-      !formData.resume
+      (!formData.coverLetter && !formData.resume)
     ) {
       toast.error("Please Provide All Details");
       return;
