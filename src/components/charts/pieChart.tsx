@@ -20,7 +20,13 @@ export default function PieChart() {
   ];
 
   if (data) {
-    for (const [key, value] of Object.entries(data)) {
+    const sortedData = Object.entries(data).sort(([keyA], [keyB]) => {
+      if (keyA === "Other") return 1;
+      if (keyB === "Other") return -1;
+      return 0;
+    });
+
+    for (const [key, value] of sortedData) {
       pieChartData.push([key, value, `<div>${key} - ${value}</div>`]);
     }
   }

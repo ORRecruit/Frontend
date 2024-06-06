@@ -146,7 +146,6 @@ const jobList = () => {
 
   const closeDialog = () => {
     setIsDialogOpen(!isDialogOpen);
-    console.log("cloase", isDialogOpen);
   };
   const closeEditDialog = () => {
     setEditDialog(!editDialog);

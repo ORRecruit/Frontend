@@ -36,6 +36,8 @@ const page = () => {
     contractType: "fullTime",
     jobVenue: "",
     description: "",
+    tier: "",
+    client_id: "",
   });
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all naukrian"],
@@ -99,7 +101,9 @@ const page = () => {
         !formData.currencyType ||
         !formData.jobType ||
         !formData.contractType ||
-        !formData.jobVenue
+        !formData.jobVenue ||
+        !formData.tier ||
+        !formData.client_id
       ) {
         setErrorMessage("Please provide all details to post the job!");
         return;
@@ -201,11 +205,11 @@ const page = () => {
                 Clients*
               </label>
               <select
-                // id="industry"
-                // name="industry"
+                id="client_id"
+                name="client_id"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                // value={formData.industry}
-                // onChange={handleChange}
+                value={formData.client_id}
+                onChange={handleChange}
               >
                 {data?.map((client: any, index: any) => (
                   <option key={index} value={client?.id}>
@@ -219,15 +223,15 @@ const page = () => {
                 Tier*
               </label>
               <select
-                // id="industry"
-                // name="industry"
+                id="tier"
+                name="tier"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                // value={formData.industry}
-                // onChange={handleChange}
+                value={formData.tier}
+                onChange={handleChange}
               >
-                <option value="Tier 1">Tier 1</option>
-                <option value="Tier 2">Tier 2</option>
-                <option value="Tier 3">Tier 3</option>
+                <option value="1">Tier 1</option>
+                <option value="2">Tier 2</option>
+                <option value="3">Tier 3</option>
               </select>
             </div>
           </div>

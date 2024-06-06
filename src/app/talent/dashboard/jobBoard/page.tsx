@@ -9,7 +9,7 @@ import CustomLoader from "@/components/customLoader";
 import { createMarkup, formatString } from "@/utils/utils";
 import { RiCloseLine } from "react-icons/ri";
 import toast from "react-hot-toast";
-import { LuLoader } from "react-icons/lu";
+import { RotatingLines } from "react-loader-spinner";
 
 const page = () => {
   const [appliedRes, setAppliedRes] = useState(false);
@@ -151,7 +151,10 @@ const page = () => {
                       <div className="absolute top-2 right-3">
                         <RiCloseLine
                           size={25}
-                          onClick={() => setPublishDialog(!publishDialog)}
+                          onClick={() => {
+                            setPublishDialog(!publishDialog);
+                            setApplyNow(false);
+                          }}
                         />
                       </div>
                       <div className="bg-white rounded-lg flex flex-col items-center">
@@ -168,7 +171,14 @@ const page = () => {
                             </button>
                           ) : (
                             <div className="mt-4">
-                              <LuLoader />
+                              <RotatingLines
+                                visible={true}
+                                width="50"
+                                strokeColor="orange"
+                                strokeWidth="5"
+                                animationDuration="0.75"
+                                ariaLabel="rotating-lines-loading"
+                              />
                             </div>
                           )}
                         </div>
