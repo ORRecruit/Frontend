@@ -15,6 +15,7 @@ interface PreviewData {
   description: string;
   responsibilities: string;
   requirements: string;
+  client_id: number | any;
 }
 
 const successModal = () => {
@@ -43,16 +44,16 @@ const successModal = () => {
     if (!previewData) {
       return;
     }
-    
+    previewData.client_id = parseInt(previewData.client_id);
     const jobDataToSend = {
       ...previewData,
       isPublished: true,
-      jobStatus: 'PUBLISHED'
+      jobStatus: "PUBLISHED",
     };
     console.log("previewDAta", previewData);
     const response = await postJobMutation.mutateAsync(jobDataToSend);
     console.log("response....", response);
-    localStorage.removeItem('postJob');
+    localStorage.removeItem("postJob");
     if (response) {
       toast.success(response?.message);
       if (response?.data) {
