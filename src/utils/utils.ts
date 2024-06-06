@@ -30,3 +30,20 @@ export function formatDate(dateString: string) {
 
   return `${day}/${month}/${year}`;
 }
+
+export function isSessionValid(): boolean {
+  const tokenTime = localStorage.getItem('tokenTime');
+  const currentTime = Date.now();
+
+  if (tokenTime) {
+    const tokenTimestamp = Number(tokenTime);
+    const diff = currentTime - tokenTimestamp;
+    return diff < 1800000;
+  }
+
+  return false;
+}
+
+export function resetSessionTimer() {
+  localStorage.setItem('tokenTime', Date.now().toString());
+}

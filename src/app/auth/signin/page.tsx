@@ -51,6 +51,7 @@ const page = () => {
             if (response?.user?.isProfile === true) {
               console.log("Inside Candidate if", response.user);
               localStorage.setItem("authToken", response.token);
+              localStorage.setItem('tokenTime', Date.now().toString());
               localStorage.setItem("candidateId", response.user.candidateId);
               localStorage.setItem("role", response.user.roles[0]);
               if (response?.user?.profilePhoto) {
@@ -60,6 +61,7 @@ const page = () => {
             } else {
               console.log("Inside Candidate Else");
               localStorage.setItem("authToken", response.token);
+              localStorage.setItem('tokenTime', Date.now().toString());
               localStorage.setItem("candidateId", response.user.candidateId);
               localStorage.setItem("role", response.user.roles[0]);
               router.push("/talentForm/resume-upload");
