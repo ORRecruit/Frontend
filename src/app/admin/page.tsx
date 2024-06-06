@@ -41,6 +41,7 @@ const page = () => {
             setResponseMessage("");
           }, 3000);
           localStorage.setItem("authToken", response.token);
+          localStorage.setItem('tokenTime', Date.now().toString());
           localStorage.setItem("role", response?.user.roles[0]);
           if (response.user?.roles == "candidate") {
             if (response?.user?.isProfile === true) {
