@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { easyApply } from "@/api/applicants/createApplicants";
 import toast from "react-hot-toast";
 import { RiCloseLine } from "react-icons/ri";
+import { RotatingLines } from "react-loader-spinner";
 
 function Page() {
   const param = useSearchParams();
@@ -49,6 +50,7 @@ function Page() {
     coverLetter: null,
     resume: null,
   });
+  const [applyNow, setApplyNow] = useState<boolean>(false);
 
   useEffect(() => {
     console.log("Updated formData:", formData);
@@ -150,11 +152,13 @@ function Page() {
     payloadData.append("resume", formData.resume);
 
     try {
+      setApplyNow(!applyNow);
       const response = await easyApplyMutation.mutateAsync(payloadData);
       if (response?.success) {
         setPublishDialog(!publishDialog);
         toast.success("You've applied to  job successfully!");
         router.push("/job-board");
+        setApplyNow(!applyNow);
       } else {
         toast.error(
           "Some error occured while processing your request. Try again later"
@@ -543,21 +547,49 @@ function Page() {
                           <div className="absolute top-2 right-3">
                             <RiCloseLine
                               size={25}
-                              onClick={() => setPublishDialog(!publishDialog)}
+                              onClick={() => {
+                                setPublishDialog(!publishDialog);
+                                setApplyNow(false);
+                              }}
                             />
                           </div>
                           <div className="bg-white rounded-lg flex flex-col items-center">
                             <p className="text-gray-600 text-xl mb-4">
                               Are You Sure Want To Apply For The Job?
                             </p>
+
+                            {!applyNow ? (
+                              <div className="text-center">
+                                <button
+                                  onClick={handleSubmit}
+                                  className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
+                                >
+                                  Yes
+                                </button>
+                              </div>
+                            ) : (
+                              <div className="mt-4">
+                                <RotatingLines
+                                  visible={true}
+                                  width="50"
+                                  strokeColor="orange"
+                                  strokeWidth="5"
+                                  animationDuration="0.75"
+                                  ariaLabel="rotating-lines-loading"
+                                />
+                              </div>
+                            )}
+                            {/* <p className="text-gray-600 text-xl mb-4">
+                              Are You Sure Want To Apply For The Job?
+                            </p>
                             <div>
                               <button
-                                onClick={handleSubmit}
+                                
                                 className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
                               >
                                 Yes
                               </button>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>
