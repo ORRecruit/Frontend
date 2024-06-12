@@ -84,7 +84,7 @@ const page = () => {
           <CustomLoader />
         ) : (
           <div className="max-w-screen-xl sm:flex sm:items-start sm:justify-between mx-auto p-4">
-            <div className="sm:w-[29%] h-[350px] sm:h-auto overflow-auto mt-6 max-h-[65rem]">
+            <div className="custom-scrollbar sm:w-[29%] h-[350px] sm:h-auto overflow-auto mt-6 max-h-[65rem]">
               {data?.data?.map((item: any, index: any) => {
                 return (
                   <div

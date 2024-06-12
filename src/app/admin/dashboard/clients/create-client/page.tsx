@@ -14,7 +14,7 @@ const page = () => {
     phoneNumber: "",
     companyName: "",
     sector: "",
-    numberOfEmployees: 0,
+    numberOfEmployees: null,
     website: "",
     address: "",
   });
@@ -108,7 +108,6 @@ const page = () => {
                   value={formData.sector}
                   onChange={handleChange}
                 >
-                  <option>Input Text</option>
                   <option value="Technology">Technology</option>
                   <option value="Tourism">Tourism</option>
                   <option value="Hospitality">Hospitality</option>
