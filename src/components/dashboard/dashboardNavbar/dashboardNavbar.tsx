@@ -327,11 +327,13 @@ const DashboardNavbar = () => {
                 className="border border-black-600 z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 absolute right-0 top-[24px]"
                 id="dropdown"
               >
-                <div className="py-3 px-4">
-                  <span className="block text-sm font-semibold text-gray-900 dark:text-white">
-                    {data?.fullName}
-                  </span>
-                </div>
+                {!pathname.includes("admin/dashboard") && (
+                  <div className="py-3 px-4">
+                    <span className="block text-sm font-semibold text-gray-900 dark:text-white">
+                      {data?.fullName}
+                    </span>
+                  </div>
+                )}
                 <ul
                   className="py-1 text-gray-500 dark:text-gray-400"
                   aria-labelledby="dropdown"
