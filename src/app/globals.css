@@ -11,13 +11,13 @@ html {
 }
 
 .ql-editor {
-  min-height: 200px; 
+  min-height: 200px;
   max-height: 400px;
   overflow-y: auto;
 }
 
 .job-description-content ul {
-    @apply list-disc ml-5 pl-4;
+  @apply list-disc ml-5 pl-4;
 }
 
 .job-description-content ol {
@@ -26,14 +26,50 @@ html {
 
 .job-description-content ul li,
 .job-description-content ol li {
-    @apply mb-2;
+  @apply mb-2;
 }
 
-#reload_href{
-    color: #EA580C !important;
-    font-size: 14px;
-    font-weight: 600;
-    padding-left: 17px;
+#reload_href {
+  color: #ff6800 !important;
+  font-size: 14px;
+  font-weight: 600;
+  padding-left: 17px;
 }
 
+/* For webkit browsers (Chrome, Safari, etc.) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
 
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the scrollbar track */
+  border-radius: 10px; /* Rounded corners for the track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #ff6800; /* Scrollbar button color */
+  border-radius: 10px; /* Rounded corners for the button */
+  border: 3px solid #f1f1f1; /* Optional: adds a border around the button */
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin; /* Makes the scrollbar thinner */
+  scrollbar-color: #ff6800 #f1f1f1; /* Button color and track color */
+}
+
+/* General container styling */
+.custom-scrollbar {
+  overflow: auto;
+  height: 350px;
+  max-height: 65rem;
+  padding-right: 10px;
+  margin-top: 12px;
+}
+
+@media (min-width: 640px) {
+  .custom-scrollbar {
+    width: 29%;
+    height: auto;
+  }
+}

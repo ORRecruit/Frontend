@@ -126,7 +126,6 @@ const jobList = () => {
         setActiveOptionsIndex(null);
       }
     }
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -800,9 +799,9 @@ const jobList = () => {
                             </td>
                             <td
                               onClick={() => handleRowClick(item)}
-                              className="px-4 py-2 whitespace-nowrap"
+                              className="pr-4 py-2 whitespace-nowrap"
                             >
-                              <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                              <span className="bg-primary-100 text-primary-800 text-xs font-medium pl-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
                                 {item.companyName}
                               </span>
                             </td>
@@ -862,7 +861,7 @@ const jobList = () => {
                                 <div
                                   id="-dropdown"
                                   ref={dropdownRef}
-                                  className="cursor-pointer z-10 w-44 bg-white rounded divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                                  className="absolute right-0 cursor-pointer z-10 w-44 bg-white rounded divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                                 >
                                   {(() => {
                                     switch (item.jobStatus) {
