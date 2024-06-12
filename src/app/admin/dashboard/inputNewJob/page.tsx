@@ -171,8 +171,8 @@ const page = () => {
           <h1 className="text-lg font-bold pb-2">Company Info</h1>
           <div className="flex justify-between w-[80%] sm:w-[60%] flex-wrap">
             <div className="w-[48%]">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Company Name*
+              <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
+                Company Name (to display)*
               </label>
               <input
                 type="text"
@@ -186,7 +186,7 @@ const page = () => {
               />
             </div>
             <div className="w-[48%]">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                 Enter Your Location*
               </label>
               <input
@@ -201,8 +201,8 @@ const page = () => {
               />
             </div>
             <div className="w-[48%]">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Clients*
+              <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
+                Client*
               </label>
               <select
                 id="client_id"
@@ -219,7 +219,7 @@ const page = () => {
               </select>
             </div>
             <div className="w-[48%]">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                 Tier*
               </label>
               <select
@@ -240,7 +240,7 @@ const page = () => {
           <h1 className="text-lg font-bold pb-2">Basic Info</h1>
           <div className="flex justify-between w-[98%] sm:w-[90%]">
             <div className="w-[32%]">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                 Job Title*
               </label>
               <input
@@ -255,7 +255,7 @@ const page = () => {
               />
             </div>
             <div className="w-[32%]">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                 Industry*
               </label>
               <select
@@ -273,7 +273,7 @@ const page = () => {
               </select>
             </div>
             <div className="w-[32%]">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                 Req. Qualification*
               </label>
               <select
@@ -338,7 +338,7 @@ const page = () => {
           <h1 className="text-lg font-bold pb-2">Salary Offered (Monthly)*</h1>
           <div className="flex justify-between w-[90%]">
             <div className="w-[32%]">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                 Payment Intervals*
               </label>
               <select
@@ -354,7 +354,7 @@ const page = () => {
               </select>
             </div>
             <div className="w-[32%]">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                 Currency*
               </label>
               <select
@@ -370,7 +370,7 @@ const page = () => {
               </select>
             </div>
             <div className="w-[32%]">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                 Salary Offered*
               </label>
               <input
@@ -505,7 +505,7 @@ const page = () => {
           </h1>
           <div className="flex justify-between w-[80%] sm:w-[90%]">
             <div className="w-[48%]">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                 Requirements*
               </label>
               <QuillTextEditor
@@ -517,7 +517,7 @@ const page = () => {
               />
             </div>
             <div className="w-[48%]">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                 Responsibilities*
               </label>
               <QuillTextEditor

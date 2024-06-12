@@ -740,7 +740,7 @@ const jobList = () => {
                         Opportunity
                       </th>
                       <th scope="col" className="px-4 py-3">
-                        Recruiter
+                        Client
                       </th>
                       <th scope="col" className="px-4 py-3">
                         Talent Applied
