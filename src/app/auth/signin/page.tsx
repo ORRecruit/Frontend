@@ -51,7 +51,7 @@ const page = () => {
             if (response?.user?.isProfile === true) {
               console.log("Inside Candidate if", response.user);
               localStorage.setItem("authToken", response.token);
-              localStorage.setItem('tokenTime', Date.now().toString());
+              localStorage.setItem("tokenTime", Date.now().toString());
               localStorage.setItem("candidateId", response.user.candidateId);
               localStorage.setItem("role", response.user.roles[0]);
               if (response?.user?.profilePhoto) {
@@ -61,7 +61,7 @@ const page = () => {
             } else {
               console.log("Inside Candidate Else");
               localStorage.setItem("authToken", response.token);
-              localStorage.setItem('tokenTime', Date.now().toString());
+              localStorage.setItem("tokenTime", Date.now().toString());
               localStorage.setItem("candidateId", response.user.candidateId);
               localStorage.setItem("role", response.user.roles[0]);
               router.push("/talentForm/resume-upload");
@@ -87,7 +87,7 @@ const page = () => {
       {signInMutation.isPending ? (
         <CustomLoader />
       ) : (
-        <div className="h-screen flex justify-center items-center border border-red-400 relative">
+        <div className="h-screen flex justify-center items-center relative">
           <section>
             <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-20 lg:py-16 lg:grid-cols-12">
               <div className="w-full p-6 mx-auto bg-white sm:max-w-xl lg:col-span-6 sm:p-8">

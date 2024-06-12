@@ -74,7 +74,7 @@ const page = () => {
                     </button>
                   </div>
                 </div>
-                <div className="flex items-center space-x-0 sm:space-x-4">
+                {/* <div className="flex items-center space-x-0 sm:space-x-4">
                   <div>
                     <button
                       id="filterDropdownButton"
@@ -108,7 +108,6 @@ const page = () => {
                         />
                       </svg>
                     </button>
-                    {/* These are some filter options */}
                     <div
                       id="filterDropdown"
                       className="z-10 hidden p-3 bg-white rounded-lg shadow w-56 dark:bg-gray-700"
@@ -207,7 +206,7 @@ const page = () => {
                       </a>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -389,15 +388,18 @@ const page = () => {
                                       {selectedItem?.fullName}
                                     </h1>
                                   </div>
-                                  <div className="font-light text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                  <div className="font-semibold text-lg text-gray-500 dark:text-gray-400">
                                     ORR-
                                     {selectedItem?.industry?.slice(0, 4)}
                                     -00
                                     {selectedItem?.id}
                                   </div>
 
-                                  <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
+                                  <span className="font-light text-gray-500 dark:text-gray-400">
                                     {selectedItem?.email}
+                                  </span>
+                                  <span className="font-light text-gray-500 dark:text-gray-400">
+                                    {selectedItem?.industry}
                                   </span>
                                 </div>
 
@@ -409,11 +411,40 @@ const page = () => {
                                     {selectedItem?.location}
                                   </p>
 
-                                  <p className="text-lg font-extrabold text-gray-900 dark:text-white">
-                                    {selectedItem?.skills?.map((item: any) => {
-                                      <span>{item}</span>;
-                                    })}
-                                  </p>
+                                  <div>
+                                    <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
+                                      SKills
+                                    </h1>
+                                    {selectedItem?.skills?.map(
+                                      (item: any, index: number) => {
+                                        return (
+                                          <span key={index}>{item}, </span>
+                                        );
+                                      }
+                                    )}
+                                  </div>
+
+                                  <div className="text-gray-900 dark:text-white">
+                                    <h1 className="font-light text-lg text-gray-500 dark:text-gray-400 pt-2">
+                                      Tech
+                                    </h1>
+                                    {selectedItem?.tools?.map(
+                                      (item: any, index: number) => {
+                                        return (
+                                          <span key={index}>{item}, </span>
+                                        );
+                                      }
+                                    )}
+                                  </div>
+
+                                  <div className="text-gray-900 dark:text-white">
+                                    <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
+                                      About Me
+                                    </h1>
+                                    <span className="font-light text-gray-500 dark:text-gray-400">
+                                      {selectedItem?.about}
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
                               <button
