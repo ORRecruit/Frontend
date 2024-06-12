@@ -17,6 +17,7 @@ import { jobCompleteApi } from "@/api/jobs/markComplete";
 import QuillTextEditor from "@/components/dashboard/quilEditor/QuillTextEditor";
 import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
 import { createMarkup, formatDate, formatString } from "@/utils/utils";
+import { getAllClients } from "@/api/recruiter/getAllClients";
 
 const jobList = () => {
   const router = useRouter();
@@ -50,6 +51,8 @@ const jobList = () => {
     currencyType: "USD",
     contractType: "",
     jobVenue: "",
+    client_id: "",
+    tier: "1",
   });
   const [editId, setEditId] = useState<any>(null);
   const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
@@ -91,9 +94,24 @@ const jobList = () => {
       ),
   });
 
+  const {
+    data: clientsData,
+    error: clientsError,
+    isLoading: clientsLoading,
+  } = useQuery({
+    queryKey: ["getAllClients"],
+    queryFn: () => getAllClients(),
+  });
+
   useEffect(() => {
     console.log("data....", data?.data);
   }, [data]);
+
+  useEffect(() => {
+    if (clientsData && clientsData.length) {
+      console.log("data....data", clientsData);
+    }
+  }, [clientsData]);
 
   useEffect(() => {
     console.log("Updated formData:", formData);
@@ -168,7 +186,9 @@ const jobList = () => {
       !formData.responsibilities ||
       !formData.currencyType ||
       !formData.jobType ||
-      !formData.contractType
+      !formData.contractType ||
+      !formData.client_id ||
+      !formData.tier
     ) {
       console.log("Please Provide All Details");
       toast.error("Please Provide All Details");
@@ -176,13 +196,13 @@ const jobList = () => {
     }
     console.log("formDAtaaaaa-----", formData);
 
-    const response = await editJobMutation.mutateAsync(formData);
-    if (response) {
-      toast.success("You have updated the Job Successfully.");
-      router.push("/admin/dashboard");
-    } else {
-      toast.error("Please Provide All Details");
-    }
+    // const response = await editJobMutation.mutateAsync(formData);
+    // if (response) {
+    //   toast.success("You have updated the Job Successfully.");
+    //   router.push("/admin/dashboard");
+    // } else {
+    //   toast.error("Please Provide All Details");
+    // }
   };
 
   const toggleShowOptions = (index: number) => {
@@ -217,6 +237,7 @@ const jobList = () => {
     });
     setSkills(item?.skillsRequired);
     setEditDialog(!editDialog);
+    setActiveOptionsIndex(null);
   };
 
   const handlePublishJob = async (item: any) => {
@@ -1128,9 +1149,9 @@ const jobList = () => {
                                         <h1 className="text-lg font-bold pb-2">
                                           Company Info
                                         </h1>
-                                        <div className="flex justify-between w-[80%] sm:w-[60%]">
+                                        <div className="flex justify-between w-[80%] sm:w-[60%] flex-wrap">
                                           <div className="w-[48%]">
-                                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                                               Company Name*
                                             </label>
                                             <input
@@ -1145,7 +1166,7 @@ const jobList = () => {
                                             />
                                           </div>
                                           <div className="w-[48%]">
-                                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                                               Enter Your Location*
                                             </label>
                                             <input
@@ -1159,6 +1180,45 @@ const jobList = () => {
                                               required={true}
                                             />
                                           </div>
+                                          <div className="w-[48%]">
+                                            <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
+                                              Client*
+                                            </label>
+                                            <select
+                                              id="client_id"
+                                              name="client_id"
+                                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                              value={formData.client_id}
+                                              onChange={handleChange}
+                                            >
+                                              {clientsData?.map(
+                                                (client: any, index: any) => (
+                                                  <option
+                                                    key={index}
+                                                    value={client?.id}
+                                                  >
+                                                    {client?.companyName}
+                                                  </option>
+                                                )
+                                              )}
+                                            </select>
+                                          </div>
+                                          <div className="w-[48%]">
+                                            <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
+                                              Tier*
+                                            </label>
+                                            <select
+                                              id="tier"
+                                              name="tier"
+                                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                              value={formData.tier}
+                                              onChange={handleChange}
+                                            >
+                                              <option value="1">Tier 1</option>
+                                              <option value="2">Tier 2</option>
+                                              <option value="3">Tier 3</option>
+                                            </select>
+                                          </div>
                                         </div>
                                       </div>
                                       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
@@ -1167,7 +1227,7 @@ const jobList = () => {
                                         </h1>
                                         <div className="flex justify-between w-[98%] sm:w-[90%]">
                                           <div className="w-[32%]">
-                                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                                               Job Title*
                                             </label>
                                             <input
@@ -1182,7 +1242,7 @@ const jobList = () => {
                                             />
                                           </div>
                                           <div className="w-[32%]">
-                                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                                               Industry*
                                             </label>
                                             <select
@@ -1208,7 +1268,7 @@ const jobList = () => {
                                             </select>
                                           </div>
                                           <div className="w-[32%]">
-                                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                                               Req. Qualification*
                                             </label>
                                             <select
@@ -1299,7 +1359,7 @@ const jobList = () => {
                                         </h1>
                                         <div className="flex justify-between w-[90%]">
                                           <div className="w-[32%]">
-                                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                                               Payment Intervals*
                                             </label>
                                             <select
@@ -1317,7 +1377,7 @@ const jobList = () => {
                                             </select>
                                           </div>
                                           <div className="w-[32%]">
-                                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                                               Currency*
                                             </label>
                                             <select
@@ -1333,7 +1393,7 @@ const jobList = () => {
                                             </select>
                                           </div>
                                           <div className="w-[32%]">
-                                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                                               Salary Offered*
                                             </label>
                                             <input
@@ -1497,7 +1557,7 @@ const jobList = () => {
                                         </h1>
                                         <div className="flex justify-between w-[80%] sm:w-[90%]">
                                           <div className="w-[48%]">
-                                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                                               Requirements*
                                             </label>
                                             <QuillTextEditor
@@ -1512,7 +1572,7 @@ const jobList = () => {
                                             />
                                           </div>
                                           <div className="w-[48%]">
-                                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                                               Responsibilities*
                                             </label>
                                             <QuillTextEditor
