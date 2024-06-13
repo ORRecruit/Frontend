@@ -58,13 +58,12 @@ const page = () => {
               </div>
             </div>
             <div className="borer-2 border-black flex items-center space-x-0 sm:space-x-4">
-              <div className="border- border-green-500">
+              {/* <div className="border- border-green-500">
                 <button
                   id="filterDropdownButton"
                   data-dropdown-toggle="filterDropdown"
                   type="button"
                   className="w-[100px] sm:w-full md:w-auto flex items-center justify-center py-2 px-2 sm:px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                  // onClick={() => setFilter(!filter)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +91,6 @@ const page = () => {
                     />
                   </svg>
                 </button>
-                {/* These are some filter options */}
                 <div
                   id="filterDropdown"
                   className="z-10 hidden p-3 bg-white rounded-lg shadow w-56 dark:bg-gray-700"
@@ -190,7 +188,7 @@ const page = () => {
                     Apply to all projects
                   </a>
                 </div>
-              </div>
+              </div> */}
               <div>
                 <div
                   id="configurationDropdown"
@@ -348,32 +346,35 @@ const page = () => {
                                   {selectedItem?.companyName}
                                 </h1>
                               </div>
-                              <div className="font-light text-lg font-semibold text-gray-500 dark:text-gray-400">
+                              <div className="font-semibold text-lg text-gray-500 dark:text-gray-400">
                                 ORR-
                                 {selectedItem?.sector?.slice(0, 4)}
                                 -00
                                 {selectedItem?.id}
                               </div>
+                              <div className="font-semibold text-lg text-gray-500 dark:text-gray-400">
+                                {selectedItem?.sector}
+                              </div>
                             </div>
 
                             <div className="mb-5">
                               <p className="font-light text-gray-500 dark:text-gray-400">
-                                {selectedItem?.firstName}
+                                No Of Employees:{" "}
+                                {selectedItem?.numberOfEmployees}
                               </p>
                               <p className="font-light text-gray-500 dark:text-gray-400">
-                                {selectedItem?.lastName}
+                                Address: {selectedItem?.address}
                               </p>
-                              <p className="text-gray-600">
-                                {selectedItem?.sector}
+                              <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
+                                Website: {selectedItem?.website}
                               </p>
-                              <p className="text-gray-600">
-                                Employees: {selectedItem?.numberOfEmployees}
-                              </p>
+
                               <h1 className="text-xl font-bold my-3">
                                 Contact Information:
                               </h1>
                               <p className="font-light text-gray-500 dark:text-gray-400">
-                                Address: {selectedItem?.address}
+                                {selectedItem?.firstName}{" "}
+                                {selectedItem?.lastName}
                               </p>
 
                               <p className="font-light text-gray-500 dark:text-gray-400">
@@ -381,9 +382,6 @@ const page = () => {
                               </p>
                               <p className="font-light text-gray-500 dark:text-gray-400">
                                 {selectedItem?.phoneNumber}
-                              </p>
-                              <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
-                                {selectedItem?.website} Yrs
                               </p>
                             </div>
                           </div>

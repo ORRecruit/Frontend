@@ -366,10 +366,10 @@ const jobList = () => {
 
   return (
     <>
-      {isLoading ? (
-        <CustomLoader />
-      ) : (
-        <section className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
+      <section className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
+        {isLoading ? (
+          <CustomLoader />
+        ) : (
           <div className="mx-auto w-full px-4 lg:px-12">
             <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
               <div className="border-b dark:border-gray-700 mx-4">
@@ -1283,8 +1283,8 @@ const jobList = () => {
                                               </option>
                                               <option
                                                 value="
-                                                             
-                                                             "
+                                                         
+                                                         "
                                               >
                                                 Master
                                               </option>
@@ -1303,14 +1303,14 @@ const jobList = () => {
                                             initialSkills={skills}
                                           />
                                           {/* <input
-                                              type="text"
-                                              id="default-input"
-                                              name="skillsRequired"
-                                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                                              value={formData.skillsRequired}
-                                              onChange={handleChange}
-                                              required={true}
-                                            /> */}
+                                          type="text"
+                                          id="default-input"
+                                          name="skillsRequired"
+                                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                          value={formData.skillsRequired}
+                                          onChange={handleChange}
+                                          required={true}
+                                        /> */}
                                         </div>
                                       </div>
                                       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
@@ -1733,8 +1733,8 @@ const jobList = () => {
               </nav>
             </div>
           </div>
-        </section>
-      )}
+        )}
+      </section>
     </>
   );
 };
