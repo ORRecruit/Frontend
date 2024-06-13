@@ -712,7 +712,7 @@ const page = () => {
                 </div>
                 <div className="bg-white rounded-lg flex flex-col items-center">
                   <p className="text-gray-600 text-xl mb-4">
-                    Are You Sure Want To Publish The Job?
+                    Are You Sure Want To Update The Profile?
                   </p>
                   <div>
                     <button

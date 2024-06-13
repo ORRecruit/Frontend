@@ -58,13 +58,15 @@ const page = () => {
       if (response) {
         console.log("response", response);
         setPublishDialog(!publishDialog);
-        setApplyNow(!applyNow);
+        setApplyNow(false);
         toast.success("You have applied to the job successfully.");
       }
     } catch (err: any) {
-      if (err?.message) {
+      if (err) {
         console.log("err.message", err);
         toast.error(err?.response?.data?.message);
+        setApplyNow(false);
+        setPublishDialog(false);
       }
     }
   };
