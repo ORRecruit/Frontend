@@ -196,13 +196,13 @@ const jobList = () => {
     }
     console.log("formDAtaaaaa-----", formData);
 
-    // const response = await editJobMutation.mutateAsync(formData);
-    // if (response) {
-    //   toast.success("You have updated the Job Successfully.");
-    //   router.push("/admin/dashboard");
-    // } else {
-    //   toast.error("Please Provide All Details");
-    // }
+    const response = await editJobMutation.mutateAsync(formData);
+    if (response) {
+      toast.success("You have updated the Job Successfully.");
+      router.push("/admin/dashboard");
+    } else {
+      toast.error("Please Provide All Details");
+    }
   };
 
   const toggleShowOptions = (index: number) => {
@@ -257,7 +257,7 @@ const jobList = () => {
     console.log("formdata...name, value", name, value);
     setFormData((prevData: any) => ({
       ...prevData,
-      [name]: value,
+      [name]: name === "client_id" ? Number(value) : value,
     }));
   };
   console.log("formdata...", formData);
