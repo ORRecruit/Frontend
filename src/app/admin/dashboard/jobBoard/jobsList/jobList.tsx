@@ -234,6 +234,8 @@ const jobList = () => {
       currencyType: item?.currencyType,
       contractType: item?.contractType,
       jobVenue: item?.jobVenue,
+      tier: item?.tier,
+      client_id: item?.client_id,
     });
     setSkills(item?.skillsRequired);
     setEditDialog(!editDialog);
