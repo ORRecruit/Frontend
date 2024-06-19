@@ -57,7 +57,7 @@ const page = () => {
               if (response?.user?.profilePhoto) {
                 localStorage.setItem("avatarUrl", response?.user?.profilePhoto);
               }
-              router.replace("/talent/dashboard");
+              router.replace("/talent/dashboard/jobBoard");
             } else {
               console.log("Inside Candidate Else");
               localStorage.setItem("authToken", response.token);

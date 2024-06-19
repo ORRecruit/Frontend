@@ -16,7 +16,12 @@ import { jobPublishApi } from "@/api/jobs/isPublishApi";
 import { jobCompleteApi } from "@/api/jobs/markComplete";
 import QuillTextEditor from "@/components/dashboard/quilEditor/QuillTextEditor";
 import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
-import { createMarkup, formatDate, formatString } from "@/utils/utils";
+import {
+  createMarkup,
+  formatDate,
+  formatString,
+  removeDoubleQuotes,
+} from "@/utils/utils";
 import { getAllClients } from "@/api/recruiter/getAllClients";
 
 const jobList = () => {
@@ -970,7 +975,7 @@ const jobList = () => {
                             </td>
                             {isDialogOpen && (
                               <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
-                                <div className="relative bg-white p-5 rounded-lg max-w-2xl w-full border border-black-400">
+                                <div className="relative bg-white p-5 rounded-lg max-w-4xl w-full border border-black-400 max-h-[90%] overflow-auto">
                                   <div className="bg-white rounded-lg">
                                     <div className="mb-5">
                                       <div className="flex justify-between">
@@ -978,7 +983,7 @@ const jobList = () => {
                                           {selectedItem?.title}
                                         </h1>
                                       </div>
-                                      <div className="font-light text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                      <div className="text-lg font-semibold text-gray-500 dark:text-gray-400">
                                         ORR-
                                         {selectedItem?.industry?.slice(0, 4)}
                                         -00
@@ -995,7 +1000,9 @@ const jobList = () => {
                                         {selectedItem?.location}
                                       </p>
                                       <p className="text-lg font-extrabold text-gray-900 dark:text-white">
-                                        {selectedItem.salaryOffered + " "}
+                                        {removeDoubleQuotes(
+                                          selectedItem.salaryOffered
+                                        ) + " "}
                                         {selectedItem.currencyType} /{" "}
                                         {selectedItem.jobType}
                                       </p>
@@ -1668,47 +1675,6 @@ const jobList = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                    >
-                      1
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                    >
-                      2
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      aria-current="page"
-                      className="flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-primary-600 bg-primary-50 border border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-                    >
-                      3
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                    >
-                      ...
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                    >
-                      100
                     </a>
                   </li>
                   <li>

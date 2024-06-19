@@ -32,7 +32,7 @@ export function formatDate(dateString: string) {
 }
 
 export function isSessionValid(): boolean {
-  const tokenTime = localStorage.getItem('tokenTime');
+  const tokenTime = localStorage.getItem("tokenTime");
   const currentTime = Date.now();
 
   if (tokenTime) {
@@ -45,5 +45,9 @@ export function isSessionValid(): boolean {
 }
 
 export function resetSessionTimer() {
-  localStorage.setItem('tokenTime', Date.now().toString());
+  localStorage.setItem("tokenTime", Date.now().toString());
+}
+
+export function removeDoubleQuotes(str: string) {
+  return str.replace(/^"|"$/g, "");
 }
