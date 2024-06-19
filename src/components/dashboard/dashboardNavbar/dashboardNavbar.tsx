@@ -11,7 +11,7 @@ const DashboardNavbar = () => {
   const [notification, setNotification] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [avatar, setAvatar] = useState("");
-  const candidateId = localStorage.getItem("candidateId");
+  const [candidateId, setCandidateId] = useState<any>("");
   const pathname = usePathname();
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all talents", candidateId],
@@ -30,6 +30,11 @@ const DashboardNavbar = () => {
   };
 
   useEffect(() => {
+    const candidateId = localStorage.getItem("candidateId");
+    if (candidateId) {
+      setCandidateId(candidateId);
+    }
+
     const avatar = localStorage.getItem("avatarUrl");
     if (avatar) {
       setAvatar(avatar);
