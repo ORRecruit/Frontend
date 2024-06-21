@@ -8,6 +8,7 @@ import { updateTalent as updateTalentApi } from "@/api/talent/updateTalent";
 import toast from "react-hot-toast";
 import { RiCloseLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
+import { RotatingLines } from "react-loader-spinner";
 
 const page = () => {
   const router = useRouter();
@@ -29,6 +30,7 @@ const page = () => {
   });
   const candId = localStorage?.getItem("candidateId");
   const [publishDialog, setPublishDialog] = useState<any>(false);
+  const [applyNow, setApplyNow] = useState<boolean>(false);
 
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get talent by id"],
@@ -194,19 +196,24 @@ const page = () => {
   const submitData = async () => {
     console.log("formData", formData);
     try {
+      setApplyNow(!applyNow);
       const response = await updateTalent.mutateAsync(candId, formData);
       console.log("response..", response);
       if (response) {
+        setApplyNow(false);
         toast.success(response?.message);
         setPublishDialog(!publishDialog);
         toast.success(response?.message);
         router.push("/talent/dashboard/jobBoard");
       } else {
         toast.error("Something went wrong");
+        setApplyNow(false);
+        setPublishDialog(!publishDialog);
       }
     } catch (err: any) {
+      setApplyNow(false);
       console.log("error", err.message);
-      toast.error(err?.response?.data?.message);
+      toast.error(err.message);
     }
   };
 
@@ -707,20 +714,44 @@ const page = () => {
                 <div className="absolute top-2 right-3">
                   <RiCloseLine
                     size={25}
-                    onClick={() => setPublishDialog(!publishDialog)}
+                    onClick={() => {
+                      setPublishDialog(!publishDialog);
+                      setApplyNow(false);
+                    }}
                   />
                 </div>
                 <div className="bg-white rounded-lg flex flex-col items-center">
                   <p className="text-gray-600 text-xl mb-4">
                     Are You Sure Want To Update The Profile?
                   </p>
-                  <div>
+                  {/* <div>
                     <button
                       onClick={() => submitData()}
                       className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
                     >
                       Yes
                     </button>
+                  </div> */}
+                  <div>
+                    {!applyNow ? (
+                      <button
+                        onClick={() => submitData()}
+                        className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
+                      >
+                        Yes
+                      </button>
+                    ) : (
+                      <div className="mt-4">
+                        <RotatingLines
+                          visible={true}
+                          width="50"
+                          strokeColor="orange"
+                          strokeWidth="5"
+                          animationDuration="0.75"
+                          ariaLabel="rotating-lines-loading"
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
