@@ -23,6 +23,7 @@ import {
   removeDoubleQuotes,
 } from "@/utils/utils";
 import { getAllClients } from "@/api/recruiter/getAllClients";
+import { RotatingLines } from "react-loader-spinner";
 
 const jobList = () => {
   const router = useRouter();
@@ -73,6 +74,11 @@ const jobList = () => {
   const locations = ["USA", "Canada", "Dubai"];
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [deleteItem, setDeleteItem] = useState<any>(null);
+
+  // Loaders for confirmation
+  const [loaderMarkComp, setLoaderMarkComp] = useState<boolean>(false);
+  const [loaderDelete, setLoaderDelete] = useState<boolean>(false);
+  const [loaderPublish, setLoaderPublish] = useState<boolean>(false);
 
   const deleteJobMutation = useMutation({
     mutationFn: (id: any) => DeleteJob(id),
@@ -270,16 +276,21 @@ const jobList = () => {
   console.log("formdata...", formData);
 
   const closeDeleteDialog = async () => {
+    setLoaderDelete(!loaderDelete);
     const response = await deleteJobMutation.mutateAsync(deleteItem?.id);
     if (response?.success) {
       console.log("responlse.....", response);
 
+      setLoaderDelete(false);
       setDeleteDialog(!deleteDialog);
       refetch();
+    } else {
+      setLoaderDelete(false);
     }
   };
   const closePublishDialog = async (job: any) => {
     console.log("job", publishItem?.id);
+    setLoaderPublish(!loaderPublish);
     const obj = {
       isPublished: true,
       jobId: publishItem?.id,
@@ -290,14 +301,19 @@ const jobList = () => {
     if (response?.success) {
       console.log("responlse.....", response);
 
+      setLoaderPublish(false);
+
       setPublishDialog(!publishDialog);
       refetch();
 
       setPublishItem(null);
+    } else {
+      setLoaderPublish(false);
     }
   };
   const closeCompleteDialog = async (job: any) => {
     console.log("job", completeItem?.id);
+    setLoaderMarkComp(!loaderMarkComp);
     const obj = {
       isCompleted: true,
       jobId: completeItem?.id,
@@ -307,11 +323,13 @@ const jobList = () => {
 
     if (response?.success) {
       console.log("responlse.....", response);
-
+      setLoaderMarkComp(false);
       setCompleteDialog(!completeDialog);
       refetch();
 
       setCompleteItem(null);
+    } else {
+      setLoaderMarkComp(false);
     }
   };
 
@@ -889,7 +907,7 @@ const jobList = () => {
                                 <div
                                   id="-dropdown"
                                   ref={dropdownRef}
-                                  className="absolute right-0 cursor-pointer z-10 w-44 bg-white rounded divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                                  className="absolute right-0 cursor-pointer w-44 bg-white rounded divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                                 >
                                   {(() => {
                                     switch (item.jobStatus) {
@@ -1076,12 +1094,31 @@ const jobList = () => {
                                       Are You Sure Want To Delete The Job?
                                     </p>
                                     <div>
-                                      <button
+                                      {/* <button
                                         onClick={() => closeDeleteDialog()}
                                         className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
                                       >
                                         Yes
-                                      </button>
+                                      </button> */}
+                                      {!loaderDelete ? (
+                                        <button
+                                          onClick={() => closeDeleteDialog()}
+                                          className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
+                                        >
+                                          Yes
+                                        </button>
+                                      ) : (
+                                        <div className="mt-4">
+                                          <RotatingLines
+                                            visible={true}
+                                            width="50"
+                                            strokeColor="orange"
+                                            strokeWidth="5"
+                                            animationDuration="0.75"
+                                            ariaLabel="rotating-lines-loading"
+                                          />
+                                        </div>
+                                      )}
                                     </div>
                                   </div>
                                 </div>
@@ -1103,12 +1140,33 @@ const jobList = () => {
                                       Are You Sure Want To Publish The Job?
                                     </p>
                                     <div>
-                                      <button
+                                      {/* <button
                                         onClick={() => closePublishDialog(item)}
                                         className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
                                       >
                                         Yes
-                                      </button>
+                                      </button> */}
+                                      {!loaderPublish ? (
+                                        <button
+                                          onClick={() =>
+                                            closePublishDialog(item)
+                                          }
+                                          className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
+                                        >
+                                          Yes
+                                        </button>
+                                      ) : (
+                                        <div className="mt-4">
+                                          <RotatingLines
+                                            visible={true}
+                                            width="50"
+                                            strokeColor="orange"
+                                            strokeWidth="5"
+                                            animationDuration="0.75"
+                                            ariaLabel="rotating-lines-loading"
+                                          />
+                                        </div>
+                                      )}
                                     </div>
                                   </div>
                                 </div>
@@ -1130,14 +1188,35 @@ const jobList = () => {
                                       Are You Sure Want To Complete The Job?
                                     </p>
                                     <div>
-                                      <button
+                                      {/* <button
                                         onClick={() =>
                                           closeCompleteDialog(item)
                                         }
                                         className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
                                       >
                                         Yes
-                                      </button>
+                                      </button> */}
+                                      {!loaderMarkComp ? (
+                                        <button
+                                          onClick={() =>
+                                            closeCompleteDialog(item)
+                                          }
+                                          className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
+                                        >
+                                          Yes
+                                        </button>
+                                      ) : (
+                                        <div className="mt-4">
+                                          <RotatingLines
+                                            visible={true}
+                                            width="50"
+                                            strokeColor="orange"
+                                            strokeWidth="5"
+                                            animationDuration="0.75"
+                                            ariaLabel="rotating-lines-loading"
+                                          />
+                                        </div>
+                                      )}
                                     </div>
                                   </div>
                                 </div>

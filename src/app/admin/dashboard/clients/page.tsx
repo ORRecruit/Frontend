@@ -36,6 +36,7 @@ const page = () => {
       phoneNumber: item?.phoneNumber,
     });
     setEditDialog(!editDialog);
+    setEditDialogItem(null);
   };
   const [applyNow, setApplyNow] = useState<boolean>(false);
 
