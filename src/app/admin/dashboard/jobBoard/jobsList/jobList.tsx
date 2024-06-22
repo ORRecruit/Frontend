@@ -79,6 +79,7 @@ const jobList = () => {
   const [loaderMarkComp, setLoaderMarkComp] = useState<boolean>(false);
   const [loaderDelete, setLoaderDelete] = useState<boolean>(false);
   const [loaderPublish, setLoaderPublish] = useState<boolean>(false);
+  const [applyNow, setApplyNow] = useState<boolean>(false);
 
   const deleteJobMutation = useMutation({
     mutationFn: (id: any) => DeleteJob(id),
@@ -180,6 +181,7 @@ const jobList = () => {
   };
 
   const handleSubmit = async (e: any) => {
+    setApplyNow(!applyNow);
     e?.preventDefault();
 
     console.log("Form Data just before if>>>>", formData);
@@ -211,8 +213,10 @@ const jobList = () => {
     if (response) {
       toast.success("You have updated the Job Successfully.");
       router.push("/admin/dashboard");
+      setApplyNow(false);
     } else {
       toast.error("Please Provide All Details");
+      setApplyNow(false);
     }
   };
 
@@ -888,7 +892,7 @@ const jobList = () => {
                                 id="-dropdown-button"
                                 type="button"
                                 data-dropdown-toggle="-dropdown"
-                                className="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                                className="inline-flex items-center z-0 p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   toggleShowOptions(index);
@@ -907,7 +911,7 @@ const jobList = () => {
                                 <div
                                   id="-dropdown"
                                   ref={dropdownRef}
-                                  className="absolute right-0 cursor-pointer w-44 bg-white rounded divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                                  className="absolute right-11 cursor-pointer w-44 bg-white rounded divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                                 >
                                   {(() => {
                                     switch (item.jobStatus) {
@@ -1703,13 +1707,26 @@ const jobList = () => {
                                       Are you sure want to Edit the Job?
                                     </p>
                                     <div className="mt-5 sm:mt-6">
-                                      <button
-                                        type="button"
-                                        className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-                                        onClick={handleSubmit}
-                                      >
-                                        Yes
-                                      </button>
+                                      {!applyNow ? (
+                                        <button
+                                          type="button"
+                                          className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                                          onClick={handleSubmit}
+                                        >
+                                          Yes
+                                        </button>
+                                      ) : (
+                                        <div className="mt-4">
+                                          <RotatingLines
+                                            visible={true}
+                                            width="50"
+                                            strokeColor="orange"
+                                            strokeWidth="5"
+                                            animationDuration="0.75"
+                                            ariaLabel="rotating-lines-loading"
+                                          />
+                                        </div>
+                                      )}
                                     </div>
                                   </div>
                                 </div>
