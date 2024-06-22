@@ -21,7 +21,7 @@ const page = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
   const [skillsRequired, setSkillsRequired] = useState<string[]>([]);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<any>({
     title: "",
     location: "",
     industry: "Technology",
@@ -47,20 +47,39 @@ const page = () => {
   console.log("The skills inside parent componnet >>>", skillsRequired);
 
   useEffect(() => {
-    // Function to load job data
-    function loadJobData() {
-      const storedJob = localStorage.getItem("postJob");
-      if (storedJob) {
-        const jobData = JSON.parse(storedJob);
-        console.log("JOB Data Get from the local storage >>>>", jobData);
-        setFormData(jobData);
-        if (jobData.skillsRequired) {
-          setSkillsRequired(jobData.skillsRequired);
+    const loadJobData = () => {
+      try {
+        const storedJob = localStorage.getItem("postJob");
+        if (storedJob) {
+          const jobData = JSON.parse(storedJob);
+          console.log("Job data retrieved from local storage:", jobData);
+          setFormData({
+            companyName: jobData.companyName || "",
+            location: jobData.location || "",
+            client_id: jobData.client_id || "",
+            tier: jobData.tier || "",
+            title: jobData.title || "",
+            industry: jobData.industry || "Technology",
+            qualification: jobData.qualification || "Bachelor",
+            experienceRequired: jobData.experienceRequired || "4",
+            jobType: jobData.jobType || "Hour",
+            currencyType: jobData.currencyType || "USD",
+            salaryOffered: jobData.salaryOffered || "5",
+            jobVenue: jobData.jobVenue || "",
+            contractType: jobData.contractType || "fullTime",
+            description: jobData.description || "",
+            requirements: jobData.requirements || "",
+            responsibilities: jobData.responsibilities || "",
+          });
+          if (jobData.skillsRequired) {
+            setSkillsRequired(jobData.skillsRequired);
+          }
         }
+      } catch (error) {
+        console.error("Failed to load job data from local storage:", error);
       }
-    }
+    };
 
-    // Call load function on mount
     loadJobData();
   }, []);
 
@@ -72,7 +91,7 @@ const page = () => {
     ) => {
       e.preventDefault();
       const { name, value } = e.target;
-      setFormData((prevData) => ({
+      setFormData((prevData: any) => ({
         ...prevData,
         [name]: value,
       }));
