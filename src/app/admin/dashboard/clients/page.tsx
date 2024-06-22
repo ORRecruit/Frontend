@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { RotatingLines } from "react-loader-spinner";
 
 const page = () => {
   const { data, error, isLoading, refetch } = useQuery({
@@ -36,6 +37,7 @@ const page = () => {
     });
     setEditDialog(!editDialog);
   };
+  const [applyNow, setApplyNow] = useState<boolean>(false);
 
   const handleRowClick = (item: any) => {
     setSelectedItem(item);
@@ -59,7 +61,7 @@ const page = () => {
     address: "",
   });
 
-  const createCliMutation = useMutation({
+  const editCliMutation = useMutation({
     mutationFn: (data: any) => editClient(editDialogItem, data),
   });
 
@@ -76,6 +78,7 @@ const page = () => {
   const handleSubmit = async () => {
     console.log("formDataformData", formData, editDialogItem);
     try {
+      setApplyNow(!applyNow);
       if (
         !formData.companyName ||
         !formData.sector ||
@@ -89,22 +92,25 @@ const page = () => {
         toast.error("please provide all details");
         return;
       }
-      const response = await createCliMutation.mutateAsync(formData);
+      const response = await editCliMutation.mutateAsync(formData);
       console.log("response..", response);
       if (response) {
         toast.success("Client Created Successfully!");
         setOpenConfirmation(false);
         setEditDialog(false);
+        setApplyNow(false);
       } else {
         toast.error("Something went wrong");
         setOpenConfirmation(!openConfirmation);
         setEditDialog(false);
+        setApplyNow(false);
       }
     } catch (err: any) {
       console.log("error", err.message);
       toast.error(err?.response?.data?.message);
       setOpenConfirmation(false);
       setEditDialog(false);
+      setApplyNow(false);
     }
   };
   // Content for the edit client mechanism
@@ -424,13 +430,15 @@ const page = () => {
                       <span>{formatDate(item.created_at)}</span>
                     </td>
                     <td className="px-4 py-2 whitespace-nowrap relative">
-                      <Image
+                      <svg
                         onClick={() => toggleEditDialog(item.id)}
-                        width={20}
-                        height={20}
-                        src="/three-dot.svg"
-                        alt="illustration"
-                      />
+                        className="w-5 h-5"
+                        aria-hidden="true"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                      </svg>
                       {editDialogItem === item.id && (
                         <p
                           onClick={() => patchAndOpenDialog(item)}
@@ -629,13 +637,33 @@ const page = () => {
                                       Are you sure want to edit the client?
                                     </p>
                                     <div className="mt-5 sm:mt-6">
-                                      <button
+                                      {/* <button
                                         type="button"
                                         className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
                                         onClick={handleSubmit}
                                       >
                                         Yes
-                                      </button>
+                                      </button> */}
+                                      {!applyNow ? (
+                                        <button
+                                          onClick={handleSubmit}
+                                          type="button"
+                                          className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                                        >
+                                          Yes
+                                        </button>
+                                      ) : (
+                                        <div className="mt-4">
+                                          <RotatingLines
+                                            visible={true}
+                                            width="50"
+                                            strokeColor="orange"
+                                            strokeWidth="5"
+                                            animationDuration="0.75"
+                                            ariaLabel="rotating-lines-loading"
+                                          />
+                                        </div>
+                                      )}
                                     </div>
                                   </div>
                                 </div>

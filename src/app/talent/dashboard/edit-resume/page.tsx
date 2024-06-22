@@ -73,8 +73,8 @@ const page = () => {
 
       setFormData({
         fullName: data?.fullName,
-        country: data?.country,
-        industry: data?.industry,
+        country: data?.country || "United States",
+        industry: data?.industry || "Technology",
         about: data?.about,
         educations: educations,
         experiences: experiences,

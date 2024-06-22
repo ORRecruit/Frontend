@@ -22,7 +22,7 @@ const Page = () => {
       const resumeUrl = response.url;
       localStorage.setItem("resumeUrl", resumeUrl);
       toast.success("Resume uploaded successfully");
-      router.push("/talent/dashboard");
+      router.push("/talent/dashboard/jobBoard");
     },
     onError: () => {
       toast.error("Resume upload failed");
