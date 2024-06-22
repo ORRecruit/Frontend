@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { RotatingLines } from "react-loader-spinner";
 
 const page = () => {
   const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
@@ -19,6 +20,7 @@ const page = () => {
     address: "",
   });
   const router = useRouter();
+  const [applyNow, setApplyNow] = useState<boolean>(false);
 
   const createCliMutation = useMutation({
     mutationFn: (data: any) => createProfile(data),
@@ -37,6 +39,7 @@ const page = () => {
   const handleSubmit = async () => {
     console.log("formDataformData", formData);
     try {
+      setApplyNow(!applyNow);
       if (
         !formData.companyName ||
         !formData.sector ||
@@ -55,13 +58,16 @@ const page = () => {
       if (response) {
         toast.success("Client Created Successfully!");
         router.push("/admin/dashboard/clients");
+        setApplyNow(false);
       } else {
         toast.error("Something went wrong");
         setOpenConfirmation(!openConfirmation);
+        setApplyNow(false);
       }
     } catch (err: any) {
       console.log("error", err.message);
       toast.error(err?.response?.data?.message);
+      setApplyNow(false);
     }
   };
 
@@ -241,13 +247,26 @@ const page = () => {
                   Are you sure want to create the client?
                 </p>
                 <div className="mt-5 sm:mt-6">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-                    onClick={handleSubmit}
-                  >
-                    Yes
-                  </button>
+                  {!applyNow ? (
+                    <button
+                      onClick={handleSubmit}
+                      type="button"
+                      className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                    >
+                      Yes
+                    </button>
+                  ) : (
+                    <div className="mt-4">
+                      <RotatingLines
+                        visible={true}
+                        width="50"
+                        strokeColor="orange"
+                        strokeWidth="5"
+                        animationDuration="0.75"
+                        ariaLabel="rotating-lines-loading"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
