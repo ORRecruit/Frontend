@@ -6,6 +6,8 @@ import { postJob as postJobApi } from "@/api/jobs/postJob";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { RotatingLines } from "react-loader-spinner";
+import { RiCloseLine } from "react-icons/ri";
 
 interface PreviewData {
   title: string;
@@ -19,6 +21,7 @@ interface PreviewData {
 }
 
 const successModal = () => {
+  const [applyNow, setApplyNow] = useState<boolean>(false);
   const router = useRouter();
   const [previewData, setPreviewData] = useState<PreviewData | null>(null);
   const postJobMutation = useMutation({
@@ -41,6 +44,7 @@ const successModal = () => {
   }, []);
 
   const postJob = async (e: any) => {
+    setApplyNow(!applyNow);
     if (!previewData) {
       return;
     }
@@ -56,10 +60,13 @@ const successModal = () => {
     localStorage.removeItem("postJob");
     if (response) {
       toast.success(response?.message);
+      setApplyNow(false);
       if (response?.data) {
         router.push("/admin/dashboard/jobBoard");
         localStorage.removeItem("postJob");
       }
+    } else {
+      setApplyNow(false);
     }
   };
 
@@ -76,7 +83,15 @@ const successModal = () => {
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center">
           <div className="bg-white rounded-lg p-6 w-[300px]">
-            <div className="text-center">
+            <div className="text-center relative">
+              <RiCloseLine
+                size={25}
+                onClick={() => {
+                  setModalOpen(false);
+                  setApplyNow(false);
+                }}
+                className="absolute right-0"
+              />
               <div className="mb-4 flex justify-center items-center">
                 <Image
                   src="/successIconModal.svg"
@@ -94,15 +109,25 @@ const successModal = () => {
             </div>
 
             <div className="mt-5 sm:mt-6">
-              {/* <Link href="/admin/dashboard/jobBoard"> */}
-              <button
-                type="button"
-                className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-                onClick={postJob}
-              >
-                Publish Now
-              </button>
-              {/* </Link> */}
+              {!applyNow ? (
+                <button
+                  className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                  onClick={postJob}
+                >
+                  Publish Now
+                </button>
+              ) : (
+                <div className="mt-4">
+                  <RotatingLines
+                    visible={true}
+                    width="50"
+                    strokeColor="orange"
+                    strokeWidth="5"
+                    animationDuration="0.75"
+                    ariaLabel="rotating-lines-loading"
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
