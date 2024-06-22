@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { getAllTalents } from "@/api/talent/getAllTalents";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { formatDate } from "@/utils/utils";
 
 const page = () => {
   const [name, setName] = useState<string>("");
@@ -304,6 +305,9 @@ const page = () => {
                   <th scope="col" className="px-4 py-3">
                     Location
                   </th>
+                  <th scope="col" className="px-4 py-3">
+                    Created At
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -341,17 +345,17 @@ const page = () => {
                         </th>
                         <td
                           onClick={() => handleRowClick(item)}
-                          className="px-4 py-2 whitespace-nowrap"
+                          className="pl-4 py-2 whitespace-nowrap"
                         >
-                          <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                          <span className="bg-primary-100 text-primary-800 text-xs font-medium py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
                             {item?.email}
                           </span>
                         </td>
                         <td
                           onClick={() => handleRowClick(item)}
-                          className="px-4 py-2 whitespace-nowrap"
+                          className="pl-4 py-2 whitespace-nowrap"
                         >
-                          <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                          <span className="bg-primary-100 text-primary-800 text-xs font-medium py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
                             {item?.industry}
                           </span>
                         </td>
@@ -361,7 +365,15 @@ const page = () => {
                         >
                           <span>{item?.country}</span>
                         </td>
-                        <td className="px-4 py-2 relative">
+                        <td
+                          onClick={() => handleRowClick(item)}
+                          className="pl-4 py-2"
+                        >
+                          <span className="bg-primary-100 text-primary-800 text-xs font-medium py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                            {formatDate(item?.createdAt)}
+                          </span>
+                        </td>
+                        {/* <td className="px-4 py-2 relative">
                           <button
                             id="-dropdown-button"
                             type="button"
@@ -377,7 +389,7 @@ const page = () => {
                               <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                             </svg>
                           </button>
-                        </td>
+                        </td> */}
                         {isDialogOpen && (
                           <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
                             <div className="relative bg-white p-5 rounded-lg max-w-2xl w-full border border-black-400">

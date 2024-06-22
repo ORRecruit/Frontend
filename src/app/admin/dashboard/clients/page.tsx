@@ -424,13 +424,15 @@ const page = () => {
                       <span>{formatDate(item.created_at)}</span>
                     </td>
                     <td className="px-4 py-2 whitespace-nowrap relative">
-                      <Image
+                      <svg
                         onClick={() => toggleEditDialog(item.id)}
-                        width={20}
-                        height={20}
-                        src="/three-dot.svg"
-                        alt="illustration"
-                      />
+                        className="w-5 h-5"
+                        aria-hidden="true"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                      </svg>
                       {editDialogItem === item.id && (
                         <p
                           onClick={() => patchAndOpenDialog(item)}
