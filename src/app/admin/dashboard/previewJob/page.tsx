@@ -20,6 +20,7 @@ interface PreviewData {
   location: string;
   experienceRequired: string;
   qualification: string;
+  client_id: any;
 }
 
 const page = () => {
@@ -61,6 +62,7 @@ const page = () => {
       ...previewData,
       isPublished: true,
       jobStatus: "PENDING",
+      client_id: Number(previewData.client_id),
     };
     console.log("previewDAta", previewData);
     const response = await postJobMutation.mutateAsync(jobDataToSend);
