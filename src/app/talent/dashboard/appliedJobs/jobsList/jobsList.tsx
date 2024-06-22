@@ -5,6 +5,12 @@ import React from "react";
 import { appliedJobs } from "@/api/talent/showAppliedJobs";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCandidateJobs } from "@/api/jobs/fetchCandidateJobs";
+import {
+  createMarkup,
+  formatDate,
+  formatString,
+  removeDoubleQuotes,
+} from "@/utils/utils";
 
 const jobsList = () => {
   const [jobsData, setJobsData] = React.useState<any>();
@@ -17,6 +23,17 @@ const jobsList = () => {
   // useEffect(() => {
   //   console.log("data....", candidateId, data?.applications);
   // }, [data]);
+  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+  const [selectedItem, setSelectedItem] = React.useState<any>(null);
+
+  const handleRowClick = (item: any) => {
+    setSelectedItem(item);
+    setIsDialogOpen(!isDialogOpen);
+  };
+  const closeDialog = () => {
+    setIsDialogOpen(!isDialogOpen);
+  };
+
   const candidateId = localStorage.getItem("candidateId");
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get jobs for candidates"],
@@ -153,10 +170,19 @@ const jobsList = () => {
                     Company
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    Status
+                    Industry
                   </th>
-                  <th scope="col" className="px-4 py-3 min-w-[14rem]">
+                  <th scope="col" className="px-4 py-3">
                     Location
+                  </th>
+                  <th scope="col" className="px-4 py-3">
+                    Contract Type
+                  </th>
+                  <th scope="col" className="px-4 py-3">
+                    Req. Experience
+                  </th>
+                  <th scope="col" className="px-4 py-3">
+                    Job Venue
                   </th>
                   <th scope="col" className="px-4 py-3">
                     Date
@@ -181,26 +207,60 @@ const jobsList = () => {
                         </div>
                       </td>
                       <th
+                        onClick={() => handleRowClick(item)}
                         scope="row"
                         className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
                         {item.title}
                       </th>
-                      <td className="px-4 py-2 whitespace-nowrap">
+                      <td
+                        onClick={() => handleRowClick(item)}
+                        className="py-2 whitespace-nowrap"
+                      >
                         <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
                           {item.companyName}
                         </span>
                       </td>
-                      <td className="px-4 py-2 whitespace-nowrap">
-                        <span>{item.jobStatus}</span>
+                      <td
+                        onClick={() => handleRowClick(item)}
+                        className="pl-4 py-2 text-xs font-medium"
+                      >
+                        <span>{item.industry}</span>
                       </td>
-                      <td className="px-4 py-2 font-medium whitespace-nowrap">
+                      <td
+                        onClick={() => handleRowClick(item)}
+                        className="pl-4 py-2 text-xs font-medium"
+                      >
                         <span>{item.location}</span>
                       </td>
-                      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <span>13/02/2024</span>
+                      <td
+                        onClick={() => handleRowClick(item)}
+                        className="pl-4 py-2 text-xs font-medium"
+                      >
+                        <span>{formatString(item.contractType)}</span>
                       </td>
-                      <td className="px-4 py-2">
+                      <td
+                        onClick={() => handleRowClick(item)}
+                        className="pl-4 py-2 text-xs font-medium"
+                      >
+                        <span>{item.experienceRequired} Years</span>
+                      </td>
+                      <td
+                        onClick={() => handleRowClick(item)}
+                        className="pl-4 py-2 text-xs font-medium"
+                      >
+                        <span>
+                          {item.jobVenue.charAt(0).toUpperCase() +
+                            item.jobVenue.slice(1)}
+                        </span>
+                      </td>
+                      <td
+                        onClick={() => handleRowClick(item)}
+                        className="px-4 py-2 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        {formatDate(item?.applicationCreatedAt)}
+                      </td>
+                      {/* <td className="px-4 py-2">
                         <button
                           id="-dropdown-button"
                           type="button"
@@ -250,7 +310,94 @@ const jobsList = () => {
                             </a>
                           </div>
                         </div>
-                      </td>
+                      </td> */}
+                      {isDialogOpen && (
+                        <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                          <div className="relative bg-white p-5 rounded-lg max-w-4xl w-full border border-black-400 max-h-[90%] overflow-auto">
+                            <div className="bg-white rounded-lg">
+                              <div className="mb-5">
+                                <div className="flex justify-between">
+                                  <h1 className="text-3xl font-bold">
+                                    {selectedItem?.title}
+                                  </h1>
+                                </div>
+                                <div className="text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                  ORR-
+                                  {selectedItem?.industry?.slice(0, 4)}
+                                  -00
+                                  {selectedItem?.id}
+                                </div>
+
+                                <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
+                                  {selectedItem?.type}
+                                </span>
+                              </div>
+
+                              <div className="mb-5">
+                                <p className="text-gray-600">
+                                  {selectedItem?.location}
+                                </p>
+                                <p className="text-lg font-extrabold text-gray-900 dark:text-white">
+                                  {removeDoubleQuotes(
+                                    selectedItem.salaryOffered
+                                  ) + " "}
+                                  {selectedItem.currencyType} /{" "}
+                                  {selectedItem.jobType}
+                                </p>
+                                <p className="font-light text-gray-500 dark:text-gray-400">
+                                  {selectedItem?.qualification}
+                                </p>
+                                <p className="font-light text-gray-500 dark:text-gray-400">
+                                  {selectedItem?.contractType}
+                                </p>
+                                <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
+                                  {selectedItem?.experienceRequired} Yrs
+                                </p>
+                              </div>
+
+                              <h2 className="text-lg text-gray-700 font-bold mb-2">
+                                Job Description
+                              </h2>
+                              <div className="text-gray-700 mb-2">
+                                <p
+                                  dangerouslySetInnerHTML={createMarkup(
+                                    selectedItem?.description
+                                  )}
+                                />
+                                <br />
+                              </div>
+
+                              <h3 className="text-lg text-gray-700 font-bold mb-2">
+                                Responsibilities
+                              </h3>
+                              <ul className="list-disc list-inside text-gray-700 mb-2">
+                                <p
+                                  dangerouslySetInnerHTML={createMarkup(
+                                    selectedItem?.responsibilities
+                                  )}
+                                />
+                              </ul>
+                              <div className="text-gray-700 mb-2">
+                                <h3 className="text-lg font-bold mb-2">
+                                  Requirements
+                                </h3>
+                                <p
+                                  className="list-disc list-inside text-gray-700 mb-2"
+                                  dangerouslySetInnerHTML={createMarkup(
+                                    selectedItem?.requirements
+                                  )}
+                                />
+                              </div>
+                            </div>
+                            <button
+                              onClick={closeDialog} // This closes the modal when clicked
+                              className="absolute top-0 right-0 p-8 text-lg text-black bg-transparent text-2xl"
+                            >
+                              &times;{" "}
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     </tr>
                   );
                 })}
