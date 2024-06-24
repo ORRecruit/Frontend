@@ -1,28 +1,13 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 import { appliedJobs } from "@/api/talent/showAppliedJobs";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCandidateJobs } from "@/api/jobs/fetchCandidateJobs";
-import {
-  createMarkup,
-  formatDate,
-  formatString,
-  removeDoubleQuotes,
-} from "@/utils/utils";
+import { formatDate, formatString } from "@/utils/utils";
+import JobDetailModal from "@/components/modals/jobDetailModal";
 
 const jobsList = () => {
-  const [jobsData, setJobsData] = React.useState<any>();
-  // const candidateId: any = localStorage.getItem("candidateId");
-  // const { data, error, isLoading, refetch } = useQuery({
-  //   queryKey: ["get all naukrian"],
-  //   queryFn: () => appliedJobs(candidateId ? candidateId : ""),
-  // });
-
-  // useEffect(() => {
-  //   console.log("data....", candidateId, data?.applications);
-  // }, [data]);
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState<any>(null);
 
@@ -48,7 +33,6 @@ const jobsList = () => {
         const response = await appliedJobs(candidateId);
         if (response) {
           console.log(response);
-          setJobsData(response);
         }
       } catch (error) {}
     })();
@@ -260,142 +244,12 @@ const jobsList = () => {
                       >
                         {formatDate(item?.applicationCreatedAt)}
                       </td>
-                      {/* <td className="px-4 py-2">
-                        <button
-                          id="-dropdown-button"
-                          type="button"
-                          data-dropdown-toggle="-dropdown"
-                          className="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                        >
-                          <svg
-                            className="w-5 h-5"
-                            aria-hidden="true"
-                            fill="currentColor"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                          </svg>
-                        </button>
-                        <div
-                          id="-dropdown"
-                          className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                        >
-                          <ul
-                            className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                            aria-labelledby="-dropdown-button"
-                          >
-                            <li>
-                              <a
-                                href="#"
-                                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                              >
-                                Show
-                              </a>
-                            </li>
-                            <li>
-                              <a
-                                href="#"
-                                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                              >
-                                Edit
-                              </a>
-                            </li>
-                          </ul>
-                          <div className="py-1">
-                            <a
-                              href="#"
-                              className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                            >
-                              Delete
-                            </a>
-                          </div>
-                        </div>
-                      </td> */}
                       {isDialogOpen && (
                         <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
-                          <div className="relative bg-white p-5 rounded-lg max-w-4xl w-full border border-black-400 max-h-[90%] overflow-auto">
-                            <div className="bg-white rounded-lg">
-                              <div className="mb-5">
-                                <div className="flex justify-between">
-                                  <h1 className="text-3xl font-bold">
-                                    {selectedItem?.title}
-                                  </h1>
-                                </div>
-                                <div className="text-lg font-semibold text-gray-500 dark:text-gray-400">
-                                  ORR-
-                                  {selectedItem?.industry?.slice(0, 4)}
-                                  -00
-                                  {selectedItem?.id}
-                                </div>
-
-                                <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
-                                  {selectedItem?.type}
-                                </span>
-                              </div>
-
-                              <div className="mb-5">
-                                <p className="text-gray-600">
-                                  {selectedItem?.location}
-                                </p>
-                                <p className="text-lg font-extrabold text-gray-900 dark:text-white">
-                                  {removeDoubleQuotes(
-                                    selectedItem.salaryOffered
-                                  ) + " "}
-                                  {selectedItem.currencyType} /{" "}
-                                  {selectedItem.jobType}
-                                </p>
-                                <p className="font-light text-gray-500 dark:text-gray-400">
-                                  {selectedItem?.qualification}
-                                </p>
-                                <p className="font-light text-gray-500 dark:text-gray-400">
-                                  {selectedItem?.contractType}
-                                </p>
-                                <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
-                                  {selectedItem?.experienceRequired} Yrs
-                                </p>
-                              </div>
-
-                              <h2 className="text-lg text-gray-700 font-bold mb-2">
-                                Job Description
-                              </h2>
-                              <div className="text-gray-700 mb-2">
-                                <p
-                                  dangerouslySetInnerHTML={createMarkup(
-                                    selectedItem?.description
-                                  )}
-                                />
-                                <br />
-                              </div>
-
-                              <h3 className="text-lg text-gray-700 font-bold mb-2">
-                                Responsibilities
-                              </h3>
-                              <ul className="list-disc list-inside text-gray-700 mb-2">
-                                <p
-                                  dangerouslySetInnerHTML={createMarkup(
-                                    selectedItem?.responsibilities
-                                  )}
-                                />
-                              </ul>
-                              <div className="text-gray-700 mb-2">
-                                <h3 className="text-lg font-bold mb-2">
-                                  Requirements
-                                </h3>
-                                <p
-                                  className="list-disc list-inside text-gray-700 mb-2"
-                                  dangerouslySetInnerHTML={createMarkup(
-                                    selectedItem?.requirements
-                                  )}
-                                />
-                              </div>
-                            </div>
-                            <button
-                              onClick={closeDialog} // This closes the modal when clicked
-                              className="absolute top-0 right-0 p-8 text-lg text-black bg-transparent text-2xl"
-                            >
-                              &times;{" "}
-                            </button>
-                          </div>
+                          <JobDetailModal
+                            data={selectedItem}
+                            closeDialog={closeDialog}
+                          />
                         </div>
                       )}
                     </tr>

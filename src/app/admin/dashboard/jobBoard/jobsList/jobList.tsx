@@ -16,20 +16,15 @@ import { jobPublishApi } from "@/api/jobs/isPublishApi";
 import { jobCompleteApi } from "@/api/jobs/markComplete";
 import QuillTextEditor from "@/components/dashboard/quilEditor/QuillTextEditor";
 import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
-import {
-  createMarkup,
-  formatDate,
-  formatString,
-  removeDoubleQuotes,
-} from "@/utils/utils";
+import { formatDate, formatString } from "@/utils/utils";
 import { getAllClients } from "@/api/recruiter/getAllClients";
 import { RotatingLines } from "react-loader-spinner";
+import JobDetailModal from "@/components/modals/jobDetailModal";
 
 const jobList = () => {
   const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
-  const [showOptions, setShowOptions] = useState(false);
   const [activeOptionsIndex, setActiveOptionsIndex] = useState<number | null>(
     null
   );
@@ -62,12 +57,10 @@ const jobList = () => {
   });
   const [editId, setEditId] = useState<any>(null);
   const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
-  const [filterString, setFilterString] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [localTitle, setLocalTitle] = useState<string>("");
   const [selectedFilter, setSelectedFilter] = useState("ALL");
   const [filter, setFilter] = useState<boolean>(false);
-  const [jobType, setJobType] = useState<string>("");
   const [contractType, setContractType] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [jobVenue, setJobVenue] = useState<string>("");
@@ -830,7 +823,6 @@ const jobList = () => {
                               </div>
                             </td>
                             <td
-                              // scope="row"
                               className="pr-4 py-2 whitespace-nowrap"
                               onClick={() => handleRowClick(item)}
                             >
@@ -839,7 +831,6 @@ const jobList = () => {
                               </span>
                             </td>
                             <td
-                              // scope="row"
                               className="pr-4 py-2 whitespace-nowrap"
                               onClick={() => handleRowClick(item)}
                             >
@@ -997,89 +988,10 @@ const jobList = () => {
                             </td>
                             {isDialogOpen && (
                               <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
-                                <div className="relative bg-white p-5 rounded-lg max-w-4xl w-full border border-black-400 max-h-[90%] overflow-auto">
-                                  <div className="bg-white rounded-lg">
-                                    <div className="mb-5">
-                                      <div className="flex justify-between">
-                                        <h1 className="text-3xl font-bold">
-                                          {selectedItem?.title}
-                                        </h1>
-                                      </div>
-                                      <div className="text-lg font-semibold text-gray-500 dark:text-gray-400">
-                                        ORR-
-                                        {selectedItem?.industry?.slice(0, 4)}
-                                        -00
-                                        {selectedItem?.id}
-                                      </div>
-
-                                      <span className="inline-block bg-green-200 text-green-800 text-xs px-2 rounded">
-                                        {selectedItem?.type}
-                                      </span>
-                                    </div>
-
-                                    <div className="mb-5">
-                                      <p className="text-gray-600">
-                                        {selectedItem?.location}
-                                      </p>
-                                      <p className="text-lg font-extrabold text-gray-900 dark:text-white">
-                                        {removeDoubleQuotes(
-                                          selectedItem.salaryOffered
-                                        ) + " "}
-                                        {selectedItem.currencyType} /{" "}
-                                        {selectedItem.jobType}
-                                      </p>
-                                      <p className="font-light text-gray-500 dark:text-gray-400">
-                                        {selectedItem?.qualification}
-                                      </p>
-                                      <p className="font-light text-gray-500 dark:text-gray-400">
-                                        {selectedItem?.contractType}
-                                      </p>
-                                      <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
-                                        {selectedItem?.experienceRequired} Yrs
-                                      </p>
-                                    </div>
-
-                                    <h2 className="text-lg text-gray-700 font-bold mb-2">
-                                      Job Description
-                                    </h2>
-                                    <div className="text-gray-700 mb-2">
-                                      <p
-                                        dangerouslySetInnerHTML={createMarkup(
-                                          selectedItem?.description
-                                        )}
-                                      />
-                                      <br />
-                                    </div>
-
-                                    <h3 className="text-lg text-gray-700 font-bold mb-2">
-                                      Responsibilities
-                                    </h3>
-                                    <ul className="list-disc list-inside text-gray-700 mb-2">
-                                      <p
-                                        dangerouslySetInnerHTML={createMarkup(
-                                          selectedItem?.responsibilities
-                                        )}
-                                      />
-                                    </ul>
-                                    <div className="text-gray-700 mb-2">
-                                      <h3 className="text-lg font-bold mb-2">
-                                        Requirements
-                                      </h3>
-                                      <p
-                                        className="list-disc list-inside text-gray-700 mb-2"
-                                        dangerouslySetInnerHTML={createMarkup(
-                                          selectedItem?.requirements
-                                        )}
-                                      />
-                                    </div>
-                                  </div>
-                                  <button
-                                    onClick={closeDialog} // This closes the modal when clicked
-                                    className="absolute top-0 right-0 p-8 text-lg text-black bg-transparent text-2xl"
-                                  >
-                                    &times;{" "}
-                                  </button>
-                                </div>
+                                <JobDetailModal
+                                  data={selectedItem}
+                                  closeDialog={closeDialog}
+                                />
                               </div>
                             )}
                             {deleteDialog && (
@@ -1098,12 +1010,6 @@ const jobList = () => {
                                       Are You Sure Want To Delete The Job?
                                     </p>
                                     <div>
-                                      {/* <button
-                                        onClick={() => closeDeleteDialog()}
-                                        className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
-                                      >
-                                        Yes
-                                      </button> */}
                                       {!loaderDelete ? (
                                         <button
                                           onClick={() => closeDeleteDialog()}
@@ -1144,12 +1050,6 @@ const jobList = () => {
                                       Are You Sure Want To Publish The Job?
                                     </p>
                                     <div>
-                                      {/* <button
-                                        onClick={() => closePublishDialog(item)}
-                                        className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
-                                      >
-                                        Yes
-                                      </button> */}
                                       {!loaderPublish ? (
                                         <button
                                           onClick={() =>
@@ -1192,14 +1092,6 @@ const jobList = () => {
                                       Are You Sure Want To Complete The Job?
                                     </p>
                                     <div>
-                                      {/* <button
-                                        onClick={() =>
-                                          closeCompleteDialog(item)
-                                        }
-                                        className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
-                                      >
-                                        Yes
-                                      </button> */}
                                       {!loaderMarkComp ? (
                                         <button
                                           onClick={() =>
@@ -1394,15 +1286,6 @@ const jobList = () => {
                                             onSkillsChange={handleSkillsChange}
                                             initialSkills={skills}
                                           />
-                                          {/* <input
-                                          type="text"
-                                          id="default-input"
-                                          name="skillsRequired"
-                                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                                          value={formData.skillsRequired}
-                                          onChange={handleChange}
-                                          required={true}
-                                        /> */}
                                         </div>
                                       </div>
                                       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
