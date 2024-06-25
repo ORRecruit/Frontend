@@ -13,7 +13,7 @@ import { formatString } from "@/utils/utils";
 const page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const jobIdFromURL = searchParams.get("jobId");
+  const jobIdFromURL = useRef(searchParams.get("jobId"));
 
   const [title, setTitle] = useState<string>("");
   const [selectedValue, setSelectedValue] = useState<any>(null);
@@ -37,12 +37,13 @@ const page = () => {
   const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
-    console.log("inside useEffect", jobIdFromURL, data);
+    console.log("inside useEffect", jobIdFromURL.current, data);
+
     if (data?.data) {
-      if (jobIdFromURL) {
+      if (jobIdFromURL.current) {
         console.log("inside internal if");
-        const jobToSelect = jobIdFromURL
-          ? data.data.find((job) => job.id.toString() === jobIdFromURL)
+        const jobToSelect = jobIdFromURL.current
+          ? data.data.find((job) => job.id.toString() === jobIdFromURL.current)
           : data.data[0];
         setSelectedValue(jobToSelect);
       }
@@ -53,7 +54,7 @@ const page = () => {
     // if (selectedValue && selectedValue.id) {
     //   router.push(`/job-board?jobId=${selectedValue?.id}`);
     // }
-    console.log("value updated", selectedValue, jobIdFromURL);
+    console.log("value updated", selectedValue, jobIdFromURL.current);
   }, [selectedValue]);
 
   const selectedJob = (item: any) => {
