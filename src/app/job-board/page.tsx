@@ -46,6 +46,7 @@ const page = () => {
           ? data.data.find((job) => job.id.toString() === jobIdFromURL.current)
           : data.data[0];
         setSelectedValue(jobToSelect);
+        router.push(`/job-board?jobId=${jobIdFromURL.current}`);
       }
     }
   }, [data]);
