@@ -37,6 +37,7 @@ const page = () => {
   const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
+    console.log("data?.data", data?.data, jobIdFromURL);
     if (data?.data) {
       const jobToSelect = jobIdFromURL
         ? data.data.find((job) => job.id.toString() === jobIdFromURL)
@@ -46,6 +47,7 @@ const page = () => {
   }, [data, jobIdFromURL]);
 
   useEffect(() => {
+    console.log("selectedValue...", selectedValue, jobIdFromURL);
     if (selectedValue && selectedValue.id) {
       router.push(`/job-board?jobId=${selectedValue?.id}`);
     }
