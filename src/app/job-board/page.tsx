@@ -14,7 +14,6 @@ const Page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const jobIdFromURL = searchParams.get("jobId");
-  console.log("outside urlllll", jobIdFromURL);
 
   const [title, setTitle] = useState<string>("");
   const [selectedValue, setSelectedValue] = useState<any>(null);
@@ -23,6 +22,7 @@ const Page = () => {
   const [contractType, setContractType] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const locations = ["USA", "Canada", "Dubai"];
+  const [initialRouteDone, setInitialRouteDone] = useState(false);
 
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all naukrian", title, contractType, jobVenue, location],
@@ -38,12 +38,10 @@ const Page = () => {
   const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
-    console.log("inside useeffect", jobIdFromURL);
     if (error) {
       console.error("Error fetching jobs:", error);
     }
     if (data?.data) {
-      console.log("jobIdFromUrl debug", jobIdFromURL, data);
       const jobToSelect = jobIdFromURL
         ? data.data.find((job) => job.id.toString() === jobIdFromURL)
         : data.data[0];
@@ -53,16 +51,14 @@ const Page = () => {
         console.warn("No job found with the specified ID.");
       }
     }
-    if (selectedValue && selectedValue.id) {
-      router.push(`/job-board?jobId=${selectedValue?.id}`);
-    }
-  }, [data, jobIdFromURL, error, selectedValue]);
+  }, [data, jobIdFromURL, error]);
 
-  // useEffect(() => {
-  //   if (selectedValue && selectedValue.id) {
-  //     router.push(`/job-board?jobId=${selectedValue?.id}`);
-  //   }
-  // }, [selectedValue]);
+  useEffect(() => {
+    if (selectedValue && selectedValue.id && !initialRouteDone) {
+      router.push(`/job-board?jobId=${selectedValue.id}`);
+      setInitialRouteDone(true);
+    }
+  }, [selectedValue, initialRouteDone]);
 
   const selectedJob = (item: any) => {
     setSelectedValue(item);
@@ -85,18 +81,6 @@ const Page = () => {
 
   const createMarkup = (htmlContent: any) => {
     return { __html: DOMPurify.sanitize(htmlContent) };
-  };
-
-  const myRef = useRef<HTMLDivElement>(null);
-
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, []);
-
-  const scrollToBottom = () => {
-    if (myRef.current) {
-      myRef.current.scrollIntoView({ behavior: "smooth" });
-    }
   };
 
   const filterJobs = (e: any) => {
