@@ -37,10 +37,10 @@ const page = () => {
   const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
-    if (data?.data) {
-      const jobToSelect = jobIdFromURL
-        ? data.data.find((job) => job.id.toString() === jobIdFromURL)
-        : data.data[0];
+    if (data?.data && jobIdFromURL) {
+      const jobToSelect = data.data.find(
+        (job) => job.id.toString() === jobIdFromURL
+      );
       setSelectedValue(jobToSelect);
     }
   }, [data, jobIdFromURL]);
