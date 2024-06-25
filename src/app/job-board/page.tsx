@@ -40,7 +40,7 @@ const Page = () => {
     if (error) {
       console.error("Error fetching jobs:", error);
     }
-    console.log("jobIdFromUrl again", jobIdFromURL, data);
+    console.log("jobIdFromUrl again debug", jobIdFromURL, data);
     if (data?.data && jobIdFromURL) {
       const jobToSelect = jobIdFromURL
         ? data.data.find((job) => job.id.toString() === jobIdFromURL)
@@ -51,13 +51,16 @@ const Page = () => {
         console.warn("No job found with the specified ID.");
       }
     }
-  }, [data, jobIdFromURL, error]);
-
-  useEffect(() => {
     if (selectedValue && selectedValue.id) {
       router.push(`/job-board?jobId=${selectedValue?.id}`);
     }
-  }, [selectedValue]);
+  }, [data, jobIdFromURL, selectedValue, error]);
+
+  // useEffect(() => {
+  //   if (selectedValue && selectedValue.id) {
+  //     router.push(`/job-board?jobId=${selectedValue?.id}`);
+  //   }
+  // }, [selectedValue]);
 
   const selectedJob = (item: any) => {
     setSelectedValue(item);
