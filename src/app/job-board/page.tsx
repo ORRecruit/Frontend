@@ -10,13 +10,13 @@ import { isAuthTokenExpired } from "../isAuthTokenExpired";
 import DOMPurify from "dompurify";
 import { formatString } from "@/utils/utils";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const jobIdFromURL = searchParams.get("jobId");
 
   const [title, setTitle] = useState<string>("");
-  const [selectedValue, setSelectedValue] = useState<any>({});
+  const [selectedValue, setSelectedValue] = useState<any>(null);
   const [filter, setFilter] = useState<boolean>(false);
   const [jobVenue, setJobVenue] = useState<string>("");
   const [contractType, setContractType] = useState<string>("");
@@ -44,7 +44,11 @@ const page = () => {
       const jobToSelect = jobIdFromURL
         ? data.data.find((job) => job.id.toString() === jobIdFromURL)
         : data.data[0];
-      setSelectedValue(jobToSelect);
+      if (jobToSelect) {
+        setSelectedValue(jobToSelect);
+      } else {
+        console.warn("No job found with the specified ID.");
+      }
     }
   }, [data, jobIdFromURL, error]);
 
@@ -56,6 +60,7 @@ const page = () => {
 
   const selectedJob = (item: any) => {
     setSelectedValue(item);
+    router.push(`/job-board?jobId=${item?.id}`);
   };
 
   const applyJob = (item: any) => {
@@ -398,4 +403,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
