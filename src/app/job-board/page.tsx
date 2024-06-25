@@ -37,13 +37,16 @@ const page = () => {
   const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
+    if (error) {
+      console.error("Error fetching jobs:", error);
+    }
     if (data?.data) {
       const jobToSelect = jobIdFromURL
         ? data.data.find((job) => job.id.toString() === jobIdFromURL)
         : data.data[0];
       setSelectedValue(jobToSelect);
     }
-  }, [data, jobIdFromURL]);
+  }, [data, jobIdFromURL, error]);
 
   useEffect(() => {
     if (selectedValue && selectedValue.id) {
@@ -253,44 +256,46 @@ const page = () => {
         ) : (
           <div className="max-w-screen-xl sm:flex sm:items-start sm:justify-between mx-auto p-4">
             <div className="custom-scrollbar sm:w-[29%] h-[350px] sm:h-auto overflow-auto mt-12 max-h-[65rem]">
-              {data?.data?.map((item: any, index: any) => {
-                return (
-                  <div
-                    key={index}
-                    className="border border-black-400 p-4 mb-6 rounded-2xl hover:bg-gray-200 hover:cursor-pointer"
-                    onClick={() => selectedJob(item)}
-                  >
-                    <div className="mb-0 text-xl font-semibold text-gray-900 dark:text-white">
-                      {item?.title}{" "}
+              {data?.data
+                ?.sort((a, b) => b.id - a.id)
+                .map((item: any, index: any) => {
+                  return (
+                    <div
+                      key={index}
+                      className="border border-black-400 p-4 mb-6 rounded-2xl hover:bg-gray-200 hover:cursor-pointer"
+                      onClick={() => selectedJob(item)}
+                    >
+                      <div className="mb-0 text-xl font-semibold text-gray-900 dark:text-white">
+                        {item?.title}{" "}
+                      </div>
+                      <div className="font-light text-lg text-gray-500 dark:text-gray-400">
+                        ORR-{item?.industry?.slice(0, 4)}-00{item?.id}
+                      </div>
+                      <div className="inline-block font-light text-white dark:text-gray-400 bg-primary-orange w-fit px-2 py-1 rounded-2xl my-2 mr-2">
+                        {formatString(`${item.jobVenue}`)}
+                      </div>
+                      <div className="inline-block font-light text-white dark:text-gray-400 bg-primary-orange w-fit px-2 py-1 rounded-2xl my-2">
+                        {formatString(`${item.contractType}`)}
+                      </div>
+                      <div className="text-lg font-extrabold text-gray-900 dark:text-white">
+                        {item.salaryOffered?.replace(/"/g, "") + " "}{" "}
+                        {item.currencyType} / {item.jobType}
+                      </div>
+                      <div className="font-light text-gray-500 dark:text-gray-400">
+                        {item.location}
+                      </div>
+                      <div className="mb-4 font-light text-gray-500 dark:text-gray-400">
+                        {item.experienceRequired} Yrs
+                      </div>
+                      <p
+                        className="text-sm text-gray-500 dark:text-gray-400"
+                        dangerouslySetInnerHTML={createMarkup(
+                          item?.description?.slice(0, 200)
+                        )}
+                      />
                     </div>
-                    <div className="font-light text-lg text-gray-500 dark:text-gray-400">
-                      ORR-{item?.industry?.slice(0, 4)}-00{item?.id}
-                    </div>
-                    <div className="inline-block font-light text-gray-500 dark:text-gray-400 bg-primary-orange w-fit px-2 py-1 rounded-2xl my-2 mr-2">
-                      {formatString(`${item.jobVenue}`)}
-                    </div>
-                    <div className="inline-block font-light text-gray-500 dark:text-gray-400 bg-primary-orange w-fit px-2 py-1 rounded-2xl my-2">
-                      {formatString(`${item.contractType}`)}
-                    </div>
-                    <div className="text-lg font-extrabold text-gray-900 dark:text-white">
-                      {item.salaryOffered?.replace(/"/g, "") + " "}{" "}
-                      {item.currencyType} / {item.jobType}
-                    </div>
-                    <div className="font-light text-gray-500 dark:text-gray-400">
-                      {item.location}
-                    </div>
-                    <div className="mb-4 font-light text-gray-500 dark:text-gray-400">
-                      {item.experienceRequired} Yrs
-                    </div>
-                    <p
-                      className="text-sm text-gray-500 dark:text-gray-400"
-                      dangerouslySetInnerHTML={createMarkup(
-                        item?.description?.slice(0, 200)
-                      )}
-                    />
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
             {selectedValue ? (
               <div className="bg-white rounded-lg mt-4 sm:w-[68%] sm:p-8">
