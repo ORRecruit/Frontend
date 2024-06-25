@@ -53,13 +53,16 @@ const Page = () => {
         console.warn("No job found with the specified ID.");
       }
     }
-  }, [data, jobIdFromURL, error]);
-
-  useEffect(() => {
     if (selectedValue && selectedValue.id) {
       router.push(`/job-board?jobId=${selectedValue?.id}`);
     }
-  }, [selectedValue]);
+  }, [data, jobIdFromURL, error, selectedValue]);
+
+  // useEffect(() => {
+  //   if (selectedValue && selectedValue.id) {
+  //     router.push(`/job-board?jobId=${selectedValue?.id}`);
+  //   }
+  // }, [selectedValue]);
 
   const selectedJob = (item: any) => {
     setSelectedValue(item);
@@ -86,9 +89,9 @@ const Page = () => {
 
   const myRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    scrollToBottom();
-  }, []);
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, []);
 
   const scrollToBottom = () => {
     if (myRef.current) {
