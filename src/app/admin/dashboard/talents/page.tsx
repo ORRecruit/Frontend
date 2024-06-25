@@ -133,148 +133,150 @@ const page = () => {
               </thead>
               <tbody>
                 {data &&
-                  data?.data?.map((item: any, index: any) => {
-                    return (
-                      <tr
-                        key={index}
-                        className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
-                      >
-                        <td className="px-4 py-2 w-4">
-                          <div className="flex items-center">
-                            <input
-                              id="checkbox-table-search-1"
-                              type="checkbox"
-                              className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                            />
-                            <label className="sr-only">checkbox</label>
-                          </div>
-                        </td>
-                        <td
-                          onClick={() => handleRowClick(item)}
-                          className="px-4 py-2 whitespace-nowrap"
+                  data?.data
+                    ?.sort((a: any, b: any) => b.id - a.id)
+                    ?.map((item: any, index: any) => {
+                      return (
+                        <tr
+                          key={index}
+                          className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                         >
-                          <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                            {`ORR-USR-00${item?.id}`}
-                          </span>
-                        </td>
-                        <th
-                          onClick={() => handleRowClick(item)}
-                          scope="row"
-                          className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
-                        >
-                          {item?.fullName}
-                        </th>
-                        <td
-                          onClick={() => handleRowClick(item)}
-                          className="pl-4 py-2 whitespace-nowrap"
-                        >
-                          <span className="bg-primary-100 text-primary-800 text-xs font-medium py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                            {item?.email}
-                          </span>
-                        </td>
-                        <td
-                          onClick={() => handleRowClick(item)}
-                          className="pl-4 py-2 whitespace-nowrap"
-                        >
-                          <span className="bg-primary-100 text-primary-800 text-xs font-medium py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                            {item?.industry}
-                          </span>
-                        </td>
-                        <td
-                          onClick={() => handleRowClick(item)}
-                          className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
-                          <span>{item?.country}</span>
-                        </td>
-                        <td
-                          onClick={() => handleRowClick(item)}
-                          className="pl-4 py-2"
-                        >
-                          <span className="bg-primary-100 text-primary-800 text-xs font-medium py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                            {formatDate(item?.createdAt)}
-                          </span>
-                        </td>
-                        {isDialogOpen && (
-                          <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
-                            <div className="relative bg-white p-5 rounded-lg max-w-2xl w-full border border-black-400">
-                              <div className="bg-white rounded-lg">
-                                <div className="mb-5">
-                                  <div className="flex justify-between">
-                                    <h1 className="text-3xl font-bold">
-                                      {selectedItem?.fullName}
-                                    </h1>
-                                  </div>
-                                  <div className="font-semibold text-lg text-gray-500 dark:text-gray-400 mb-2">
-                                    ORR-
-                                    {selectedItem?.industry?.slice(0, 4)}
-                                    -00
-                                    {selectedItem?.id}
-                                  </div>
+                          <td className="px-4 py-2 w-4">
+                            <div className="flex items-center">
+                              <input
+                                id="checkbox-table-search-1"
+                                type="checkbox"
+                                className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                              />
+                              <label className="sr-only">checkbox</label>
+                            </div>
+                          </td>
+                          <td
+                            onClick={() => handleRowClick(item)}
+                            className="px-4 py-2 whitespace-nowrap"
+                          >
+                            <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                              {`ORR-USR-00${item?.id}`}
+                            </span>
+                          </td>
+                          <th
+                            onClick={() => handleRowClick(item)}
+                            scope="row"
+                            className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
+                          >
+                            {item?.fullName}
+                          </th>
+                          <td
+                            onClick={() => handleRowClick(item)}
+                            className="pl-4 py-2 whitespace-nowrap"
+                          >
+                            <span className="bg-primary-100 text-primary-800 text-xs font-medium py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                              {item?.email}
+                            </span>
+                          </td>
+                          <td
+                            onClick={() => handleRowClick(item)}
+                            className="pl-4 py-2 whitespace-nowrap"
+                          >
+                            <span className="bg-primary-100 text-primary-800 text-xs font-medium py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                              {item?.industry}
+                            </span>
+                          </td>
+                          <td
+                            onClick={() => handleRowClick(item)}
+                            className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            <span>{item?.country}</span>
+                          </td>
+                          <td
+                            onClick={() => handleRowClick(item)}
+                            className="pl-4 py-2"
+                          >
+                            <span className="bg-primary-100 text-primary-800 text-xs font-medium py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                              {formatDate(item?.createdAt)}
+                            </span>
+                          </td>
+                          {isDialogOpen && (
+                            <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                              <div className="relative bg-white p-5 rounded-lg max-w-2xl w-full border border-black-400">
+                                <div className="bg-white rounded-lg">
+                                  <div className="mb-5">
+                                    <div className="flex justify-between">
+                                      <h1 className="text-3xl font-bold">
+                                        {selectedItem?.fullName}
+                                      </h1>
+                                    </div>
+                                    <div className="font-semibold text-lg text-gray-500 dark:text-gray-400 mb-2">
+                                      ORR-
+                                      {selectedItem?.industry?.slice(0, 4)}
+                                      -00
+                                      {selectedItem?.id}
+                                    </div>
 
-                                  <span className="bg-primary-orange p-2 font-light text-white dark:text-gray-400 rounded-2xl mr-2">
-                                    {selectedItem?.email}
-                                  </span>
-                                  <span className="bg-primary-orange p-2 font-light text-white dark:text-gray-400 rounded-2xl">
-                                    {selectedItem?.industry}
-                                  </span>
-                                </div>
-
-                                <div className="mb-5">
-                                  <p className="text-gray-600">
-                                    {selectedItem?.country}
-                                  </p>
-                                  <p className="font-light text-gray-500 dark:text-gray-400">
-                                    {selectedItem?.location}
-                                  </p>
-
-                                  <div>
-                                    <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
-                                      SKills
-                                    </h1>
-                                    {selectedItem?.skills?.map(
-                                      (item: any, index: number) => {
-                                        return (
-                                          <span key={index}>{item}, </span>
-                                        );
-                                      }
-                                    )}
-                                  </div>
-
-                                  <div className="text-gray-900 dark:text-white">
-                                    <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
-                                      Tech
-                                    </h1>
-                                    {selectedItem?.tools?.map(
-                                      (item: any, index: number) => {
-                                        return (
-                                          <span key={index}>{item}, </span>
-                                        );
-                                      }
-                                    )}
-                                  </div>
-
-                                  <div className="text-gray-900 dark:text-white">
-                                    <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
-                                      About Me
-                                    </h1>
-                                    <span className="font-light text-gray-500 dark:text-gray-400">
-                                      {selectedItem?.about}
+                                    <span className="bg-primary-orange p-2 font-light text-white dark:text-gray-400 rounded-2xl mr-2">
+                                      {selectedItem?.email}
+                                    </span>
+                                    <span className="bg-primary-orange p-2 font-light text-white dark:text-gray-400 rounded-2xl">
+                                      {selectedItem?.industry}
                                     </span>
                                   </div>
+
+                                  <div className="mb-5">
+                                    <p className="text-gray-600">
+                                      {selectedItem?.country}
+                                    </p>
+                                    <p className="font-light text-gray-500 dark:text-gray-400">
+                                      {selectedItem?.location}
+                                    </p>
+
+                                    <div>
+                                      <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
+                                        SKills
+                                      </h1>
+                                      {selectedItem?.skills?.map(
+                                        (item: any, index: number) => {
+                                          return (
+                                            <span key={index}>{item}, </span>
+                                          );
+                                        }
+                                      )}
+                                    </div>
+
+                                    <div className="text-gray-900 dark:text-white">
+                                      <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
+                                        Tech
+                                      </h1>
+                                      {selectedItem?.tools?.map(
+                                        (item: any, index: number) => {
+                                          return (
+                                            <span key={index}>{item}, </span>
+                                          );
+                                        }
+                                      )}
+                                    </div>
+
+                                    <div className="text-gray-900 dark:text-white">
+                                      <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
+                                        About Me
+                                      </h1>
+                                      <span className="font-light text-gray-500 dark:text-gray-400">
+                                        {selectedItem?.about}
+                                      </span>
+                                    </div>
+                                  </div>
                                 </div>
+                                <button
+                                  onClick={closeDialog}
+                                  className="absolute top-0 right-0 p-8 text-lg text-black bg-transparent text-2xl"
+                                >
+                                  &times;{" "}
+                                </button>
                               </div>
-                              <button
-                                onClick={closeDialog}
-                                className="absolute top-0 right-0 p-8 text-lg text-black bg-transparent text-2xl"
-                              >
-                                &times;{" "}
-                              </button>
                             </div>
-                          </div>
-                        )}
-                      </tr>
-                    );
-                  })}
+                          )}
+                        </tr>
+                      );
+                    })}
               </tbody>
             </table>
           </div>
