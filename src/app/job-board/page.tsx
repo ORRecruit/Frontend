@@ -14,6 +14,7 @@ const Page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const jobIdFromURL = searchParams.get("jobId");
+  console.log("outside urlllll", jobIdFromURL);
 
   const [title, setTitle] = useState<string>("");
   const [selectedValue, setSelectedValue] = useState<any>(null);
@@ -37,6 +38,7 @@ const Page = () => {
   const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
+    console.log("inside useeffect", jobIdFromURL);
     if (error) {
       console.error("Error fetching jobs:", error);
     }
