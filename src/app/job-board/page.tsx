@@ -54,7 +54,7 @@ const page = () => {
         : data.data[0];
       setSelectedValue(jobToSelect);
     }
-    console.log("selectedValue...", selectedValue, jobIdFromURL);
+    console.log("selectedValueValue...", selectedValue, jobIdFromURL);
     if (selectedValue && selectedValue.id) {
       router.push(`/job-board?jobId=${selectedValue?.id}`);
     }
@@ -62,6 +62,7 @@ const page = () => {
 
   const selectedJob = (item: any) => {
     setSelectedValue(item);
+    router.push(`/job-board?jobId=${selectedValue?.id}`);
   };
 
   const applyJob = (item: any) => {
