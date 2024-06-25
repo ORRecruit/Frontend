@@ -17,6 +17,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   if (path && path === "/admin/dashboard/jobBoard/ai-matching" && jobId) {
     path = path + `?jobId=${jobId}`;
   }
+  if (path && jobId) {
+    path = path + `?jobId=${jobId}`;
+  }
 
   // Function to check if the path matches the blog details with a dynamic number
   const isPublicBlogDetail = (path: string) => {
