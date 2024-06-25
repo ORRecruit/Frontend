@@ -41,6 +41,7 @@ const Page = () => {
       console.error("Error fetching jobs:", error);
     }
     if (data?.data) {
+      console.log("jobIdFromUrl", jobIdFromURL, data.data);
       const jobToSelect = jobIdFromURL
         ? data.data.find((job) => job.id.toString() === jobIdFromURL)
         : data.data[0];
