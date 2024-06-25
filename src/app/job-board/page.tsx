@@ -16,7 +16,7 @@ const page = () => {
   const jobIdFromURL = searchParams.get("jobId");
 
   const [title, setTitle] = useState<string>("");
-  const [selectedValue, setSelectedValue] = useState<any>({});
+  const [selectedValue, setSelectedValue] = useState<any>(null);
   const [filter, setFilter] = useState<boolean>(false);
   const [jobVenue, setJobVenue] = useState<string>("");
   const [contractType, setContractType] = useState<string>("");
@@ -37,17 +37,15 @@ const page = () => {
   const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
-    console.log("data?.data", data?.data, jobIdFromURL);
     if (data?.data) {
       const jobToSelect = jobIdFromURL
         ? data.data.find((job) => job.id.toString() === jobIdFromURL)
         : data.data[0];
       setSelectedValue(jobToSelect);
     }
-  }, [data, jobIdFromURL]);
+  }, [data]);
 
   useEffect(() => {
-    console.log("selectedValueValue...", selectedValue, jobIdFromURL);
     if (selectedValue && selectedValue.id) {
       router.push(`/job-board?jobId=${selectedValue?.id}`);
     }
@@ -55,7 +53,7 @@ const page = () => {
 
   const selectedJob = (item: any) => {
     setSelectedValue(item);
-    router.push(`/job-board?jobId=${selectedValue?.id}`);
+    router.push(`/job-board?jobId=${item?.id}`);
   };
 
   const applyJob = (item: any) => {
