@@ -1,11 +1,10 @@
 "use client";
-import Navbar from "@/components/landing/navbar/navbar";
 import React, { useEffect, useRef, useState } from "react";
 import About from "@/components/landing/about/about";
 import Footer from "@/components/landing/footer/footer";
 import { getAllJobs } from "@/api/jobs/getAllJobs";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import CustomLoader from "@/components/customLoader";
 import { isAuthTokenExpired } from "../isAuthTokenExpired";
 import DOMPurify from "dompurify";
@@ -13,10 +12,12 @@ import { formatString } from "@/utils/utils";
 
 const page = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const jobIdFromURL = searchParams.get("jobId");
+
   const [title, setTitle] = useState<string>("");
   const [selectedValue, setSelectedValue] = useState<any>({});
   const [filter, setFilter] = useState<boolean>(false);
-  // const [jobType, setJobType] = useState<string>("");
   const [jobVenue, setJobVenue] = useState<string>("");
   const [contractType, setContractType] = useState<string>("");
   const [location, setLocation] = useState<string>("");
@@ -32,15 +33,25 @@ const page = () => {
         `location=${location}`
       ),
   });
+
   const [showOptions, setShowOptions] = useState(false);
-  console.log("The valute seclected for location is >>", location);
+
   useEffect(() => {
-    console.log("data....", data?.data);
-    setSelectedValue(data?.data[0]);
-  }, [data]);
+    if (data?.data) {
+      const jobToSelect = jobIdFromURL
+        ? data.data.find((job) => job.id.toString() === jobIdFromURL)
+        : data.data[0];
+      setSelectedValue(jobToSelect);
+    }
+  }, [data, jobIdFromURL]);
+
+  useEffect(() => {
+    if (selectedValue && selectedValue.id) {
+      router.push(`/job-board?jobId=${selectedValue?.id}`);
+    }
+  }, [selectedValue]);
 
   const selectedJob = (item: any) => {
-    console.log("item...", item);
     setSelectedValue(item);
   };
 
@@ -75,7 +86,6 @@ const page = () => {
   };
 
   const filterJobs = (e: any) => {
-    console.log("e.target", e.target.value);
     setTitle(e.target.value);
     refetch();
   };
@@ -90,7 +100,7 @@ const page = () => {
     setContractType("");
     setJobVenue("");
     setLocation("");
-    // refetch();
+    refetch();
   };
 
   return (
@@ -172,66 +182,9 @@ const page = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col items-stretch justify-end flex-shrink-0 w-full pb-4 md:pb-0 md:w-auto md:flex-row md:items-center md:space-x-3">
-                    <button
-                      type="button"
-                      className="flex items-center justify-center px-4 py-2 text-sm font-medium text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-                    >
-                      <svg
-                        className="h-3.5 w-3.5 mr-1.5 -ml-1"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                      >
-                        <path
-                          clipRule="evenodd"
-                          fillRule="evenodd"
-                          d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                        />
-                      </svg>
-                      Add new product
-                    </button>
-                  </div>
                 </div>
                 {filter && (
                   <div className="flex mt-2 mb-2">
-                    {/* <div className="flex items-center">
-                      <label className="mr-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Job Type:
-                      </label>
-                      <div className="flex flex-wrap">
-                        <label className="mr-4">
-                          <input
-                            type="radio"
-                            name="jobType"
-                            value="Hour"
-                            checked={jobType === "Hour"}
-                            onChange={(e) => setJobType(e.target.value)}
-                          />
-                          Hour
-                        </label>
-                        <label className="mr-4">
-                          <input
-                            type="radio"
-                            name="jobType"
-                            value="Month"
-                            checked={jobType === "Month"}
-                            onChange={(e) => setJobType(e.target.value)}
-                          />
-                          Month
-                        </label>
-                        <label className="mr-4">
-                          <input
-                            type="radio"
-                            name="jobType"
-                            value="Year"
-                            checked={jobType === "Year"}
-                            onChange={(e) => setJobType(e.target.value)}
-                          />
-                          Year
-                        </label>
-                      </div>
-                    </div> */}
                     <div className="flex items-center">
                       <select
                         id="jobVenue"
@@ -313,10 +266,10 @@ const page = () => {
                     <div className="font-light text-lg text-gray-500 dark:text-gray-400">
                       ORR-{item?.industry?.slice(0, 4)}-00{item?.id}
                     </div>
-                    <div className="inline-block font-light text-gray-500 dark:text-gray-400 bg-primary-orange text-white w-fit px-2 py-1 rounded-2xl my-2 mr-2">
+                    <div className="inline-block font-light text-gray-500 dark:text-gray-400 bg-primary-orange w-fit px-2 py-1 rounded-2xl my-2 mr-2">
                       {formatString(`${item.jobVenue}`)}
                     </div>
-                    <div className="inline-block font-light text-gray-500 dark:text-gray-400 bg-primary-orange text-white w-fit px-2 py-1 rounded-2xl my-2">
+                    <div className="inline-block font-light text-gray-500 dark:text-gray-400 bg-primary-orange w-fit px-2 py-1 rounded-2xl my-2">
                       {formatString(`${item.contractType}`)}
                     </div>
                     <div className="text-lg font-extrabold text-gray-900 dark:text-white">
@@ -384,10 +337,10 @@ const page = () => {
                     {selectedValue?.salaryOffered?.replace(/"/g, "") + " "}{" "}
                     {selectedValue?.currencyType} / {selectedValue?.jobType}
                   </p>
-                  <p className="inline-block font-light text-gray-500 dark:text-gray-400 bg-primary-orange text-white w-fit px-6 py-1 rounded-2xl my-2 mr-2">
+                  <p className="inline-block font-light dark:text-gray-400 bg-primary-orange text-white w-fit px-6 py-1 rounded-2xl my-2 mr-2">
                     {formatString(`${selectedValue?.jobVenue}`)}
                   </p>
-                  <p className="inline-block font-light text-gray-500 dark:text-gray-400 bg-primary-orange text-white w-fit px-6 py-1 rounded-2xl my-2 mr-2">
+                  <p className="inline-block font-light dark:text-gray-400 bg-primary-orange text-white w-fit px-6 py-1 rounded-2xl my-2 mr-2">
                     {formatString(`${selectedValue?.contractType}`)}
                   </p>
                   <p className="font-light text-gray-500 dark:text-gray-400">
