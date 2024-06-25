@@ -37,9 +37,10 @@ const page = () => {
   const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
-    console.log("inside useEffect", jobIdFromURL);
+    console.log("inside useEffect", jobIdFromURL, data);
     if (data?.data) {
       if (jobIdFromURL) {
+        console.log("inside internal if");
         const jobToSelect = jobIdFromURL
           ? data.data.find((job) => job.id.toString() === jobIdFromURL)
           : data.data[0];
@@ -49,13 +50,15 @@ const page = () => {
   }, [data]);
 
   useEffect(() => {
-    if (selectedValue && selectedValue.id) {
-      router.push(`/job-board?jobId=${selectedValue?.id}`);
-    }
+    // if (selectedValue && selectedValue.id) {
+    //   router.push(`/job-board?jobId=${selectedValue?.id}`);
+    // }
+    console.log("value updated", selectedValue, jobIdFromURL);
   }, [selectedValue]);
 
   const selectedJob = (item: any) => {
     setSelectedValue(item);
+    console.log("on job click");
     router.push(`/job-board?jobId=${item?.id}`);
   };
 
