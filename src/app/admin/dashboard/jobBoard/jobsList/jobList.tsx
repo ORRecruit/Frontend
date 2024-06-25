@@ -182,6 +182,8 @@ const jobList = () => {
       !formData.tier
     ) {
       toast.error("Please Provide All Details");
+      console.log("formData error details", formData);
+      setApplyNow(false);
       return;
     }
 
@@ -1140,6 +1142,7 @@ const jobList = () => {
                                                 value={formData.client_id}
                                                 onChange={handleChange}
                                               >
+                                                <option>Select Option</option>
                                                 {clientsData?.map(
                                                   (client: any, index: any) => (
                                                     <option
@@ -1163,6 +1166,7 @@ const jobList = () => {
                                                 value={formData.tier}
                                                 onChange={handleChange}
                                               >
+                                                <option>Select Option</option>
                                                 <option value="1">
                                                   Tier 1
                                                 </option>

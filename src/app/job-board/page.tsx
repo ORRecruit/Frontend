@@ -10,19 +10,18 @@ import { isAuthTokenExpired } from "../isAuthTokenExpired";
 import DOMPurify from "dompurify";
 import { formatString } from "@/utils/utils";
 
-const Page = () => {
+const page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const jobIdFromURL = searchParams.get("jobId");
 
   const [title, setTitle] = useState<string>("");
-  const [selectedValue, setSelectedValue] = useState<any>(null);
+  const [selectedValue, setSelectedValue] = useState<any>({});
   const [filter, setFilter] = useState<boolean>(false);
   const [jobVenue, setJobVenue] = useState<string>("");
   const [contractType, setContractType] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const locations = ["USA", "Canada", "Dubai"];
-  const [initialRouteDone, setInitialRouteDone] = useState(false);
 
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all naukrian", title, contractType, jobVenue, location],
@@ -38,31 +37,22 @@ const Page = () => {
   const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
-    if (error) {
-      console.error("Error fetching jobs:", error);
-    }
     if (data?.data) {
       const jobToSelect = jobIdFromURL
         ? data.data.find((job) => job.id.toString() === jobIdFromURL)
         : data.data[0];
-      if (jobToSelect) {
-        setSelectedValue(jobToSelect);
-      } else {
-        console.warn("No job found with the specified ID.");
-      }
+      setSelectedValue(jobToSelect);
     }
-  }, [data, jobIdFromURL, error]);
+  }, [data, jobIdFromURL]);
 
   useEffect(() => {
-    if (selectedValue && selectedValue.id && !initialRouteDone) {
-      router.push(`/job-board?jobId=${selectedValue.id}`);
-      setInitialRouteDone(true);
+    if (selectedValue && selectedValue.id) {
+      router.push(`/job-board?jobId=${selectedValue?.id}`);
     }
-  }, [selectedValue, initialRouteDone]);
+  }, [selectedValue]);
 
   const selectedJob = (item: any) => {
     setSelectedValue(item);
-    router.push(`/job-board?jobId=${item?.id}`);
   };
 
   const applyJob = (item: any) => {
@@ -81,6 +71,18 @@ const Page = () => {
 
   const createMarkup = (htmlContent: any) => {
     return { __html: DOMPurify.sanitize(htmlContent) };
+  };
+
+  const myRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
+
+  const scrollToBottom = () => {
+    if (myRef.current) {
+      myRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const filterJobs = (e: any) => {
@@ -253,7 +255,7 @@ const Page = () => {
             <div className="custom-scrollbar sm:w-[29%] h-[350px] sm:h-auto overflow-auto mt-12 max-h-[65rem]">
               {data?.data
                 ?.sort((a, b) => b.id - a.id)
-                .map((item: any, index: any) => {
+                ?.map((item: any, index: any) => {
                   return (
                     <div
                       key={index}
@@ -393,4 +395,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default page;
