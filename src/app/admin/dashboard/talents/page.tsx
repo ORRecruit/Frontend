@@ -5,6 +5,7 @@ import { getAllTalents } from "@/api/talent/getAllTalents";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { formatDate } from "@/utils/utils";
+import TalentDetailModal from "@/components/modals/talentDetailModal";
 
 const page = () => {
   const [name, setName] = useState<string>("");
@@ -198,80 +199,10 @@ const page = () => {
                           </td>
                           {isDialogOpen && (
                             <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
-                              <div className="relative bg-white p-5 rounded-lg max-w-2xl w-full border border-black-400">
-                                <div className="bg-white rounded-lg">
-                                  <div className="mb-5">
-                                    <div className="flex justify-between">
-                                      <h1 className="text-3xl font-bold">
-                                        {selectedItem?.fullName}
-                                      </h1>
-                                    </div>
-                                    <div className="font-semibold text-lg text-gray-500 dark:text-gray-400 mb-2">
-                                      ORR-
-                                      {selectedItem?.industry?.slice(0, 4)}
-                                      -00
-                                      {selectedItem?.id}
-                                    </div>
-
-                                    <span className="bg-primary-orange p-2 font-light text-white dark:text-gray-400 rounded-2xl mr-2">
-                                      {selectedItem?.email}
-                                    </span>
-                                    <span className="bg-primary-orange p-2 font-light text-white dark:text-gray-400 rounded-2xl">
-                                      {selectedItem?.industry}
-                                    </span>
-                                  </div>
-
-                                  <div className="mb-5">
-                                    <p className="text-gray-600">
-                                      {selectedItem?.country}
-                                    </p>
-                                    <p className="font-light text-gray-500 dark:text-gray-400">
-                                      {selectedItem?.location}
-                                    </p>
-
-                                    <div>
-                                      <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
-                                        SKills
-                                      </h1>
-                                      {selectedItem?.skills?.map(
-                                        (item: any, index: number) => {
-                                          return (
-                                            <span key={index}>{item}, </span>
-                                          );
-                                        }
-                                      )}
-                                    </div>
-
-                                    <div className="text-gray-900 dark:text-white">
-                                      <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
-                                        Tech
-                                      </h1>
-                                      {selectedItem?.tools?.map(
-                                        (item: any, index: number) => {
-                                          return (
-                                            <span key={index}>{item}, </span>
-                                          );
-                                        }
-                                      )}
-                                    </div>
-
-                                    <div className="text-gray-900 dark:text-white">
-                                      <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
-                                        About Me
-                                      </h1>
-                                      <span className="font-light text-gray-500 dark:text-gray-400">
-                                        {selectedItem?.about}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <button
-                                  onClick={closeDialog}
-                                  className="absolute top-0 right-0 p-8 text-lg text-black bg-transparent text-2xl"
-                                >
-                                  &times;{" "}
-                                </button>
-                              </div>
+                              <TalentDetailModal
+                                data={selectedItem}
+                                closeDialog={closeDialog}
+                              />
                             </div>
                           )}
                         </tr>
