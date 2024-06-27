@@ -237,13 +237,16 @@ const page = () => {
           <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
             <div className="relative bg-white p-5 rounded-lg border border-black-500">
               <button
-                onClick={() => setOpenConfirmation(!openConfirmation)}
-                className="absolute top-0 right-3 pb-1 text-lg text-black bg-transparent text-2xl"
+                onClick={() => {
+                  setOpenConfirmation(!openConfirmation);
+                  setApplyNow(false);
+                }}
+                className="absolute top-0 right-3 pb-1 text-black bg-transparent text-2xl"
               >
                 &times;
               </button>
-              <div className="bg-white rounded-lg flex flex-col items-center">
-                <p className="text-sm leading-5 text-gray-500 mt-3">
+              <div className="bg-white rounded-lg flex flex-col items-center py-2">
+                <p className="text-lg leading-5 text-gray-500 mt-3">
                   Are you sure want to create the client?
                 </p>
                 <div className="mt-5 sm:mt-6">

@@ -809,7 +809,7 @@ const jobList = () => {
                                 onClick={() => handleRowClick(item)}
                                 className="pr-4 py-2 whitespace-nowrap"
                               >
-                                <span className="bg-primary-100 text-primary-800 text-xs font-medium pl-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                                <span className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center">
                                   {item.companyName}
                                 </span>
                               </td>
@@ -1554,7 +1554,7 @@ const jobList = () => {
                                             onClick={openEditConfirmation}
                                             className="w-full mt-[20px] sm:mt-[0px] bg-orange-600 text-white font-medium rounded-lg px-5 py-2.5 text-center"
                                           >
-                                            Edit Job
+                                            Save Changes
                                           </button>
                                         </div>
                                       </div>
@@ -1573,7 +1573,7 @@ const jobList = () => {
                                     </button>
                                     <div className="bg-white rounded-lg flex flex-col items-center">
                                       <p className="text-sm leading-5 text-gray-500 mt-3">
-                                        Are you sure want to Edit the Job?
+                                        Are you sure want to save changes?
                                       </p>
                                       <div className="mt-5 sm:mt-6">
                                         {!applyNow ? (

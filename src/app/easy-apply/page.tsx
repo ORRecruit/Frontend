@@ -45,7 +45,7 @@ function Page() {
     linkedinProfile: "",
     indeedProfile: "",
     glassdoorProfile: "",
-    highestEducation: "",
+    highestEducation: "Bachelor's Degree",
     workExperience: "",
     coverLetter: null,
     resume: null,
@@ -116,12 +116,11 @@ function Page() {
       !formData.city ||
       !formData.address ||
       !formData.countryCode ||
-      !formData.areaCode ||
       !formData.phoneNumber ||
       !formData.preferredContactMethod ||
       !formData.highestEducation ||
       !formData.workExperience ||
-      (!formData.coverLetter && !formData.resume)
+      !formData.resume
     ) {
       toast.error("Please Provide All Details");
       return;
@@ -190,7 +189,7 @@ function Page() {
                         className="text-gray-500 text-sm"
                         htmlFor="first-name"
                       >
-                        First Name
+                        First Name*
                       </label>
                       <input
                         type="text"
@@ -225,7 +224,7 @@ function Page() {
                         className="text-gray-500 text-sm"
                         htmlFor="last-name"
                       >
-                        Last Name
+                        Last Name*
                       </label>
                       <input
                         type="text"
@@ -240,7 +239,7 @@ function Page() {
                     </div>
                     <div>
                       <label className="text-gray-500 text-sm" htmlFor="email">
-                        Email Address
+                        Email Address*
                       </label>
                       <input
                         type="email"
@@ -258,7 +257,7 @@ function Page() {
                         className="text-gray-500 text-sm"
                         htmlFor="address-country"
                       >
-                        Country
+                        Country*
                       </label>
                       <input
                         type="text"
@@ -276,7 +275,7 @@ function Page() {
                         className="text-gray-500 text-sm"
                         htmlFor="address-city"
                       >
-                        City
+                        City*
                       </label>
                       <input
                         type="text"
@@ -294,7 +293,7 @@ function Page() {
                         className="text-gray-500 text-sm"
                         htmlFor="address"
                       >
-                        Address
+                        Address*
                       </label>
                       <input
                         type="text"
@@ -312,7 +311,7 @@ function Page() {
                           className="text-gray-500 text-sm"
                           htmlFor="phone-country-code"
                         >
-                          Country Code
+                          Country Code*
                         </label>
                         <input
                           type="text"
@@ -337,7 +336,7 @@ function Page() {
                           name="areaCode"
                           id="phone-area-code"
                           autoComplete="tel-area-code"
-                          placeholder="Area Code*"
+                          placeholder="Area Code"
                           value={formData.areaCode}
                           onChange={handleChange}
                           className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
@@ -348,7 +347,7 @@ function Page() {
                           className="text-gray-500 text-sm"
                           htmlFor="phone-number"
                         >
-                          Phone Number
+                          Phone Number*
                         </label>
                         <input
                           type="text"
@@ -448,12 +447,16 @@ function Page() {
                         onChange={handleChange}
                         className="block w-full mt-1 py-3 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
-                        <option>High School</option>
-                        <option>Associate Degree</option>
-                        <option>Bachelor's Degree</option>
-                        <option>Master's Degree</option>
-                        <option>Doctorate</option>
-                        <option>Other</option>
+                        <option value="High School">High School</option>
+                        <option value="Associate Degree">
+                          Associate Degree
+                        </option>
+                        <option value="Bachelor's Degree">
+                          Bachelor's Degree
+                        </option>
+                        <option value="Master's Degree">Master's Degree</option>
+                        <option value="Doctorate">Doctorate</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
                     <div className="sm:col-span-2">
@@ -461,7 +464,7 @@ function Page() {
                         className="text-gray-500 text-sm"
                         htmlFor="experience"
                       >
-                        Work Experience (Years)
+                        Work Experience (Years)*
                       </label>
                       <input
                         type="number"
@@ -491,7 +494,7 @@ function Page() {
                     </div>
                     <div>
                       <label className="text-gray-500 text-sm" htmlFor="resume">
-                        Resume (PDF or Word)
+                        Resume (PDF or Word)*
                       </label>
                       <input
                         type="file"
@@ -554,12 +557,11 @@ function Page() {
                             />
                           </div>
                           <div className="bg-white rounded-lg flex flex-col items-center">
-                            <p className="text-gray-600 text-xl mb-4">
-                              Are You Sure Want To Apply For The Job?
-                            </p>
-
                             {!applyNow ? (
                               <div className="text-center">
+                                <p className="text-gray-600 text-xl mb-4">
+                                  Are You Sure Want To Apply For The Job?
+                                </p>
                                 <button
                                   onClick={handleSubmit}
                                   className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
@@ -568,28 +570,22 @@ function Page() {
                                 </button>
                               </div>
                             ) : (
-                              <div className="mt-4">
-                                <RotatingLines
-                                  visible={true}
-                                  width="50"
-                                  strokeColor="orange"
-                                  strokeWidth="5"
-                                  animationDuration="0.75"
-                                  ariaLabel="rotating-lines-loading"
-                                />
+                              <div className="flex flex-col justify-center items-center py-4">
+                                <p className="text-gray-600 text-xl mb-4 text-center">
+                                  Sit back, we're submitting your application.
+                                </p>
+                                <div className="mt-4">
+                                  <RotatingLines
+                                    visible={true}
+                                    width="50"
+                                    strokeColor="orange"
+                                    strokeWidth="5"
+                                    animationDuration="0.75"
+                                    ariaLabel="rotating-lines-loading"
+                                  />
+                                </div>
                               </div>
                             )}
-                            {/* <p className="text-gray-600 text-xl mb-4">
-                              Are You Sure Want To Apply For The Job?
-                            </p>
-                            <div>
-                              <button
-                                
-                                className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
-                              >
-                                Yes
-                              </button>
-                            </div> */}
                           </div>
                         </div>
                       </div>

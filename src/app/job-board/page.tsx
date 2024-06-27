@@ -47,6 +47,8 @@ const page = () => {
           : data.data[0];
         setSelectedValue(jobToSelect);
         router.push(`/job-board?jobId=${jobIdFromURL.current}`);
+      } else {
+        setSelectedValue(data.data[0]);
       }
     }
   }, [data]);

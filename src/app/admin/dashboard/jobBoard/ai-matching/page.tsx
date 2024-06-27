@@ -171,14 +171,14 @@ const page = () => {
                               onClick={() => handleRowClick(item)}
                               className="px-4 py-2 whitespace-nowrap"
                             >
-                              <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                              <span className="py-2 font-medium whitespace-nowrap flex items-center">
                                 {`ORR-USR-00${item?.id}`}
                               </span>
                             </td>
                             <th
                               onClick={() => handleRowClick(item)}
                               scope="row"
-                              className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
+                              className="pt-4 font-medium whitespace-nowrap flex items-center"
                             >
                               {item?.fullName}
                             </th>
@@ -186,7 +186,7 @@ const page = () => {
                               onClick={() => handleRowClick(item)}
                               className="px-4 py-2 whitespace-nowrap"
                             >
-                              <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                              <span className="py-2 font-medium whitespace-nowrap flex items-center">
                                 {item?.email}
                               </span>
                             </td>
@@ -194,7 +194,7 @@ const page = () => {
                               onClick={() => handleRowClick(item)}
                               className="px-4 py-2 whitespace-nowrap"
                             >
-                              <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                              <span className="py-2 font-medium whitespace-nowrap flex items-center">
                                 {item?.industry}
                               </span>
                             </td>
@@ -202,7 +202,7 @@ const page = () => {
                               onClick={() => handleRowClick(item)}
                               className="px-4 py-2 whitespace-nowrap"
                             >
-                              <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                              <span className="py-2 font-medium whitespace-nowrap flex items-center">
                                 {item?.userType?.charAt(0).toUpperCase() +
                                   item?.userType?.slice(1)}
                               </span>
@@ -221,7 +221,7 @@ const page = () => {
                             </td>
                             <td
                               onClick={() => handleRowClick(item)}
-                              className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                              className="px-4 py-2 font-medium whitespace-nowrap"
                             >
                               <span>
                                 {item?.recommended?.charAt(0).toUpperCase() +
