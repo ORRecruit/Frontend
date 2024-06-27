@@ -388,7 +388,7 @@ const page = () => {
                         className="pr-4 py-2 whitespace-nowrap"
                         onClick={() => handleRowClick(item)}
                       >
-                        <span className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center">
+                        <span className="px-4 py-2 font-medium whitespace-nowrap flex items-center">
                           ORR-{item?.sector?.slice(0, 4).toUpperCase()}-00
                           {item?.id}
                         </span>
@@ -397,7 +397,7 @@ const page = () => {
                         className="pr-4 py-2 whitespace-nowrap"
                         onClick={() => handleRowClick(item)}
                       >
-                        <span className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center">
+                        <span className="px-4 py-2 font-medium whitespace-nowrap flex items-center">
                           {item.sector}
                         </span>
                       </td>
@@ -405,7 +405,7 @@ const page = () => {
                         onClick={() => handleRowClick(item)}
                         className="px-4 py-2 whitespace-nowrap"
                       >
-                        <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                        <span className="py-2 font-medium whitespace-nowrap flex items-center">
                           {item.companyName}
                         </span>
                       </td>
@@ -415,14 +415,14 @@ const page = () => {
                       >
                         <span
                           // onClick={() => routeToAiMatching(item?.id)}
-                          className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300"
+                          className="py-2 font-medium whitespace-nowrap flex items-center"
                         >
                           {item?.numberOfEmployees}
                         </span>
                       </td>
                       <td
                         onClick={() => handleRowClick(item)}
-                        className="px-4 py-2 whitespace-nowrap"
+                        className="py-2 font-medium whitespace-nowrap flex items-center"
                       >
                         <span>{item.email}</span>
                       </td>

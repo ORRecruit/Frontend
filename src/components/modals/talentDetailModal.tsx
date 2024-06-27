@@ -18,18 +18,16 @@ const talentDetailModal: React.FC<TalentModalProps> = ({
             <h1 className="text-3xl font-bold">{data?.fullName}</h1>
           </div>
           <div className="font-semibold text-lg text-gray-500 dark:text-gray-400 mb-2">
-            ORR-
-            {data?.industry?.slice(0, 4)}
-            -00
+            ORR-USR-00
             {data?.id}
           </div>
 
           <span className="bg-primary-orange p-2 font-light text-white dark:text-gray-400 rounded-2xl mr-2">
             {data?.email}
           </span>
-          <span className="bg-primary-orange p-2 font-light text-white dark:text-gray-400 rounded-2xl">
+          {/* <span className="bg-primary-orange p-2 font-light text-white dark:text-gray-400 rounded-2xl">
             {data?.industry}
-          </span>
+          </span> */}
         </div>
 
         <div className="mb-5">
