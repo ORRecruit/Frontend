@@ -7,25 +7,38 @@ import { useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import CustomLoader from "@/components/customLoader";
 import TalentDetailModal from "@/components/modals/talentDetailModal";
+import ResumeTemplate from "@/components/templates/ResumeTemplate";
+import { PDFDownloadLink, pdf } from "@react-pdf/renderer";
+import { saveAs } from "file-saver";
 
-const page = () => {
+const Page = () => {
   const param = useSearchParams();
   const jobId = param.get("jobId");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedItem, setSelectedItem] = useState(null);
+
   const handleRowClick = (item: any) => {
     setSelectedItem(item);
     setIsDialogOpen(!isDialogOpen);
   };
+
   const closeDialog = () => {
     setIsDialogOpen(!isDialogOpen);
-    console.log("cloase", isDialogOpen);
   };
 
-  const { data, error, isLoading, refetch } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["get jobs for candidates"],
     queryFn: () => aiJobMatching(`${jobId}`),
   });
+
+  const downloadResume = async (item: any) => {
+    if (item.resumePath && item.resumePath.length > 0) {
+      window.open(item.resumePath, "_blank");
+    } else {
+      const blob = await pdf(<ResumeTemplate user={item} />).toBlob();
+      saveAs(blob, `${item.fullName}_Resume.pdf`);
+    }
+  };
 
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
@@ -72,15 +85,7 @@ const page = () => {
                         id="default-search"
                         className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         placeholder="Search..."
-                        // onChange={filterCandidateFunction}
-                        // value={name}
                       />
-                      <button
-                        type="submit"
-                        className="text-white absolute right-0 bottom-0 top-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-r-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                      >
-                        Search
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -97,8 +102,6 @@ const page = () => {
                     type="radio"
                     value="ALL"
                     name="show-only"
-                    //   onChange={handleFilterChange}
-                    //   checked={selectedFilter === "ALL"}
                     className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -143,7 +146,10 @@ const page = () => {
                       AI Matching
                     </th>
                     <th scope="col" className="px-4 py-3">
-                      Recomended
+                      Recommended
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      Resume
                     </th>
                   </tr>
                 </thead>
@@ -228,6 +234,12 @@ const page = () => {
                                   item?.recommended?.slice(1)}
                               </span>
                             </td>
+                            <td
+                              onClick={() => downloadResume(item)}
+                              className="text-blue-600 border-b-2 cursor-pointer"
+                            >
+                              Download
+                            </td>
                             {isDialogOpen && (
                               <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
                                 <TalentDetailModal
@@ -247,14 +259,7 @@ const page = () => {
               aria-label="Table navigation"
             >
               <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                Showing
-                <span className="font-semibold text-gray-900 dark:text-white">
-                  1-10
-                </span>
-                of
-                <span className="font-semibold text-gray-900 dark:text-white">
-                  1000
-                </span>
+                Showing 1 - 10 of 1000
               </span>
               <ul className="inline-flex items-stretch -space-x-px">
                 <li>
@@ -262,19 +267,7 @@ const page = () => {
                     href="#"
                     className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                   >
-                    <span className="sr-only">Previous</span>
-                    <svg
-                      className="w-5 h-5"
-                      aria-hidden="true"
-                      fill="currentColor"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                    Previous
                   </a>
                 </li>
                 <li>
@@ -282,19 +275,7 @@ const page = () => {
                     href="#"
                     className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                   >
-                    <span className="sr-only">Next</span>
-                    <svg
-                      className="w-5 h-5"
-                      aria-hidden="true"
-                      fill="currentColor"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                    Next
                   </a>
                 </li>
               </ul>
@@ -306,4 +287,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
