@@ -15,15 +15,12 @@ const page = () => {
     mutationFn: (body: any) => loginUser(email, password),
     onSuccess: (data) => {
       console.log("Login success response >>>>>", data);
-      // Additional success handling here
     },
     onError: (error) => {
       console.error("Login failed response >>>>>", error);
-      // Additional error handling here
     },
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -40,16 +37,13 @@ const page = () => {
           email,
           password,
         });
-        console.log("response here inside Try >>>>>", response);
         if (response.success) {
           if (response.user.roles[0] === "admin") {
             toast.error("Use Admin Route to Sign Admin In!");
             return;
           } else if (response.user.roles[0] === "candidate") {
             toast.success(response?.message);
-            console.log("Inside Candidate");
             if (response?.user?.isProfile === true) {
-              console.log("Inside Candidate if", response.user);
               localStorage.setItem("authToken", response.token);
               localStorage.setItem("tokenTime", Date.now().toString());
               localStorage.setItem("candidateId", response.user.candidateId);
@@ -59,7 +53,6 @@ const page = () => {
               }
               router.replace("/talent/dashboard/jobBoard");
             } else {
-              console.log("Inside Candidate Else");
               localStorage.setItem("authToken", response.token);
               localStorage.setItem("tokenTime", Date.now().toString());
               localStorage.setItem("candidateId", response.user.candidateId);
@@ -69,7 +62,6 @@ const page = () => {
           }
         }
       } catch (error: any) {
-        console.log("Login Error >>>>>", error.response.data.message);
         toast.error(error.response.data.message);
       }
     }
@@ -179,7 +171,7 @@ const page = () => {
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-primary-orange focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white"
+                    className="w-full bg-primary-orange focus:outline-none hover:bg-orange-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white"
                   >
                     Sign in
                   </button>

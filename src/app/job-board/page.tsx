@@ -37,11 +37,8 @@ const page = () => {
   const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
-    console.log("inside useEffect", jobIdFromURL.current, data);
-
     if (data?.data) {
       if (jobIdFromURL.current) {
-        console.log("inside internal if");
         const jobToSelect = jobIdFromURL.current
           ? data.data.find((job) => job.id.toString() === jobIdFromURL.current)
           : data.data[0];
@@ -54,15 +51,11 @@ const page = () => {
   }, [data]);
 
   useEffect(() => {
-    // if (selectedValue && selectedValue.id) {
-    //   router.push(`/job-board?jobId=${selectedValue?.id}`);
-    // }
     console.log("value updated", selectedValue, jobIdFromURL.current);
   }, [selectedValue]);
 
   const selectedJob = (item: any) => {
     setSelectedValue(item);
-    console.log("on job click");
     router.push(`/job-board?jobId=${item?.id}`);
   };
 
@@ -349,6 +342,9 @@ const page = () => {
                   <p className="text-lg font-extrabold text-gray-900 dark:text-white">
                     {selectedValue?.salaryOffered?.replace(/"/g, "") + " "}{" "}
                     {selectedValue?.currencyType} / {selectedValue?.jobType}
+                  </p>
+                  <p className="font-light text-gray-500 dark:text-gray-400">
+                    {selectedValue?.companyName}
                   </p>
                   <p className="inline-block font-light dark:text-gray-400 bg-primary-orange text-white w-fit px-6 py-1 rounded-2xl my-2 mr-2">
                     {formatString(`${selectedValue?.jobVenue}`)}

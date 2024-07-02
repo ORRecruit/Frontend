@@ -16,10 +16,10 @@ function Page() {
   const router = useRouter();
   useEffect(() => {
     setJobId(id);
-    console.log("jobId", id);
   }, [id]);
 
   const [policyAccepted, setPolicyAccepted] = useState<boolean>(false);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const easyApplyMutation = useMutation({
     mutationFn: (formData: FormData) => easyApply(formData, jobId),
     onSuccess: (data) => {
@@ -89,7 +89,6 @@ function Page() {
         ...prev,
         resume: file,
       }));
-      console.log("Selected resume:", file);
     }
   };
 
@@ -100,28 +99,14 @@ function Page() {
         ...prev,
         coverLetter: file,
       }));
-      console.log("Selected cover letter:", file);
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | any) => {
-    e.preventDefault();
-    console.log("formData0000", formData);
+  const handleSubmit = async () => {
+    const errors = validateFormData();
+    setValidationErrors(errors);
 
-    if (
-      !formData.firstName ||
-      !formData.lastName ||
-      !formData.email ||
-      !formData.country ||
-      !formData.city ||
-      !formData.address ||
-      !formData.countryCode ||
-      !formData.phoneNumber ||
-      !formData.preferredContactMethod ||
-      !formData.highestEducation ||
-      !formData.workExperience ||
-      !formData.resume
-    ) {
+    if (errors.length > 0) {
       toast.error("Please Provide All Details");
       return;
     }
@@ -155,7 +140,7 @@ function Page() {
       const response = await easyApplyMutation.mutateAsync(payloadData);
       if (response?.success) {
         setPublishDialog(!publishDialog);
-        toast.success("You've applied to  job successfully!");
+        toast.success("You've applied to job successfully!");
         router.push("/job-board");
         setApplyNow(!applyNow);
       } else {
@@ -168,9 +153,38 @@ function Page() {
     }
   };
 
-  if (jobId) {
-    console.log("jobId", jobId);
-  }
+  const validateFormData = () => {
+    const errors: string[] = [];
+    if (!formData.firstName) errors.push("firstName");
+    if (!formData.lastName) errors.push("lastName");
+    if (!formData.email) errors.push("email");
+    if (!formData.country) errors.push("country");
+    if (!formData.city) errors.push("city");
+    if (!formData.address) errors.push("address");
+    if (!formData.countryCode) errors.push("countryCode");
+    if (!formData.phoneNumber) errors.push("phoneNumber");
+    if (!formData.preferredContactMethod) errors.push("preferredContactMethod");
+    if (!formData.highestEducation) errors.push("highestEducation");
+    if (!formData.workExperience) errors.push("workExperience");
+    if (!formData.resume) errors.push("resume");
+    return errors;
+  };
+
+  const setPublishDialogFtn = () => {
+    const errors = validateFormData();
+    setValidationErrors(errors);
+
+    if (errors.length > 0) {
+      return;
+    }
+    setPublishDialog(!publishDialog);
+  };
+
+  const getInputClasses = (field: string) => {
+    return validationErrors.includes(field)
+      ? "block w-full shadow-sm py-3 px-4 placeholder-gray-400 focus:ring-red-500 focus:border-red-500 border-red-500 rounded-md"
+      : "block w-full shadow-sm py-3 px-4 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md";
+  };
 
   return (
     <>
@@ -201,6 +215,11 @@ function Page() {
                         onChange={handleChange}
                         className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                       />
+                      {validationErrors.includes("firstName") && (
+                        <p className="text-red-500 text-xs mt-2">
+                          First name is required
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label
@@ -216,7 +235,7 @@ function Page() {
                         placeholder="Middle Name"
                         value={formData.middleName}
                         onChange={handleChange}
-                        className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                        className="block w-full shadow-sm py-3 px-4 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                       />
                     </div>
                     <div>
@@ -234,8 +253,13 @@ function Page() {
                         placeholder="Last Name*"
                         value={formData.lastName}
                         onChange={handleChange}
-                        className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                        className={getInputClasses("lastName")}
                       />
+                      {validationErrors.includes("lastName") && (
+                        <p className="text-red-500 text-xs mt-2">
+                          Last name is required
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label className="text-gray-500 text-sm" htmlFor="email">
@@ -249,8 +273,13 @@ function Page() {
                         placeholder="Email Address*"
                         value={formData.email}
                         onChange={handleChange}
-                        className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                        className={getInputClasses("email")}
                       />
+                      {validationErrors.includes("email") && (
+                        <p className="text-red-500 text-xs mt-2">
+                          Email address is required
+                        </p>
+                      )}
                     </div>
                     <div className="sm:col-span-2">
                       <label
@@ -267,8 +296,13 @@ function Page() {
                         placeholder="Country*"
                         value={formData.country}
                         onChange={handleChange}
-                        className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                        className={getInputClasses("country")}
                       />
+                      {validationErrors.includes("country") && (
+                        <p className="text-red-500 text-xs mt-2">
+                          Country is required
+                        </p>
+                      )}
                     </div>
                     <div className="sm:col-span-1">
                       <label
@@ -285,8 +319,13 @@ function Page() {
                         placeholder="City*"
                         value={formData.city}
                         onChange={handleChange}
-                        className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                        className={getInputClasses("city")}
                       />
+                      {validationErrors.includes("city") && (
+                        <p className="text-red-500 text-xs mt-2">
+                          City is required
+                        </p>
+                      )}
                     </div>
                     <div className="sm:col-span-1">
                       <label
@@ -302,8 +341,13 @@ function Page() {
                         placeholder="Address*"
                         value={formData.address}
                         onChange={handleChange}
-                        className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                        className={getInputClasses("address")}
                       />
+                      {validationErrors.includes("address") && (
+                        <p className="text-red-500 text-xs mt-2">
+                          Address is required
+                        </p>
+                      )}
                     </div>
                     <div className="sm:col-span-2 grid grid-cols-3 gap-x-4">
                       <div>
@@ -321,8 +365,13 @@ function Page() {
                           placeholder="Country Code*"
                           value={formData.countryCode}
                           onChange={handleChange}
-                          className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                          className={getInputClasses("countryCode")}
                         />
+                        {validationErrors.includes("countryCode") && (
+                          <p className="text-red-500 text-xs mt-2">
+                            Country code is required
+                          </p>
+                        )}
                       </div>
                       <div>
                         <label
@@ -339,7 +388,7 @@ function Page() {
                           placeholder="Area Code"
                           value={formData.areaCode}
                           onChange={handleChange}
-                          className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                          className="block w-full shadow-sm py-3 px-4 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                         />
                       </div>
                       <div>
@@ -357,8 +406,13 @@ function Page() {
                           placeholder="Phone Number*"
                           value={formData.phoneNumber}
                           onChange={handleChange}
-                          className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                          className={getInputClasses("phoneNumber")}
                         />
+                        {validationErrors.includes("phoneNumber") && (
+                          <p className="text-red-500 text-xs mt-2">
+                            Phone number is required
+                          </p>
+                        )}
                       </div>
                     </div>
                     <div className="sm:col-span-2">
@@ -373,12 +427,17 @@ function Page() {
                         name="preferredContactMethod"
                         value={formData.preferredContactMethod}
                         onChange={handleChange}
-                        className="block w-full mt-1 py-3 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className={getInputClasses("preferredContactMethod")}
                       >
                         <option value="email">Email</option>
                         <option value="phone">Phone</option>
                         <option value="both">Both</option>
                       </select>
+                      {validationErrors.includes("preferredContactMethod") && (
+                        <p className="text-red-500 text-xs mt-2">
+                          Preferred contact method is required
+                        </p>
+                      )}
                     </div>
                     <div className="sm:col-span-2 grid grid-cols-3 gap-x-4">
                       <div>
@@ -395,7 +454,7 @@ function Page() {
                           placeholder="LinkedIn Profile"
                           value={formData.linkedinProfile}
                           onChange={handleChange}
-                          className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                          className="block w-full shadow-sm py-3 px-4 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                         />
                       </div>
                       <div>
@@ -412,7 +471,7 @@ function Page() {
                           placeholder="Indeed Profile"
                           value={formData.indeedProfile}
                           onChange={handleChange}
-                          className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                          className="block w-full shadow-sm py-3 px-4 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                         />
                       </div>
                       <div>
@@ -429,7 +488,7 @@ function Page() {
                           placeholder="Glassdoor Profile"
                           value={formData.glassdoorProfile}
                           onChange={handleChange}
-                          className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                          className="block w-full shadow-sm py-3 px-4 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                         />
                       </div>
                     </div>
@@ -445,7 +504,7 @@ function Page() {
                         name="highestEducation"
                         value={formData.highestEducation}
                         onChange={handleChange}
-                        className="block w-full mt-1 py-3 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className={getInputClasses("highestEducation")}
                       >
                         <option value="High School">High School</option>
                         <option value="Associate Degree">
@@ -458,6 +517,11 @@ function Page() {
                         <option value="Doctorate">Doctorate</option>
                         <option value="Other">Other</option>
                       </select>
+                      {validationErrors.includes("highestEducation") && (
+                        <p className="text-red-500 text-xs mt-2">
+                          Highest education is required
+                        </p>
+                      )}
                     </div>
                     <div className="sm:col-span-2">
                       <label
@@ -473,8 +537,13 @@ function Page() {
                         placeholder="Work Experience in Years*"
                         value={formData.workExperience}
                         onChange={handleChange}
-                        className="block w-full shadow-sm py-3 px-4 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                        className={getInputClasses("workExperience")}
                       />
+                      {validationErrors.includes("workExperience") && (
+                        <p className="text-red-500 text-xs mt-2">
+                          Work experience is required
+                        </p>
+                      )}
                     </div>
                     <div className="">
                       <label
@@ -504,6 +573,11 @@ function Page() {
                         onChange={handleResumeChange}
                         className="block w-full text-sm text-gray-500 my-5  cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
                       />
+                      {validationErrors.includes("resume") && (
+                        <p className="text-red-500 text-xs mt-2">
+                          Resume is required
+                        </p>
+                      )}
                     </div>
                     <div className="sm:col-span-2 flex items-start">
                       <div
@@ -538,8 +612,8 @@ function Page() {
                     </div>
                     <div className="sm:col-span-2">
                       <button
-                        onClick={() => setPublishDialog(!publishDialog)}
-                        className="mt-2 h-10 w-full bg-orange-600 inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                        onClick={() => setPublishDialogFtn()}
+                        className="mt-2 h-10 w-full bg-orange-600 inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:bg-orange-700 focus:outline-none"
                       >
                         Submit Application
                       </button>
