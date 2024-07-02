@@ -8,7 +8,7 @@ import { Toaster } from "react-hot-toast";
 import AuthProvider from "./authProvider";
 import Navbar from "@/components/landing/navbar/navbar";
 import { usePathname } from "next/navigation";
-import { isSessionValid,resetSessionTimer  } from "@/utils/utils";
+import { isSessionValid, resetSessionTimer } from "@/utils/utils";
 import { useRouter } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -48,6 +48,8 @@ export default function RootLayout({
     "/admin/dashboard/previewJob",
     "/admin/dashboard/clients",
     "/admin/dashboard/clients/create-client",
+    "/admin/dashboard/ai-magic",
+    "/admin/dashboard/ai-magic/match-ai-talents",
   ];
   const showNavbar = !noNavbarRoutes.includes(path);
 
@@ -67,28 +69,27 @@ export default function RootLayout({
       resetSessionTimer();
     };
 
-    window.addEventListener('click', handleUserActivity);
-    window.addEventListener('keydown', handleUserActivity);
-    window.addEventListener('scroll', handleUserActivity);
+    window.addEventListener("click", handleUserActivity);
+    window.addEventListener("keydown", handleUserActivity);
+    window.addEventListener("scroll", handleUserActivity);
 
     const interval = setInterval(() => {
       if (!isSessionValid()) {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('tokenTime');
-        localStorage.removeItem('role');
-        localStorage.removeItem('candidateId');
-        localStorage.removeItem('avatarUrl');
-        router.push('/auth/signin');
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("tokenTime");
+        localStorage.removeItem("role");
+        localStorage.removeItem("candidateId");
+        localStorage.removeItem("avatarUrl");
+        router.push("/auth/signin");
       }
     }, 300000);
     return () => {
-      window.removeEventListener('click', handleUserActivity);
-      window.removeEventListener('keydown', handleUserActivity);
-      window.removeEventListener('scroll', handleUserActivity);
+      window.removeEventListener("click", handleUserActivity);
+      window.removeEventListener("keydown", handleUserActivity);
+      window.removeEventListener("scroll", handleUserActivity);
       clearInterval(interval);
     };
   }, []);
-  
 
   return (
     <html lang="en">
