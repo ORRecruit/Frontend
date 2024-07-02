@@ -333,7 +333,7 @@ const page = () => {
                       </div>
                     )}
                   </div>
-                  <div className="font-light text-xl font-semibold text-gray-500 dark:text-gray-400">
+                  <div className="text-xl font-semibold text-gray-500 dark:text-gray-400">
                     ORR-{selectedValue?.industry?.slice(0, 4)}-00
                     {selectedValue?.id}
                   </div>
@@ -343,7 +343,7 @@ const page = () => {
                     {selectedValue?.salaryOffered?.replace(/"/g, "") + " "}{" "}
                     {selectedValue?.currencyType} / {selectedValue?.jobType}
                   </p>
-                  <p className="font-light text-gray-500 dark:text-gray-400">
+                  <p className="text-lg font-base text-gray-500 dark:text-gray-400">
                     {selectedValue?.companyName}
                   </p>
                   <p className="inline-block font-light dark:text-gray-400 bg-primary-orange text-white w-fit px-6 py-1 rounded-2xl my-2 mr-2">
