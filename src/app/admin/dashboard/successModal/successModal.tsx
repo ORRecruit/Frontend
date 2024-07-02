@@ -108,7 +108,7 @@ const successModal = () => {
               </p>
             </div>
 
-            <div className="mt-5 sm:mt-6">
+            <div className="mt-5 sm:mt-6 flex justify-center items-center">
               {!applyNow ? (
                 <button
                   className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
