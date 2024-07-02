@@ -36,11 +36,11 @@ export default function RootLayout({
       text: "Clients",
       href: "/admin/dashboard/clients",
     },
-    // {
-    //   iconUrl: "/adminSidebar5.svg",
-    //   text: "Leads",
-    //   href: "#",
-    // },
+    {
+      iconUrl: "/adminSidebar5.svg",
+      text: "AI Magic",
+      href: "/admin/dashboard/ai-magic",
+    },
   ];
   return (
     <html lang="en">

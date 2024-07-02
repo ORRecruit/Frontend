@@ -8,6 +8,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const param = useSearchParams();
   const blogNo = param.get("blogNo");
   const jobId = param.get("jobId");
+  const jobIdAllTalents = param.get("job-id");
+
   if (path && blogNo) {
     path = path + `?blogNo=${blogNo}`;
   }
@@ -16,6 +18,13 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
   if (path && path === "/admin/dashboard/jobBoard/ai-matching" && jobId) {
     path = path + `?jobId=${jobId}`;
+  }
+  if (
+    path &&
+    path === "/admin/dashboard/ai-magic/match-ai-talents" &&
+    jobIdAllTalents
+  ) {
+    path = path + `?job-id=${jobIdAllTalents}`;
   }
 
   // Function to check if the path matches the blog details with a dynamic number
@@ -52,7 +61,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         path === "/admin/dashboard/talents" ||
         path.includes("/admin/dashboard/jobBoard/ai-matching") ||
         path === "/admin/dashboard/clients" ||
-        path === "/admin/dashboard/clients/create-client"
+        path === "/admin/dashboard/clients/create-client" ||
+        path === "/admin/dashboard/ai-magic" ||
+        path.includes("/admin/dashboard/ai-magic/match-ai-talents")
       ) {
         if (role === "admin" && !isAuthTokenExpired(token!)) {
           router.push(path);
