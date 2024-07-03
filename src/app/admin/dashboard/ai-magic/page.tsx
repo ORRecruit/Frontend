@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import JobDetailModal from "@/components/modals/jobDetailModal";
 
 const page = () => {
   const [title, setTitle] = useState<string>("");
@@ -12,6 +13,9 @@ const page = () => {
   const [jobVenue, setJobVenue] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [filter, setFilter] = useState<boolean>(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
+
   const router = useRouter();
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all naukrian", title, contractType, jobVenue, location],
@@ -38,7 +42,12 @@ const page = () => {
   });
 
   const handleRowClick = (item: any) => {
-    console.log("item.item.item", item);
+    setSelectedItem(item);
+    setIsDialogOpen(!isDialogOpen);
+  };
+
+  const closeDialog = () => {
+    setIsDialogOpen(!isDialogOpen);
   };
 
   const routeToAiMatching = (jobId: any) => {
@@ -282,9 +291,6 @@ const page = () => {
                     Client
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    Talent Applied
-                  </th>
-                  <th scope="col" className="px-4 py-3">
                     Experience
                   </th>
                   <th scope="col" className="px-4 py-3 min-w-[6rem]">
@@ -295,6 +301,9 @@ const page = () => {
                   </th>
                   <th scope="col" className="px-4 py-3">
                     Status
+                  </th>
+                  <th scope="col" className="px-4 py-3">
+                    Ai Matching
                   </th>
                   <th scope="col" className="px-4 py-3">
                     <span className="sr-only">Actions</span>
@@ -345,14 +354,6 @@ const page = () => {
                               {item.companyName}
                             </span>
                           </td>
-                          <td className="px-4 py-2 whitespace-nowrap">
-                            <span
-                              onClick={() => routeToAiMatching(item?.id)}
-                              className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300"
-                            >
-                              {item?.applicationsCount}
-                            </span>
-                          </td>
                           <td
                             onClick={() => handleRowClick(item)}
                             className="px-4 py-2 whitespace-nowrap"
@@ -377,6 +378,22 @@ const page = () => {
                           >
                             <span>{item.jobStatus}</span>
                           </td>
+                          <td className="px-4 py-2 whitespace-nowrap">
+                            <span
+                              onClick={() => routeToAiMatching(item?.id)}
+                              className="bg-primary-100 text-blue-600 text-sm font-medium px-2.5 py-0.5 rounded"
+                            >
+                              View Talents
+                            </span>
+                          </td>
+                          {isDialogOpen && (
+                            <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                              <JobDetailModal
+                                data={selectedItem}
+                                closeDialog={closeDialog}
+                              />
+                            </div>
+                          )}
                         </tr>
                       );
                     })}
