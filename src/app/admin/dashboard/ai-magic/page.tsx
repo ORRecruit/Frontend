@@ -55,7 +55,7 @@ const page = () => {
   };
 
   return (
-    <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
+    <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%] overflow-x-hidden">
       <div className="flex flex-col-reverse md:flex-row items-center justify-between md:space-x-4 py-3 relative bg-white px-4 rounded mr-4 shadow-lg">
         <div className="w-full">
           <div className="border-b dark:border-gray-700 mx-4">

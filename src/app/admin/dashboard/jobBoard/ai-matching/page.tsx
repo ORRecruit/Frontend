@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomLoader from "@/components/customLoader";
 import TalentDetailModal from "@/components/modals/talentDetailModal";
 import ResumeTemplate from "@/components/templates/ResumeTemplate";
@@ -16,6 +16,7 @@ const Page = () => {
   const jobId = param.get("jobId");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [data, setData] = useState<any>(null);
 
   const handleRowClick = (item: any) => {
     setSelectedItem(item);
@@ -26,10 +27,18 @@ const Page = () => {
     setIsDialogOpen(!isDialogOpen);
   };
 
-  const { data, isLoading } = useQuery({
+  const { isLoading, refetch } = useQuery({
     queryKey: ["get jobs for candidates"],
     queryFn: () => aiJobMatching(`${jobId}`),
+    enabled: false,
   });
+
+  useEffect(() => {
+    setData(null);
+    refetch().then((result) => {
+      setData(result.data);
+    });
+  }, [jobId, refetch]);
 
   const downloadResume = async (item: any) => {
     if (item.resumePath && item.resumePath.length > 0) {
