@@ -1,5 +1,5 @@
 "use client";
-import { aiJobMatching } from "@/api/jobs/aiMatchingCandidates";
+import { aiMatchingAllTalents } from "@/api/jobs/aiMatchingAllTalents";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,7 +8,7 @@ import React, { useState } from "react";
 import CustomLoader from "@/components/customLoader";
 import TalentDetailModal from "@/components/modals/talentDetailModal";
 import ResumeTemplate from "@/components/templates/ResumeTemplate";
-import { PDFDownloadLink, pdf } from "@react-pdf/renderer";
+import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
 
 const page = () => {
@@ -18,7 +18,7 @@ const page = () => {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const handleRowClick = (item: any) => {
-    setSelectedItem(item);
+    setSelectedItem(item?.profile);
     setIsDialogOpen(!isDialogOpen);
   };
 
@@ -28,15 +28,15 @@ const page = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: ["get jobs for candidates"],
-    queryFn: () => aiJobMatching(`${jobId}`),
+    queryFn: () => aiMatchingAllTalents(`${jobId}`),
   });
 
   const downloadResume = async (item: any) => {
-    if (item.resumePath && item.resumePath.length > 0) {
-      window.open(item.resumePath, "_blank");
+    if (item?.profile?.resumePath && item?.profile?.resumePath.length > 0) {
+      window.open(item?.profile?.resumePath, "_blank");
     } else {
-      const blob = await pdf(<ResumeTemplate user={item} />).toBlob();
-      saveAs(blob, `${item.fullName}_Resume.pdf`);
+      const blob = await pdf(<ResumeTemplate user={item?.profile} />).toBlob();
+      saveAs(blob, `${item.profile.fullName}_Resume.pdf`);
     }
   };
 
@@ -156,7 +156,11 @@ const page = () => {
                 <tbody>
                   {data &&
                     data?.data
-                      ?.sort((a: any, b: any) => b?.relevancy - a?.relevancy)
+                      ?.sort(
+                        (a: any, b: any) =>
+                          b?.result?.relevancy_score -
+                          a?.result?.relevancy_score
+                      )
                       ?.map((item: any, index: any) => {
                         return (
                           <tr
@@ -178,7 +182,7 @@ const page = () => {
                               className="px-4 py-2 whitespace-nowrap"
                             >
                               <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                                {`ORR-USR-00${item?.id}`}
+                                {`ORR-USR-00${item?.profile?.id}`}
                               </span>
                             </td>
                             <th
@@ -186,14 +190,14 @@ const page = () => {
                               scope="row"
                               className="pt-4 font-medium whitespace-nowrap flex items-center"
                             >
-                              {item?.fullName}
+                              {item?.profile?.fullName}
                             </th>
                             <td
                               onClick={() => handleRowClick(item)}
                               className="px-4 py-2 whitespace-nowrap"
                             >
                               <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                                {item?.email}
+                                {item?.profile?.email}
                               </span>
                             </td>
                             <td
@@ -201,7 +205,7 @@ const page = () => {
                               className="px-4 py-2 whitespace-nowrap"
                             >
                               <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                                {item?.industry}
+                                {item?.profile?.industry}
                               </span>
                             </td>
                             <td
@@ -209,29 +213,33 @@ const page = () => {
                               className="px-4 py-2 whitespace-nowrap"
                             >
                               <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                                {item?.userType?.charAt(0).toUpperCase() +
-                                  item?.userType?.slice(1)}
+                                {item?.profile?.userType
+                                  ?.charAt(0)
+                                  .toUpperCase() +
+                                  item?.profile?.userType?.slice(1)}
                               </span>
                             </td>
                             <td
                               onClick={() => handleRowClick(item)}
                               className="px-4 py-2 whitespace-nowrap"
                             >
-                              <span>{item?.location}</span>
+                              <span>{item?.profile?.location}</span>
                             </td>
                             <td
                               onClick={() => handleRowClick(item)}
                               className="px-4 py-2 font-medium whitespace-nowrap"
                             >
-                              <span>{item?.relevancy}%</span>
+                              <span>{item?.result?.relevancy_score}%</span>
                             </td>
                             <td
                               onClick={() => handleRowClick(item)}
                               className="px-4 py-2 font-medium whitespace-nowrap"
                             >
                               <span>
-                                {item?.recommended?.charAt(0).toUpperCase() +
-                                  item?.recommended?.slice(1)}
+                                {item?.result?.recommended
+                                  ?.charAt(0)
+                                  .toUpperCase() +
+                                  item?.result?.recommended?.slice(1)}
                               </span>
                             </td>
                             <td
