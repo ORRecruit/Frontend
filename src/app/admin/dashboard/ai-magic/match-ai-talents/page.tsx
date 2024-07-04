@@ -15,8 +15,10 @@ const page = () => {
   const param = useSearchParams();
   const jobId = param.get("job-id");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = React.useState<any>(null);
   const [data, setData] = useState<any>(null);
+  const [viewDetails, setViewDetails] = useState<any>(null);
+  const [itemReason, setItemReason] = React.useState<any>(null);
 
   const handleRowClick = (item: any) => {
     setSelectedItem(item?.profile);
@@ -40,13 +42,46 @@ const page = () => {
     });
   }, [jobId, refetch]);
 
+  console.log("datadatadata", data);
+
   const downloadResume = async (item: any) => {
-    if (item?.profile?.resumePath && item?.profile?.resumePath.length > 0) {
+    console.log("downloaddownload", item);
+    if (item?.profile?.resume_file && item?.profile?.resume_file.length > 0) {
+      window.open(item?.profile?.resumePath, "_blank");
+    } else if (
+      item?.profile?.resumePath &&
+      item?.profile?.resumePath.length > 0
+    ) {
       window.open(item?.profile?.resumePath, "_blank");
     } else {
-      const blob = await pdf(<ResumeTemplate user={item?.profile} />).toBlob();
-      saveAs(blob, `${item.profile.fullName}_Resume.pdf`);
+      console.log("downloaddownload else", item);
+
+      try {
+        const blob = await pdf(<ResumeTemplate user={item.profile} />).toBlob();
+        if (item?.profile?.fullName) {
+          saveAs(blob, `${item?.profile?.fullName}_Resume.pdf`);
+        } else if (item?.profile?.firstName) {
+          saveAs(blob, `${item?.profile?.firstName}_Resume.pdf`);
+        }
+      } catch (error) {
+        console.error("Error generating PDF:", error);
+        // Handle the error (e.g., show an error message to the user)
+      }
     }
+  };
+
+  const viewReason = (item: any) => {
+    console.log("item,.....", item, viewDetails);
+    setSelectedItem(item?.profile);
+    setViewDetails(
+      viewDetails === item?.profile?.id ? null : item?.profile?.id
+    );
+    setItemReason(item?.result);
+    console.log("item", selectedItem, viewDetails, itemReason);
+  };
+
+  const closeResaonDialog = () => {
+    setViewDetails(false);
   };
 
   return (
@@ -158,6 +193,9 @@ const page = () => {
                       Recommended
                     </th>
                     <th scope="col" className="px-4 py-3">
+                      Reason
+                    </th>
+                    <th scope="col" className="px-4 py-3">
                       Resume
                     </th>
                   </tr>
@@ -167,14 +205,14 @@ const page = () => {
                     data?.data
                       ?.sort(
                         (a: any, b: any) =>
-                          b?.result?.relevancy_score -
-                          a?.result?.relevancy_score
+                          b?.result?.relevancy_score?.slice(0, -3) -
+                          a?.result?.relevancy_score?.slice(0, -3)
                       )
                       ?.map((item: any, index: any) => {
                         return (
                           <tr
                             key={index}
-                            className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                            className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer relative"
                           >
                             <td className="px-4 py-2 w-4">
                               <div className="flex items-center">
@@ -199,7 +237,9 @@ const page = () => {
                               scope="row"
                               className="pt-4 font-medium whitespace-nowrap flex items-center"
                             >
-                              {item?.profile?.fullName}
+                              {item?.profile?.fullName
+                                ? item?.profile?.fullName
+                                : `${item?.profile?.firstName} ${item?.profile?.lastName}`}
                             </th>
                             <td
                               onClick={() => handleRowClick(item)}
@@ -222,10 +262,8 @@ const page = () => {
                               className="px-4 py-2 whitespace-nowrap"
                             >
                               <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                                {item?.profile?.userType
-                                  ?.charAt(0)
-                                  .toUpperCase() +
-                                  item?.profile?.userType?.slice(1)}
+                                {item?.userType?.charAt(0)?.toUpperCase() +
+                                  item?.userType?.slice(1)}
                               </span>
                             </td>
                             <td
@@ -238,18 +276,27 @@ const page = () => {
                               onClick={() => handleRowClick(item)}
                               className="px-4 py-2 font-medium whitespace-nowrap"
                             >
-                              <span>{item?.result?.relevancy_score}%</span>
+                              <span>
+                                {item?.result?.relevancy_score?.slice(0, -3)}%
+                              </span>
                             </td>
                             <td
                               onClick={() => handleRowClick(item)}
                               className="px-4 py-2 font-medium whitespace-nowrap"
                             >
                               <span>
-                                {item?.result?.recommended
-                                  ?.charAt(0)
-                                  .toUpperCase() +
-                                  item?.result?.recommended?.slice(1)}
+                                {typeof item?.result?.recommended === "boolean"
+                                  ? item.result.recommended
+                                    ? "True"
+                                    : "False"
+                                  : ""}{" "}
                               </span>
+                            </td>
+                            <td
+                              onClick={() => viewReason(item)}
+                              className="px-4 py-2 font-medium whitespace-nowrap"
+                            >
+                              <span>View Details</span>
                             </td>
                             <td
                               onClick={() => downloadResume(item)}
@@ -263,6 +310,45 @@ const page = () => {
                                   data={selectedItem}
                                   closeDialog={closeDialog}
                                 />
+                              </div>
+                            )}
+                            {viewDetails === item?.profile?.id && (
+                              <div className="border border-black text-black absolute right-24 top-4 bg-white p-3 pt-4 opacity-100 z-50 rounded-2xl w-60">
+                                <button
+                                  onClick={closeResaonDialog}
+                                  className="absolute top-0 right-0 text-black bg-transparent text-2xl cursor-pointer pr-2"
+                                >
+                                  &times;{" "}
+                                </button>
+                                <div className="mb-3">
+                                  <span className="font-bold border border-orange-600 text-white bg-primary-orange px-2 rounded-xl py-1">
+                                    AI Matching
+                                  </span>
+                                  <span className="ml-2">
+                                    {itemReason?.relevancy_score?.slice(0, -3)}%
+                                  </span>
+                                </div>
+                                <div className="mb-3">
+                                  <span className="font-bold border border-orange-600 text-white bg-primary-orange px-2 rounded-xl py-1">
+                                    Recommended
+                                  </span>
+                                  <span className="ml-2">
+                                    {typeof item?.result?.recommended ===
+                                    "boolean"
+                                      ? item.result.recommended
+                                        ? "True"
+                                        : "False"
+                                      : ""}{" "}
+                                  </span>
+                                </div>
+                                <div className="mb-3">
+                                  <span className="font-bold border border-orange-600 text-white bg-primary-orange px-2 rounded-xl py-1">
+                                    Reason
+                                  </span>
+                                  <span className="ml-2">
+                                    {itemReason?.explanation}
+                                  </span>
+                                </div>
                               </div>
                             )}
                           </tr>

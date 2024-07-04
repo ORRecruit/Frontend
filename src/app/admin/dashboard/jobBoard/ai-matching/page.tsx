@@ -8,15 +8,16 @@ import React, { useState, useEffect } from "react";
 import CustomLoader from "@/components/customLoader";
 import TalentDetailModal from "@/components/modals/talentDetailModal";
 import ResumeTemplate from "@/components/templates/ResumeTemplate";
-import { PDFDownloadLink, pdf } from "@react-pdf/renderer";
+import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
 
 const Page = () => {
   const param = useSearchParams();
   const jobId = param.get("jobId");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
   const [data, setData] = useState<any>(null);
+  const [viewDetails, setViewDetails] = useState<any>(null);
 
   const handleRowClick = (item: any) => {
     setSelectedItem(item);
@@ -47,6 +48,15 @@ const Page = () => {
       const blob = await pdf(<ResumeTemplate user={item} />).toBlob();
       saveAs(blob, `${item.fullName}_Resume.pdf`);
     }
+  };
+
+  const viewReason = (item: any) => {
+    setSelectedItem(item);
+    setViewDetails(viewDetails === item.id ? null : item.id); // Toggle view details for the item
+  };
+
+  const closeResaonDialog = () => {
+    setViewDetails(false);
   };
 
   return (
@@ -158,6 +168,9 @@ const Page = () => {
                       Recommended
                     </th>
                     <th scope="col" className="px-4 py-3">
+                      Reason
+                    </th>
+                    <th scope="col" className="px-4 py-3">
                       Resume
                     </th>
                   </tr>
@@ -170,7 +183,7 @@ const Page = () => {
                         return (
                           <tr
                             key={index}
-                            className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                            className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer relative"
                           >
                             <td className="px-4 py-2 w-4">
                               <div className="flex items-center">
@@ -244,6 +257,12 @@ const Page = () => {
                               </span>
                             </td>
                             <td
+                              onClick={() => viewReason(item)}
+                              className="px-4 py-2 font-medium whitespace-nowrap"
+                            >
+                              <span>View Details</span>
+                            </td>
+                            <td
                               onClick={() => downloadResume(item)}
                               className="text-blue-600 border-b-2 cursor-pointer"
                             >
@@ -257,6 +276,43 @@ const Page = () => {
                                 />
                               </div>
                             )}
+                            {viewDetails === item.id && (
+                              <div className="border border-black text-black absolute right-24 top-4 bg-white p-3 pt-4 opacity-100 z-50 rounded-2xl w-60">
+                                <button
+                                  onClick={closeResaonDialog}
+                                  className="absolute top-0 right-0 text-black bg-transparent text-2xl cursor-pointer pr-2"
+                                >
+                                  &times;{" "}
+                                </button>
+                                <div className="mb-3">
+                                  <span className="font-bold border border-orange-600 text-white bg-primary-orange px-2 rounded-xl py-1">
+                                    AI Matching
+                                  </span>
+                                  <span className="ml-2">
+                                    {selectedItem?.relevancy}%
+                                  </span>
+                                </div>
+                                <div className="mb-3">
+                                  <span className="font-bold border border-orange-600 text-white bg-primary-orange px-2 rounded-xl py-1">
+                                    Recommended
+                                  </span>
+                                  <span className="ml-2">
+                                    {selectedItem?.recommended
+                                      ?.charAt(0)
+                                      .toUpperCase() +
+                                      selectedItem?.recommended?.slice(1)}
+                                  </span>
+                                </div>
+                                <div className="mb-3">
+                                  <span className="font-bold border border-orange-600 text-white bg-primary-orange px-2 rounded-xl py-1">
+                                    Reason
+                                  </span>
+                                  <span className="ml-2">
+                                    {selectedItem?.explanation}
+                                  </span>
+                                </div>
+                              </div>
+                            )}
                           </tr>
                         );
                       })}
@@ -264,7 +320,7 @@ const Page = () => {
               </table>
             </div>
             <nav
-              className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
+              className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4 z-0"
               aria-label="Table navigation"
             >
               <span className="text-sm font-normal text-gray-500 dark:text-gray-400">

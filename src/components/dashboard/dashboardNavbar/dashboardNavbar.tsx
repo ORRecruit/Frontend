@@ -25,6 +25,7 @@ const DashboardNavbar = () => {
     localStorage.removeItem("role");
     localStorage.removeItem("candidateId");
     localStorage.removeItem("avatarUrl");
+    localStorage.removeItem("postJob");
     // router.push("/auth/signin");
     window.location.href = "/auth/signin";
   };

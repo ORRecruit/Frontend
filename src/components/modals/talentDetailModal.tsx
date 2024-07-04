@@ -11,32 +11,42 @@ const talentDetailModal: React.FC<TalentModalProps> = ({
   closeDialog,
 }) => {
   return (
-    <div className="relative bg-white p-5 rounded-lg max-w-2xl w-full border border-black-400">
+    <div className="relative bg-white p-5 rounded-lg max-w-3xl w-full border border-black-400 cursor-auto">
       <div className="bg-white rounded-lg">
         <div className="mb-5">
           <div className="flex justify-between">
-            <h1 className="text-3xl font-bold">{data?.fullName}</h1>
+            <h1 className="text-3xl font-bold text-black">{data?.fullName}</h1>
           </div>
-          <div className="font-semibold text-lg text-gray-500 dark:text-gray-400 mb-2">
+          <div className="font-semibold text-lg text-black dark:text-black mb-2">
             ORR-USR-00
             {data?.id}
           </div>
 
-          <span className="bg-primary-orange p-2 font-light text-white dark:text-gray-400 rounded-2xl mr-2">
-            {data?.email}
-          </span>
-          {/* <span className="bg-primary-orange p-2 font-light text-white dark:text-gray-400 rounded-2xl">
-            {data?.industry}
-          </span> */}
+          <div>
+            {data?.userType && (
+              <span className="bg-primary-orange py-2 px-4 font-light text-white dark:text-gray-400 rounded-2xl mr-2">
+                {data?.userType?.charAt(0).toUpperCase() +
+                  data?.userType?.slice(1)}
+              </span>
+            )}
+            <span className="bg-primary-orange py-2 px-4 font-light text-white dark:text-gray-400 rounded-2xl mr-2">
+              {data?.email}
+            </span>
+          </div>
         </div>
 
         <div className="mb-5">
-          <p className="text-gray-900 dark:text-white">{data?.country}</p>
-          <p className="text-gray-900 dark:text-white">{data?.location}</p>
-
+          {data?.country === data?.location ? (
+            <p className="text-gray-900 dark:text-white">{data?.location}</p>
+          ) : (
+            <div>
+              <p className="text-gray-900 dark:text-white">{data?.country}</p>
+              <p className="text-gray-900 dark:text-white">{data?.location}</p>
+            </div>
+          )}
           <div className="text-gray-900 dark:text-white">
-            <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
-              SKills
+            <h1 className="font-semibold text-lg text-black dark:text-black pt-2">
+              Skills
             </h1>
             {data?.skills?.map((item: any, index: number) => {
               return <span key={index}>{item}, </span>;
@@ -44,7 +54,7 @@ const talentDetailModal: React.FC<TalentModalProps> = ({
           </div>
 
           <div className="text-gray-900 dark:text-white">
-            <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
+            <h1 className="font-semibold text-lg text-black dark:text-black pt-2">
               Tech
             </h1>
             {data?.tools?.map((item: any, index: number) => {
@@ -53,7 +63,7 @@ const talentDetailModal: React.FC<TalentModalProps> = ({
           </div>
 
           <div className="text-gray-900 dark:text-white">
-            <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
+            <h1 className="font-semibold text-lg text-black dark:text-black pt-2">
               Experiences
             </h1>
             {data?.experiences?.map((item: any, index: number) => {
@@ -68,7 +78,7 @@ const talentDetailModal: React.FC<TalentModalProps> = ({
           </div>
 
           <div className="text-gray-900 dark:text-white">
-            <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
+            <h1 className="font-semibold text-lg text-black dark:text-black pt-2">
               Educations
             </h1>
             {data?.educations?.map((item: any, index: number) => {
@@ -83,7 +93,7 @@ const talentDetailModal: React.FC<TalentModalProps> = ({
           </div>
 
           <div className="text-gray-900 dark:text-white">
-            <h1 className="font-semibold text-lg text-gray-500 dark:text-gray-400 pt-2">
+            <h1 className="font-semibold text-lg text-black dark:text-black pt-2">
               About Me
             </h1>
             <span>{data?.about}</span>
@@ -92,7 +102,7 @@ const talentDetailModal: React.FC<TalentModalProps> = ({
       </div>
       <button
         onClick={closeDialog}
-        className="absolute top-0 right-0 p-8 text-lg text-black bg-transparent text-2xl"
+        className="absolute top-0 right-0 p-8 text-black bg-transparent text-2xl cursor-pointer"
       >
         &times;{" "}
       </button>
