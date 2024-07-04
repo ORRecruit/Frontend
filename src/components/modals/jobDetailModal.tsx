@@ -12,9 +12,9 @@ const jobDetailModal: React.FC<JobModalProps> = ({ data, closeDialog }) => {
       <div className="bg-white rounded-lg">
         <div className="mb-5">
           <div className="flex justify-between">
-            <h1 className="text-3xl font-bold">{data?.title}</h1>
+            <h1 className="text-3xl font-bold text-black">{data?.title}</h1>
           </div>
-          <div className="text-lg font-semibold text-gray-500 dark:text-gray-400">
+          <div className="text-lg font-semibold text-black dark:text-black">
             ORR-
             {data?.industry?.slice(0, 4)}
             -00
