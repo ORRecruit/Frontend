@@ -23,10 +23,12 @@ const talentDetailModal: React.FC<TalentModalProps> = ({
           </div>
 
           <div>
-            <span className="bg-primary-orange py-2 px-4 font-light text-white dark:text-gray-400 rounded-2xl mr-2">
-              {data?.userType?.charAt(0).toUpperCase() +
-                data?.userType?.slice(1)}
-            </span>
+            {data?.userType && (
+              <span className="bg-primary-orange py-2 px-4 font-light text-white dark:text-gray-400 rounded-2xl mr-2">
+                {data?.userType?.charAt(0).toUpperCase() +
+                  data?.userType?.slice(1)}
+              </span>
+            )}
             <span className="bg-primary-orange py-2 px-4 font-light text-white dark:text-gray-400 rounded-2xl mr-2">
               {data?.email}
             </span>
