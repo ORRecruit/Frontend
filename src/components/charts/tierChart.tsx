@@ -1,4 +1,6 @@
 "use client";
+import { jobsTiers } from "@/api/adminStats/jobTiers";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 const data = [
@@ -12,6 +14,12 @@ const data = [
 const colors = ["#1f77b4", "#ff7f0e", "#c7c7c7", "#ffbb78", "#1f77b4"];
 
 const CustomBarChart = () => {
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ["get jobs with tiers"],
+    queryFn: () => jobsTiers(),
+  });
+  console.log("data from tiers...", data);
+
   return (
     <div className="flex justify-center items-center h-screen w-full">
       <div className="flex space-x-4">
@@ -20,7 +28,7 @@ const CustomBarChart = () => {
             className="bg-[#87207D] text-white font-bold py-4 px-6 flex justify-center items-center w-24 h-24"
             id="application"
           >
-            3
+            {data?.data?.tier1}
           </p>
           <p className="text-lg mt-2 font-semibold text-black">Tier 1</p>
         </div>
@@ -29,7 +37,7 @@ const CustomBarChart = () => {
             className="bg-orange-500 text-white font-bold py-4 px-6 flex justify-center items-center w-24 h-24"
             id="phone-screen"
           >
-            0
+            {data?.data?.tier2}{" "}
           </p>
           <p className="text-lg mt-2 font-semibold text-black">Tier 2</p>
         </div>
@@ -38,7 +46,7 @@ const CustomBarChart = () => {
             className="bg-[#16BDCA] text-white font-bold py-4 px-6 flex justify-center items-center w-24 h-24"
             id="mgr-interview"
           >
-            0
+            {data?.data?.tier3}{" "}
           </p>
           <p className="text-lg mt-2 font-semibold text-black">Tier 3</p>
         </div>

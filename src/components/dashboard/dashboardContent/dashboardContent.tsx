@@ -24,7 +24,7 @@ const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] h-[90%] overflow-auto">
       <div className="flex w-[99%] gap-4 flex-wrap lg:flex-nowrap">
-        {details?.map((item, index) => (
+        {details?.map((item: any, index: any) => (
           <div
             key={index}
             className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex-1"
@@ -38,9 +38,15 @@ const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
             />
             <Link href="#">
               <p>{item.heading}</p>
-              <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                {item.rating}
-              </h5>
+              {item?.rating && (
+                <h5
+                  className={`mb-2 font-semibold tracking-tight text-gray-900 dark:text-white ${
+                    item?.rating?.length > 10 ? "text-lg" : "text-2xl"
+                  }`}
+                >
+                  {item?.rating}
+                </h5>
+              )}
             </Link>
           </div>
         ))}

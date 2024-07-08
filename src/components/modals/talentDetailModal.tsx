@@ -12,7 +12,7 @@ const talentDetailModal: React.FC<TalentModalProps> = ({
 }) => {
   return (
     <div className="relative bg-white p-5 rounded-lg max-w-3xl w-full border border-black-400 cursor-auto">
-      <div className="bg-white rounded-lg">
+      <div className="bg-white rounded-lg max-h-[600px] overflow-y-auto">
         <div className="mb-5">
           <div className="flex justify-between">
             <h1 className="text-3xl font-bold text-black">{data?.fullName}</h1>
@@ -102,7 +102,7 @@ const talentDetailModal: React.FC<TalentModalProps> = ({
       </div>
       <button
         onClick={closeDialog}
-        className="absolute top-0 right-0 p-8 text-black bg-transparent text-2xl cursor-pointer"
+        className="absolute top-0 right-5 p-8 text-black bg-transparent text-2xl cursor-pointer"
       >
         &times;{" "}
       </button>
