@@ -168,7 +168,7 @@ const Page = () => {
                       Recommended
                     </th>
                     <th scope="col" className="px-4 py-3">
-                      Reason
+                      AI Feedback
                     </th>
                     <th scope="col" className="px-4 py-3">
                       Resume
@@ -183,7 +183,7 @@ const Page = () => {
                         return (
                           <tr
                             key={index}
-                            className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer relative"
+                            className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                           >
                             <td className="px-4 py-2 w-4">
                               <div className="flex items-center">
@@ -277,39 +277,60 @@ const Page = () => {
                               </div>
                             )}
                             {viewDetails === item.id && (
-                              <div className="border border-black text-black absolute right-24 top-4 bg-white p-3 pt-4 opacity-100 z-50 rounded-2xl w-60">
-                                <button
-                                  onClick={closeResaonDialog}
-                                  className="absolute top-0 right-0 text-black bg-transparent text-2xl cursor-pointer pr-2"
-                                >
-                                  &times;{" "}
-                                </button>
-                                <div className="mb-3">
-                                  <span className="font-bold border border-orange-600 text-white bg-primary-orange px-2 rounded-xl py-1">
-                                    AI Matching
-                                  </span>
-                                  <span className="ml-2">
-                                    {selectedItem?.relevancy}%
-                                  </span>
-                                </div>
-                                <div className="mb-3">
-                                  <span className="font-bold border border-orange-600 text-white bg-primary-orange px-2 rounded-xl py-1">
-                                    Recommended
-                                  </span>
-                                  <span className="ml-2">
-                                    {selectedItem?.recommended
-                                      ?.charAt(0)
-                                      .toUpperCase() +
-                                      selectedItem?.recommended?.slice(1)}
-                                  </span>
-                                </div>
-                                <div className="mb-3">
-                                  <span className="font-bold border border-orange-600 text-white bg-primary-orange px-2 rounded-xl py-1">
-                                    Reason
-                                  </span>
-                                  <span className="ml-2">
-                                    {selectedItem?.explanation}
-                                  </span>
+                              <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                                <div className="bg-white p-5 rounded-lg max-w-xl w-full border border-black-400 cursor-auto">
+                                  <div className="bg-white rounded-lg relative">
+                                    <button
+                                      onClick={closeResaonDialog}
+                                      className="absolute top-0 right-0 text-black bg-transparent text-2xl cursor-pointer pr-2"
+                                    >
+                                      &times;{" "}
+                                    </button>
+                                    <div>
+                                      <div className="text-center text-3xl font-bold text-black my-4">
+                                        AI Feedback
+                                      </div>
+                                      <div className="flex justify-between items-center w-[80%] mx-auto my-2">
+                                        <div className="flex flex-col justify-center items-center">
+                                          <p className="font-bold text-black px-3 py-1 text-lg">
+                                            AI Matching
+                                          </p>
+                                          <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 px-6 w-[150px] text-center text-center text-base">
+                                            {selectedItem?.relevancy}%
+                                          </p>
+                                        </div>
+                                        <div className="flex flex-col justify-center items-center">
+                                          <p className="font-bold text-black px-3 py-1 text-lg">
+                                            Recommended
+                                          </p>
+                                          <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 px-6 w-[150px] text-center text-center text-base">
+                                            {selectedItem?.recommended
+                                              ?.charAt(0)
+                                              .toUpperCase() +
+                                              selectedItem?.recommended?.slice(
+                                                1
+                                              )}
+                                          </p>
+                                        </div>
+                                      </div>
+                                      <div className="mb-3 w-[80%] mx-auto">
+                                        <p className="font-bold text-black px-3 py-1 text-lg">
+                                          Reason
+                                        </p>
+                                        <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 px-6 text-base text-center">
+                                          {selectedItem?.explanation}
+                                        </p>
+                                      </div>
+                                      <div className="mb-3 w-[80%] mx-auto flex justify-center items-center">
+                                        <p
+                                          onClick={() => downloadResume(item)}
+                                          className="text-blue-600 cursor-pointer border-b-[1px] border-blue-500 text-base my-2"
+                                        >
+                                          Download
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             )}
