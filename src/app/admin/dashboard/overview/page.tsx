@@ -42,22 +42,22 @@ const Page = () => {
     {
       iconUrl: "/overviewAdmin1.svg",
       heading: "Open Positions",
-      rating: jobOverviewData?.data?.openPositions || 0,
+      rating: `${jobOverviewData?.data?.openPositions || 0}`,
     },
     {
       iconUrl: "/overviewAdmin2.svg",
       heading: "Closed Positions",
-      rating: jobOverviewData?.data?.closedPositions || 0,
+      rating: `${jobOverviewData?.data?.closedPositions || 0}`,
     },
     {
       iconUrl: "/overviewAdmin3.svg",
       heading: "Covered Countries",
-      rating: "Canada, USA",
+      rating: "Canada",
     },
     {
       iconUrl: "/overviewAdmin4.svg",
       heading: "Industries",
-      rating: "IT, Tourism",
+      rating: "Technology & Hospitality",
     },
     {
       iconUrl: "/overviewAdmin5.svg",

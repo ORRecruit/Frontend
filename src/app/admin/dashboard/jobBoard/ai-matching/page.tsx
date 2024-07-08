@@ -317,7 +317,7 @@ const Page = () => {
                                         <p className="font-bold text-black px-3 py-1 text-lg">
                                           Reason
                                         </p>
-                                        <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 px-6 text-base text-center">
+                                        <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 px-6 text-base text-left">
                                           {selectedItem?.explanation}
                                         </p>
                                       </div>
@@ -326,7 +326,7 @@ const Page = () => {
                                           onClick={() => downloadResume(item)}
                                           className="text-blue-600 cursor-pointer border-b-[1px] border-blue-500 text-base my-2"
                                         >
-                                          Download
+                                          Download Resume
                                         </p>
                                       </div>
                                     </div>

@@ -309,14 +309,14 @@ function Page() {
                         className="text-gray-500 text-sm"
                         htmlFor="address-city"
                       >
-                        City*
+                        State*
                       </label>
                       <input
                         type="text"
                         name="city"
                         id="address-city"
                         autoComplete="address-level2"
-                        placeholder="City*"
+                        placeholder="State*"
                         value={formData.city}
                         onChange={handleChange}
                         className={getInputClasses("city")}
@@ -332,13 +332,13 @@ function Page() {
                         className="text-gray-500 text-sm"
                         htmlFor="address"
                       >
-                        Address*
+                        City / Postal code*
                       </label>
                       <input
                         type="text"
                         name="address"
                         id="address"
-                        placeholder="Address*"
+                        placeholder="City / Postal code*"
                         value={formData.address}
                         onChange={handleChange}
                         className={getInputClasses("address")}
