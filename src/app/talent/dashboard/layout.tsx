@@ -36,6 +36,11 @@ export default function RootLayout({
       text: "Application Status",
       href: "/talent/dashboard/appliedJobs",
     },
+    {
+      iconUrl: "/adminSidebar5.svg",
+      text: "Job Matching",
+      href: "/talent/dashboard/talent-ai-jobs",
+    },
     // {
     //   iconUrl: "/talendSidebar5.svg",
     //   text: "Interviews",

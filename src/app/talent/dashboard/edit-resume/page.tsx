@@ -28,10 +28,9 @@ const page = () => {
     skills: [],
     tools: [],
   });
-  const candId = localStorage?.getItem("candidateId");
+  const [candId, setCandId] = React.useState<string | null>(null);
   const [publishDialog, setPublishDialog] = useState<any>(false);
   const [applyNow, setApplyNow] = useState<boolean>(false);
-
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get talent by id"],
     queryFn: () => getTalentById(`${candId}`),
@@ -86,6 +85,7 @@ const page = () => {
         tools: data?.tools,
       });
     }
+    setCandId(localStorage?.getItem("candidateId"));
   }, [data]);
 
   const formatDate = (isoDate: string) => {
@@ -219,7 +219,7 @@ const page = () => {
 
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
-      <div className="w-[60%] mx-auto px-[2%]">
+      <div className="w-[60%] mx-auto px-[2%] bg-white py-4 rounded-xl">
         <div>
           {/* Personal Info */}
           <div className="mt-4">
