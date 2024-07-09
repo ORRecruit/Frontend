@@ -72,7 +72,7 @@ const page = () => {
   };
 
   return (
-    <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
+    <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%] bg-gray-50 dark:bg-gray-900">
       <FilterHeaderJobBoard />
       <div className="max-w-screen-xl sm:flex items-start justify-between mx-auto p-4 relative">
         {appliedRes ? (

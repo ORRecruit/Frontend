@@ -50,6 +50,7 @@ export default function RootLayout({
     "/admin/dashboard/clients/create-client",
     "/admin/dashboard/ai-magic",
     "/admin/dashboard/ai-magic/match-ai-talents",
+    "/talent/dashboard/talent-ai-jobs",
   ];
   const showNavbar = !noNavbarRoutes.includes(path);
 
