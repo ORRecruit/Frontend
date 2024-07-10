@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import CustomLoader from "@/components/customLoader";
 import { formatString } from "@/utils/utils";
 import JobDetailModal from "@/components/modals/jobDetailModal";
+import { getMatchingJobsCandidate } from "@/api/applicants/getMatchingJobsCandidates";
+import { useQuery } from "@tanstack/react-query";
 
 const page = () => {
   const blogPosts = [
@@ -315,6 +317,18 @@ const page = () => {
       applicationsCount: 5,
     },
   ];
+
+  const [candidateId, setCandidateId] = React.useState<any>(null);
+  React.useEffect(() => {
+    const id: any = localStorage.getItem("candidateId");
+    setCandidateId(parseInt(id));
+  }, []);
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ["get all naukrian"],
+    queryFn: () => getMatchingJobsCandidate(candidateId),
+  });
+  console.log("datadatadatadata", data);
+
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const openDetailModal = (item: any) => {
@@ -331,37 +345,70 @@ const page = () => {
         <CustomLoader />
       ) : ( */}
       <div className="mx-auto w-full px-4 lg:px-12">
-        <div className="relative sm:rounded-lg overflow-hidden w-full flex flex-wrap justify-evenly items-start">
-          {blogPosts.map((post: any, index: any) => {
+        <div className="relative sm:rounded-lg overflow-hidden w-full">
+          {data?.matchingJobResults?.map((post: any, index: any) => {
             return (
               <div
                 key={index}
-                className="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between w-[48%] mx-auto max-h-[300px] mb-4"
+                className="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between w-full mx-auto max-h-[300px] mb-4 px-16"
               >
-                <div>
-                  <p
-                    className="text-2xl font-bold cursor-pointer"
-                    onClick={() => openDetailModal(post)}
-                  >
-                    {post?.title}
-                  </p>
-                  <p className="text-base font-semibold text-gray-900 dark:text-white">
-                    {post?.salaryOffered?.replace(/"/g, "") + " "}{" "}
-                    {post?.currencyType} / {post?.jobType}
-                  </p>
-                  <p className="inline-block font-light dark:text-gray-400 bg-primary-orange text-white w-fit px-6 py-1 rounded-2xl my-2 mr-2">
-                    {formatString(`${post?.jobVenue}`)}
-                  </p>
-                  <p className="inline-block font-light dark:text-gray-400 bg-primary-orange text-white w-fit px-6 py-1 rounded-2xl my-2 mr-2">
-                    {formatString(`${post?.contractType}`)}
-                  </p>
+                <div className="flex">
+                  <div className="w-[30%]">
+                    <p
+                      className="text-2xl font-bold cursor-pointer"
+                      onClick={() => openDetailModal(post?.job)}
+                    >
+                      {post?.job?.title}
+                    </p>
+                    <p className="text-base font-semibold text-gray-900 dark:text-white">
+                      {post?.job?.salaryOffered?.replace(/"/g, "") + " "}{" "}
+                      {post?.job?.currencyType} / {post?.job?.jobType}
+                    </p>
+                    <p className="inline-block font-light dark:text-gray-400 bg-primary-orange text-white w-fit px-6 py-1 rounded-2xl my-2 mr-2">
+                      {formatString(`${post?.job?.jobVenue}`)}
+                    </p>
+                    <p className="inline-block font-light dark:text-gray-400 bg-primary-orange text-white w-fit px-6 py-1 rounded-2xl my-2 mr-2">
+                      {formatString(`${post?.job?.contractType}`)}
+                    </p>
 
-                  <p className="text-base font-semibold text-gray-900 dark:text-white">
-                    {post?.companyName}
-                  </p>
-                  <p className="text-gray-600 mb-4">
-                    {post.description.slice(0, 300)}
-                  </p>
+                    <p className="text-base font-semibold text-gray-900 dark:text-white">
+                      {post?.job?.companyName}
+                    </p>
+                  </div>
+                  <div className="w-[65%] mx-auto">
+                    <div className="text-lg font-semibold mb-1">
+                      AI Feedback
+                    </div>
+                    <div>
+                      <div>
+                        <span className="text-base font-semibold mb-1">
+                          Relevancy Score:
+                        </span>
+                        <span className="text-gray-600 mb-4">
+                          {" " + post?.result.relevancy_score}%
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-base font-semibold mb-1">
+                          Recommendation:
+                        </span>
+                        <span className="text-gray-600 mb-4">
+                          {" " +
+                            post?.result?.recommended?.charAt(0).toUpperCase() +
+                            post?.result?.recommended?.slice(1)}
+                        </span>
+                      </div>
+
+                      <div>
+                        <span className="text-base font-semibold mb-1">
+                          Reason:
+                        </span>
+                        <span className="text-gray-600 mb-4">
+                          {" " + post?.result.explanation}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             );
