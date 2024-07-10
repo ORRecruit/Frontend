@@ -287,8 +287,8 @@ const page = () => {
                               <span>
                                 {typeof item?.result?.recommended === "boolean"
                                   ? item.result.recommended
-                                    ? "True"
-                                    : "False"
+                                    ? "Yes"
+                                    : "No"
                                   : ""}{" "}
                               </span>
                             </td>
@@ -347,8 +347,8 @@ const page = () => {
                                             {typeof item?.result
                                               ?.recommended === "boolean"
                                               ? item.result.recommended
-                                                ? "True"
-                                                : "False"
+                                                ? "Yes"
+                                                : "No"
                                               : ""}
                                           </p>
                                         </div>

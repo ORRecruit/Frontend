@@ -13,7 +13,7 @@ import { formatString } from "@/utils/utils";
 const page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const jobIdFromURL = useRef(searchParams.get("jobId"));
+  const jobIdFromURL: any = useRef(searchParams.get("jobId"));
 
   const [title, setTitle] = useState<string>("");
   const [selectedValue, setSelectedValue] = useState<any>(null);
@@ -56,6 +56,7 @@ const page = () => {
 
   const selectedJob = (item: any) => {
     setSelectedValue(item);
+    jobIdFromURL.current = item?.id.toString();
     router.push(`/job-board?jobId=${item?.id}`);
   };
 

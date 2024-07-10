@@ -8,7 +8,7 @@ type JobModalProps = {
 
 const jobDetailModal: React.FC<JobModalProps> = ({ data, closeDialog }) => {
   return (
-    <div className="relative bg-white p-5 rounded-lg max-w-4xl w-full border border-black-400 max-h-[60%] overflow-auto px-12 py-8">
+    <div className="relative bg-white p-5 rounded-lg max-w-4xl w-full border border-black-400 overflow-hidden px-12 py-8">
       <div className="bg-white rounded-lg">
         <div className="mb-5">
           <div className="flex justify-between">
@@ -43,26 +43,28 @@ const jobDetailModal: React.FC<JobModalProps> = ({ data, closeDialog }) => {
           </p>
         </div>
 
-        <h2 className="text-lg text-gray-700 font-bold mb-2">
-          Job Description
-        </h2>
-        <div className="text-gray-700 mb-2">
-          <p dangerouslySetInnerHTML={createMarkup(data?.description)} />
-          <br />
-        </div>
+        <div className="overflow-y-auto max-h-[320px]">
+          <h2 className="text-lg text-gray-700 font-bold mb-2">
+            Job Description
+          </h2>
+          <div className="text-gray-700 mb-2">
+            <p dangerouslySetInnerHTML={createMarkup(data?.description)} />
+            <br />
+          </div>
 
-        <h3 className="text-lg text-gray-700 font-bold mb-2">
-          Responsibilities
-        </h3>
-        <ul className="list-disc list-inside text-gray-700 mb-2">
-          <p dangerouslySetInnerHTML={createMarkup(data?.responsibilities)} />
-        </ul>
-        <div className="text-gray-700 mb-2">
-          <h3 className="text-lg font-bold mb-2">Requirements</h3>
-          <p
-            className="list-disc list-inside text-gray-700 mb-2"
-            dangerouslySetInnerHTML={createMarkup(data?.requirements)}
-          />
+          <h3 className="text-lg text-gray-700 font-bold mb-2">
+            Responsibilities
+          </h3>
+          <ul className="list-disc list-inside text-gray-700 mb-2">
+            <p dangerouslySetInnerHTML={createMarkup(data?.responsibilities)} />
+          </ul>
+          <div className="text-gray-700 mb-2">
+            <h3 className="text-lg font-bold mb-2">Requirements</h3>
+            <p
+              className="list-disc list-inside text-gray-700 mb-2"
+              dangerouslySetInnerHTML={createMarkup(data?.requirements)}
+            />
+          </div>
         </div>
       </div>
       <button
