@@ -4,14 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import CustomLoader from "@/components/customLoader";
 import TalentDetailModal from "@/components/modals/talentDetailModal";
 import ResumeTemplate from "@/components/templates/ResumeTemplate";
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
 
-const page = () => {
+const ITEMS_PER_PAGE = 10;
+
+const AIMatchingContent = () => {
   const param = useSearchParams();
   const jobId = param.get("job-id");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -19,6 +21,7 @@ const page = () => {
   const [data, setData] = useState<any>(null);
   const [viewDetails, setViewDetails] = useState<any>(null);
   const [itemReason, setItemReason] = React.useState<any>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleRowClick = (item: any) => {
     setSelectedItem(item?.profile);
@@ -82,6 +85,17 @@ const page = () => {
 
   const closeResaonDialog = () => {
     setViewDetails(false);
+  };
+
+  // Pagination logic
+  const totalPages = Math.ceil((data?.data?.length || 0) / ITEMS_PER_PAGE);
+  const paginatedData = data?.data?.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
   };
 
   return (
@@ -201,182 +215,111 @@ const page = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data &&
-                    data?.data
-                      ?.sort(
-                        (a: any, b: any) =>
-                          b?.result?.relevancy_score?.slice(0, -3) -
-                          a?.result?.relevancy_score?.slice(0, -3)
-                      )
-                      ?.map((item: any, index: any) => {
-                        return (
-                          <tr
-                            key={index}
-                            className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                  {paginatedData
+                    ?.sort(
+                      (a: any, b: any) =>
+                        b?.result?.relevancy_score?.slice(0, -3) -
+                        a?.result?.relevancy_score?.slice(0, -3)
+                    )
+                    ?.map((item: any, index: any) => {
+                      return (
+                        <tr
+                          key={index}
+                          className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                        >
+                          <td className="px-4 py-2 w-4">
+                            <div className="flex items-center">
+                              <input
+                                id="checkbox-table-search-1"
+                                type="checkbox"
+                                className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                              />
+                              <label className="sr-only">checkbox</label>
+                            </div>
+                          </td>
+                          <td
+                            onClick={() => handleRowClick(item)}
+                            className="px-4 py-2 whitespace-nowrap"
                           >
-                            <td className="px-4 py-2 w-4">
-                              <div className="flex items-center">
-                                <input
-                                  id="checkbox-table-search-1"
-                                  type="checkbox"
-                                  className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                />
-                                <label className="sr-only">checkbox</label>
-                              </div>
-                            </td>
-                            <td
-                              onClick={() => handleRowClick(item)}
-                              className="px-4 py-2 whitespace-nowrap"
-                            >
-                              <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                                {`ORR-USR-00${item?.profile?.id}`}
-                              </span>
-                            </td>
-                            <th
-                              onClick={() => handleRowClick(item)}
-                              scope="row"
-                              className="pt-4 font-medium whitespace-nowrap flex items-center"
-                            >
-                              {item?.profile?.fullName
-                                ? item?.profile?.fullName
-                                : `${item?.profile?.firstName} ${item?.profile?.lastName}`}
-                            </th>
-                            <td
-                              onClick={() => handleRowClick(item)}
-                              className="px-4 py-2 whitespace-nowrap"
-                            >
-                              <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                                {item?.profile?.email}
-                              </span>
-                            </td>
-                            <td
-                              onClick={() => handleRowClick(item)}
-                              className="px-4 py-2 whitespace-nowrap"
-                            >
-                              <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                                {item?.profile?.industry}
-                              </span>
-                            </td>
-                            <td
-                              onClick={() => handleRowClick(item)}
-                              className="px-4 py-2 whitespace-nowrap"
-                            >
-                              <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                                {item?.userType?.charAt(0)?.toUpperCase() +
-                                  item?.userType?.slice(1)}
-                              </span>
-                            </td>
-                            <td
-                              onClick={() => handleRowClick(item)}
-                              className="px-4 py-2 whitespace-nowrap"
-                            >
-                              <span>{item?.profile?.location}</span>
-                            </td>
-                            <td
-                              onClick={() => handleRowClick(item)}
-                              className="px-4 py-2 font-medium whitespace-nowrap"
-                            >
-                              <span>
-                                {item?.result?.relevancy_score?.slice(0, -3)}%
-                              </span>
-                            </td>
-                            <td
-                              onClick={() => handleRowClick(item)}
-                              className="px-4 py-2 font-medium whitespace-nowrap"
-                            >
-                              <span>
-                                {typeof item?.result?.recommended === "boolean"
-                                  ? item.result.recommended
-                                    ? "Yes"
-                                    : "No"
-                                  : ""}{" "}
-                              </span>
-                            </td>
-                            <td
-                              onClick={() => viewReason(item)}
-                              className="px-4 py-2 font-medium whitespace-nowrap"
-                            >
-                              <span>View Details</span>
-                            </td>
-                            <td
-                              onClick={() => downloadResume(item)}
-                              className="text-blue-600 border-b-2 cursor-pointer"
-                            >
-                              Download
-                            </td>
-                            {isDialogOpen && (
-                              <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
-                                <TalentDetailModal
-                                  data={selectedItem}
-                                  closeDialog={closeDialog}
-                                />
-                              </div>
-                            )}
-                            {viewDetails === item?.profile?.id && (
-                              <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
-                                <div className="bg-white p-5 rounded-lg max-w-xl w-full border border-black-400 cursor-auto">
-                                  <div className="bg-white rounded-lg relative">
-                                    <button
-                                      onClick={closeResaonDialog}
-                                      className="absolute top-0 right-0 text-black bg-transparent text-2xl cursor-pointer pr-2"
-                                    >
-                                      &times;{" "}
-                                    </button>
-                                    <div>
-                                      <div className="text-center text-3xl font-bold text-black my-4">
-                                        AI Feedback
-                                      </div>
-                                      <div className="flex justify-between items-center w-[80%] mx-auto my-2">
-                                        <div className="flex flex-col justify-center items-center">
-                                          <p className="font-bold text-black px-3 py-1 text-lg">
-                                            AI Matching
-                                          </p>
-                                          <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 w-[150px] text-center text-base">
-                                            {itemReason?.relevancy_score?.slice(
-                                              0,
-                                              -3
-                                            )}
-                                            %
-                                          </p>
-                                        </div>
-                                        <div className="flex flex-col justify-center items-center">
-                                          <p className="font-bold text-black px-3 py-1 text-lg">
-                                            Recommended
-                                          </p>
-                                          <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 w-[150px] text-center text-base">
-                                            {typeof item?.result
-                                              ?.recommended === "boolean"
-                                              ? item.result.recommended
-                                                ? "Yes"
-                                                : "No"
-                                              : ""}
-                                          </p>
-                                        </div>
-                                      </div>
-                                      <div className="mb-3 w-[80%] mx-auto">
-                                        <p className="font-bold text-black px-3 py-1 text-lg">
-                                          Reason
-                                        </p>
-                                        <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 text-base text-left">
-                                          {itemReason?.explanation}
-                                        </p>
-                                      </div>
-                                      <div className="mb-3 w-[80%] mx-auto flex justify-center items-center">
-                                        <p
-                                          onClick={() => downloadResume(item)}
-                                          className="text-blue-600 cursor-pointer border-b-[1px] border-blue-500 text-base my-2"
-                                        >
-                                          Download Resume
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                          </tr>
-                        );
-                      })}
+                            <span className="py-2 font-medium whitespace-nowrap flex items-center">
+                              {`ORR-USR-00${item?.profile?.id}`}
+                            </span>
+                          </td>
+                          <th
+                            onClick={() => handleRowClick(item)}
+                            scope="row"
+                            className="pt-4 font-medium whitespace-nowrap flex items-center"
+                          >
+                            {item?.profile?.fullName
+                              ? item?.profile?.fullName
+                              : `${item?.profile?.firstName} ${item?.profile?.lastName}`}
+                          </th>
+                          <td
+                            onClick={() => handleRowClick(item)}
+                            className="px-4 py-2 whitespace-nowrap"
+                          >
+                            <span className="py-2 font-medium whitespace-nowrap flex items-center">
+                              {item?.profile?.email}
+                            </span>
+                          </td>
+                          <td
+                            onClick={() => handleRowClick(item)}
+                            className="px-4 py-2 whitespace-nowrap"
+                          >
+                            <span className="py-2 font-medium whitespace-nowrap flex items-center">
+                              {item?.profile?.industry}
+                            </span>
+                          </td>
+                          <td
+                            onClick={() => handleRowClick(item)}
+                            className="px-4 py-2 whitespace-nowrap"
+                          >
+                            <span className="py-2 font-medium whitespace-nowrap flex items-center">
+                              {item?.userType?.charAt(0)?.toUpperCase() +
+                                item?.userType?.slice(1)}
+                            </span>
+                          </td>
+                          <td
+                            onClick={() => handleRowClick(item)}
+                            className="px-4 py-2 whitespace-nowrap"
+                          >
+                            <span>{item?.profile?.location}</span>
+                          </td>
+                          <td
+                            onClick={() => handleRowClick(item)}
+                            className="px-4 py-2 font-medium whitespace-nowrap"
+                          >
+                            <span>
+                              {item?.result?.relevancy_score?.slice(0, -3)}%
+                            </span>
+                          </td>
+                          <td
+                            onClick={() => handleRowClick(item)}
+                            className="px-4 py-2 font-medium whitespace-nowrap"
+                          >
+                            <span>
+                              {typeof item?.result?.recommended === "boolean"
+                                ? item.result.recommended
+                                  ? "Yes"
+                                  : "No"
+                                : ""}{" "}
+                            </span>
+                          </td>
+                          <td
+                            onClick={() => viewReason(item)}
+                            className="px-4 py-2 font-medium whitespace-nowrap"
+                          >
+                            <span>View Details</span>
+                          </td>
+                          <td
+                            onClick={() => downloadResume(item)}
+                            className="text-blue-600 border-b-2 cursor-pointer"
+                          >
+                            Download
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
@@ -385,27 +328,110 @@ const page = () => {
               aria-label="Table navigation"
             >
               <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                Showing 1 - 10 of 1000
+                Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1} -{" "}
+                {Math.min(
+                  currentPage * ITEMS_PER_PAGE,
+                  data?.data?.length || 0
+                )}{" "}
+                of {data?.data?.length || 0}
               </span>
               <ul className="inline-flex items-stretch -space-x-px">
                 <li>
-                  <a
-                    href="#"
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
                     className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                   >
                     Previous
-                  </a>
+                  </button>
                 </li>
+                {[...Array(totalPages).keys()].map((number) => (
+                  <li key={number}>
+                    <button
+                      onClick={() => handlePageChange(number + 1)}
+                      className={`flex items-center justify-center text-sm py-2 px-3 leading-tight ${
+                        currentPage === number + 1
+                          ? "text-primary-600 bg-primary-50 border border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                          : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      }`}
+                    >
+                      {number + 1}
+                    </button>
+                  </li>
+                ))}
                 <li>
-                  <a
-                    href="#"
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
                     className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                   >
                     Next
-                  </a>
+                  </button>
                 </li>
               </ul>
             </nav>
+          </div>
+        </div>
+      )}
+      {isDialogOpen && (
+        <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+          <TalentDetailModal data={selectedItem} closeDialog={closeDialog} />
+        </div>
+      )}
+      {viewDetails && (
+        <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-5 rounded-lg max-w-xl w-full border border-black-400 cursor-auto">
+            <div className="bg-white rounded-lg relative">
+              <button
+                onClick={closeResaonDialog}
+                className="absolute top-0 right-0 text-black bg-transparent text-2xl cursor-pointer pr-2"
+              >
+                &times;
+              </button>
+              <div>
+                <div className="text-center text-3xl font-bold text-black my-4">
+                  AI Feedback
+                </div>
+                <div className="flex justify-between items-center w-[80%] mx-auto my-2">
+                  <div className="flex flex-col justify-center items-center">
+                    <p className="font-bold text-black px-3 py-1 text-lg">
+                      AI Matching
+                    </p>
+                    <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 w-[150px] text-center text-base">
+                      {itemReason?.relevancy_score?.slice(0, -3)}%
+                    </p>
+                  </div>
+                  <div className="flex flex-col justify-center items-center">
+                    <p className="font-bold text-black px-3 py-1 text-lg">
+                      Recommended
+                    </p>
+                    <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 w-[150px] text-center text-base">
+                      {typeof itemReason?.recommended === "boolean"
+                        ? itemReason.recommended
+                          ? "Yes"
+                          : "No"
+                        : ""}
+                    </p>
+                  </div>
+                </div>
+                <div className="mb-3 w-[80%] mx-auto">
+                  <p className="font-bold text-black px-3 py-1 text-lg">
+                    Reason
+                  </p>
+                  <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 text-base text-left">
+                    {itemReason?.explanation}
+                  </p>
+                </div>
+                <div className="mb-3 w-[80%] mx-auto flex justify-center items-center">
+                  <p
+                    onClick={() => downloadResume(selectedItem)}
+                    className="text-blue-600 cursor-pointer border-b-[1px] border-blue-500 text-base my-2"
+                  >
+                    Download Resume
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -413,4 +439,12 @@ const page = () => {
   );
 };
 
-export default page;
+const Page = () => {
+  return (
+    <Suspense fallback={<CustomLoader />}>
+      <AIMatchingContent />
+    </Suspense>
+  );
+};
+
+export default Page;
