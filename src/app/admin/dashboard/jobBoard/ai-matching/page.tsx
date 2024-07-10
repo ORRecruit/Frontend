@@ -317,8 +317,10 @@ const Page = () => {
                                         <p className="font-bold text-black px-3 py-1 text-lg">
                                           Reason
                                         </p>
-                                        <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 px-6 text-base text-left">
-                                          {selectedItem?.explanation}
+                                        <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 px-6 text-base text-center">
+                                          {selectedItem?.explanation
+                                            ? selectedItem?.explanation
+                                            : "No details found for the talent"}
                                         </p>
                                       </div>
                                       <div className="mb-3 w-[80%] mx-auto flex justify-center items-center">
