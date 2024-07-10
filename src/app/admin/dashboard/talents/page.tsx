@@ -1,39 +1,56 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getAllTalents } from "@/api/talent/getAllTalents";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { formatDate } from "@/utils/utils";
 import TalentDetailModal from "@/components/modals/talentDetailModal";
 
-const page = () => {
+const Page = () => {
   const [name, setName] = useState<string>("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+
   const handleRowClick = (item: any) => {
     setSelectedItem(item);
     setIsDialogOpen(!isDialogOpen);
   };
+
   const closeDialog = () => {
     setIsDialogOpen(!isDialogOpen);
-    console.log("cloase", isDialogOpen);
+    console.log("close", isDialogOpen);
   };
 
   const { data, error, isLoading, refetch } = useQuery({
-    queryKey: ["get all talents"],
+    queryKey: ["get all talents", name, currentPage],
     queryFn: () => getAllTalents(`Candidate%20Name=${name}`),
   });
-  console.log("data", data);
 
-  const filterCandidateFunction = (e: any) => {
+  useEffect(() => {
+    refetch();
+  }, [currentPage, refetch]);
+
+  const filterCandidateFunction = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("e.target", e.target.value);
     setName(e.target.value);
+    setCurrentPage(1);
     refetch();
     if (!data?.data?.length) {
       toast.success("No Talents Found");
     }
   };
+
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data?.data?.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages: any = Math.ceil((data?.data?.length || 0) / itemsPerPage);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
@@ -133,81 +150,68 @@ const page = () => {
                 </tr>
               </thead>
               <tbody>
-                {data &&
-                  data?.data
-                    ?.sort((a: any, b: any) => b.id - a.id)
-                    ?.map((item: any, index: any) => {
-                      return (
-                        <tr
-                          key={index}
-                          className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
-                        >
-                          <td className="px-4 py-2 w-4">
-                            <div className="flex items-center">
-                              <input
-                                id="checkbox-table-search-1"
-                                type="checkbox"
-                                className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                              />
-                              <label className="sr-only">checkbox</label>
-                            </div>
-                          </td>
-                          <td
-                            onClick={() => handleRowClick(item)}
-                            className="px-4 py-2 whitespace-nowrap"
-                          >
-                            <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                              {`ORR-USR-00${item?.id}`}
-                            </span>
-                          </td>
-                          <th
-                            onClick={() => handleRowClick(item)}
-                            scope="row"
-                            className="px-4 py-2 font-medium whitespace-nowrap flex items-center"
-                          >
-                            {item?.fullName}
-                          </th>
-                          <td
-                            onClick={() => handleRowClick(item)}
-                            className="pl-4 py-2 whitespace-nowrap"
-                          >
-                            <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                              {item?.email}
-                            </span>
-                          </td>
-                          <td
-                            onClick={() => handleRowClick(item)}
-                            className="pl-4 py-2 whitespace-nowrap"
-                          >
-                            <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                              {item?.industry}
-                            </span>
-                          </td>
-                          <td
-                            onClick={() => handleRowClick(item)}
-                            className="px-4 py-2 font-medium whitespace-nowrap"
-                          >
-                            <span>{item?.country}</span>
-                          </td>
-                          <td
-                            onClick={() => handleRowClick(item)}
-                            className="pl-4 py-2"
-                          >
-                            <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                              {formatDate(item?.createdAt)}
-                            </span>
-                          </td>
-                          {isDialogOpen && (
-                            <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
-                              <TalentDetailModal
-                                data={selectedItem}
-                                closeDialog={closeDialog}
-                              />
-                            </div>
-                          )}
-                        </tr>
-                      );
-                    })}
+                {currentItems?.map((item: any, index: number) => (
+                  <tr
+                    key={index}
+                    className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                  >
+                    <td className="px-4 py-2 w-4">
+                      <div className="flex items-center">
+                        <input
+                          id="checkbox-table-search-1"
+                          type="checkbox"
+                          className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        />
+                        <label className="sr-only">checkbox</label>
+                      </div>
+                    </td>
+                    <td
+                      onClick={() => handleRowClick(item)}
+                      className="px-4 py-2 whitespace-nowrap"
+                    >
+                      <span className="py-2 font-medium whitespace-nowrap flex items-center">
+                        {`ORR-USR-00${item?.id}`}
+                      </span>
+                    </td>
+                    <th
+                      onClick={() => handleRowClick(item)}
+                      scope="row"
+                      className="px-4 py-2 font-medium whitespace-nowrap flex items-center"
+                    >
+                      {item?.fullName}
+                    </th>
+                    <td
+                      onClick={() => handleRowClick(item)}
+                      className="pl-4 py-2 whitespace-nowrap"
+                    >
+                      <span className="py-2 font-medium whitespace-nowrap flex items-center">
+                        {item?.email}
+                      </span>
+                    </td>
+                    <td
+                      onClick={() => handleRowClick(item)}
+                      className="pl-4 py-2 whitespace-nowrap"
+                    >
+                      <span className="py-2 font-medium whitespace-nowrap flex items-center">
+                        {item?.industry}
+                      </span>
+                    </td>
+                    <td
+                      onClick={() => handleRowClick(item)}
+                      className="px-4 py-2 font-medium whitespace-nowrap"
+                    >
+                      <span>{item?.country}</span>
+                    </td>
+                    <td
+                      onClick={() => handleRowClick(item)}
+                      className="pl-4 py-2"
+                    >
+                      <span className="py-2 font-medium whitespace-nowrap flex items-center">
+                        {formatDate(item?.createdAt)}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -218,17 +222,21 @@ const page = () => {
             <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
               Showing
               <span className="font-semibold text-gray-900 dark:text-white">
-                1-10
+                {" "}
+                {indexOfFirstItem + 1}-
+                {Math.min(indexOfLastItem, data?.data?.length || 0)}{" "}
               </span>
               of
               <span className="font-semibold text-gray-900 dark:text-white">
-                1000
+                {" "}
+                {data?.data?.length || 0}
               </span>
             </span>
             <ul className="inline-flex items-stretch -space-x-px">
               <li>
-                <a
-                  href="#"
+                <button
+                  onClick={() => paginate(currentPage - 1)}
+                  disabled={currentPage === 1}
                   className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                 >
                   <span className="sr-only">Previous</span>
@@ -244,11 +252,26 @@ const page = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                </a>
+                </button>
               </li>
+              {Array.from({ length: totalPages }, (_, number) => (
+                <li key={number}>
+                  <button
+                    onClick={() => paginate(number + 1)}
+                    className={`flex items-center justify-center text-sm py-2 px-3 leading-tight ${
+                      currentPage === number + 1
+                        ? "text-primary-600 bg-primary-50 border border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                        : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    }`}
+                  >
+                    {number + 1}
+                  </button>
+                </li>
+              ))}
               <li>
-                <a
-                  href="#"
+                <button
+                  onClick={() => paginate(currentPage + 1)}
+                  disabled={currentPage === totalPages}
                   className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                 >
                   <span className="sr-only">Next</span>
@@ -264,14 +287,19 @@ const page = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                </a>
+                </button>
               </li>
             </ul>
           </nav>
         </div>
       </div>
+      {isDialogOpen && (
+        <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+          <TalentDetailModal data={selectedItem} closeDialog={closeDialog} />
+        </div>
+      )}
     </div>
   );
 };
 
-export default page;
+export default Page;
