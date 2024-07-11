@@ -59,6 +59,28 @@ const Page = () => {
     setViewDetails(false);
   };
 
+  // Pagination states and logic
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil((data?.data?.length || 0) / itemsPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const paginatedData = data?.data?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
       {isLoading ? (
@@ -176,8 +198,8 @@ const Page = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data &&
-                    data?.data
+                  {paginatedData &&
+                    paginatedData
                       ?.sort((a: any, b: any) => b?.relevancy - a?.relevancy)
                       ?.map((item: any, index: any) => {
                         return (
@@ -200,7 +222,9 @@ const Page = () => {
                               className="px-4 py-2 whitespace-nowrap"
                             >
                               <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                                {`ORR-USR-00${item?.id}`}
+                                {item?.userType == "applicant"
+                                  ? `ORR-USR-00${item?.id}`
+                                  : `ORR-CAD-00${item?.id}`}
                               </span>
                             </td>
                             <th
@@ -347,24 +371,28 @@ const Page = () => {
               aria-label="Table navigation"
             >
               <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                Showing 1 - 10 of 1000
+                Showing {currentPage * itemsPerPage - itemsPerPage + 1}-
+                {Math.min(currentPage * itemsPerPage, data?.data?.length || 0)}{" "}
+                of {data?.data?.length || 0}
               </span>
               <ul className="inline-flex items-stretch -space-x-px">
                 <li>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  <button
+                    onClick={handlePreviousPage}
+                    disabled={currentPage === 1}
+                    className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50"
                   >
                     Previous
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  <button
+                    onClick={handleNextPage}
+                    disabled={currentPage === totalPages}
+                    className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50"
                   >
                     Next
-                  </a>
+                  </button>
                 </li>
               </ul>
             </nav>

@@ -48,7 +48,6 @@ const page = () => {
     setIsDialogOpen(!isDialogOpen);
   };
 
-  // Content for the edit client mechanism
   const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
   const [formData, setFormData] = useState<any>({
     firstName: "",
@@ -114,7 +113,28 @@ const page = () => {
       setApplyNow(false);
     }
   };
-  // Content for the edit client mechanism
+
+  // Pagination states and logic
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil((data?.length || 0) / itemsPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const paginatedData = data?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
@@ -139,8 +159,6 @@ const page = () => {
                   id="default-search"
                   className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   placeholder="Search..."
-                  // onChange={handleInputChange}
-                  // value={localTitle}
                 />
                 <button
                   type="submit"
@@ -151,173 +169,6 @@ const page = () => {
               </div>
             </div>
             <div className="borer-2 border-black flex items-center space-x-0 sm:space-x-4">
-              {/* <div className="border- border-green-500">
-                <button
-                  id="filterDropdownButton"
-                  data-dropdown-toggle="filterDropdown"
-                  type="button"
-                  className="w-[100px] sm:w-full md:w-auto flex items-center justify-center py-2 px-2 sm:px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    className="h-4 w-4 mr-2 text-gray-400"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
-                    />
-                  </svg>
-                  Filter
-                  <svg
-                    className="-mr-1 ml-1.5 w-5 h-5"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path
-                      clipRule="evenodd"
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    />
-                  </svg>
-                </button>
-                <div
-                  id="filterDropdown"
-                  className="z-10 hidden p-3 bg-white rounded-lg shadow w-56 dark:bg-gray-700"
-                >
-                  <h6 className="mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    By status
-                  </h6>
-                  <ul
-                    className="space-y-2 text-sm"
-                    aria-labelledby="filterDropdownButton"
-                  >
-                    <li>
-                      <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                        <input
-                          type="checkbox"
-                          value=""
-                          className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        />
-                        In progress
-                      </label>
-                    </li>
-                    <li>
-                      <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                        <input
-                          type="checkbox"
-                          value=""
-                          className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        />
-                        In review
-                      </label>
-                    </li>
-                    <li>
-                      <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                        <input
-                          type="checkbox"
-                          value=""
-                          className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        />
-                        Completed
-                      </label>
-                    </li>
-                    <li>
-                      <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                        <input
-                          type="checkbox"
-                          value=""
-                          className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        />
-                        Canceled
-                      </label>
-                    </li>
-                  </ul>
-                  <h6 className="mt-4 mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    By number of users
-                  </h6>
-                  <ul
-                    className="space-y-2 text-sm"
-                    aria-labelledby="dropdownDefault"
-                  >
-                    <li>
-                      <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                        <input
-                          type="checkbox"
-                          value=""
-                          className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        />
-                        5-10 peoples
-                      </label>
-                    </li>
-                    <li>
-                      <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                        <input
-                          type="checkbox"
-                          value=""
-                          className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        />
-                        10+ peoples
-                      </label>
-                    </li>
-                    <li>
-                      <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                        <input
-                          type="checkbox"
-                          value=""
-                          className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        />
-                        More than 10 peoples
-                      </label>
-                    </li>
-                  </ul>
-                  <a
-                    href="#"
-                    className="flex items-center text-sm font-medium text-primary-600 dark:text-primary-500 hover:underline mt-4 ml-1.5"
-                  >
-                    Apply to all projects
-                  </a>
-                </div>
-              </div> */}
-              <div>
-                <div
-                  id="configurationDropdown"
-                  className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                >
-                  <ul
-                    className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                    aria-labelledby="configurationDropdownButton"
-                  >
-                    <li>
-                      <a
-                        href="#"
-                        className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >
-                        By Category
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >
-                        By Brand
-                      </a>
-                    </li>
-                  </ul>
-                  <div className="py-1">
-                    <a
-                      href="#"
-                      className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Reset
-                    </a>
-                  </div>
-                </div>
-              </div>
               <div className="absolute right-0">
                 <Link href="/admin/dashboard/clients/create-client">
                   <button className="bg-primary-orange text-sm text-white w-24 sm:w-40 py-2 mr-4 rounded-xl hover:shadow-xl">
@@ -365,8 +216,8 @@ const page = () => {
             </tr>
           </thead>
           <tbody>
-            {data &&
-              data
+            {paginatedData &&
+              paginatedData
                 ?.sort((a: any, b: any) => b.id - a.id)
                 ?.map((item: any, index: any) => {
                   return (
@@ -413,10 +264,7 @@ const page = () => {
                         className="px-4 py-2 whitespace-nowrap"
                         onClick={() => handleRowClick(item)}
                       >
-                        <span
-                          // onClick={() => routeToAiMatching(item?.id)}
-                          className="py-2 font-medium whitespace-nowrap flex items-center"
-                        >
+                        <span className="py-2 font-medium whitespace-nowrap flex items-center">
                           {item?.numberOfEmployees}
                         </span>
                       </td>
@@ -640,13 +488,6 @@ const page = () => {
                                         Are you sure want to edit the client?
                                       </p>
                                       <div className="mt-5 sm:mt-6">
-                                        {/* <button
-                                        type="button"
-                                        className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-                                        onClick={handleSubmit}
-                                      >
-                                        Yes
-                                      </button> */}
                                         {!applyNow ? (
                                           <button
                                             onClick={handleSubmit}
@@ -675,7 +516,7 @@ const page = () => {
                             </div>
 
                             <button
-                              onClick={() => setEditDialog(false)} // This closes the modal when clicked
+                              onClick={() => setEditDialog(false)}
                               className="absolute top-0 right-0 p-8 text-black bg-transparent text-2xl"
                             >
                               &times;{" "}
@@ -733,8 +574,8 @@ const page = () => {
                               </p>
                             </p>
                             <button
-                              onClick={closeDialog} // This closes the modal when clicked
-                              className="absolute top-0 right-0 p-8 text-lg text-black bg-transparent text-2xl"
+                              onClick={closeDialog}
+                              className="absolute top-0 right-0 p-8 text-black bg-transparent text-2xl"
                             >
                               &times;{" "}
                             </button>
@@ -753,18 +594,20 @@ const page = () => {
           <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
             Showing
             <span className="font-semibold text-gray-900 dark:text-white">
-              1-10
+              {currentPage * itemsPerPage - itemsPerPage + 1}-
+              {Math.min(currentPage * itemsPerPage, data?.length || 0)}
             </span>
             of
             <span className="font-semibold text-gray-900 dark:text-white">
-              1000
+              {data?.length || 0}
             </span>
           </span>
           <ul className="inline-flex items-stretch -space-x-px">
             <li>
-              <a
-                href="#"
-                className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              <button
+                onClick={handlePreviousPage}
+                disabled={currentPage === 1}
+                className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50"
               >
                 <span className="sr-only">Previous</span>
                 <svg
@@ -779,12 +622,13 @@ const page = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-              </a>
+              </button>
             </li>
             <li>
-              <a
-                href="#"
-                className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              <button
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+                className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50"
               >
                 <span className="sr-only">Next</span>
                 <svg
@@ -799,7 +643,7 @@ const page = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-              </a>
+              </button>
             </li>
           </ul>
         </nav>

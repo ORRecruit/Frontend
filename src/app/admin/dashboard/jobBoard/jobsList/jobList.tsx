@@ -351,6 +351,28 @@ const jobList = () => {
     router.push(`/admin/dashboard/jobBoard/ai-matching?jobId=${jobId}`);
   };
 
+  // Pagination states and logic
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil((filteredJobs?.length || 0) / itemsPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const paginatedData = filteredJobs?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <>
       <section className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
@@ -432,140 +454,6 @@ const jobList = () => {
                               />
                             </svg>
                           </button>
-                          {/* These are some filter options */}
-                          <div
-                            id="filterDropdown"
-                            className="z-10 hidden p-3 bg-white rounded-lg shadow w-56 dark:bg-gray-700"
-                          >
-                            <h6 className="mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                              By status
-                            </h6>
-                            <ul
-                              className="space-y-2 text-sm"
-                              aria-labelledby="filterDropdownButton"
-                            >
-                              <li>
-                                <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                                  <input
-                                    type="checkbox"
-                                    value=""
-                                    className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                                  />
-                                  In progress
-                                </label>
-                              </li>
-                              <li>
-                                <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                                  <input
-                                    type="checkbox"
-                                    value=""
-                                    className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                                  />
-                                  In review
-                                </label>
-                              </li>
-                              <li>
-                                <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                                  <input
-                                    type="checkbox"
-                                    value=""
-                                    className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                                  />
-                                  Completed
-                                </label>
-                              </li>
-                              <li>
-                                <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                                  <input
-                                    type="checkbox"
-                                    value=""
-                                    className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                                  />
-                                  Canceled
-                                </label>
-                              </li>
-                            </ul>
-                            <h6 className="mt-4 mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                              By number of users
-                            </h6>
-                            <ul
-                              className="space-y-2 text-sm"
-                              aria-labelledby="dropdownDefault"
-                            >
-                              <li>
-                                <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                                  <input
-                                    type="checkbox"
-                                    value=""
-                                    className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                                  />
-                                  5-10 peoples
-                                </label>
-                              </li>
-                              <li>
-                                <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                                  <input
-                                    type="checkbox"
-                                    value=""
-                                    className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                                  />
-                                  10+ peoples
-                                </label>
-                              </li>
-                              <li>
-                                <label className="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md px-1.5 py-1 w-full">
-                                  <input
-                                    type="checkbox"
-                                    value=""
-                                    className="w-4 h-4 mr-2 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                                  />
-                                  More than 10 peoples
-                                </label>
-                              </li>
-                            </ul>
-                            <a
-                              href="#"
-                              className="flex items-center text-sm font-medium text-primary-600 dark:text-primary-500 hover:underline mt-4 ml-1.5"
-                            >
-                              Apply to all projects
-                            </a>
-                          </div>
-                        </div>
-                        <div>
-                          <div
-                            id="configurationDropdown"
-                            className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                          >
-                            <ul
-                              className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                              aria-labelledby="configurationDropdownButton"
-                            >
-                              <li>
-                                <a
-                                  href="#"
-                                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                >
-                                  By Category
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="#"
-                                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                >
-                                  By Brand
-                                </a>
-                              </li>
-                            </ul>
-                            <div className="py-1">
-                              <a
-                                href="#"
-                                className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                              >
-                                Reset
-                              </a>
-                            </div>
-                          </div>
                         </div>
                         <div className="absolute right-0">
                           <Link href="/admin/dashboard/newJob">
@@ -638,26 +526,6 @@ const jobList = () => {
                         </div>
                       )}
                     </div>
-                  </div>
-                  <div className="w-full md:w-auto flex flex-col md:flex-row mb-3 md:mb-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <button
-                      type="button"
-                      className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-                    >
-                      <svg
-                        className="h-3.5 w-3.5 mr-2"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                      >
-                        <path
-                          clipRule="evenodd"
-                          fillRule="evenodd"
-                          d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                        />
-                      </svg>
-                      Add new task
-                    </button>
                   </div>
                 </div>
               </div>
@@ -770,8 +638,8 @@ const jobList = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredJobs &&
-                      filteredJobs
+                    {paginatedData &&
+                      paginatedData
                         ?.sort((a, b) => b.id - a.id)
                         ?.map((item: any, index: any) => {
                           return (
@@ -1614,53 +1482,35 @@ const jobList = () => {
                 <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
                   Showing
                   <span className="font-semibold text-gray-900 dark:text-white">
-                    1-10
+                    {currentPage * itemsPerPage - itemsPerPage + 1}-
+                    {Math.min(
+                      currentPage * itemsPerPage,
+                      filteredJobs?.length || 0
+                    )}
                   </span>
                   of
                   <span className="font-semibold text-gray-900 dark:text-white">
-                    1000
+                    {filteredJobs?.length || 0}
                   </span>
                 </span>
                 <ul className="inline-flex items-stretch -space-x-px">
                   <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    <button
+                      onClick={handlePreviousPage}
+                      disabled={currentPage === 1}
+                      className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50"
                     >
-                      <span className="sr-only">Previous</span>
-                      <svg
-                        className="w-5 h-5"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </a>
+                      Previous
+                    </button>
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    <button
+                      onClick={handleNextPage}
+                      disabled={currentPage === totalPages}
+                      className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50"
                     >
-                      <span className="sr-only">Next</span>
-                      <svg
-                        className="w-5 h-5"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </a>
+                      Next
+                    </button>
                   </li>
                 </ul>
               </nav>

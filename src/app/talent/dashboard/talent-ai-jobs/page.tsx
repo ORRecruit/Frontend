@@ -60,6 +60,11 @@ const page = () => {
     }
   };
 
+  const applyNowFunction = (job: any) => {
+    setPublishDialog(!publishDialog);
+    setSelectedItem(job?.job);
+  };
+
   return (
     <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
       {isLoading ? (
@@ -72,7 +77,7 @@ const page = () => {
                 (a: any, b: any) =>
                   b?.result?.relevancy_score - a?.result?.relevancy_score
               )
-              ?.map((post: any, index: any) => {
+              ?.map((job: any, index: any) => {
                 return (
                   <div
                     key={index}
@@ -82,30 +87,30 @@ const page = () => {
                       <div className="w-[30%]">
                         <p
                           className="text-2xl font-bold cursor-pointer"
-                          onClick={() => openDetailModal(post?.job)}
+                          onClick={() => openDetailModal(job?.job)}
                         >
-                          {post?.job?.title}
+                          {job?.job?.title}
                         </p>
                         <p className="text-base font-semibold text-gray-900 dark:text-white">
-                          {post?.job?.salaryOffered?.replace(/"/g, "") + " "}{" "}
-                          {post?.job?.currencyType} / {post?.job?.jobType}
+                          {job?.job?.salaryOffered?.replace(/"/g, "") + " "}{" "}
+                          {job?.job?.currencyType} / {job?.job?.jobType}
                         </p>
                         <p className="inline-block font-light dark:text-gray-400 bg-primary-orange text-white w-fit px-6 py-1 rounded-2xl my-2 mr-2">
-                          {formatString(`${post?.job?.jobVenue}`)}
+                          {formatString(`${job?.job?.jobVenue}`)}
                         </p>
                         <p className="inline-block font-light dark:text-gray-400 bg-primary-orange text-white w-fit px-6 py-1 rounded-2xl my-2 mr-2">
-                          {formatString(`${post?.job?.contractType}`)}
+                          {formatString(`${job?.job?.contractType}`)}
                         </p>
 
                         <p className="text-base font-semibold text-gray-900 dark:text-white">
-                          {post?.job?.companyName}
+                          {job?.job?.companyName}
                         </p>
                       </div>
                       <div className="w-[65%] mx-auto relative">
                         <button
                           type="button"
                           className="text-white font-small rounded-lg text-sm sm:px-2 sm:py-2 text-center bg-primary-orange w-[90px] h-[28px] mt-[20px] sm:h-fit sm:mt-0 sm:w-[150px] absolute right-0 top-0"
-                          onClick={() => setPublishDialog(!publishDialog)}
+                          onClick={() => applyNowFunction(job)}
                         >
                           Apply Now
                         </button>
@@ -128,7 +133,7 @@ const page = () => {
                                 <div>
                                   {!applyNow ? (
                                     <button
-                                      onClick={() => applyJob(post?.job?.id)}
+                                      onClick={() => applyJob(selectedItem?.id)}
                                       className="w-full mt-[20px] sm:mt-[0px] sm:w-auto bg-orange-600 text-white justify-center font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center"
                                     >
                                       Yes
@@ -159,7 +164,7 @@ const page = () => {
                               Relevancy Score:
                             </span>
                             <span className="text-gray-600 mb-4">
-                              {" " + post?.result.relevancy_score}%
+                              {" " + job?.result.relevancy_score}%
                             </span>
                           </div>
                           <div>
@@ -168,10 +173,10 @@ const page = () => {
                             </span>
                             <span className="text-gray-600 mb-4">
                               {" " +
-                                post?.result?.recommended
+                                job?.result?.recommended
                                   ?.charAt(0)
                                   .toUpperCase() +
-                                post?.result?.recommended?.slice(1)}
+                                job?.result?.recommended?.slice(1)}
                             </span>
                           </div>
                           <div>
@@ -179,7 +184,7 @@ const page = () => {
                               Reason:
                             </span>
                             <span className="text-gray-600 mb-4">
-                              {" " + post?.result.explanation}
+                              {" " + job?.result.explanation}
                             </span>
                           </div>
                         </div>

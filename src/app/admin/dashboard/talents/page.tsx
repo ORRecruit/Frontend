@@ -142,6 +142,9 @@ const Page = () => {
                     Industry
                   </th>
                   <th scope="col" className="px-4 py-3">
+                    Talent Type
+                  </th>
+                  <th scope="col" className="px-4 py-3">
                     Location
                   </th>
                   <th scope="col" className="px-4 py-3">
@@ -194,6 +197,16 @@ const Page = () => {
                     >
                       <span className="py-2 font-medium whitespace-nowrap flex items-center">
                         {item?.industry}
+                      </span>
+                    </td>
+                    <td
+                      onClick={() => handleRowClick(item)}
+                      className="pl-4 py-2 whitespace-nowrap"
+                    >
+                      <span className="py-2 font-medium whitespace-nowrap flex items-center">
+                        {/* {item?.userType?.charAt(0)?.toUpperCase() +
+                          item?.userType?.slice(1)} */}
+                        N/A
                       </span>
                     </td>
                     <td

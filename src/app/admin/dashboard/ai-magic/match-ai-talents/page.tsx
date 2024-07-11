@@ -242,7 +242,9 @@ const AIMatchingContent = () => {
                             className="px-4 py-2 whitespace-nowrap"
                           >
                             <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                              {`ORR-USR-00${item?.profile?.id}`}
+                              {item?.userType == "applicant"
+                                ? `ORR-USR-00${item?.profile?.id}`
+                                : `ORR-CAD-00${item?.profile?.id}`}
                             </span>
                           </td>
                           <th

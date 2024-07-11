@@ -29,16 +29,7 @@ const page = () => {
   });
 
   const filteredJobs = data?.data?.filter((job: any) => {
-    // switch (selectedFilter) {
-    //   case "PENDING":
-    //     return job.jobStatus === "PENDING";
-    //   case "PUBLISHED":
-    //     return job.jobStatus === "PUBLISHED";
-    //   case "COMPLETED":
-    //     return job.jobStatus === "COMPLETED";
-    //   default:
     return true;
-    // }
   });
 
   const handleRowClick = (item: any) => {
@@ -53,6 +44,28 @@ const page = () => {
   const routeToAiMatching = (jobId: any) => {
     router.push(`/admin/dashboard/ai-magic/match-ai-talents?job-id=${jobId}`);
   };
+
+  // Pagination states and logic
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil((filteredJobs?.length || 0) / itemsPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const paginatedData = filteredJobs?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%] overflow-x-hidden">
@@ -87,8 +100,6 @@ const page = () => {
                         id="default-search"
                         className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         placeholder="Search..."
-                        // onChange={handleInputChange}
-                        // value={localTitle}
                       />
                       <button
                         type="submit"
@@ -176,22 +187,15 @@ const page = () => {
                           name="location"
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           value={location}
-                          // onChange={handleLocationChange}
                         >
                           <option disabled value="">
                             Location
                           </option>
-                          {/* {locations?.map((loc, index) => (
-                                <option key={index} value={loc}>
-                                  {loc}
-                                </option>
-                              ))} */}
                         </select>
                       </div>
                       <button
                         type="button"
                         className="text-white font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[135px] h-[40px] ml-2 mt-[20px] sm:w-fit sm:mt-0 sm:w-[150px]"
-                        // onClick={resetFilters}
                       >
                         Reset Filters
                       </button>
@@ -212,8 +216,6 @@ const page = () => {
                   type="radio"
                   value="ALL"
                   name="show-only"
-                  // onChange={handleFilterChange}
-                  // checked={selectedFilter === "ALL"}
                   className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -226,8 +228,6 @@ const page = () => {
                   type="radio"
                   value="PENDING"
                   name="show-only"
-                  // onChange={handleFilterChange}
-                  // checked={selectedFilter === "PENDING"}
                   className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -241,8 +241,6 @@ const page = () => {
                   type="radio"
                   value="PUBLISHED"
                   name="show-only"
-                  // onChange={handleFilterChange}
-                  // checked={selectedFilter === "PUBLISHED"}
                   className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -256,8 +254,6 @@ const page = () => {
                   type="radio"
                   value="COMPLETED"
                   name="show-only"
-                  // onChange={handleFilterChange}
-                  // checked={selectedFilter === "COMPLETED"}
                   className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -311,8 +307,8 @@ const page = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredJobs &&
-                  filteredJobs
+                {paginatedData &&
+                  paginatedData
                     ?.sort((a: any, b: any) => b.id - a.id)
                     ?.map((item: any, index: any) => {
                       return (
@@ -407,29 +403,35 @@ const page = () => {
             <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
               Showing
               <span className="font-semibold text-gray-900 dark:text-white">
-                1-10
+                {currentPage * itemsPerPage - itemsPerPage + 1}-
+                {Math.min(
+                  currentPage * itemsPerPage,
+                  filteredJobs?.length || 0
+                )}
               </span>
               of
               <span className="font-semibold text-gray-900 dark:text-white">
-                1000
+                {filteredJobs?.length || 0}
               </span>
             </span>
             <ul className="inline-flex items-stretch -space-x-px">
               <li>
-                <a
-                  href="#"
-                  className="flex items-center justify-center text-sm h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                <button
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1}
+                  className="flex items-center justify-center text-sm h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50"
                 >
                   Previous
-                </a>
+                </button>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="flex items-center justify-center text-sm h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                <button
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                  className="flex items-center justify-center text-sm h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50"
                 >
                   Next
-                </a>
+                </button>
               </li>
             </ul>
           </nav>
