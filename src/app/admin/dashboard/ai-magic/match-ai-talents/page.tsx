@@ -421,7 +421,9 @@ const AIMatchingContent = () => {
                     Reason
                   </p>
                   <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 text-base text-left">
-                    {itemReason?.explanation}
+                    {itemReason?.explanation?.length
+                      ? itemReason?.explanation
+                      : "No details found for the talent"}
                   </p>
                 </div>
                 <div className="mb-3 w-[80%] mx-auto flex justify-center items-center">
