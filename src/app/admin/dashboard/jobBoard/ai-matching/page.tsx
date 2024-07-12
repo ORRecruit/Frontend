@@ -342,7 +342,7 @@ const Page = () => {
                                           Reason
                                         </p>
                                         <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 px-6 text-base text-center">
-                                          {selectedItem?.explanation
+                                          {selectedItem?.explanation?.length
                                             ? selectedItem?.explanation
                                             : "No details found for the talent"}
                                         </p>
