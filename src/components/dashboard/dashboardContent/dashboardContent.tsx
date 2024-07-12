@@ -26,7 +26,7 @@ const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
 
   return (
     <div
-      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-auto border border-red-700 ${
+      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-auto ${
         toggleMenu ? "sm:left-[272px]" : "sm:left-[20px]"
       }`}
     >
