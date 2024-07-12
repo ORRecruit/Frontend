@@ -49,7 +49,7 @@ const DashboardNavbar = () => {
     <header className="antialiased">
       <nav className="bg-white px-4 lg:px-6 py-2.5">
         <div className="flex flex-wrap justify-between items-center relative">
-          <div className="flex justify-start items-center ml-10 sm:ml-0">
+          <div className="flex justify-start items-center ml-10 sm:ml-6">
             <Link href="https://onlineremoterecruit.com" className="flex mr-4">
               <Image
                 width={50}

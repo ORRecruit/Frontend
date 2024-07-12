@@ -6,10 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchCandidateJobs } from "@/api/jobs/fetchCandidateJobs";
 import { formatDate, formatString } from "@/utils/utils";
 import JobDetailModal from "@/components/modals/jobDetailModal";
+import useToggleStore from "@/app/toggleStore";
 
 const jobsList = () => {
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState<any>(null);
+  const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
 
   const handleRowClick = (item: any) => {
     setSelectedItem(item);
@@ -39,7 +41,11 @@ const jobsList = () => {
   }, []);
 
   return (
-    <section className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
+    <section
+      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-y-auto overflow-x-hidden bg-gray-50 ${
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[20px]"
+      }`}
+    >
       <div className="mx-auto w-full px-4 lg:px-12">
         <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
           <div className="border-b dark:border-gray-700 mx-4">

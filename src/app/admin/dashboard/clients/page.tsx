@@ -1,6 +1,7 @@
 "use client";
 import { editClient } from "@/api/recruiter/editClient";
 import { getAllClients } from "@/api/recruiter/getAllClients";
+import useToggleStore from "@/app/toggleStore";
 import { formatDate } from "@/utils/utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -39,6 +40,7 @@ const page = () => {
     setEditDialogItem(null);
   };
   const [applyNow, setApplyNow] = useState<boolean>(false);
+  const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
 
   const handleRowClick = (item: any) => {
     setSelectedItem(item);
@@ -137,7 +139,11 @@ const page = () => {
   );
 
   return (
-    <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
+    <div
+      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-auto ${
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[20px]"
+      }`}
+    >
       <div className="flex flex-col-reverse md:flex-row items-center justify-between md:space-x-4 py-3 relative bg-white px-4 rounded mr-4">
         <div className="w-full">
           <div className="w-full lg:w-2/3 flex flex-col space-y-3 md:space-y-0 md:flex-row md:items-center">

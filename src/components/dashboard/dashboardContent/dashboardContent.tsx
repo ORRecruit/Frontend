@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
+import useToggleStore from "@/app/toggleStore";
 
 interface OverviewInterface {
   details: {
@@ -20,9 +21,15 @@ interface OverviewInterface {
 
 const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
   const pathname = usePathname();
+  const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
+  console.log("toggletoggle", toggleMenu);
 
   return (
-    <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] h-[90%] overflow-auto">
+    <div
+      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-auto border border-red-700 ${
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[20px]"
+      }`}
+    >
       <div className="flex w-[99%] gap-4 flex-wrap lg:flex-nowrap">
         {details?.map((item: any, index: any) => (
           <div

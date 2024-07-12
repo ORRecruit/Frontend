@@ -10,6 +10,7 @@ import { createMarkup, formatString } from "@/utils/utils";
 import { RiCloseLine } from "react-icons/ri";
 import toast from "react-hot-toast";
 import { RotatingLines } from "react-loader-spinner";
+import useToggleStore from "@/app/toggleStore";
 
 const page = () => {
   const [appliedRes, setAppliedRes] = useState(false);
@@ -19,6 +20,7 @@ const page = () => {
   const [title, setTitle] = useState<string>("");
   const [publishDialog, setPublishDialog] = useState<any>(false);
   const [applyNow, setApplyNow] = useState<boolean>(false);
+  const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
 
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all naukrian"],
@@ -72,7 +74,11 @@ const page = () => {
   };
 
   return (
-    <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%] bg-gray-50 dark:bg-gray-900">
+    <div
+      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-y-auto overflow-x-hidden bg-gray-50 ${
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[20px]"
+      }`}
+    >
       <FilterHeaderJobBoard />
       <div className="max-w-screen-xl sm:flex items-start justify-between mx-auto p-4 relative">
         {appliedRes ? (

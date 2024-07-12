@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import JobDetailModal from "@/components/modals/jobDetailModal";
+import useToggleStore from "@/app/toggleStore";
 
 const page = () => {
   const [title, setTitle] = useState<string>("");
@@ -15,6 +16,7 @@ const page = () => {
   const [filter, setFilter] = useState<boolean>(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
+  const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
 
   const router = useRouter();
   const { data, error, isLoading, refetch } = useQuery({
@@ -68,7 +70,11 @@ const page = () => {
   );
 
   return (
-    <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%] overflow-x-hidden">
+    <div
+      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-y-auto overflow-x-hidden bg-gray-50 ${
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[20px]"
+      }`}
+    >
       <div className="flex flex-col-reverse md:flex-row items-center justify-between md:space-x-4 py-3 relative bg-white px-4 rounded mr-4 shadow-lg">
         <div className="w-full">
           <div className="border-b dark:border-gray-700 mx-4">

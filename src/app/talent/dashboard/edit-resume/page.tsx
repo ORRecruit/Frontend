@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { RiCloseLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 import { RotatingLines } from "react-loader-spinner";
+import useToggleStore from "@/app/toggleStore";
 
 const page = () => {
   const router = useRouter();
@@ -38,6 +39,7 @@ const page = () => {
   const updateTalent = useMutation({
     mutationFn: (data: any) => updateTalentApi(candId, formData),
   });
+  const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
 
   console.log("data", data);
 
@@ -218,7 +220,11 @@ const page = () => {
   };
 
   return (
-    <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
+    <div
+      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-y-auto overflow-x-hidden bg-gray-50 ${
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[20px]"
+      }`}
+    >
       <div className="w-[60%] mx-auto px-[2%] bg-white py-4 rounded-xl">
         <div>
           {/* Personal Info */}

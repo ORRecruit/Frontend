@@ -9,6 +9,7 @@ import { RiCloseLine } from "react-icons/ri";
 import { RotatingLines } from "react-loader-spinner";
 import { applyJob as applyJobApi } from "@/api/talent/applyJob";
 import toast from "react-hot-toast";
+import useToggleStore from "@/app/toggleStore";
 
 const page = () => {
   const [candidateId, setCandidateId] = React.useState<any>(null);
@@ -26,6 +27,7 @@ const page = () => {
   const [isDialogOpen, setIsDialogOpen] = React.useState<boolean>(false);
   const [applyNow, setApplyNow] = React.useState(false);
   const [publishDialog, setPublishDialog] = useState<any>(false);
+  const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
 
   const openDetailModal = (item: any) => {
     setIsDialogOpen(!isDialogOpen);
@@ -66,7 +68,11 @@ const page = () => {
   };
 
   return (
-    <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
+    <div
+      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-y-auto overflow-x-hidden bg-gray-50 ${
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[20px]"
+      }`}
+    >
       {isLoading ? (
         <CustomLoader />
       ) : (

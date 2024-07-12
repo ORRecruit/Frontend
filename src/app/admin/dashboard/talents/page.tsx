@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { formatDate } from "@/utils/utils";
 import TalentDetailModal from "@/components/modals/talentDetailModal";
+import useToggleStore from "@/app/toggleStore";
 
 const Page = () => {
   const [name, setName] = useState<string>("");
@@ -13,6 +14,7 @@ const Page = () => {
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
 
   const handleRowClick = (item: any) => {
     setSelectedItem(item);
@@ -53,7 +55,11 @@ const Page = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
+    <div
+      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-auto bg-gray-50 ${
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[20px]"
+      }`}
+    >
       <div className="mx-auto w-full px-4 lg:px-12">
         <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
           <div className="border-b dark:border-gray-700 mx-4">

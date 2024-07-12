@@ -10,6 +10,7 @@ import TalentDetailModal from "@/components/modals/talentDetailModal";
 import ResumeTemplate from "@/components/templates/ResumeTemplate";
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
+import useToggleStore from "@/app/toggleStore";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -22,6 +23,7 @@ const AIMatchingContent = () => {
   const [viewDetails, setViewDetails] = useState<any>(null);
   const [itemReason, setItemReason] = React.useState<any>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
 
   const handleRowClick = (item: any) => {
     setSelectedItem(item?.profile);
@@ -99,7 +101,11 @@ const AIMatchingContent = () => {
   };
 
   return (
-    <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
+    <div
+      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-y-auto overflow-x-hidden bg-gray-50 ${
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[20px]"
+      }`}
+    >
       {isLoading ? (
         <CustomLoader />
       ) : (
@@ -420,7 +426,7 @@ const AIMatchingContent = () => {
                   <p className="font-bold text-black px-3 py-1 text-lg">
                     Reason
                   </p>
-                  <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 text-base text-left">
+                  <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 text-base text-center">
                     {itemReason?.explanation?.length
                       ? itemReason?.explanation
                       : "No details found for the talent"}

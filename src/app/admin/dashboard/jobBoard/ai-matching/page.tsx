@@ -10,6 +10,7 @@ import TalentDetailModal from "@/components/modals/talentDetailModal";
 import ResumeTemplate from "@/components/templates/ResumeTemplate";
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
+import useToggleStore from "@/app/toggleStore";
 
 const Page = () => {
   const param = useSearchParams();
@@ -18,6 +19,7 @@ const Page = () => {
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [data, setData] = useState<any>(null);
   const [viewDetails, setViewDetails] = useState<any>(null);
+  const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
 
   const handleRowClick = (item: any) => {
     setSelectedItem(item);
@@ -82,7 +84,11 @@ const Page = () => {
   );
 
   return (
-    <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
+    <div
+      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-auto bg-gray-50 ${
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[20px]"
+      }`}
+    >
       {isLoading ? (
         <CustomLoader />
       ) : (

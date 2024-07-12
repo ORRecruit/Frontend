@@ -20,6 +20,7 @@ import { formatDate, formatString } from "@/utils/utils";
 import { getAllClients } from "@/api/recruiter/getAllClients";
 import { RotatingLines } from "react-loader-spinner";
 import JobDetailModal from "@/components/modals/jobDetailModal";
+import useToggleStore from "@/app/toggleStore";
 
 const jobList = () => {
   const router = useRouter();
@@ -73,6 +74,8 @@ const jobList = () => {
   const [loaderDelete, setLoaderDelete] = useState<boolean>(false);
   const [loaderPublish, setLoaderPublish] = useState<boolean>(false);
   const [applyNow, setApplyNow] = useState<boolean>(false);
+
+  const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
 
   const deleteJobMutation = useMutation({
     mutationFn: (id: any) => DeleteJob(id),
@@ -375,7 +378,11 @@ const jobList = () => {
 
   return (
     <>
-      <section className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 h-[90%] overflow-y-auto">
+      <section
+        className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-auto bg-gray-50 ${
+          toggleMenu ? "sm:left-[272px]" : "sm:left-[20px]"
+        }`}
+      >
         {isLoading ? (
           <CustomLoader />
         ) : (
