@@ -11,7 +11,7 @@ const talentDetailModal: React.FC<TalentModalProps> = ({
   closeDialog,
 }) => {
   return (
-    <div className="relative bg-white p-5 rounded-lg max-w-3xl w-full border border-black-400 cursor-auto max-h-[600px]">
+    <div className="relative bg-white p-5 rounded-lg max-w-3xl w-full border border-black-400 cursor-auto max-h-[620px]">
       <div className="bg-white rounded-lg overflow-y-hidden px-[32px] pt-[16px]">
         <div className="mb-5">
           <div className="flex justify-between">
@@ -62,7 +62,7 @@ const talentDetailModal: React.FC<TalentModalProps> = ({
             })}
           </div>
 
-          <div className="max-h-[220px] overflow-y-auto">
+          <div className="max-h-[250px] overflow-y-auto">
             <div className="text-gray-900 dark:text-white">
               <h1 className="font-semibold text-lg text-black dark:text-black pt-2">
                 Experiences

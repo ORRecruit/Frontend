@@ -61,7 +61,7 @@ html {
 /* General container styling */
 .custom-scrollbar {
   overflow: auto;
-  height: 350px;
+  height: auto;
   max-height: 65rem;
   padding-right: 10px;
   margin-top: 12px;

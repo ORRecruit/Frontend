@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { formatDate } from "@/utils/utils";
 import TalentDetailModal from "@/components/modals/talentDetailModal";
 import useToggleStore from "@/app/toggleStore";
+import { getAllUsers } from "@/api/statistics/getAllUsers";
 
 const Page = () => {
   const [name, setName] = useState<string>("");
@@ -26,10 +27,15 @@ const Page = () => {
     console.log("close", isDialogOpen);
   };
 
+  // const { data, error, isLoading, refetch } = useQuery({
+  //   queryKey: ["get all talents", name, currentPage],
+  //   queryFn: () => getAllTalents(`Candidate%20Name=${name}`),
+  // });
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all talents", name, currentPage],
-    queryFn: () => getAllTalents(`Candidate%20Name=${name}`),
+    queryFn: () => getAllUsers(),
   });
+  console.log("data all users", data);
 
   useEffect(() => {
     refetch();
@@ -187,7 +193,11 @@ const Page = () => {
                       scope="row"
                       className="px-4 py-2 font-medium whitespace-nowrap flex items-center"
                     >
-                      {item?.fullName}
+                      {item?.fullName
+                        ? item?.fullName
+                        : item?.firstName
+                        ? item?.firstName
+                        : "N/A"}
                     </th>
                     <td
                       onClick={() => handleRowClick(item)}
@@ -202,7 +212,11 @@ const Page = () => {
                       className="pl-4 py-2 whitespace-nowrap"
                     >
                       <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                        {item?.industry}
+                        {item?.industry
+                          ? item?.industry
+                          : item?.sector
+                          ? item?.sector
+                          : "N/A"}
                       </span>
                     </td>
                     <td
@@ -210,16 +224,23 @@ const Page = () => {
                       className="pl-4 py-2 whitespace-nowrap"
                     >
                       <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                        {/* {item?.userType?.charAt(0)?.toUpperCase() +
-                          item?.userType?.slice(1)} */}
-                        N/A
+                        {item?.userType
+                          ? item?.userType?.charAt(0)?.toUpperCase() +
+                            item?.userType?.slice(1)
+                          : "N/A"}
                       </span>
                     </td>
                     <td
                       onClick={() => handleRowClick(item)}
                       className="px-4 py-2 font-medium whitespace-nowrap"
                     >
-                      <span>{item?.country}</span>
+                      <span>
+                        {item?.country
+                          ? item?.country
+                          : item?.location
+                          ? item?.location?.slice(0, 15)
+                          : "N/A"}
+                      </span>
                     </td>
                     <td
                       onClick={() => handleRowClick(item)}

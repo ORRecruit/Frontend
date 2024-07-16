@@ -8,7 +8,7 @@ type JobModalProps = {
 
 const jobDetailModal: React.FC<JobModalProps> = ({ data, closeDialog }) => {
   return (
-    <div className="relative bg-white p-5 rounded-lg max-w-4xl w-full border border-black-400 overflow-hidden px-12 py-8">
+    <div className="relative bg-white px-2 sm:px-5 p-5 rounded-lg max-w-4xl w-full border border-black-400 overflow-hidden py-8">
       <div className="bg-white rounded-lg">
         <div className="mb-5">
           <div className="flex justify-between">

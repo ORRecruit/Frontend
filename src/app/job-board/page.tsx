@@ -9,6 +9,7 @@ import CustomLoader from "@/components/customLoader";
 import { isAuthTokenExpired } from "../isAuthTokenExpired";
 import DOMPurify from "dompurify";
 import { formatString } from "@/utils/utils";
+import JobDetailModal from "@/components/modals/jobDetailModal";
 
 const page = () => {
   const router = useRouter();
@@ -22,6 +23,7 @@ const page = () => {
   const [contractType, setContractType] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const locations = ["USA", "Canada", "Dubai"];
+  const [isDialogOpen, setIsDialogOpen] = React.useState<boolean>(false);
 
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all naukrian", title, contractType, jobVenue, location],
@@ -34,7 +36,7 @@ const page = () => {
       ),
   });
 
-  const [showOptions, setShowOptions] = useState(false);
+  const [showOptions, setShowOptions] = useState<string | null | any>(null);
 
   useEffect(() => {
     if (data?.data) {
@@ -56,6 +58,7 @@ const page = () => {
 
   const selectedJob = (item: any) => {
     setSelectedValue(item);
+    setIsDialogOpen(!isDialogOpen);
     jobIdFromURL.current = item?.id.toString();
     router.push(`/job-board?jobId=${item?.id}`);
   };
@@ -106,6 +109,10 @@ const page = () => {
     setJobVenue("");
     setLocation("");
     refetch();
+  };
+
+  const closeDialog = () => {
+    setIsDialogOpen(false);
   };
 
   return (
@@ -252,8 +259,8 @@ const page = () => {
         {isLoading ? (
           <CustomLoader />
         ) : (
-          <div className="max-w-screen-xl sm:flex sm:items-start sm:justify-between mx-auto p-4">
-            <div className="custom-scrollbar sm:w-[29%] h-[350px] sm:h-auto overflow-auto mt-12 max-h-[65rem]">
+          <div className="max-w-screen-xl sm:flex sm:items-start sm:justify-between mx-auto px-2 sm:px-4 py-4">
+            <div className="custom-scrollbar sm:w-[29%] h-auto overflow-auto mt-12 max-h-[65rem]">
               {data?.data
                 ?.sort((a, b) => b.id - a.id)
                 ?.map((item: any, index: any) => {
@@ -269,11 +276,43 @@ const page = () => {
                       <div className="font-light text-lg text-gray-500 dark:text-gray-400">
                         ORR-{item?.industry?.slice(0, 4)}-00{item?.id}
                       </div>
-                      <div className="inline-block font-light text-white dark:text-gray-400 bg-primary-orange w-fit px-2 py-1 rounded-2xl my-2 mr-2">
+                      <div className="font-light text-white dark:text-gray-400 bg-primary-orange w-fit px-2 py-1 rounded-2xl my-2 hidden sm:inline-block">
                         {formatString(`${item.jobVenue}`)}
                       </div>
-                      <div className="inline-block font-light text-white dark:text-gray-400 bg-primary-orange w-fit px-2 py-1 rounded-2xl my-2">
+                      <div className="inline-block font-light text-white dark:text-gray-400 bg-primary-orange w-fit px-2 py-1 rounded-2xl my-2 mr-2">
                         {formatString(`${item.contractType}`)}
+                      </div>
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowOptions(
+                            showOptions === item.id ? null : item.id
+                          );
+                          setSelectedValue(item);
+                        }}
+                        className="relative inline-block font-light text-white dark:text-gray-400 bg-primary-orange w-fit px-2 py-1 rounded-2xl my-2 sm:hidden"
+                      >
+                        Apply Now
+                        {showOptions === item.id && (
+                          <div className="absolute right-0 mt-2 w-[210px] top-[30px] sm:top-[45px]">
+                            <button
+                              type="button"
+                              className="text-orange font-medium rounded-lg text-xs sm:text-sm px-0 sm:px-5 py-2 text-center border-2 border-orange-600 bg-gray-100 w-[150px] mb-1"
+                              onClick={() => easyApply(selectedValue?.id)}
+                            >
+                              Easy Apply
+                            </button>
+                            <button
+                              type="button"
+                              className="text-orange font-medium rounded-lg text-xs sm:text-sm px-0 sm:px-5 py-2 text-center border-2 border-orange-600 bg-gray-100 w-[150px]"
+                              onClick={() => {
+                                applyJob(selectedValue);
+                              }}
+                            >
+                              Apply from Account
+                            </button>
+                          </div>
+                        )}
                       </div>
                       <div className="text-lg font-extrabold text-gray-900 dark:text-white">
                         {item.salaryOffered?.replace(/"/g, "") + " "}{" "}
@@ -295,8 +334,16 @@ const page = () => {
                   );
                 })}
             </div>
+            {isDialogOpen && (
+              <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                <JobDetailModal
+                  data={selectedValue}
+                  closeDialog={closeDialog}
+                />
+              </div>
+            )}
             {selectedValue ? (
-              <div className="bg-white rounded-lg mt-4 sm:w-[68%] sm:p-8">
+              <div className="bg-white rounded-lg mt-4 sm:w-[68%] sm:p-8 hidden sm:block">
                 <div className="mb-5">
                   <div className="flex justify-between relative">
                     <h1 className="text-3xl font-bold">
@@ -305,11 +352,17 @@ const page = () => {
                     <button
                       type="button"
                       className="text-white font-medium rounded-lg text-sm sm:px-5 sm:py-3 text-center bg-orange-600 w-[135px] h-[40px] mt-[20px] sm:w-fit sm:h-fit sm:mt-0 sm:w-[150px]"
-                      onClick={() => setShowOptions(!showOptions)}
+                      onClick={() =>
+                        setShowOptions(
+                          showOptions === selectedValue.id
+                            ? null
+                            : selectedValue.id
+                        )
+                      }
                     >
                       Apply Now
                     </button>
-                    {showOptions && (
+                    {showOptions === selectedValue.id && (
                       <div className="absolute right-0 mt-2 w-[210px] top-[60px] sm:top-[45px]">
                         <button
                           type="button"
