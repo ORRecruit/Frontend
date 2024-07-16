@@ -45,7 +45,7 @@ const Navbar = ({ scrollToBottom }: NavbarProps) => {
           <button
             type="button"
             onClick={handleNavigation}
-            className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600"
+            className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center bg-orange-600 hidden sm:block"
           >
             Contact Us
           </button>

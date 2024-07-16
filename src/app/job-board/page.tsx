@@ -114,17 +114,19 @@ const page = () => {
         <div>
           <section className="flex">
             <div className="w-full max-w-screen-xl px-4 mx-auto">
-              <div className="relative px-4 bg-white dark:bg-gray-800 sm:rounded-lg">
-                <div className="flex items-center justify-between pt-4 md:pb-4">
-                  <div className="flex items-center flex-1 space-x-2">
+              <div className="relative px-0 sm:px-4 bg-white dark:bg-gray-800 sm:rounded-lg">
+                <div className="flex items-center justify-between pt-0 sm:pt-4 pb-2 sm:pb-0 md:pb-4">
+                  <div className="flex items-center justify-center sm:justify-start flex-1 space-x-2">
                     <h5>
-                      <span className="dark:text-white">Find Jobs</span>
+                      <span className="text-black dark:text-white">
+                        Find Jobs
+                      </span>
                     </h5>
                   </div>
                 </div>
-                <div className="flex flex-col items-stretch justify-between pb-4 space-y-3 md:flex-row md:items-center md:space-y-0">
-                  <div className="flex flex-col w-full space-y-3 lg:w-2/3 md:space-y-0 md:flex-row md:items-center">
-                    <form className="flex-1 w-full md:max-w-sm md:mr-4">
+                <div className="flex flex-col items-stretch justify-between pb-4 space-y-3 sm:flex-row sm:items-center sm:space-y-0">
+                  <div className="flex flex-col w-full space-y-3 lg:w-2/3 sm:space-y-0 sm:flex-row sm:items-center">
+                    <form className="flex-1 w-full sm:max-w-sm sm:mr-4">
                       <label className="text-sm font-medium text-gray-900 sr-only dark:text-white">
                         Search
                       </label>
@@ -153,21 +155,15 @@ const page = () => {
                           onChange={filterJobs}
                           value={title}
                         />
-                        <button
-                          type="submit"
-                          className="absolute top-0 bottom-0 right-0 px-4 py-2 text-sm font-medium text-white rounded-r-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                        >
-                          Search
-                        </button>
                       </div>
                     </form>
-                    <div className="flex items-center space-x-4">
-                      <div>
+                    <div className="flex items-center sm:space-x-4">
+                      <div className="w-full">
                         <button
                           id="filterDropdownButton"
                           data-dropdown-toggle="filterDropdown"
                           type="button"
-                          className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                          className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                           onClick={() => setFilter(!filter)}
                         >
                           <svg

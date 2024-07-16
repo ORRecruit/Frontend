@@ -10,6 +10,8 @@ import Navbar from "@/components/landing/navbar/navbar";
 import { usePathname } from "next/navigation";
 import { isSessionValid, resetSessionTimer } from "@/utils/utils";
 import { useRouter } from "next/navigation";
+import Script from "next/script";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -94,6 +96,13 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <Head>
+        <Script
+          src="https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache="
+          strategy="afterInteractive"
+          async
+        />
+      </Head>
       <body className={inter.className}>
         <QueryClientProvider client={queryClient}>
           {showNavbar && <Navbar scrollToBottom={scrollToBottom} />}
