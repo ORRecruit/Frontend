@@ -103,7 +103,7 @@ const AIMatchingContent = () => {
   return (
     <div
       className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-y-auto overflow-x-hidden bg-gray-50 ${
-        toggleMenu ? "sm:left-[272px]" : "sm:left-[20px]"
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[75px]"
       }`}
     >
       {isLoading ? (

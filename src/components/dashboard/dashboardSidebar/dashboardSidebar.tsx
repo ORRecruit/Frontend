@@ -65,10 +65,10 @@ const dashboardSidebar: React.FC<sidebarInterface> = ({
         id="default-sidebar"
         className={`fixed top-[60px] left-0 z-40 w-64 h-[90%] transition-transform ${
           isMenuOpen ? "" : "-translate-x-full"
-        } sm:translate-x-0 ${!isSidebarOpen ? "hidden" : "block"}`}
+        } sm:translate-x-0 ${!isSidebarOpen ? "w-[60px]" : ""}`}
         aria-label="Sidenav"
       >
-        <div className="relative overflow-y-auto py-5 px-3 h-full bg-white">
+        <div className="relative overflow-y-auto py-5 px-3 h-full bg-white overflow-x-hidden">
           <ul className="space-y-2">
             {sidebarDetails?.map((item: any, index: any) => {
               return (
@@ -83,7 +83,11 @@ const dashboardSidebar: React.FC<sidebarInterface> = ({
                       src={item.iconUrl}
                       alt="icon"
                     />
-                    <span className="ml-3">{item.text}</span>
+                    <span
+                      className={`ml-3 ${!isSidebarOpen ? "hidden" : "block"}`}
+                    >
+                      {item.text}
+                    </span>
                   </Link>
                 </li>
               );
@@ -91,7 +95,9 @@ const dashboardSidebar: React.FC<sidebarInterface> = ({
           </ul>
           <div
             onClick={logout}
-            className="absolute cursor-pointer bottom-5 w-[90%] flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            className={`absolute cursor-pointer bottom-5 w-[90%] flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${
+              !isSidebarOpen ? "hidden" : "block"
+            }`}
           >
             <span className="ml-3">Logout</span>
           </div>

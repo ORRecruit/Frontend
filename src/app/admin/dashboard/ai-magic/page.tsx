@@ -72,7 +72,7 @@ const page = () => {
   return (
     <div
       className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-y-auto overflow-x-hidden bg-gray-50 ${
-        toggleMenu ? "sm:left-[272px]" : "sm:left-[20px]"
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[75px]"
       }`}
     >
       <div className="flex flex-col-reverse md:flex-row items-center justify-between md:space-x-4 py-3 relative bg-white px-4 rounded mr-4 shadow-lg">
