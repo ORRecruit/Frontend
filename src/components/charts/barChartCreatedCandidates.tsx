@@ -11,12 +11,13 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { getCandidatesForLastSixMonths } from "@/api/adminStats/getCreatedCandidatesSixMonths"; // Assume you have this API function
+import { getCandidatesForLastSixMonths } from "@/api/adminStats/getCreatedCandidatesSixMonths";
 
 interface CustomTooltipProps {
   active?: boolean;
   payload?: {
     value: number;
+    dataKey: string;
   }[];
   label?: string;
 }
@@ -30,10 +31,18 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
     return (
       <div className="p-4 bg-white shadow-lg flex flex-col gap-4 rounded-md">
         <p className="text-medium text-lg">{label}</p>
-        <p className="text-sm text-blue-400">
-          New Candidates:
-          <span className="ml-2">{payload[0].value}</span>
-        </p>
+        {payload.map((entry) => (
+          <p
+            key={entry.dataKey}
+            className={`text-sm ${
+              entry.dataKey === "Candidates"
+                ? "text-blue-400"
+                : "text-green-400"
+            }`}
+          >
+            {entry.dataKey}:<span className="ml-2">{entry.value}</span>
+          </p>
+        ))}
       </div>
     );
   }
@@ -42,12 +51,12 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
 };
 
 const BarChartComponent: React.FC = () => {
-  const { data, error, isLoading, refetch } = useQuery({
-    queryKey: ["get candidates for last six months"],
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["get candidates and applicants for last six months"],
     queryFn: () => getCandidatesForLastSixMonths(),
   });
 
-  const salesData = useMemo(() => {
+  const chartData = useMemo(() => {
     if (!data || !data.data) {
       return [];
     }
@@ -57,6 +66,7 @@ const BarChartComponent: React.FC = () => {
       .map((key) => ({
         name: key?.slice(0, -4),
         Candidates: data.data[key].newCandidates,
+        Applicants: data.data[key].newApplicants,
       }));
   }, [data]);
 
@@ -73,7 +83,7 @@ const BarChartComponent: React.FC = () => {
       <BarChart
         width={500}
         height={300}
-        data={salesData}
+        data={chartData}
         margin={{
           right: 30,
         }}
@@ -84,6 +94,7 @@ const BarChartComponent: React.FC = () => {
         <Tooltip content={<CustomTooltip />} />
         <Legend />
         <Bar dataKey="Candidates" fill="#F97316" />
+        <Bar dataKey="Applicants" fill="#22C55E" />
       </BarChart>
     </ResponsiveContainer>
   );

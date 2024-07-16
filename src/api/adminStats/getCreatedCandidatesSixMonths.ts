@@ -8,6 +8,7 @@ export const getCandidatesForLastSixMonths = () => {
 
 interface CandidateStatistics {
   newCandidates: number;
+  newApplicants: number;
 }
 
 interface CandidateStatisticsResponse {
