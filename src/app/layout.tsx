@@ -12,6 +12,7 @@ import { isSessionValid, resetSessionTimer } from "@/utils/utils";
 import { useRouter } from "next/navigation";
 import Script from "next/script";
 import Head from "next/head";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -97,11 +98,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <Script
-          src="https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache="
-          strategy="afterInteractive"
-          async
-        />
+        <GoogleTagManager gtmId="GTM-WQBFH7L6" />
       </Head>
       <body className={inter.className}>
         <QueryClientProvider client={queryClient}>
