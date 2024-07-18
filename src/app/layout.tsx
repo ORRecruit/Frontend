@@ -54,6 +54,7 @@ export default function RootLayout({
     "/admin/dashboard/ai-magic",
     "/admin/dashboard/ai-magic/match-ai-talents",
     "/talent/dashboard/talent-ai-jobs",
+    "/admin/dashboard/linkedin-scrap",
   ];
   const showNavbar = !noNavbarRoutes.includes(path);
 
