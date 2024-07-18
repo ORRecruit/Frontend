@@ -98,10 +98,32 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <Head>
+        <Script
+          id="apollo-tracker"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+          function initApollo() {
+            var n = Math.random().toString(36).substring(7);
+            var o = document.createElement("script");
+            o.src = "https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache=" + n;
+            o.async = true;
+            o.defer = true;
+            o.onload = function() {
+              window.trackingFunctions.onLoad({appId: "667d8edb4b466e0a9f2e49a4"});
+            };
+            document.head.appendChild(o);
+          }
+          initApollo();
+        `,
+          }}
+        />
+      </Head>
       <body className={inter.className}>
-        <GoogleTagManager containerId="GTM-WQBFH7L6" />
+        {/* <GoogleTagManager containerId="GTM-WQBFH7L6" />
 
-        <ApolloTracker appId="667d8edb4b466e0a9f2e49a4" />
+        <ApolloTracker appId="667d8edb4b466e0a9f2e49a4" /> */}
 
         <QueryClientProvider client={queryClient}>
           {showNavbar && <Navbar scrollToBottom={scrollToBottom} />}
