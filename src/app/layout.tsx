@@ -12,7 +12,8 @@ import { isSessionValid, resetSessionTimer } from "@/utils/utils";
 import { useRouter } from "next/navigation";
 import Script from "next/script";
 import Head from "next/head";
-import ApolloTracker from "@/components/custom/GoogleTagManager";
+import GoogleTagManager from "@/components/custom/GoogleTagManager";
+import ApolloTracker from "@/components/custom/ApolloTracker";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -98,7 +99,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <GoogleTagManager containerId="GTM-WQBFH7L6" />
+
         <ApolloTracker appId="667d8edb4b466e0a9f2e49a4" />
+
         <QueryClientProvider client={queryClient}>
           {showNavbar && <Navbar scrollToBottom={scrollToBottom} />}
 
