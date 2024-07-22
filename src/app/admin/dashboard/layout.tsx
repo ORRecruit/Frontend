@@ -42,6 +42,11 @@ export default function RootLayout({
       href: "/admin/dashboard/ai-magic",
     },
     {
+      iconUrl: "/adminSidebar5.svg",
+      text: "LinkedIn Scrapping",
+      href: "/admin/dashboard/linkedin-scrap",
+    },
+    {
       iconUrl: "/adminSidebar2.svg",
       text: "Lead Owners",
       href: "/admin/dashboard/leadOwner",
