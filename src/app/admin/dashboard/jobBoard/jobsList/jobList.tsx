@@ -21,6 +21,7 @@ import { getAllClients } from "@/api/recruiter/getAllClients";
 import { RotatingLines } from "react-loader-spinner";
 import JobDetailModal from "@/components/modals/jobDetailModal";
 import useToggleStore from "@/app/toggleStore";
+import { getAllLeadOwners } from "@/api/leadOwner/getAllLeadOwners";
 
 const jobList = () => {
   const router = useRouter();
@@ -55,6 +56,7 @@ const jobList = () => {
     jobVenue: "",
     client_id: "",
     tier: "1",
+    leadowner_id: "",
   });
   const [editId, setEditId] = useState<any>(null);
   const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
@@ -109,6 +111,16 @@ const jobList = () => {
   } = useQuery({
     queryKey: ["getAllClients"],
     queryFn: () => getAllClients(),
+  });
+
+  const {
+    data: leadOwnerData,
+    error: leadOwnerError,
+    isLoading: leadOwnerIsLoading,
+    refetch: leadOwnerRefetch,
+  } = useQuery({
+    queryKey: ["get all lead owners"],
+    queryFn: () => getAllLeadOwners(),
   });
 
   useEffect(() => {}, [data]);
@@ -182,7 +194,8 @@ const jobList = () => {
       !formData.jobType ||
       !formData.contractType ||
       !formData.client_id ||
-      !formData.tier
+      !formData.tier ||
+      !formData.leadowner_id
     ) {
       toast.error("Please Provide All Details");
       console.log("formData error details", formData);
@@ -190,7 +203,12 @@ const jobList = () => {
       return;
     }
 
-    const response = await editJobMutation.mutateAsync(formData);
+    const data = {
+      ...formData,
+      leadowner_id: Number(formData?.leadowner_id),
+    };
+
+    const response = await editJobMutation.mutateAsync(data);
     if (response) {
       toast.success("You have updated the Job Successfully.");
       router.push("/admin/dashboard");
@@ -230,6 +248,7 @@ const jobList = () => {
       jobVenue: item?.jobVenue,
       tier: item?.tier,
       client_id: item?.client_id,
+      leadowner_id: item?.leadowner_id,
     });
     setSkills(item?.skillsRequired);
     setEditDialog(!editDialog);
@@ -967,7 +986,7 @@ const jobList = () => {
                                       <div className="w-full relative">
                                         <button
                                           onClick={closeEditDialog}
-                                          className="absolute right-0 pb-1 text-lg text-black bg-transparent text-2xl"
+                                          className="absolute right-0 pb-1 text-black bg-transparent text-2xl"
                                         >
                                           &times;{" "}
                                         </button>
@@ -975,8 +994,8 @@ const jobList = () => {
                                           <h1 className="text-lg font-bold pb-2">
                                             Company Info
                                           </h1>
-                                          <div className="flex justify-between w-[80%] sm:w-[60%] flex-wrap">
-                                            <div className="w-[48%]">
+                                          <div className="flex justify-between w-[80%] sm:w-[90%] flex-wrap">
+                                            <div className="w-[30%]">
                                               <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                                                 Company Name*
                                               </label>
@@ -991,7 +1010,7 @@ const jobList = () => {
                                                 required={true}
                                               />
                                             </div>
-                                            <div className="w-[48%]">
+                                            <div className="w-[30%]">
                                               <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                                                 Enter Your Location*
                                               </label>
@@ -1006,7 +1025,7 @@ const jobList = () => {
                                                 required={true}
                                               />
                                             </div>
-                                            <div className="w-[48%]">
+                                            <div className="w-[30%]">
                                               <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                                                 Client*
                                               </label>
@@ -1030,7 +1049,7 @@ const jobList = () => {
                                                 )}
                                               </select>
                                             </div>
-                                            <div className="w-[48%]">
+                                            <div className="w-[30%]">
                                               <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                                                 Tier*
                                               </label>
@@ -1051,6 +1070,33 @@ const jobList = () => {
                                                 <option value="3">
                                                   Tier 3
                                                 </option>
+                                              </select>
+                                            </div>
+                                            <div className="w-[30%]">
+                                              <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
+                                                Lead Owner*
+                                              </label>
+                                              <select
+                                                id="leadowner_id"
+                                                name="leadowner_id"
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                value={formData.leadowner_id}
+                                                onChange={handleChange}
+                                              >
+                                                <option>Select Option</option>
+                                                {leadOwnerData?.map(
+                                                  (
+                                                    leadOwner: any,
+                                                    index: any
+                                                  ) => (
+                                                    <option
+                                                      key={index}
+                                                      value={leadOwner?.id}
+                                                    >
+                                                      {leadOwner?.name}
+                                                    </option>
+                                                  )
+                                                )}
                                               </select>
                                             </div>
                                           </div>
