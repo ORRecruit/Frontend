@@ -37,7 +37,6 @@ const page = () => {
       phoneNumber: item?.phoneNumber,
     });
     setEditDialog(!editDialog);
-    setEditDialogItem(null);
   };
   const [applyNow, setApplyNow] = useState<boolean>(false);
   const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
@@ -101,6 +100,7 @@ const page = () => {
         setOpenConfirmation(false);
         setEditDialog(false);
         setApplyNow(false);
+        refetch();
       } else {
         toast.error("Something went wrong");
         setOpenConfirmation(!openConfirmation);
@@ -322,7 +322,7 @@ const page = () => {
                                         }
                                         className="bg-primary-orange text-sm text-white w-24 sm:w-40 py-2 mr-4 rounded-xl hover:shadow-xl"
                                       >
-                                        Edit Client
+                                        Save Changes
                                       </button>
                                     </div>
                                   </div>
