@@ -8,6 +8,8 @@ import QuillTextEditor from "@/components/dashboard/quilEditor/QuillTextEditor";
 import SkillsInput from "@/components/dashboard/skillsInput/SkillsInput";
 import { useQuery } from "@tanstack/react-query";
 import { getAllClients } from "@/api/recruiter/getAllClients";
+import { getAllLeadOwners } from "@/api/leadOwner/getAllLeadOwners";
+import useToggleStore from "@/app/toggleStore";
 
 const page = () => {
   const router = useRouter();
@@ -30,13 +32,25 @@ const page = () => {
     description: "",
     tier: "",
     client_id: "",
+    leadowner_id: "",
   });
 
   const [validationErrors, setValidationErrors] = useState<any>({});
+  const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
 
   const { data, error, isLoading, refetch } = useQuery({
-    queryKey: ["get all naukrian"],
+    queryKey: ["get all cients"],
     queryFn: () => getAllClients(),
+  });
+
+  const {
+    data: leadOwnerData,
+    error: LOError,
+    isLoading: LOIsLoading,
+    refetch: LORefetch,
+  } = useQuery({
+    queryKey: ["get all lead owners"],
+    queryFn: () => getAllLeadOwners(),
   });
 
   useEffect(() => {
@@ -134,6 +148,7 @@ const page = () => {
         "description",
         "tier",
         "client_id",
+        "leadowner_id",
       ];
 
       requiredFields.forEach((field) => {
@@ -166,6 +181,7 @@ const page = () => {
       const data = {
         ...formData,
         skillsRequired,
+        leadowner_id: Number(formData?.leadowner_id),
       };
       localStorage.setItem("postJob", JSON.stringify(data));
       router.push("/admin/dashboard/previewJob");
@@ -174,7 +190,11 @@ const page = () => {
   );
 
   return (
-    <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
+    <div
+      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-auto bg-gray-50 ${
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[75px]"
+      }`}
+    >
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%]">
         <div className="p-4 ">
           <div>
@@ -214,8 +234,8 @@ const page = () => {
       <form action="">
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
           <h1 className="text-lg font-bold pb-2">Company Info</h1>
-          <div className="flex justify-between w-[80%] sm:w-[60%] flex-wrap">
-            <div className="w-[48%]">
+          <div className="flex justify-between w-[80%] sm:w-[90%] flex-wrap">
+            <div className="w-[32%]">
               <label
                 className={`block mb-1 mt-2 text-sm font-medium ${
                   validationErrors.companyName
@@ -240,7 +260,7 @@ const page = () => {
                 required={true}
               />
             </div>
-            <div className="w-[48%]">
+            <div className="w-[32%]">
               <label
                 className={`block mb-1 mt-2 text-sm font-medium ${
                   validationErrors.location ? "text-red-500" : "text-gray-500"
@@ -263,7 +283,7 @@ const page = () => {
                 required={true}
               />
             </div>
-            <div className="w-[48%]">
+            <div className="w-[32%]">
               <label
                 className={`block mb-1 mt-2 text-sm font-medium ${
                   validationErrors.client_id ? "text-red-500" : "text-gray-500"
@@ -290,7 +310,7 @@ const page = () => {
                 ))}
               </select>
             </div>
-            <div className="w-[48%]">
+            <div className="w-[32%]">
               <label
                 className={`block mb-1 mt-2 text-sm font-medium ${
                   validationErrors.tier ? "text-red-500" : "text-gray-500"
@@ -311,6 +331,35 @@ const page = () => {
                 <option value="1">Tier 1</option>
                 <option value="2">Tier 2</option>
                 <option value="3">Tier 3</option>
+              </select>
+            </div>
+            <div className="w-[32%]">
+              <label
+                className={`block mb-1 mt-2 text-sm font-medium ${
+                  validationErrors.leadowner_id
+                    ? "text-red-500"
+                    : "text-gray-500"
+                } dark:text-white`}
+              >
+                Lead Owner*
+              </label>
+              <select
+                id="leadowner_id"
+                name="leadowner_id"
+                className={`bg-gray-50 border ${
+                  validationErrors.leadowner_id
+                    ? "border-red-500"
+                    : "border-gray-300"
+                } text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500`}
+                value={formData.leadowner_id}
+                onChange={handleChange}
+              >
+                <option>Select Option</option>
+                {leadOwnerData?.map((client: any, index: any) => (
+                  <option key={index} value={client?.id}>
+                    {client?.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

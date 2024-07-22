@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import DOMPurify from "dompurify";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import useToggleStore from "@/app/toggleStore";
 interface PreviewData {
   title: string;
   type: string;
@@ -21,6 +22,7 @@ interface PreviewData {
   experienceRequired: string;
   qualification: string;
   client_id: any;
+  leadowner_id: any;
 }
 
 const page = () => {
@@ -35,6 +37,7 @@ const page = () => {
       console.log("error", error);
     },
   });
+  const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
 
   useEffect(() => {
     const postJob = localStorage.getItem("postJob");
@@ -64,15 +67,28 @@ const page = () => {
       jobStatus: "PENDING",
       client_id: Number(previewData.client_id),
     };
-    console.log("previewDAta", previewData);
-    const response = await postJobMutation.mutateAsync(jobDataToSend);
-    console.log("response....", response);
-    if (response) {
-      toast.success(response?.message);
-      if (response?.data) {
-        router.push("/admin/dashboard/jobBoard");
-        localStorage.removeItem("postJob");
+
+    if (isNaN(jobDataToSend.leadowner_id)) {
+      console.error("leadowner_id must be a valid integer");
+      return;
+    }
+
+    console.log("previewData", previewData);
+
+    try {
+      const response = await postJobMutation.mutateAsync(jobDataToSend);
+      console.log("response....", response);
+
+      if (response) {
+        toast.success(response?.message);
+        if (response?.data) {
+          router.push("/admin/dashboard/jobBoard");
+          localStorage.removeItem("postJob");
+        }
       }
+    } catch (error) {
+      console.error("Error posting job", error);
+      toast.error("Failed to post job. Please try again.");
     }
   };
 
@@ -80,7 +96,11 @@ const page = () => {
     return { __html: DOMPurify.sanitize(htmlContent) };
   };
   return (
-    <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
+    <div
+      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-auto bg-gray-50 ${
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[75px]"
+      }`}
+    >
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] pt-4">
         <div className="p-4">
           <div className="">
