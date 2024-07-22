@@ -55,6 +55,8 @@ export default function RootLayout({
     "/admin/dashboard/ai-magic",
     "/admin/dashboard/ai-magic/match-ai-talents",
     "/talent/dashboard/talent-ai-jobs",
+    "/admin/dashboard/leadOwner",
+    "/admin/dashboard/leadOwner/create-lead-owner",
   ];
   const showNavbar = !noNavbarRoutes.includes(path);
 
