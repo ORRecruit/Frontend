@@ -1,10 +1,18 @@
+"use client";
+import useToggleStore from "@/app/toggleStore";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const page = () => {
+  const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
+
   return (
-    <div className="fixed top-[60px] sm:left-[272px] w-[-webkit-fill-available]">
+    <div
+      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-auto bg-gray-50 ${
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[75px]"
+      }`}
+    >
       <section className="w-full h-screen bg-gray-50 dark:bg-gray-900 pt-2">
         <div className="w-full px-4 mx-auto">
           <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">

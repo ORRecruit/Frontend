@@ -12,7 +12,8 @@ import { isSessionValid, resetSessionTimer } from "@/utils/utils";
 import { useRouter } from "next/navigation";
 import Script from "next/script";
 import Head from "next/head";
-import { GoogleTagManager } from "@next/third-parties/google";
+import GoogleTagManager from "@/components/custom/GoogleTagManager";
+import ApolloTracker from "@/components/custom/ApolloTracker";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -55,6 +56,8 @@ export default function RootLayout({
     "/admin/dashboard/ai-magic/match-ai-talents",
     "/talent/dashboard/talent-ai-jobs",
     "/admin/dashboard/linkedin-scrap",
+    "/admin/dashboard/leadOwner",
+    "/admin/dashboard/leadOwner/create-lead-owner",
   ];
   const showNavbar = !noNavbarRoutes.includes(path);
 
@@ -98,10 +101,11 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <Head>
-        <GoogleTagManager gtmId="GTM-WQBFH7L6" />
-      </Head>
       <body className={inter.className}>
+        <GoogleTagManager containerId="GTM-WQBFH7L6" />
+
+        <ApolloTracker appId="667d8edb4b466e0a9f2e49a4" />
+
         <QueryClientProvider client={queryClient}>
           {showNavbar && <Navbar scrollToBottom={scrollToBottom} />}
 

@@ -46,6 +46,11 @@ export default function RootLayout({
       text: "LinkedIn Scrapping",
       href: "/admin/dashboard/linkedin-scrap",
     },
+    {
+      iconUrl: "/adminSidebar2.svg",
+      text: "Lead Owners",
+      href: "/admin/dashboard/leadOwner",
+    },
   ];
   return (
     <html lang="en">
