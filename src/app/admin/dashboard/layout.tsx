@@ -32,12 +32,7 @@ export default function RootLayout({
       href: "/admin/dashboard/talents",
     },
     {
-      iconUrl: "/adminSidebar4.svg",
-      text: "Clients",
-      href: "/admin/dashboard/clients",
-    },
-    {
-      iconUrl: "/adminSidebar5.svg",
+      iconUrl: "/ai-magic-icon.svg",
       text: "AI Magic",
       href: "/admin/dashboard/ai-magic",
     },
@@ -47,9 +42,13 @@ export default function RootLayout({
       href: "/admin/dashboard/linkedin-scrap",
     },
     {
-      iconUrl: "/adminSidebar2.svg",
-      text: "Lead Owners",
-      href: "/admin/dashboard/leadOwner",
+      iconUrl: "/setting-icon.svg",
+      text: "Settings",
+      href: "",
+      options: [
+        { text: "Lead Owners", href: "/admin/dashboard/leadOwner" },
+        { text: "Clients", href: "/admin/dashboard/clients" },
+      ],
     },
   ];
   return (
