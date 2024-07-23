@@ -3,17 +3,28 @@ import { getAllLeadOwners } from "@/api/leadOwner/getAllLeadOwners";
 import useToggleStore from "@/app/toggleStore";
 import { formatDate } from "@/utils/utils";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 const page = () => {
   const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all lead owners"],
     queryFn: () => getAllLeadOwners(),
   });
-  console.log("datadatadata", data);
+
+  const totalItems = data?.length || 0;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentItems = data?.slice(startIndex, startIndex + itemsPerPage) || [];
 
   return (
     <div
@@ -66,7 +77,7 @@ const page = () => {
             </tr>
           </thead>
           <tbody>
-            {data?.map((item: any, index: any) => {
+            {currentItems.map((item: any, index: any) => {
               return (
                 <tr
                   key={index}
@@ -124,29 +135,45 @@ const page = () => {
           <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
             Showing
             <span className="font-semibold text-gray-900 dark:text-white">
-              1-10
+              {startIndex + 1}-{Math.min(startIndex + itemsPerPage, totalItems)}
             </span>
             of
             <span className="font-semibold text-gray-900 dark:text-white">
-              1000
+              {totalItems}
             </span>
           </span>
           <ul className="inline-flex items-stretch -space-x-px">
             <li>
-              <a
-                href="#"
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
                 className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
               >
                 <span>Previous</span>
-              </a>
+              </button>
             </li>
+            {[...Array(totalPages)].map((_, index) => (
+              <li key={index}>
+                <button
+                  onClick={() => handlePageChange(index + 1)}
+                  className={`flex items-center justify-center h-full py-1.5 px-3 leading-tight ${
+                    currentPage === index + 1
+                      ? "text-primary-600 bg-gray-200"
+                      : "text-gray-500 bg-white"
+                  } border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+                >
+                  <span>{index + 1}</span>
+                </button>
+              </li>
+            ))}
             <li>
-              <a
-                href="#"
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
                 className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
               >
                 <span>Next</span>
-              </a>
+              </button>
             </li>
           </ul>
         </nav>
