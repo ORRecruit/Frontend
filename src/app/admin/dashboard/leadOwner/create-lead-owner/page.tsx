@@ -2,6 +2,8 @@
 import { createLeadOwner } from "@/api/leadOwner/createLeadOwner";
 import useToggleStore from "@/app/toggleStore";
 import { useMutation } from "@tanstack/react-query";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -83,8 +85,17 @@ const page = () => {
       <div className="flex items-center justify-between py-3 relative bg-white px-4 rounded">
         <div className="w-full">
           <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
+            <Link href="/admin/dashboard/leadOwner">
+              <Image
+                src="/arrowLeft.svg"
+                alt="back-icon"
+                width={20}
+                height={20}
+              />
+            </Link>
+
             <div className="flex justify-between items-center">
-              <h1 className="text-2xl font-bold pb-2">
+              <h1 className="text-2xl font-bold py-2">
                 Lead Owner Information:
               </h1>
               <div className="mr-4">

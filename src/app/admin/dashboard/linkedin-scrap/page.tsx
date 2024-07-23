@@ -10,7 +10,7 @@ const Page = () => {
   const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
   const [toggleCards, setToggleCards] = React.useState<boolean>(false);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<any>({
     field: "",
     geoId: "",
     page: "",
@@ -18,6 +18,7 @@ const Page = () => {
     jobType: "temporary",
     expLevel: "internship",
     workType: "temporary",
+    resume: null,
   });
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all talents"],
@@ -46,6 +47,16 @@ const Page = () => {
     console.log(formData);
     refetch();
     console.log("data abc data", data);
+  };
+
+  const handleFileChange = (event: any) => {
+    const file = event.target.files[0];
+    handleChange({
+      target: {
+        name: "resume",
+        value: file,
+      },
+    });
   };
 
   return (
@@ -186,6 +197,25 @@ const Page = () => {
                   <option value="remote">remote</option>
                   <option value="hybrid">hybrid</option>
                 </select>
+              </div>
+
+              <div className="w-[32%] mr-2">
+                <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
+                  Resume
+                </label>
+                <input
+                  type="file"
+                  id="resume"
+                  name="resume"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  onChange={handleFileChange}
+                  accept=".pdf,.doc,.docx"
+                />
+                {formData.resume && (
+                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
+                    File selected: {formData.resume.name}
+                  </p>
+                )}
               </div>
             </div>
           </div>
