@@ -38,7 +38,7 @@ export default function RootLayout({
     },
     {
       iconUrl: "/adminSidebar5.svg",
-      text: "LinkedIn Scrapping",
+      text: "ORR Search",
       href: "/admin/dashboard/linkedin-scrap",
     },
     {
