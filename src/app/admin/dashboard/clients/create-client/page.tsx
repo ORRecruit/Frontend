@@ -1,5 +1,6 @@
 "use client";
 import { createProfile } from "@/api/recruiter/createProfile";
+import useToggleStore from "@/app/toggleStore";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,6 +24,7 @@ const page = () => {
   });
   const router = useRouter();
   const [applyNow, setApplyNow] = useState<boolean>(false);
+  const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
 
   const createCliMutation = useMutation({
     mutationFn: (data: any) => createProfile(data),
@@ -74,7 +76,11 @@ const page = () => {
   };
 
   return (
-    <div className="fixed top-[60px] left-[272px] w-[-webkit-fill-available] overflow-y-auto h-[90%]">
+    <div
+      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-auto ${
+        toggleMenu ? "sm:left-[272px]" : "sm:left-[75px]"
+      }`}
+    >
       <div className="flex items-center justify-between py-3 relative bg-white px-4 rounded">
         <div className="w-full">
           <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">

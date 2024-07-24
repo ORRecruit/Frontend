@@ -11,6 +11,22 @@ import DOMPurify from "dompurify";
 import { formatString } from "@/utils/utils";
 import JobDetailModal from "@/components/modals/jobDetailModal";
 
+const useMediaQuery = (query: any) => {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    if (media.matches !== matches) {
+      setMatches(media.matches);
+    }
+    const listener = () => setMatches(media.matches);
+    media.addListener(listener);
+    return () => media.removeListener(listener);
+  }, [matches, query]);
+
+  return matches;
+};
+
 const page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -24,6 +40,8 @@ const page = () => {
   const [location, setLocation] = useState<string>("");
   const locations = ["USA", "Canada", "Dubai"];
   const [isDialogOpen, setIsDialogOpen] = React.useState<boolean>(false);
+
+  const isMobile = useMediaQuery("(max-width: 639px)");
 
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["get all naukrian", title, contractType, jobVenue, location],
@@ -334,7 +352,7 @@ const page = () => {
                   );
                 })}
             </div>
-            {isDialogOpen && (
+            {isDialogOpen && isMobile && (
               <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
                 <JobDetailModal
                   data={selectedValue}
