@@ -178,11 +178,9 @@ const page = () => {
                               Recommendation:
                             </span>
                             <span className="text-gray-600 mb-4">
-                              {" " +
-                                job?.result?.recommended
-                                  ?.charAt(0)
-                                  .toUpperCase() +
-                                job?.result?.recommended?.slice(1)}
+                              {"" + job?.result?.recommended === "yes"
+                                ? "Yes"
+                                : "No"}
                             </span>
                           </div>
                           <div>

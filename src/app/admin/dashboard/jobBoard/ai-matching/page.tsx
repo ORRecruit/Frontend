@@ -334,12 +334,9 @@ const Page = () => {
                                             Recommended
                                           </p>
                                           <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 px-6 w-[150px] text-center text-center text-base">
-                                            {selectedItem?.recommended
-                                              ?.charAt(0)
-                                              .toUpperCase() +
-                                              selectedItem?.recommended?.slice(
-                                                1
-                                              )}
+                                            {selectedItem?.recommended === "yes"
+                                              ? "Yes"
+                                              : "No"}
                                           </p>
                                         </div>
                                       </div>
