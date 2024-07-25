@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { getAllJobsForAdmin } from "@/api/jobs/getAllJobs";
 import { useQuery } from "@tanstack/react-query";
 import CustomLoader from "@/components/customLoader";
@@ -25,19 +25,19 @@ import { getAllLeadOwners } from "@/api/leadOwner/getAllLeadOwners";
 
 const jobList = () => {
   const router = useRouter();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<any>(null);
-  const [activeOptionsIndex, setActiveOptionsIndex] = useState<number | null>(
-    null
-  );
-  const [skills, setSkills] = useState<string[]>([]);
-  const [deleteDialog, setDeleteDialog] = useState<any>(false);
-  const [publishDialog, setPublishDialog] = useState<any>(false);
-  const [completeDialog, setCompleteDialog] = useState<any>(false);
-  const [publishItem, setPublishItem] = useState<any>(null);
-  const [completeItem, setCompleteItem] = useState<any>(null);
-  const [editDialog, setEditDialog] = useState<any>(false);
-  const [formData, setFormData] = useState<any>({
+  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+  const [selectedItem, setSelectedItem] = React.useState<any>(null);
+  const [activeOptionsIndex, setActiveOptionsIndex] = React.useState<
+    number | null
+  >(null);
+  const [skills, setSkills] = React.useState<string[]>([]);
+  const [deleteDialog, setDeleteDialog] = React.useState<any>(false);
+  const [publishDialog, setPublishDialog] = React.useState<any>(false);
+  const [completeDialog, setCompleteDialog] = React.useState<any>(false);
+  const [publishItem, setPublishItem] = React.useState<any>(null);
+  const [completeItem, setCompleteItem] = React.useState<any>(null);
+  const [editDialog, setEditDialog] = React.useState<any>(false);
+  const [formData, setFormData] = React.useState<any>({
     title: "",
     description: "",
     location: "",
@@ -58,24 +58,40 @@ const jobList = () => {
     tier: "1",
     leadowner_id: "",
   });
-  const [editId, setEditId] = useState<any>(null);
-  const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
-  const [title, setTitle] = useState<string>("");
-  const [localTitle, setLocalTitle] = useState<string>("");
-  const [selectedFilter, setSelectedFilter] = useState("ALL");
-  const [filter, setFilter] = useState<boolean>(false);
-  const [contractType, setContractType] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
-  const [jobVenue, setJobVenue] = useState<string>("");
+  const [editId, setEditId] = React.useState<any>(null);
+  const [confirmationDialog, setConfirmationDialog] =
+    React.useState<boolean>(false);
+  const [title, setTitle] = React.useState<string>("");
+  const [localTitle, setLocalTitle] = React.useState<string>("");
+  const [selectedFilter, setSelectedFilter] = React.useState("ALL");
+  const [filter, setFilter] = React.useState<boolean>(false);
+  const [contractType, setContractType] = React.useState<string>("");
+  const [location, setLocation] = React.useState<string>("");
+  const [jobVenue, setJobVenue] = React.useState<string>("");
   const locations = ["USA", "Canada", "Dubai"];
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [deleteItem, setDeleteItem] = useState<any>(null);
+  const [deleteItem, setDeleteItem] = React.useState<any>(null);
+  const [winLoseDialog, setWinLoseDialog] = React.useState<boolean>(false);
+  const [selection, setSelection] = React.useState(null);
+  const [winLoseReason, setWinLoseReason] = React.useState("");
 
   // Loaders for confirmation
-  const [loaderMarkComp, setLoaderMarkComp] = useState<boolean>(false);
-  const [loaderDelete, setLoaderDelete] = useState<boolean>(false);
-  const [loaderPublish, setLoaderPublish] = useState<boolean>(false);
-  const [applyNow, setApplyNow] = useState<boolean>(false);
+  const [loaderMarkComp, setLoaderMarkComp] = React.useState<boolean>(false);
+  const [loaderDelete, setLoaderDelete] = React.useState<boolean>(false);
+  const [loaderPublish, setLoaderPublish] = React.useState<boolean>(false);
+  const [applyNow, setApplyNow] = React.useState<boolean>(false);
+
+  const handleSelect = (option: any) => {
+    setSelection(option);
+  };
+
+  const handleChangeWinLose = (event: any) => {
+    setWinLoseReason(event.target.value);
+  };
+
+  const submitWinLose = () => {
+    console.log("win lose reason", selection, winLoseReason);
+  };
 
   const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
 
@@ -374,7 +390,7 @@ const jobList = () => {
   };
 
   // Pagination states and logic
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
   const itemsPerPage = 10;
   const totalPages = Math.ceil((filteredJobs?.length || 0) / itemsPerPage);
 
@@ -1488,7 +1504,7 @@ const jobList = () => {
                                   <div className="relative bg-white p-5 rounded-lg border border-black-500">
                                     <button
                                       onClick={openEditConfirmation}
-                                      className="absolute top-0 right-3 pb-1 text-lg text-black bg-transparent text-2xl"
+                                      className="absolute top-0 right-3 pb-1 text-black bg-transparent text-2xl"
                                     >
                                       &times;{" "}
                                     </button>
@@ -1517,6 +1533,60 @@ const jobList = () => {
                                             />
                                           </div>
                                         )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                              {winLoseDialog && (
+                                <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center border border-red-700">
+                                  <div className="relative bg-white p-5 rounded-lg border border-black-500 w-[500px] py-12">
+                                    <button className="absolute top-0 right-3 pb-1 text-black bg-transparent text-2xl">
+                                      &times;
+                                    </button>
+                                    <div className="bg-white rounded-lg flex flex-col items-center">
+                                      <div className="text-[20px]">
+                                        What is the Conclusion of the Job?
+                                      </div>
+                                      <div className="flex justify-evenly items-center w-[400px] mt-[15px]">
+                                        <div
+                                          onClick={() => handleSelect("win")}
+                                          className={`h-[40px] flex justify-center items-center w-[30%] border border-[#FF6800] rounded-xl cursor-pointer ${
+                                            selection === "win"
+                                              ? "bg-[#FF6800] text-white"
+                                              : "hover:bg-[#FF6800] hover:text-white"
+                                          }`}
+                                        >
+                                          Win
+                                        </div>
+                                        <div
+                                          onClick={() => handleSelect("lose")}
+                                          className={`h-[40px] flex justify-center items-center w-[30%] border border-[#FF6800] rounded-xl cursor-pointer ${
+                                            selection === "lose"
+                                              ? "bg-[#FF6800] text-white"
+                                              : "hover:bg-[#FF6800] hover:text-white"
+                                          }`}
+                                        >
+                                          Lose
+                                        </div>
+                                      </div>
+                                      <div className="flex justify-evenly items-center w-[400px] mt-[15px]">
+                                        <textarea
+                                          name="winLoseReason"
+                                          id="winLoseReason"
+                                          className="w-[74%] h-[225px] resize-none border p-[8px] rounded-xl"
+                                          placeholder="What's the reason for the job completion?"
+                                          onChange={handleChangeWinLose}
+                                          value={winLoseReason}
+                                        />
+                                      </div>
+                                      <div className="w-[60%] mt-[15px] mx-auto flex justify-center items-center">
+                                        <button
+                                          onClick={submitWinLose}
+                                          className="w-full border border-[#FF6800] py-[10px] rounded-xl bg-primary-orange text-white"
+                                        >
+                                          Save Changes
+                                        </button>
                                       </div>
                                     </div>
                                   </div>
@@ -1551,7 +1621,7 @@ const jobList = () => {
                     <button
                       onClick={handlePreviousPage}
                       disabled={currentPage === 1}
-                      className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50"
+                      className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                     >
                       Previous
                     </button>
@@ -1560,7 +1630,7 @@ const jobList = () => {
                     <button
                       onClick={handleNextPage}
                       disabled={currentPage === totalPages}
-                      className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50"
+                      className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                     >
                       Next
                     </button>

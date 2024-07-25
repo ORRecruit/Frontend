@@ -111,23 +111,23 @@ const Page = () => {
         toggleMenu ? "sm:left-[272px]" : "sm:left-[75px]"
       }`}
     >
-      <div className="flex flex-col-reverse md:flex-row items-center justify-between md:space-x-4 py-3 relative bg-white px-4 rounded mr-4 shadow-lg">
+      <div className="flex flex-col-reverse md:flex-row justify-between md:space-x-4 py-3 relative bg-white px-4 rounded mr-4 shadow-lg h-full">
         {!toggleCards && (
-          <div className="w-full">
-            <div className="flex justify-between items-center">
-              <h1 className="text-lg font-bold pb-2"></h1>
+          <div className="w-full p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
+            <div className="flex justify-between items-center mb-3">
+              <h1 className="text-lg font-bold pb-2">ORR Job Search</h1>
               <div className="mr-4">
                 <button
                   onClick={handleScrap}
-                  className="mt-4 bg-primary-orange text-white px-4 py-2 rounded-xl"
+                  className="mt-4 bg-primary-orange text-white px-4 py-2 rounded-xl shadow hover:bg-primary-orange-dark"
                 >
                   Find Jobs
                 </button>
               </div>
             </div>
-            <div className="flex flex-wrap w-[80%] md:w-[99%] sm:w-[60%]">
-              <div className="w-[32%] mr-2">
-                <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
+            <div className="flex flex-wrap -mx-3">
+              <div className="w-full md:w-1/3 px-3 mb-3">
+                <label className="block mb-1 text-sm font-medium text-gray-500 dark:text-white">
                   Field*
                 </label>
                 <input
@@ -141,8 +141,8 @@ const Page = () => {
                   required={true}
                 />
               </div>
-              <div className="w-[32%] mr-2">
-                <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
+              <div className="w-full md:w-1/3 px-3 mb-3">
+                <label className="block mb-1 text-sm font-medium text-gray-500 dark:text-white">
                   Geoid
                 </label>
                 <select
@@ -152,17 +152,17 @@ const Page = () => {
                   value={formData.geoId}
                   onChange={handleChange}
                 >
-                  <option value="temporary">Select geoId</option>
+                  <option value="">Select geoId</option>
                   {geoIds &&
-                    geoIds.map((item: any, index: any) => (
+                    geoIds.map((item, index) => (
                       <option key={index} value={item?.geoId}>
                         {item?.location}
                       </option>
                     ))}
                 </select>
               </div>
-              <div className="w-[32%] mr-2">
-                <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
+              <div className="w-full md:w-1/3 px-3 mb-3">
+                <label className="block mb-1 text-sm font-medium text-gray-500 dark:text-white">
                   Page*
                 </label>
                 <input
@@ -170,15 +170,14 @@ const Page = () => {
                   name="page"
                   id="page"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="page"
+                  placeholder="Page"
                   value={formData.page}
                   onChange={handleChange}
                   required={true}
                 />
               </div>
-
-              <div className="w-[32%] mr-2">
-                <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
+              <div className="w-full md:w-1/3 px-3 mb-3">
+                <label className="block mb-1 text-sm font-medium text-gray-500 dark:text-white">
                   Sort By
                 </label>
                 <select
@@ -193,9 +192,8 @@ const Page = () => {
                   <option value="month">month</option>
                 </select>
               </div>
-
-              <div className="w-[32%] mr-2">
-                <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
+              <div className="w-full md:w-1/3 px-3 mb-3">
+                <label className="block mb-1 text-sm font-medium text-gray-500 dark:text-white">
                   Job Type
                 </label>
                 <select
@@ -212,9 +210,8 @@ const Page = () => {
                   <option value="part_time">part_time</option>
                 </select>
               </div>
-
-              <div className="w-[32%] mr-2">
-                <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
+              <div className="w-full md:w-1/3 px-3 mb-3">
+                <label className="block mb-1 text-sm font-medium text-gray-500 dark:text-white">
                   Experience Level
                 </label>
                 <select
@@ -231,9 +228,8 @@ const Page = () => {
                   <option value="director">director</option>
                 </select>
               </div>
-
-              <div className="w-[32%] mr-2">
-                <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
+              <div className="w-full md:w-1/3 px-3 mb-3">
+                <label className="block mb-1 text-sm font-medium text-gray-500 dark:text-white">
                   Work Type
                 </label>
                 <select
@@ -249,9 +245,8 @@ const Page = () => {
                   <option value="hybrid">hybrid</option>
                 </select>
               </div>
-
-              <div className="w-[32%] mr-2">
-                <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
+              <div className="w-full md:w-1/3 px-3 mb-3">
+                <label className="block mb-1 text-sm font-medium text-gray-500 dark:text-white">
                   Resume
                 </label>
                 <input

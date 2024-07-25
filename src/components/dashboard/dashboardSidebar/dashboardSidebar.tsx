@@ -46,7 +46,7 @@ const DashboardSidebar: React.FC<SidebarInterface> = ({
     <div>
       <button
         onClick={toggleSidebar}
-        className="absolute top-0 z-50 inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        className="absolute top-0 inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
       >
         <span className="sr-only">Open sidebar</span>
         <svg
@@ -65,7 +65,7 @@ const DashboardSidebar: React.FC<SidebarInterface> = ({
       </button>
 
       <aside
-        className={`fixed top-[60px] left-0 z-40 w-64 h-[90%] transition-transform ${
+        className={`fixed top-[60px] left-0 w-64 h-[90%] transition-transform ${
           isMenuOpen ? "" : "-translate-x-full"
         } sm:translate-x-0 ${!isSidebarOpen ? "w-[60px]" : ""}`}
       >
