@@ -20,7 +20,7 @@ export const geoIds = [
   { geoId: "104345081", location: "Oshawa" },
   { geoId: "104343457", location: "Barrie" },
   { geoId: "104344892", location: "Kingston" },
-  { geoId: "104344478", location: "Guelph" },
+  { geoId: "101228627", location: "Guelph" },
   { geoId: "104345259", location: "Thunder Bay" },
   { geoId: "104345157", location: "Sudbury" },
   { geoId: "104345252", location: "Sault Ste. Marie" },
