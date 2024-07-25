@@ -6,9 +6,6 @@ import CustomLoader from "@/components/customLoader";
 import { scrapMatchResume } from "@/api/Scrapping/scrapMatchResume";
 import toast from "react-hot-toast";
 import Link from "next/link";
-import ResumeTemplate from "@/components/templates/ResumeTemplate";
-import { pdf } from "@react-pdf/renderer";
-import saveAs from "file-saver";
 import { geoIds } from "@/constants/geoIds";
 
 const Page = () => {
@@ -108,6 +105,63 @@ const Page = () => {
 
   // Function to change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  const handleSaveAsCsv = () => {
+    if (!jobsData || jobsData.length === 0) {
+      toast.error("No data to export");
+      return;
+    }
+
+    const headers = [
+      "Job ID",
+      "Title",
+      "Company Name",
+      "Location",
+      "AI Matching",
+      "Recommended",
+      "Company Profile",
+      "Job Link",
+    ];
+
+    const csvData = jobsData.map((item: any) => [
+      item.job.job_id,
+      item.job.job_position,
+      item.job.company_name,
+      item.job.job_location,
+      `${item.result.relevancy_score}%`,
+      item.result.recommended.charAt(0).toUpperCase() +
+        item.result.recommended.slice(1),
+      item.job.company_profile,
+      item.job.job_link,
+    ]);
+
+    // Function to escape and format CSV fields
+    const formatCSVField = (field: any) => {
+      if (field == null) return "";
+      field = field.toString();
+      if (field.includes('"') || field.includes(",") || field.includes("\n")) {
+        return `"${field.replace(/"/g, '""')}"`;
+      }
+      return field;
+    };
+
+    const csvContent = [
+      headers.map(formatCSVField).join(","),
+      ...csvData.map((row: any) => row.map(formatCSVField).join(",")),
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    if (link.download !== undefined) {
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", "job_data.csv");
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
 
   return (
     <div
@@ -279,11 +333,16 @@ const Page = () => {
             {jobsData && jobsData?.length ? (
               <>
                 <div className="overflow-x-auto">
-                  <div>
-                    <h2 className="text-2xl font-bold mb-3">
-                      ORR Scrapped Jobs
-                    </h2>
+                  <div className="flex justify-between items-center mb-3">
+                    <h2 className="text-2xl font-bold">ORR Scrapped Jobs</h2>
+                    <button
+                      onClick={handleSaveAsCsv}
+                      className="bg-primary-orange text-white px-4 py-2 rounded-xl shadow hover:bg-primary-orange-dark"
+                    >
+                      Save as CSV
+                    </button>
                   </div>
+
                   <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
