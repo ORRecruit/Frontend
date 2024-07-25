@@ -531,62 +531,92 @@ const page = () => {
                         </p>
                       )}
                       {isDialogOpen && (
-                        <p className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
-                          <p className="relative bg-white p-5 rounded-lg max-w-2xl w-full border border-black-400">
-                            <p className="bg-white rounded-lg">
-                              <p className="mb-5">
-                                <p className="flex justify-between">
+                        <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                          <div className="relative bg-white p-10 rounded-lg max-w-2xl w-full border border-black-400">
+                            <div className="bg-white rounded-lg">
+                              <div className="mb-5">
+                                <div className="flex items-center mb-2">
+                                  {selectedItem?.logo ? (
+                                    <Image
+                                      src={selectedItem?.logo}
+                                      alt="company logo"
+                                      width={50}
+                                      height={50}
+                                      className="w-[60px] h-[60px] object-cover	rounded-[50%] mr-4"
+                                    />
+                                  ) : (
+                                    ""
+                                  )}
                                   <h1 className="text-3xl font-bold">
                                     {selectedItem?.companyName}
                                   </h1>
-                                </p>
-                                <p className="font-semibold text-lg text-gray-500 dark:text-gray-400">
+                                </div>
+                                <div className="font-semibold text-lg text-gray-500 dark:text-gray-400">
                                   ORR-
                                   {selectedItem?.sector?.slice(0, 4)}
                                   -00
                                   {selectedItem?.id}
-                                </p>
-                                <p className="font-semibold text-lg text-gray-500 dark:text-gray-400">
+                                </div>
+                                <div className="font-semibold text-lg text-gray-500 dark:text-gray-400">
                                   {selectedItem?.sector}
-                                </p>
-                              </p>
+                                </div>
+                              </div>
 
-                              <p className="mb-5">
-                                <p className="font-light text-gray-500 dark:text-gray-400">
+                              <div className="mb-5">
+                                <div className="font-light text-gray-500 dark:text-gray-400">
                                   No Of Employees:{" "}
                                   {selectedItem?.numberOfEmployees}
-                                </p>
-                                <p className="font-light text-gray-500 dark:text-gray-400">
+                                </div>
+                                <div className="font-light text-gray-500 dark:text-gray-400">
                                   Address: {selectedItem?.address}
-                                </p>
-                                <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
+                                </div>
+                                <div className="mb-4 font-light text-gray-500 dark:text-gray-400">
                                   Website: {selectedItem?.website}
-                                </p>
+                                </div>
 
                                 <h1 className="text-xl font-bold my-3">
                                   Contact Information:
                                 </h1>
-                                <p className="font-light text-gray-500 dark:text-gray-400">
+                                <div className="font-light text-gray-500 dark:text-gray-400">
                                   {selectedItem?.firstName}{" "}
                                   {selectedItem?.lastName}
-                                </p>
+                                </div>
 
-                                <p className="font-light text-gray-500 dark:text-gray-400">
+                                <div className="font-light text-gray-500 dark:text-gray-400">
                                   {selectedItem?.email}
-                                </p>
-                                <p className="font-light text-gray-500 dark:text-gray-400">
+                                </div>
+                                <div className="font-light text-gray-500 dark:text-gray-400">
                                   {selectedItem?.phoneNumber}
-                                </p>
-                              </p>
-                            </p>
+                                </div>
+                              </div>
+
+                              {selectedItem?.contract && (
+                                <div className="mt-5">
+                                  <h2 className="text-xl font-bold mb-3">
+                                    PDF Preview
+                                  </h2>
+                                  <div className="text-sm font-semibold mb-3 text-blue-500">
+                                    <Link href={selectedItem?.contract}>
+                                      Download Resume
+                                    </Link>
+                                  </div>
+                                  <iframe
+                                    src={`${selectedItem?.contract}#toolbar=0&navpanes=0&scrollbar=0`}
+                                    width="100%"
+                                    height="400px"
+                                    className="border-0"
+                                  />
+                                </div>
+                              )}
+                            </div>
                             <button
                               onClick={closeDialog}
                               className="absolute top-0 right-0 p-8 text-black bg-transparent text-2xl"
                             >
                               &times;{" "}
                             </button>
-                          </p>
-                        </p>
+                          </div>
+                        </div>
                       )}
                     </tr>
                   );

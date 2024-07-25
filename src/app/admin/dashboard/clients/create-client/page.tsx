@@ -21,10 +21,32 @@ const page = () => {
     numberOfEmployees: null,
     website: "",
     address: "",
+    contract: null,
+    companyLogo: null,
   });
   const router = useRouter();
   const [applyNow, setApplyNow] = useState<boolean>(false);
   const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
+
+  const handleFileChangeContract = (event: any) => {
+    const file = event.target.files[0];
+    handleChange({
+      target: {
+        name: "contract",
+        value: file,
+      },
+    });
+  };
+
+  const handleFileChangeCompanyLogo = (event: any) => {
+    const file = event.target.files[0];
+    handleChange({
+      target: {
+        name: "companyLogo",
+        value: file,
+      },
+    });
+  };
 
   const createCliMutation = useMutation({
     mutationFn: (data: any) => createProfile(data),
@@ -57,7 +79,19 @@ const page = () => {
         toast.error("please provide all details");
         return;
       }
-      const response = await createCliMutation.mutateAsync(formData);
+      const payloadForm = new FormData();
+      payloadForm.append("logo", formData.companyLogo);
+      payloadForm.append("contract", formData.contract);
+      payloadForm.append("companyName", formData.companyName);
+      payloadForm.append("sector", formData.sector);
+      payloadForm.append("numberOfEmployees", formData.numberOfEmployees);
+      payloadForm.append("website", formData.website);
+      payloadForm.append("address", formData.address);
+      payloadForm.append("firstName", formData.firstName);
+      payloadForm.append("lastName", formData.lastName);
+      payloadForm.append("email", formData.email);
+      payloadForm.append("phoneNumber", formData.phoneNumber);
+      const response = await createCliMutation.mutateAsync(payloadForm);
       console.log("response..", response);
       if (response) {
         toast.success("Client Created Successfully!");
@@ -185,8 +219,8 @@ const page = () => {
           </div>
           <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-[99%] my-4 py-4 pl-4">
             <h1 className="text-lg font-bold pb-2">Contact Person:</h1>
-            <div className="flex flex-wrap w-[80%] sm:w-[60%]">
-              <div className="w-[48%] mr-4">
+            <div className="flex flex-wrap w-[80%] sm:w-[99%]">
+              <div className="w-[32%] mr-4">
                 <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                   First Name*
                 </label>
@@ -201,7 +235,7 @@ const page = () => {
                   required={true}
                 />
               </div>
-              <div className="w-[48%] mr-4">
+              <div className="w-[32%] mr-4">
                 <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                   Last Name*
                 </label>
@@ -216,7 +250,7 @@ const page = () => {
                   required={true}
                 />
               </div>
-              <div className="w-[48%] mr-4">
+              <div className="w-[32%] mr-4">
                 <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                   Email*
                 </label>
@@ -231,7 +265,7 @@ const page = () => {
                   required={true}
                 />
               </div>
-              <div className="w-[48%] mr-4">
+              <div className="w-[32%] mr-4">
                 <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                   Phone Number*
                 </label>
@@ -245,6 +279,41 @@ const page = () => {
                   onChange={handleChange}
                   required={true}
                 />
+              </div>
+              <div className="w-[32%] mr-4 mt-2">
+                <label className="block mb-1 text-sm font-medium text-gray-500 dark:text-white">
+                  Contract File
+                </label>
+                <input
+                  type="file"
+                  id="contract"
+                  name="contract"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  onChange={handleFileChangeContract}
+                  accept=".pdf,.doc,.docx"
+                />
+                {formData.contract && (
+                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
+                    File selected: {formData.contract.name}
+                  </p>
+                )}
+              </div>
+              <div className="w-[32%] mr-4 mt-2">
+                <label className="block mb-1 text-sm font-medium text-gray-500 dark:text-white">
+                  Company Logo
+                </label>
+                <input
+                  type="file"
+                  id="companyLogo"
+                  name="companyLogo"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  onChange={handleFileChangeCompanyLogo}
+                />
+                {formData.companyLogo && (
+                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
+                    File selected: {formData.companyLogo.name}
+                  </p>
+                )}
               </div>
             </div>
           </div>

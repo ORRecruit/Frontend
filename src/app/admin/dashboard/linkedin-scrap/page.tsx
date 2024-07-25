@@ -37,10 +37,10 @@ const Page = () => {
     field: "",
     geoId: "",
     page: "",
-    sortBy: "day",
-    jobType: "temporary",
-    expLevel: "internship",
-    workType: "temporary",
+    sortBy: "",
+    jobType: "",
+    expLevel: "",
+    workType: "",
     resume: null,
   });
 
@@ -63,6 +63,14 @@ const Page = () => {
   };
 
   const handleScrap = async () => {
+    if (
+      !formData.field ||
+      !formData.geoId ||
+      !formData.page ||
+      !formData.resume
+    ) {
+      return;
+    }
     const payloadData = new FormData();
 
     payloadData.append("field", formData.field);
@@ -143,7 +151,7 @@ const Page = () => {
               </div>
               <div className="w-full md:w-1/3 px-3 mb-3">
                 <label className="block mb-1 text-sm font-medium text-gray-500 dark:text-white">
-                  Geoid
+                  Geoid*
                 </label>
                 <select
                   id="geoId"
@@ -187,6 +195,7 @@ const Page = () => {
                   value={formData.sortBy}
                   onChange={handleChange}
                 >
+                  <option>Select sort by</option>
                   <option value="day">day</option>
                   <option value="week">week</option>
                   <option value="month">month</option>
@@ -203,6 +212,7 @@ const Page = () => {
                   value={formData.jobType}
                   onChange={handleChange}
                 >
+                  <option>Select job type</option>
                   <option value="temporary">temporary</option>
                   <option value="contract">contract</option>
                   <option value="volunteer">volunteer</option>
@@ -221,6 +231,7 @@ const Page = () => {
                   value={formData.expLevel}
                   onChange={handleChange}
                 >
+                  <option>Select experience level</option>
                   <option value="internship">internship</option>
                   <option value="entry_level">entry_level</option>
                   <option value="associate">associate</option>
@@ -239,6 +250,7 @@ const Page = () => {
                   value={formData.workType}
                   onChange={handleChange}
                 >
+                  <option>Select work type</option>
                   <option value="temporary">temporary</option>
                   <option value="at_work">at_work</option>
                   <option value="remote">remote</option>

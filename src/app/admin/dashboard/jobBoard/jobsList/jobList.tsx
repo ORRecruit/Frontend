@@ -331,8 +331,8 @@ const jobList = () => {
       setLoaderMarkComp(false);
       setCompleteDialog(!completeDialog);
       refetch();
-
       setCompleteItem(null);
+      setWinLoseDialog(!winLoseDialog);
     } else {
       setLoaderMarkComp(false);
     }
@@ -415,7 +415,7 @@ const jobList = () => {
     <>
       <section
         className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-auto bg-gray-50 ${
-          toggleMenu ? "sm:left-[272px]" : "sm:left-[20px]"
+          toggleMenu ? "sm:left-[272px]" : "sm:left-[75px]"
         }`}
       >
         {isLoading ? (
@@ -1541,7 +1541,10 @@ const jobList = () => {
                               {winLoseDialog && (
                                 <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center border border-red-700">
                                   <div className="relative bg-white p-5 rounded-lg border border-black-500 w-[500px] py-12">
-                                    <button className="absolute top-0 right-3 pb-1 text-black bg-transparent text-2xl">
+                                    <button
+                                      onClick={() => setWinLoseDialog(false)}
+                                      className="absolute top-0 right-3 pb-1 text-black bg-transparent text-2xl"
+                                    >
                                       &times;
                                     </button>
                                     <div className="bg-white rounded-lg flex flex-col items-center">
