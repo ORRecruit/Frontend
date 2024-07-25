@@ -16,17 +16,13 @@ const Page = () => {
   const [toggleCards, setToggleCards] = React.useState<boolean>(false);
   const [jobsData, setJobsData] = React.useState<any>(null);
   const [viewDetails, setViewDetails] = useState<any>(null);
-  const [selectedItem, setSelectedItem] = React.useState<any>(null);
   const [itemReason, setItemReason] = React.useState<any>(null);
 
   const viewReason = (item: any) => {
     console.log("item,.....", item, viewDetails);
-    setSelectedItem(item?.profile);
-    setViewDetails(
-      viewDetails === item?.profile?.id ? null : item?.profile?.id
-    );
+    setViewDetails(viewDetails === item?.job?.id ? null : item?.job?.id);
     setItemReason(item?.result);
-    console.log("item", selectedItem, viewDetails, itemReason);
+    console.log("item", viewDetails, itemReason);
   };
 
   const closeResaonDialog = () => {
@@ -36,7 +32,7 @@ const Page = () => {
   const [formData, setFormData] = useState<any>({
     field: "",
     geoId: "",
-    page: "",
+    page: "1",
     sortBy: "",
     jobType: "",
     expLevel: "",
@@ -283,6 +279,11 @@ const Page = () => {
             {jobsData && jobsData?.length ? (
               <>
                 <div className="overflow-x-auto">
+                  <div>
+                    <h2 className="text-2xl font-bold mb-3">
+                      ORR Scrapped Jobs
+                    </h2>
+                  </div>
                   <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
@@ -383,7 +384,7 @@ const Page = () => {
                               </td>
                               <td
                                 className="px-4 py-2 font-medium whitespace-nowrap"
-                                onClick={viewReason}
+                                onClick={() => viewReason(item)}
                               >
                                 <span>View Details</span>
                               </td>
@@ -486,7 +487,7 @@ const Page = () => {
                       AI Matching
                     </p>
                     <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 w-[150px] text-center text-base">
-                      {itemReason?.relevancy_score?.slice(0, -3)}%
+                      {itemReason?.relevancy_score}%
                     </p>
                   </div>
                   <div className="flex flex-col justify-center items-center">
@@ -494,11 +495,7 @@ const Page = () => {
                       Recommended
                     </p>
                     <p className="ml-2 border-[3px] border-orange-400 rounded-xl p-2 w-[150px] text-center text-base">
-                      {typeof itemReason?.recommended === "boolean"
-                        ? itemReason.recommended
-                          ? "Yes"
-                          : "No"
-                        : ""}
+                      {itemReason?.recommended === "yes" ? "Yes" : "No"}
                     </p>
                   </div>
                 </div>
