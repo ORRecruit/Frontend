@@ -91,6 +91,7 @@ const jobList = () => {
 
   const submitWinLose = () => {
     console.log("win lose reason", selection, winLoseReason);
+    setWinLoseDialog(false);
   };
 
   const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
