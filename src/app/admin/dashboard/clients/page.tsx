@@ -532,9 +532,9 @@ const page = () => {
                       )}
                       {isDialogOpen && (
                         <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
-                          <div className="relative bg-white p-10 rounded-lg max-w-2xl w-full border border-black-400">
+                          <div className="relative bg-white px-10 py-5 rounded-lg max-w-4xl w-full border border-black-400">
                             <div className="bg-white rounded-lg">
-                              <div className="mb-5">
+                              <div className="mb-3">
                                 <div className="flex items-center mb-2">
                                   {selectedItem?.logo ? (
                                     <Image
@@ -562,7 +562,7 @@ const page = () => {
                                 </div>
                               </div>
 
-                              <div className="mb-5">
+                              <div className="mb-2">
                                 <div className="font-light text-gray-500 dark:text-gray-400">
                                   No Of Employees:{" "}
                                   {selectedItem?.numberOfEmployees}
@@ -574,7 +574,7 @@ const page = () => {
                                   Website: {selectedItem?.website}
                                 </div>
 
-                                <h1 className="text-xl font-bold my-3">
+                                <h1 className="text-xl font-bold mt-3">
                                   Contact Information:
                                 </h1>
                                 <div className="font-light text-gray-500 dark:text-gray-400">
@@ -592,10 +592,10 @@ const page = () => {
 
                               {selectedItem?.contract && (
                                 <div className="mt-5">
-                                  <h2 className="text-xl font-bold mb-3">
+                                  <h2 className="text-xl font-bold">
                                     PDF Preview
                                   </h2>
-                                  <div className="text-sm font-semibold mb-3 text-blue-500">
+                                  <div className="text-sm font-semibold mb-2 text-blue-500">
                                     <Link href={selectedItem?.contract}>
                                       Download Resume
                                     </Link>
@@ -603,8 +603,8 @@ const page = () => {
                                   <iframe
                                     src={`${selectedItem?.contract}#toolbar=0&navpanes=0&scrollbar=0`}
                                     width="100%"
-                                    height="400px"
-                                    className="border-0"
+                                    height="300px"
+                                    className="border-0 overflow-x-hidden"
                                   />
                                 </div>
                               )}
