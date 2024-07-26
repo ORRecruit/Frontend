@@ -1,7 +1,6 @@
 "use client";
-import { jobsPubClosThreeMonths } from "@/api/adminStats/jobsPubClosThreeMonths";
-import { useQuery } from "@tanstack/react-query";
 import React, { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import {
   BarChart,
   Bar,
@@ -12,11 +11,13 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { jobsPubClosThreeMonths } from "@/api/adminStats/jobsPubClosThreeMonths";
 
 interface CustomTooltipProps {
   active?: boolean;
   payload?: {
     value: number;
+    dataKey: string;
   }[];
   label?: string;
 }
@@ -30,14 +31,19 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
     return (
       <div className="p-4 bg-white shadow-lg flex flex-col gap-4 rounded-md">
         <p className="text-medium text-lg">{label}</p>
-        <p className="text-sm text-blue-400">
-          Published Jobs:
-          <span className="ml-2">{payload[0].value}</span>
-        </p>
-        <p className="text-sm text-indigo-400">
-          Completed Jobs:
-          <span className="ml-2">{payload[1].value}</span>
-        </p>
+        {payload.map((entry, index) => (
+          <p
+            key={`item-${index}`}
+            className={`text-sm ${
+              entry.dataKey === "Published"
+                ? "text-blue-400"
+                : "text-indigo-400"
+            }`}
+          >
+            {entry.dataKey} Jobs:
+            <span className="ml-2">{entry.value}</span>
+          </p>
+        ))}
       </div>
     );
   }
@@ -46,9 +52,9 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
 };
 
 const BarChartComponent: React.FC = () => {
-  const { data, error, isLoading, refetch } = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryKey: ["get jobs posted and closed"],
-    queryFn: () => jobsPubClosThreeMonths(),
+    queryFn: jobsPubClosThreeMonths,
   });
 
   const salesData = useMemo(() => {
@@ -56,12 +62,12 @@ const BarChartComponent: React.FC = () => {
       return [];
     }
 
-    return Object.keys(data.data)
-      ?.reverse()
-      .map((key) => ({
+    return Object.entries(data.data)
+      .reverse()
+      .map(([key, value]) => ({
         name: key,
-        Published: data.data[key].publishedJobs,
-        Completed: data.data[key].completedJobs,
+        Published: value.publishedJobs,
+        Completed: value.completedJobs,
       }));
   }, [data]);
 
@@ -69,7 +75,7 @@ const BarChartComponent: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
+  if (error instanceof Error) {
     return <div>Error: {error.message}</div>;
   }
 

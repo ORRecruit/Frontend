@@ -1,6 +1,7 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
+
 import React, { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import {
   BarChart,
   Bar,
@@ -53,20 +54,20 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
 const BarChartComponent: React.FC = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["get candidates and applicants for last six months"],
-    queryFn: () => getCandidatesForLastSixMonths(),
+    queryFn: getCandidatesForLastSixMonths,
   });
 
   const chartData = useMemo(() => {
-    if (!data || !data.data) {
+    if (!data?.data) {
       return [];
     }
 
-    return Object.keys(data.data)
-      ?.reverse()
-      .map((key) => ({
-        name: key?.slice(0, -4),
-        Candidates: data.data[key].newCandidates,
-        Applicants: data.data[key].newApplicants,
+    return Object.entries(data.data)
+      .reverse()
+      .map(([key, value]) => ({
+        name: key.slice(0, -4),
+        Candidates: value.newCandidates,
+        Applicants: value.newApplicants,
       }));
   }, [data]);
 
@@ -74,15 +75,13 @@ const BarChartComponent: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
+  if (error instanceof Error) {
     return <div>Error: {error.message}</div>;
   }
 
   return (
     <ResponsiveContainer width="100%" height={300}>
       <BarChart
-        width={500}
-        height={300}
         data={chartData}
         margin={{
           right: 30,

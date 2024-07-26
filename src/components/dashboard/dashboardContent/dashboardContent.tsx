@@ -1,15 +1,13 @@
-// import AreaChart from "@/components/charts/areaCharts";
-// import LineChart from "@/components/charts/lineChart";
 "use client";
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import useToggleStore from "@/app/toggleStore";
 import BarChart from "@/components/charts/barChart";
 import PieChart from "@/components/charts/pieChart";
 import TierChart from "@/components/charts/tierChart";
 import BarChartCreatedClients from "@/components/charts/barChartCreatedCandidates";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import { usePathname } from "next/navigation";
-import useToggleStore from "@/app/toggleStore";
 
 interface OverviewInterface {
   details: {
@@ -22,7 +20,6 @@ interface OverviewInterface {
 const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
   const pathname = usePathname();
   const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
-  console.log("toggletoggle", toggleMenu);
 
   return (
     <div
@@ -31,7 +28,7 @@ const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
       }`}
     >
       <div className="flex w-[99%] gap-4 flex-wrap lg:flex-nowrap">
-        {details?.map((item: any, index: any) => (
+        {details?.map((item, index) => (
           <div
             key={index}
             className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex-1"
@@ -48,7 +45,9 @@ const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
               {item?.rating && (
                 <h5
                   className={`mb-2 font-semibold tracking-tight text-gray-900 dark:text-white ${
-                    item?.rating?.length > 10 ? "text-lg" : "text-2xl"
+                    item?.rating?.toString().length > 10
+                      ? "text-lg"
+                      : "text-2xl"
                   }`}
                 >
                   {item?.rating}
@@ -88,8 +87,6 @@ const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
   );
 };
 
-export default DashboardContent;
-
 interface GridItemProps {
   title: string;
   children: React.ReactNode;
@@ -103,3 +100,5 @@ const GridItem: React.FC<GridItemProps> = ({ title, children }) => {
     </div>
   );
 };
+
+export default DashboardContent;
