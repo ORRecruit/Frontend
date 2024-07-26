@@ -417,13 +417,13 @@ const Page = () => {
                                 </span>
                               </td>
                               <td className="px-4 py-2 whitespace-nowrap">
-                                <span className="py-2 font-medium whitespace-nowrap flex items-center">
+                                <span className="py-2 font-medium whitespace-nowrap flex items-center max-w-[200px] overflow-x-hidden">
                                   {item?.job?.job_position}
                                 </span>
                               </td>
                               <th
                                 scope="row"
-                                className="pt-4 font-medium whitespace-nowrap flex items-center"
+                                className="pt-4 font-medium whitespace-nowrap flex items-center max-w-[200px] overflow-x-hidden"
                               >
                                 {item?.job?.company_name}
                               </th>
