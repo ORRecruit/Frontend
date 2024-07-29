@@ -172,11 +172,7 @@ const Page = () => {
   };
 
   return (
-    <div
-      className={`fixed top-[60px] w-[-webkit-fill-available] h-[90%] overflow-y-auto overflow-x-hidden bg-gray-50 ${
-        toggleMenu ? "sm:left-[272px]" : "sm:left-[75px]"
-      }`}
-    >
+    <div className="w-[-webkit-fill-available] h-[90%] overflow-y-auto overflow-x-hidden bg-gray-50 pt-[40px]">
       <div
         className={`flex flex-col-reverse md:flex-row justify-between md:space-x-4 py-3 relative px-4 mr-4 h-full {toggleCards? "bg-white":""}`}
       >
