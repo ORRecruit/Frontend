@@ -15,6 +15,7 @@ const Page = () => {
   const [jobsData, setJobsData] = React.useState<any>(null);
   const [viewDetails, setViewDetails] = useState<any>(null);
   const [itemReason, setItemReason] = React.useState<any>(null);
+  const [isOtherGeoId, setIsOtherGeoId] = useState<boolean>(false);
 
   const viewReason = (item: any) => {
     console.log("item,.....", item, viewDetails);
@@ -171,6 +172,22 @@ const Page = () => {
     }
   };
 
+  const handleGeoIdChange = (e: any) => {
+    const { value } = e.target;
+    if (value === "other") {
+      setIsOtherGeoId(true);
+      setFormData({ ...formData, geoId: "" });
+    } else {
+      setIsOtherGeoId(false);
+      handleChange(e);
+    }
+  };
+
+  const handleOtherGeoIdChange = (e: any) => {
+    const { value } = e.target;
+    setFormData({ ...formData, geoId: value });
+  };
+
   return (
     <div className="w-[-webkit-fill-available] h-[90%] overflow-y-auto overflow-x-hidden bg-gray-50 pt-[40px]">
       <div
@@ -209,21 +226,35 @@ const Page = () => {
                 <label className="block mb-1 text-sm font-medium text-gray-500 dark:text-white">
                   Geoid*
                 </label>
-                <select
-                  id="geoId"
-                  name="geoId"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  value={formData?.geoId}
-                  onChange={handleChange}
-                >
-                  <option value="">Select geoId</option>
-                  {geoIds &&
-                    geoIds.map((item, index) => (
-                      <option key={index} value={item?.geoId}>
-                        {item?.location}
-                      </option>
-                    ))}
-                </select>
+                {isOtherGeoId ? (
+                  <input
+                    type="text"
+                    name="geoId"
+                    id="geoId"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="Enter GeoId"
+                    value={formData?.geoId}
+                    onChange={handleOtherGeoIdChange}
+                    required={true}
+                  />
+                ) : (
+                  <select
+                    id="geoId"
+                    name="geoId"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    value={formData?.geoId}
+                    onChange={handleGeoIdChange}
+                  >
+                    <option value="">Select geoId</option>
+                    {geoIds &&
+                      geoIds.map((item, index) => (
+                        <option key={index} value={item?.geoId}>
+                          {item?.location}
+                        </option>
+                      ))}
+                    <option value="other">Other</option>
+                  </select>
+                )}
               </div>
               <div className="w-full md:w-1/3 px-3 mb-3">
                 <label className="block mb-1 text-sm font-medium text-gray-500 dark:text-white">
