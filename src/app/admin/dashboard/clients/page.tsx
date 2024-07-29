@@ -6,6 +6,7 @@ import { formatDate } from "@/utils/utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { RotatingLines } from "react-loader-spinner";
@@ -40,6 +41,8 @@ const page = () => {
   };
   const [applyNow, setApplyNow] = useState<boolean>(false);
   const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
+  const router = useRouter();
+  const [isViewContract, setIsViewContract] = React.useState<boolean>(false);
 
   const handleRowClick = (item: any) => {
     setSelectedItem(item);
@@ -47,6 +50,16 @@ const page = () => {
   };
   const closeDialog = () => {
     setIsDialogOpen(!isDialogOpen);
+  };
+  const downloadContract = (item: any, event: React.MouseEvent) => {
+    console.log("itemitemitem...", item, selectedItem);
+    if (item?.contract) {
+      if (event.ctrlKey) {
+        window.open(item.contract, "_blank");
+      } else {
+        router.push(item.contract);
+      }
+    }
   };
 
   const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
@@ -215,6 +228,12 @@ const page = () => {
               <th scope="col" className="px-4 py-3">
                 Email
               </th>
+              <th scope="col" className="px-4 py-3">
+                Contract
+              </th>
+              <th scope="col" className="px-4 py-3">
+                Contract
+              </th>
               <th scope="col" className="px-4 py-3 min-w-[6rem]">
                 Created At
               </th>
@@ -279,6 +298,29 @@ const page = () => {
                         className="py-2 font-medium whitespace-nowrap flex items-center"
                       >
                         <span>{item.email}</span>
+                      </td>
+                      <td
+                        className="px-4 py-2 whitespace-nowrap"
+                        onClick={() => {
+                          setIsViewContract(!isViewContract);
+                          setSelectedItem(item);
+                          console.log(
+                            "selectedItem selectedItem",
+                            selectedItem
+                          );
+                        }}
+                      >
+                        <span className="py-2 font-medium whitespace-nowrap flex items-center">
+                          View
+                        </span>
+                      </td>
+                      <td
+                        className="px-4 py-2 whitespace-nowrap"
+                        onClick={(event) => downloadContract(item, event)}
+                      >
+                        <span className="py-2 font-medium whitespace-nowrap flex items-center">
+                          Download
+                        </span>
                       </td>
                       <td
                         onClick={() => handleRowClick(item)}
@@ -485,7 +527,7 @@ const page = () => {
                                       onClick={() =>
                                         setOpenConfirmation(!openConfirmation)
                                       }
-                                      className="absolute top-0 right-3 pb-1 text-lg text-black bg-transparent text-2xl"
+                                      className="absolute top-0 right-3 pb-1 text-black bg-transparent text-2xl"
                                     >
                                       &times;
                                     </button>
@@ -532,85 +574,118 @@ const page = () => {
                       )}
                       {isDialogOpen && (
                         <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
-                          <div className="relative bg-white px-10 py-5 rounded-lg max-w-4xl w-full border border-black-400">
-                            <div className="bg-white rounded-lg">
+                          <div className="relative bg-white px-10 py-5 rounded-lg max-w-4xl w-full border border-gray-300 shadow-lg overflow-hidden">
+                            <div className="rounded-lg p-6">
                               <div className="mb-3">
-                                <div className="flex items-center mb-2">
+                                <div className="flex items-center mb-4">
                                   {selectedItem?.logo ? (
                                     <Image
                                       src={selectedItem?.logo}
                                       alt="company logo"
-                                      width={50}
-                                      height={50}
-                                      className="w-[60px] h-[60px] object-cover	rounded-[50%] mr-4"
+                                      width={60}
+                                      height={60}
+                                      className="w-[60px] h-[60px] object-cover rounded-full mr-4 shadow-md transition-transform transform hover:scale-105"
                                     />
                                   ) : (
                                     ""
                                   )}
-                                  <h1 className="text-3xl font-bold">
+                                  <h1 className="text-4xl font-bold transition-colors duration-300 hover:text-orange-800">
                                     {selectedItem?.companyName}
                                   </h1>
                                 </div>
-                                <div className="font-semibold text-lg text-gray-500 dark:text-gray-400">
-                                  ORR-
-                                  {selectedItem?.sector?.slice(0, 4)}
-                                  -00
-                                  {selectedItem?.id}
+                                <div className="font-semibold text-lg text-gray-700">
+                                  <span className="bg-[#FF6800] text-white px-2 py-1 rounded shadow-sm">{`ORR-${selectedItem?.sector?.slice(
+                                    0,
+                                    4
+                                  )}-00${selectedItem?.id}`}</span>
                                 </div>
-                                <div className="font-semibold text-lg text-gray-500 dark:text-gray-400">
-                                  {selectedItem?.sector}
+                                <div className="font-semibold text-lg text-gray-700 mt-2">
+                                  <span className="bg-[#FF6800] text-white px-2 py-1 rounded shadow-sm">
+                                    {selectedItem?.sector}
+                                  </span>
                                 </div>
                               </div>
 
-                              <div className="mb-2">
-                                <div className="font-light text-gray-500 dark:text-gray-400">
-                                  No Of Employees:{" "}
+                              <div className="mb-4">
+                                <div className="font-light text-gray-700">
+                                  <span className="font-medium text-gray-900">
+                                    No Of Employees:
+                                  </span>{" "}
                                   {selectedItem?.numberOfEmployees}
                                 </div>
-                                <div className="font-light text-gray-500 dark:text-gray-400">
-                                  Address: {selectedItem?.address}
+                                <div className="font-light text-gray-700 mt-2">
+                                  <span className="font-medium text-gray-900">
+                                    Address:
+                                  </span>{" "}
+                                  {selectedItem?.address}
                                 </div>
-                                <div className="mb-4 font-light text-gray-500 dark:text-gray-400">
-                                  Website: {selectedItem?.website}
+                                <div className="font-light text-gray-700 mt-2">
+                                  <span className="font-medium text-gray-900">
+                                    Website:
+                                  </span>{" "}
+                                  <a
+                                    href={selectedItem?.website}
+                                    className="text-[#FF6800] underline hover:text-orange-800 transition-colors duration-300"
+                                  >
+                                    {selectedItem?.website}
+                                  </a>
                                 </div>
 
-                                <h1 className="text-xl font-bold mt-3">
-                                  Contact Information:
+                                <h1 className="text-2xl font-bold mt-6 text-[#FF6800] border-b-2 border-[#FF6800] pb-2">
+                                  Contact Information
                                 </h1>
-                                <div className="font-light text-gray-500 dark:text-gray-400">
-                                  {selectedItem?.firstName}{" "}
-                                  {selectedItem?.lastName}
+                                <div className="font-light text-gray-700 mt-2">
+                                  <span className="font-medium text-gray-900">
+                                    {selectedItem?.firstName}{" "}
+                                    {selectedItem?.lastName}
+                                  </span>
                                 </div>
 
-                                <div className="font-light text-gray-500 dark:text-gray-400">
-                                  {selectedItem?.email}
+                                <div className="font-light text-gray-700 mt-2">
+                                  <span className="font-medium text-gray-900">
+                                    {selectedItem?.email}
+                                  </span>
                                 </div>
-                                <div className="font-light text-gray-500 dark:text-gray-400">
-                                  {selectedItem?.phoneNumber}
+                                <div className="font-light text-gray-700 mt-2">
+                                  <span className="font-medium text-gray-900">
+                                    {selectedItem?.phoneNumber}
+                                  </span>
                                 </div>
                               </div>
-
-                              {selectedItem?.contract && (
+                            </div>
+                            <button
+                              onClick={closeDialog}
+                              className="absolute top-0 right-0 m-4 p-2 text-[#FF6800] bg-transparent text-2xl focus:outline-none hover:text-orange-800 transition duration-200"
+                            >
+                              &times;
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                      {isViewContract && (
+                        <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                          <div className="relative bg-white px-10 py-5 rounded-lg max-w-4xl w-full border border-black-400">
+                            <div className="bg-white rounded-lg">
+                              {selectedItem?.contract ? (
                                 <div className="mt-5">
-                                  <h2 className="text-xl font-bold">
-                                    PDF Preview
+                                  <h2 className="text-xl font-bold mb-2">
+                                    Contract Preview
                                   </h2>
-                                  <div className="text-sm font-semibold mb-2 text-blue-500">
-                                    <Link href={selectedItem?.contract}>
-                                      Download Resume
-                                    </Link>
-                                  </div>
                                   <iframe
                                     src={`${selectedItem?.contract}#toolbar=0&navpanes=0&scrollbar=0`}
                                     width="100%"
-                                    height="300px"
+                                    height="500px"
                                     className="border-0 overflow-x-hidden"
                                   />
+                                </div>
+                              ) : (
+                                <div className="text-center text-xl">
+                                  No contract to show
                                 </div>
                               )}
                             </div>
                             <button
-                              onClick={closeDialog}
+                              onClick={() => setIsViewContract(false)}
                               className="absolute top-0 right-0 p-8 text-black bg-transparent text-2xl"
                             >
                               &times;{" "}
