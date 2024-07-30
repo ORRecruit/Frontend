@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { RotatingLines } from "react-loader-spinner";
 
-const customLoader = () => {
+const CustomLoader = () => {
   const path = usePathname();
 
   return (
@@ -26,19 +26,21 @@ const customLoader = () => {
           />
         </svg> */}
         <div>Please sit back, we're processing your request...</div>
-        {path !== "/admin/dashboard/linkedin-scrap" && (
-          <div className="w-full flex justify-center items-center mt-4">
-            <RotatingLines
-              visible={true}
-              width="50"
-              strokeColor="orange"
-              strokeWidth="5"
-              animationDuration="0.75"
-              ariaLabel="rotating-lines-loading"
-            />
-          </div>
-        )}
-        {path === "/admin/dashboard/linkedin-scrap" && (
+        {path !== "/admin/dashboard/linkedin-scrap" &&
+          path !== "/orr-search" && (
+            <div className="w-full flex justify-center items-center mt-4">
+              <RotatingLines
+                visible={true}
+                width="50"
+                strokeColor="orange"
+                strokeWidth="5"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+              />
+            </div>
+          )}
+        {(path === "/admin/dashboard/linkedin-scrap" ||
+          path === "/orr-search") && (
           <div className="w-full flex justify-center items-center mt-4">
             <Image
               src="/loading-animation.gif"
@@ -53,4 +55,4 @@ const customLoader = () => {
   );
 };
 
-export default customLoader;
+export default CustomLoader;
