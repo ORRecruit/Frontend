@@ -318,7 +318,7 @@ const page = () => {
                         className="px-4 py-2 whitespace-nowrap"
                         onClick={(event) => downloadContract(item, event)}
                       >
-                        <span className="py-2 font-medium whitespace-nowrap flex items-center">
+                        <span className="py-2 font-medium whitespace-nowrap flex items-center text-blue-600">
                           Download
                         </span>
                       </td>
