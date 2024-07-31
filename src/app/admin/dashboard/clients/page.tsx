@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { RotatingLines } from "react-loader-spinner";
+import ViewClientContract from "@/components/modals/viewClientContract";
+import ClientDetailModal from "@/components/modals/clientDetailModal";
 
 const page = () => {
   const { data, error, isLoading, refetch } = useQuery({
@@ -574,132 +576,18 @@ const page = () => {
                       )}
                       {isDialogOpen && (
                         <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
-                          <div className="relative bg-white px-10 py-5 rounded-lg max-w-4xl w-full border border-gray-300 shadow-lg overflow-hidden">
-                            <div className="rounded-lg p-6">
-                              <div className="mb-3">
-                                <div className="flex items-center mb-4">
-                                  {selectedItem?.logo ? (
-                                    <Image
-                                      src={selectedItem?.logo}
-                                      alt="company logo"
-                                      width={60}
-                                      height={60}
-                                      className="w-[60px] h-[60px] object-cover rounded-full mr-4 shadow-md transition-transform transform hover:scale-105"
-                                    />
-                                  ) : (
-                                    ""
-                                  )}
-                                  <h1 className="text-4xl font-bold transition-colors duration-300 hover:text-orange-800">
-                                    {selectedItem?.companyName}
-                                  </h1>
-                                </div>
-                                <div className="font-semibold text-lg text-gray-700 inline mr-2">
-                                  <span className="bg-[#FF6800] text-white px-2 py-1 rounded-lg shadow-xl font-light">{`ORR-${selectedItem?.sector?.slice(
-                                    0,
-                                    4
-                                  )}-00${selectedItem?.id}`}</span>
-                                </div>
-                                <div className="font-semibold text-lg text-gray-700 mt-2 inline">
-                                  <span className="bg-[#FF6800] text-white px-2 py-1 rounded-lg shadow-xl font-light">
-                                    {selectedItem?.sector}
-                                  </span>
-                                </div>
-                              </div>
-
-                              <div className="mb-4">
-                                <div className="font-light text-gray-700">
-                                  <span className="font-medium text-gray-900">
-                                    No Of Employees:
-                                  </span>{" "}
-                                  {selectedItem?.numberOfEmployees}
-                                </div>
-                                <div className="font-light text-gray-700 mt-2">
-                                  <span className="font-medium text-gray-900">
-                                    Address:
-                                  </span>{" "}
-                                  {selectedItem?.address}
-                                </div>
-                                <div className="font-light text-gray-700 mt-2">
-                                  <span className="font-medium text-gray-900">
-                                    Website:
-                                  </span>{" "}
-                                  <a
-                                    href={selectedItem?.website}
-                                    className="text-[#FF6800] underline hover:text-orange-800 transition-colors duration-300"
-                                  >
-                                    {selectedItem?.website}
-                                  </a>
-                                </div>
-
-                                <h1 className="text-2xl font-bold mt-6 text-[#FF6800] border-b-2 border-[#FF6800] pb-2">
-                                  Contact Information
-                                </h1>
-                                <div className="font-light text-gray-700 mt-2">
-                                  <span className="font-medium text-gray-900">
-                                    Full Name:
-                                  </span>{" "}
-                                  <span className="text-gray-700 font-light">
-                                    {selectedItem?.firstName}{" "}
-                                    {selectedItem?.lastName}
-                                  </span>
-                                </div>
-
-                                <div className="font-light text-gray-700 mt-2">
-                                  <span className="font-medium text-gray-900">
-                                    Email:
-                                  </span>{" "}
-                                  <span className="text-gray-700 font-light">
-                                    {selectedItem?.email}
-                                  </span>
-                                </div>
-                                <div className="font-light text-gray-700 mt-2">
-                                  <span className="font-medium text-gray-900">
-                                    Phone Number:
-                                  </span>{" "}
-                                  <span className="text-gray-700 font-light">
-                                    {selectedItem?.phoneNumber}
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-                            <button
-                              onClick={closeDialog}
-                              className="absolute top-0 right-0 m-4 p-2 text-[#FF6800] bg-transparent text-2xl focus:outline-none hover:text-orange-800 transition duration-200"
-                            >
-                              &times;
-                            </button>
-                          </div>
+                          <ClientDetailModal
+                            data={selectedItem}
+                            closeDialog={closeDialog}
+                          />
                         </div>
                       )}
                       {isViewContract && (
                         <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
-                          <div className="relative bg-white px-10 py-5 rounded-lg max-w-4xl w-full border border-black-400">
-                            <div className="bg-white rounded-lg">
-                              {selectedItem?.contract ? (
-                                <div className="mt-5">
-                                  <h2 className="text-xl font-bold mb-2">
-                                    Contract Preview
-                                  </h2>
-                                  <iframe
-                                    src={`${selectedItem?.contract}#toolbar=0&navpanes=0&scrollbar=0`}
-                                    width="100%"
-                                    height="500px"
-                                    className="border-0 overflow-x-hidden"
-                                  />
-                                </div>
-                              ) : (
-                                <div className="text-center text-xl">
-                                  No contract to show
-                                </div>
-                              )}
-                            </div>
-                            <button
-                              onClick={() => setIsViewContract(false)}
-                              className="absolute top-0 right-0 p-8 text-black bg-transparent text-2xl"
-                            >
-                              &times;{" "}
-                            </button>
-                          </div>
+                          <ViewClientContract
+                            data={selectedItem}
+                            closeDialog={setIsViewContract}
+                          />
                         </div>
                       )}
                     </tr>
