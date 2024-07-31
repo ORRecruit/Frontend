@@ -91,7 +91,7 @@ const BarChartComponent: React.FC = () => {
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
-        <YAxis />
+        <YAxis tickFormatter={(tick) => (Number.isInteger(tick) ? tick : "")} />
         <Tooltip content={<CustomTooltip />} />
         <Legend />
         <Bar dataKey="Published" fill="#87207D" />
