@@ -593,14 +593,14 @@ const page = () => {
                                     {selectedItem?.companyName}
                                   </h1>
                                 </div>
-                                <div className="font-semibold text-lg text-gray-700">
-                                  <span className="bg-[#FF6800] text-white px-2 py-1 rounded shadow-sm">{`ORR-${selectedItem?.sector?.slice(
+                                <div className="font-semibold text-lg text-gray-700 inline mr-2">
+                                  <span className="bg-[#FF6800] text-white px-2 py-1 rounded-lg shadow-xl font-light">{`ORR-${selectedItem?.sector?.slice(
                                     0,
                                     4
                                   )}-00${selectedItem?.id}`}</span>
                                 </div>
-                                <div className="font-semibold text-lg text-gray-700 mt-2">
-                                  <span className="bg-[#FF6800] text-white px-2 py-1 rounded shadow-sm">
+                                <div className="font-semibold text-lg text-gray-700 mt-2 inline">
+                                  <span className="bg-[#FF6800] text-white px-2 py-1 rounded-lg shadow-xl font-light">
                                     {selectedItem?.sector}
                                   </span>
                                 </div>
@@ -636,6 +636,9 @@ const page = () => {
                                 </h1>
                                 <div className="font-light text-gray-700 mt-2">
                                   <span className="font-medium text-gray-900">
+                                    Full Name:
+                                  </span>{" "}
+                                  <span className="text-gray-700 font-light">
                                     {selectedItem?.firstName}{" "}
                                     {selectedItem?.lastName}
                                   </span>
@@ -643,11 +646,17 @@ const page = () => {
 
                                 <div className="font-light text-gray-700 mt-2">
                                   <span className="font-medium text-gray-900">
+                                    Email:
+                                  </span>{" "}
+                                  <span className="text-gray-700 font-light">
                                     {selectedItem?.email}
                                   </span>
                                 </div>
                                 <div className="font-light text-gray-700 mt-2">
                                   <span className="font-medium text-gray-900">
+                                    Phone Number:
+                                  </span>{" "}
+                                  <span className="text-gray-700 font-light">
                                     {selectedItem?.phoneNumber}
                                   </span>
                                 </div>

@@ -16,6 +16,11 @@ const Page = () => {
   const [viewDetails, setViewDetails] = useState<any>(null);
   const [itemReason, setItemReason] = React.useState<any>(null);
   const [isOtherGeoId, setIsOtherGeoId] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
 
   const viewReason = (item: any) => {
     console.log("item,.....", item, viewDetails);
@@ -65,6 +70,11 @@ const Page = () => {
       !formData?.resume
     ) {
       toast.error("Please provide all required details.");
+      return;
+    }
+
+    if (!isChecked) {
+      toast.error("Please Agree Resume Usage Consent");
       return;
     }
     const payloadData = new FormData();
@@ -346,7 +356,7 @@ const Page = () => {
               </div>
               <div className="w-full md:w-1/3 px-3 mb-3">
                 <label className="block mb-1 text-sm font-medium text-gray-500 dark:text-white">
-                  Resume
+                  Resume*
                 </label>
                 <input
                   type="file"
@@ -361,6 +371,19 @@ const Page = () => {
                     File selected: {formData?.resume.name}
                   </p>
                 )}
+              </div>
+              <div className="w-full md:w-1/3 px-3 mb-3 h-fit mt-6 flex justify-start items-center">
+                <input
+                  type="checkbox"
+                  name=""
+                  id=""
+                  className="inline h-[40px] w-[16px]"
+                  checked={isChecked}
+                  onChange={handleCheckboxChange}
+                />
+                <span className="mb-1 text-sm font-light text-black dark:text-white mt-[5px] ml-[5px]">
+                  I grant ORR permission to use my resume.
+                </span>
               </div>
             </div>
           </div>
