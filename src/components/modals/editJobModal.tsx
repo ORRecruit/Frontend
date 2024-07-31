@@ -14,12 +14,12 @@ const editJobModal: React.FC<any> = ({
   openEditConfirmation,
 }) => {
   return (
-    <div className="relative bg-white p-5 rounded-lg w-[70%] h-[85%] overflow-y-scroll border border-black-500">
+    <div className="relative bg-white p-10 rounded-lg w-[70%] h-[85%] overflow-y-scroll border border-black-500">
       <div className="bg-white rounded-lg flex flex-col items-center">
         <div className="w-full relative">
           <button
             onClick={closeEditDialog}
-            className="absolute right-0 pb-1 text-black bg-transparent text-2xl"
+            className="absolute right-[-20px] top-[-20px] pb-1 text-black bg-transparent text-2xl"
           >
             &times;{" "}
           </button>
