@@ -381,7 +381,7 @@ const Page = () => {
                   checked={isChecked}
                   onChange={handleCheckboxChange}
                 />
-                <span className="mb-1 text-sm font-light text-black dark:text-white mt-[5px] ml-[5px]">
+                <span className="mb-1 text-sm font-medium text-gray-500 dark:text-white mt-[4px] ml-[5px]">
                   I grant ORR permission to use my resume.
                 </span>
               </div>
@@ -389,9 +389,9 @@ const Page = () => {
           </div>
         )}
         {toggleCards && (
-          <div className="w-full">
+          <div className={`w-[90%] mx-[5%]`}>
             {jobsData && jobsData?.length ? (
-              <>
+              <div className="shadow-lg p-4">
                 <div className="overflow-x-auto">
                   <div className="cursor-pointer mb-4">
                     <Image
@@ -593,9 +593,11 @@ const Page = () => {
                     </div>
                   </div>
                 </div>
-              </>
+              </div>
             ) : (
-              <CustomLoader />
+              <div>
+                <CustomLoader />
+              </div>
             )}
           </div>
         )}
