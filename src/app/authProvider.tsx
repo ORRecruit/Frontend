@@ -48,7 +48,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       path.includes("/reset-password") ||
       path.includes("easy-apply") ||
       path === "/privacy-policy" ||
-      path === "/orr-search"
+      path === "/orr-search" ||
+      path === "/sanity-blogs"
     ) {
       router.push(path);
     } else {

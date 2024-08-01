@@ -13,8 +13,9 @@
   },
   "dependencies": {
     "@next/third-parties": "^14.2.5",
-    "@portabletext/react": "^3.0.11",
+    "@portabletext/react": "^3.1.0",
     "@react-pdf/renderer": "^3.4.4",
+    "@sanity/client": "^6.21.1",
     "@tanstack/react-query": "^5.28.8",
     "axios": "^1.6.8",
     "dompurify": "^3.1.2",
