@@ -23,6 +23,7 @@ import JobDetailModal from "@/components/modals/jobDetailModal";
 import useToggleStore from "@/app/toggleStore";
 import { getAllLeadOwners } from "@/api/leadOwner/getAllLeadOwners";
 import EditJobDialog from "@/components/modals/editJobModal";
+import { isWinStatus } from "@/api/jobs/winLoseStatus";
 
 const jobList = () => {
   const router = useRouter();
@@ -90,8 +91,20 @@ const jobList = () => {
     setWinLoseReason(event.target.value);
   };
 
-  const submitWinLose = () => {
-    console.log("win lose reason", selection, winLoseReason);
+  const submitWinLose = async () => {
+    console.log("win lose reason", selection, winLoseReason, completeItem);
+    const jobId = completeItem?.id;
+    const isWin: boolean = selection === "win" ? true : false;
+    const response = await isWinStatusMutation.mutateAsync({
+      jobId,
+      isWin,
+      reason: winLoseReason,
+    });
+    if (response?.success) {
+      toast.success(`Provided job is complete and saved as a ${selection}`);
+    } else {
+      toast.error("The job status has been saved successfully.");
+    }
     setWinLoseDialog(false);
   };
 
@@ -109,6 +122,9 @@ const jobList = () => {
   });
   const jobComplete = useMutation({
     mutationFn: (data: any) => jobCompleteApi(data),
+  });
+  const isWinStatusMutation = useMutation({
+    mutationFn: (data: any) => isWinStatus(data),
   });
 
   const { data, error, isLoading, refetch } = useQuery({
@@ -333,7 +349,6 @@ const jobList = () => {
       setLoaderMarkComp(false);
       setCompleteDialog(!completeDialog);
       refetch();
-      setCompleteItem(null);
       setWinLoseDialog(!winLoseDialog);
     } else {
       setLoaderMarkComp(false);
