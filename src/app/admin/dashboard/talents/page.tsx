@@ -185,7 +185,11 @@ const Page = () => {
                       className="px-4 py-2 whitespace-nowrap"
                     >
                       <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                        {`ORR-USR-00${item?.id}`}
+                        {`${
+                          item?.userType == "applicant"
+                            ? `ORR-APP-00${item?.id}`
+                            : `ORR-USR-00${item?.id}`
+                        }`}
                       </span>
                     </td>
                     <th
