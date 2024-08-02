@@ -31,7 +31,7 @@ const page = () => {
   return (
     <>
       <HeroSection
-        heading={"Hire Here From Anywhere"}
+        heading={"Make Your Next Hire Your Best Hire"}
         paragraph={`Create job listings that our AI system comprehensively analyzes, ensuring they reach the most suitable candidates. `}
         videoImageSrc={`/hero-section-img-job.svg`}
         iconImages={iconImages}
