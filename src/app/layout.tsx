@@ -102,6 +102,12 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <Head>
+        <meta
+          name="google-site-verification"
+          content="3cgj6fLT8zsNQ9EbAU5zTZteKVBAHXSiZR3-VNgB7gk"
+        />
+      </Head>
       <body className={inter.className}>
         <GoogleTagManager containerId="GTM-WQBFH7L6" />
 
