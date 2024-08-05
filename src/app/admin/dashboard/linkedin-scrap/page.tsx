@@ -502,12 +502,12 @@ const Page = () => {
                               >
                                 <span>View Details</span>
                               </td>
-                              <td className="text-blue-600 border-b-2 cursor-pointer w-[20px] text-center">
+                              <td className="text-blue-600 cursor-pointer w-[20px] text-center">
                                 <Link href={item?.job?.company_profile}>
                                   View
                                 </Link>
                               </td>
-                              <td className="text-blue-600 border-b-2 cursor-pointer">
+                              <td className="text-blue-600 cursor-pointer">
                                 <Link href={item?.job?.job_link}>
                                   Apply Job
                                 </Link>

@@ -42,6 +42,11 @@ export default function RootLayout({
       href: "/admin/dashboard/linkedin-scrap",
     },
     {
+      iconUrl: "/adminSidebar2.svg",
+      text: "Indeed Search",
+      href: "/admin/dashboard/indeed-scrap",
+    },
+    {
       iconUrl: "/setting-icon.svg",
       text: "Settings",
       href: "",

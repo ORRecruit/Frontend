@@ -58,7 +58,7 @@ export default function RootLayout({
     "/admin/dashboard/linkedin-scrap",
     "/admin/dashboard/leadOwner",
     "/admin/dashboard/leadOwner/create-lead-owner",
-    // "/orr-search",
+    "/admin/dashboard/indeed-scrap",
   ];
   const showNavbar = !noNavbarRoutes.includes(path);
 
