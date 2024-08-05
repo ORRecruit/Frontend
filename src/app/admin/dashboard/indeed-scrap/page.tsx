@@ -5,19 +5,26 @@ import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import React from "react";
 import toast from "react-hot-toast";
+import CustomLoader from "@/components/customLoader";
 
-const page = () => {
+const Page = () => {
   const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
   const [field, setField] = React.useState("");
   const [location, setLocation] = React.useState("");
   const [page, setPage] = React.useState("1");
-  const [resData, setResData] = React.useState<any>(null);
+  const [resData, setResData] = React.useState<any[] | null>(null);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const scrapMatchResumeMutation = useMutation({
     mutationFn: (obj: any) => getIndeedJobs(obj),
     onSuccess: (data) => {
       console.log("data", data);
       setResData(data);
+      setIsLoading(false);
+    },
+    onError: () => {
+      setResData([]);
+      setIsLoading(false);
     },
   });
 
@@ -28,16 +35,87 @@ const page = () => {
       toast.error("please provide all mandatory details");
       return;
     }
+    setIsLoading(true);
     try {
-      const response = await scrapMatchResumeMutation.mutateAsync({
+      await scrapMatchResumeMutation.mutateAsync({
         field,
         location,
         page,
       });
-      console.log("response response...", response);
     } catch (err) {
       console.log("error error", err);
+      setResData([]);
+      setIsLoading(false);
     }
+  };
+
+  const renderTableContent = () => {
+    if (isLoading) {
+      return (
+        <tr>
+          <td colSpan={6} className="text-center py-4">
+            <CustomLoader />
+          </td>
+        </tr>
+      );
+    }
+
+    if (resData === null) {
+      return (
+        <tr>
+          <td colSpan={6} className="text-center py-4">
+            Please search to get jobs
+          </td>
+        </tr>
+      );
+    }
+
+    if (resData.length === 0) {
+      return (
+        <tr>
+          <td colSpan={6} className="text-center py-4">
+            No jobs found. Try different search criteria.
+          </td>
+        </tr>
+      );
+    }
+
+    return resData.map((item: any, index: any) => (
+      <tr
+        key={index}
+        className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+      >
+        <td className="px-4 py-2 w-4">
+          <div className="flex items-center">
+            <input
+              id={`checkbox-table-search-${index}`}
+              type="checkbox"
+              className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label className="sr-only">checkbox</label>
+          </div>
+        </td>
+        <td className="px-4 py-2 whitespace-nowrap">
+          <span className="py-2 font-medium whitespace-nowrap flex items-center">
+            {item?.jobID}
+          </span>
+        </td>
+        <td className="px-4 py-2 whitespace-nowrap">
+          <span className="py-2 font-medium whitespace-nowrap flex items-center max-w-[200px] overflow-x-hidden">
+            {item?.jobTitle}
+          </span>
+        </td>
+        <td className="px-4 font-medium whitespace-nowrap flex items-center max-w-[200px] overflow-x-hidden">
+          {item?.companyName}
+        </td>
+        <td className="px-4 font-medium whitespace-nowrap max-w-[250px]">
+          {item?.companyLocation}
+        </td>
+        <td className="text-blue-600 cursor-pointer">
+          <Link href={item?.jobLink ? item?.jobLink : ""}>Apply Job</Link>
+        </td>
+      </tr>
+    ));
   };
 
   return (
@@ -137,48 +215,7 @@ const page = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody>
-                  {resData?.map((item: any, index: any) => {
-                    return (
-                      <tr
-                        key={index}
-                        className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
-                      >
-                        <td className="px-4 py-2 w-4">
-                          <div className="flex items-center">
-                            <input
-                              id="checkbox-table-search-1"
-                              type="checkbox"
-                              className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                            />
-                            <label className="sr-only">checkbox</label>
-                          </div>
-                        </td>
-                        <td className="px-4 py-2 whitespace-nowrap">
-                          <span className="py-2 font-medium whitespace-nowrap flex items-center">
-                            {item?.jobID}
-                          </span>
-                        </td>
-                        <td className="px-4 py-2 whitespace-nowrap">
-                          <span className="py-2 font-medium whitespace-nowrap flex items-center max-w-[200px] overflow-x-hidden">
-                            {item?.jobTitle}
-                          </span>
-                        </td>
-                        <td className="px-4 font-medium whitespace-nowrap flex items-center max-w-[200px] overflow-x-hidden">
-                          {item?.companyName}
-                        </td>
-                        <td className="px-4 font-medium whitespace-nowrap max-w-[250px]">
-                          {item?.companyLocation}
-                        </td>
-                        <td className="text-blue-600 cursor-pointer">
-                          <Link href={item?.jobLink ? item?.jobLink : ""}>
-                            Apply Job
-                          </Link>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
+                <tbody>{renderTableContent()}</tbody>
               </table>
             </div>
           </div>
@@ -188,4 +225,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
