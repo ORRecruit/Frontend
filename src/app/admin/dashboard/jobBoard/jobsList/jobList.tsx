@@ -95,6 +95,18 @@ const jobList = () => {
     console.log("win lose reason", selection, winLoseReason, completeItem);
     const jobId = completeItem?.id;
     const isWin: boolean = selection === "win" ? true : false;
+    const obj = {
+      isCompleted: true,
+      jobId,
+    };
+    const completeRes = await jobComplete.mutateAsync(obj);
+
+    if (completeRes?.success) {
+      refetch();
+    } else {
+      console.log("error");
+    }
+
     const response = await isWinStatusMutation.mutateAsync({
       jobId,
       isWin,
@@ -338,21 +350,9 @@ const jobList = () => {
     }
   };
   const closeCompleteDialog = async (job: any) => {
-    setLoaderMarkComp(!loaderMarkComp);
-    const obj = {
-      isCompleted: true,
-      jobId: completeItem?.id,
-    };
-    const response = await jobComplete.mutateAsync(obj);
-
-    if (response?.success) {
-      setLoaderMarkComp(false);
-      setCompleteDialog(!completeDialog);
-      refetch();
-      setWinLoseDialog(!winLoseDialog);
-    } else {
-      setLoaderMarkComp(false);
-    }
+    setLoaderMarkComp(false);
+    setCompleteDialog(!completeDialog);
+    setWinLoseDialog(!winLoseDialog);
   };
 
   const openEditConfirmation = () => {
