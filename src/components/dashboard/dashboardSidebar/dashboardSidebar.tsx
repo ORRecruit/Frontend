@@ -22,7 +22,7 @@ const DashboardSidebar: React.FC<SidebarInterface> = ({
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [activePopup, setActivePopup] = useState<number | null>(null);
+  const [expandedItem, setExpandedItem] = useState<number | null>(null);
   const setToggleMenu = useToggleStore((state) => state.toggleSidebar);
 
   const toggleSidebar = () => {
@@ -30,8 +30,8 @@ const DashboardSidebar: React.FC<SidebarInterface> = ({
     setToggleMenu();
   };
 
-  const togglePopup = (index: number | any) => {
-    setActivePopup(activePopup === index ? null : index);
+  const toggleExpand = (index: number) => {
+    setExpandedItem(expandedItem === index ? null : index);
   };
 
   const logout = () => {
@@ -93,47 +93,51 @@ const DashboardSidebar: React.FC<SidebarInterface> = ({
                     </span>
                   </Link>
                 ) : (
-                  <div
-                    onClick={() => togglePopup(index)}
-                    className={`relative flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer ${
-                      !isSidebarOpen ? "py-[10px]" : "p-2"
-                    }`}
-                  >
-                    <Image
-                      width={18}
-                      height={18}
-                      src={item.iconUrl}
-                      alt="icon"
-                    />
-                    <span
-                      className={`ml-3 ${!isSidebarOpen ? "hidden" : "block"}`}
-                    >
-                      {item.text} {item.options && ""}
-                    </span>
-                    <Image
-                      width={15}
-                      height={15}
-                      src="/next-icon.svg"
-                      alt="next-icon"
-                      className={`absolute right-5 ${
-                        !isSidebarOpen ? "hidden" : "block"
+                  <>
+                    <div
+                      onClick={() => toggleExpand(index)}
+                      className={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer ${
+                        !isSidebarOpen ? "py-[10px]" : "p-2"
                       }`}
-                    />
-                  </div>
-                )}
-                {item.options && activePopup === index && (
-                  <div className="absolute ml-2 bg-white right-[-10px] top-3 z-50 rounded-lg shadow-lg">
-                    {item.options.map((option, optionIndex) => (
-                      <Link
-                        key={optionIndex}
-                        href={option.href}
-                        onClick={() => togglePopup(null)}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
+                    >
+                      <Image
+                        width={18}
+                        height={18}
+                        src={item.iconUrl}
+                        alt="icon"
+                      />
+                      <span
+                        className={`ml-3 ${
+                          !isSidebarOpen ? "hidden" : "block"
+                        }`}
                       >
-                        {option.text}
-                      </Link>
-                    ))}
-                  </div>
+                        {item.text}
+                      </span>
+                      <Image
+                        width={15}
+                        height={15}
+                        src="/next-icon.svg"
+                        alt="next-icon"
+                        className={`ml-auto transform ${
+                          expandedItem === index ? "rotate-90" : ""
+                        } ${!isSidebarOpen ? "hidden" : "block"}`}
+                      />
+                    </div>
+                    {expandedItem === index && item.options && (
+                      <ul className="mt-2 space-y-2">
+                        {item.options.map((option, optionIndex) => (
+                          <li key={optionIndex}>
+                            <Link
+                              href={option.href}
+                              className="flex items-center py-1 px-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 group"
+                            >
+                              {option.text}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </>
                 )}
               </li>
             ))}

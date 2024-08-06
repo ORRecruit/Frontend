@@ -3,17 +3,24 @@ import { getIndeedJobs } from "@/api/statistics/indeedScrap";
 import useToggleStore from "@/app/toggleStore";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import CustomLoader from "@/components/customLoader";
 
 const Page = () => {
   const toggleMenu = useToggleStore((state) => state.isSidebarOpen);
-  const [field, setField] = React.useState("");
-  const [location, setLocation] = React.useState("");
-  const [page, setPage] = React.useState("1");
-  const [resData, setResData] = React.useState<any[] | null>(null);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [field, setField] = useState("");
+  const [location, setLocation] = useState("");
+  const [page, setPage] = useState("1");
+  const [resData, setResData] = useState<any[] | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+  const [pageNumberLimit] = useState(5);
+  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
+  const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
   const scrapMatchResumeMutation = useMutation({
     mutationFn: (obj: any) => getIndeedJobs(obj),
@@ -21,6 +28,9 @@ const Page = () => {
       console.log("data", data);
       setResData(data);
       setIsLoading(false);
+      setCurrentPage(1);
+      setMaxPageNumberLimit(5);
+      setMinPageNumberLimit(0);
     },
     onError: () => {
       setResData([]);
@@ -49,11 +59,36 @@ const Page = () => {
     }
   };
 
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = resData
+    ? resData.slice(indexOfFirstItem, indexOfLastItem)
+    : [];
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  const handleNextBtn = () => {
+    setCurrentPage(currentPage + 1);
+    if (currentPage + 1 > maxPageNumberLimit) {
+      setMaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
+      setMinPageNumberLimit(minPageNumberLimit + pageNumberLimit);
+    }
+  };
+
+  const handlePrevBtn = () => {
+    setCurrentPage(currentPage - 1);
+    if ((currentPage - 1) % pageNumberLimit === 0) {
+      setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
+      setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit);
+    }
+  };
+
   const renderTableContent = () => {
     if (isLoading) {
       return (
-        <tr>
-          <td colSpan={6} className="text-center py-4">
+        <tr className="max-h-[300px] text-xl">
+          <td colSpan={6} className="text-center max-h-[300px]">
             <CustomLoader />
           </td>
         </tr>
@@ -62,7 +97,7 @@ const Page = () => {
 
     if (resData === null) {
       return (
-        <tr>
+        <tr className="h-[300px] text-xl">
           <td colSpan={6} className="text-center py-4">
             Please search to get jobs
           </td>
@@ -72,7 +107,7 @@ const Page = () => {
 
     if (resData.length === 0) {
       return (
-        <tr>
+        <tr className="h-[300px] text-xl">
           <td colSpan={6} className="text-center py-4">
             No jobs found. Try different search criteria.
           </td>
@@ -80,12 +115,12 @@ const Page = () => {
       );
     }
 
-    return resData.map((item: any, index: any) => (
+    return currentItems.map((item: any, index: any) => (
       <tr
         key={index}
-        className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+        className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors"
       >
-        <td className="px-4 py-2 w-4">
+        <td className="px-4 py-3 w-4">
           <div className="flex items-center">
             <input
               id={`checkbox-table-search-${index}`}
@@ -95,27 +130,93 @@ const Page = () => {
             <label className="sr-only">checkbox</label>
           </div>
         </td>
-        <td className="px-4 py-2 whitespace-nowrap">
-          <span className="py-2 font-medium whitespace-nowrap flex items-center">
-            {item?.jobID}
-          </span>
+        <td className="px-4 py-3 whitespace-nowrap">
+          <span className="font-medium">{item?.jobID}</span>
         </td>
-        <td className="px-4 py-2 whitespace-nowrap">
-          <span className="py-2 font-medium whitespace-nowrap flex items-center max-w-[200px] overflow-x-hidden">
+        <td className="px-4 py-3">
+          <span className="font-medium line-clamp-2 max-w-[200px]">
             {item?.jobTitle}
           </span>
         </td>
-        <td className="px-4 font-medium whitespace-nowrap flex items-center max-w-[200px] overflow-x-hidden">
-          {item?.companyName}
+        <td className="px-4 py-3">
+          <span className="line-clamp-1 max-w-[200px]">
+            {item?.companyName}
+          </span>
         </td>
-        <td className="px-4 font-medium whitespace-nowrap max-w-[250px]">
-          {item?.companyLocation}
+        <td className="px-4 py-3">
+          <span className="line-clamp-1 max-w-[250px]">
+            {item?.companyLocation}
+          </span>
         </td>
-        <td className="text-blue-600 cursor-pointer">
-          <Link href={item?.jobLink ? item?.jobLink : ""}>Apply Job</Link>
+        <td className="px-4 py-3 text-blue-600 cursor-pointer">
+          <Link
+            href={item?.jobLink ? item?.jobLink : ""}
+            className="hover:underline"
+          >
+            Apply Job
+          </Link>
         </td>
       </tr>
     ));
+  };
+
+  const renderPagination = () => {
+    if (!resData || resData.length <= itemsPerPage) return null;
+
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(resData.length / itemsPerPage); i++) {
+      pageNumbers.push(i);
+    }
+
+    return (
+      <div className="flex justify-center mt-4">
+        <nav>
+          <ul className="flex items-center -space-x-px h-8 text-sm">
+            <li>
+              <button
+                onClick={handlePrevBtn}
+                disabled={currentPage === 1}
+                className="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                Prev
+              </button>
+            </li>
+            {pageNumbers.map((number) => {
+              if (
+                number < maxPageNumberLimit + 1 &&
+                number > minPageNumberLimit
+              ) {
+                return (
+                  <li key={number}>
+                    <button
+                      onClick={() => paginate(number)}
+                      className={`flex items-center justify-center px-3 h-8 leading-tight ${
+                        currentPage === number
+                          ? "text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700"
+                          : "text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"
+                      } border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+                    >
+                      {number}
+                    </button>
+                  </li>
+                );
+              } else {
+                return null;
+              }
+            })}
+            <li>
+              <button
+                onClick={handleNextBtn}
+                disabled={currentPage === pageNumbers[pageNumbers.length - 1]}
+                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    );
   };
 
   return (
@@ -125,7 +226,9 @@ const Page = () => {
       }`}
     >
       <div
-        className={`flex flex-col-reverse md:flex-row justify-between md:space-x-4 py-3 relative px-4 mr-4 h-full {toggleCards? "bg-white":""}`}
+        className={`flex flex-col-reverse md:flex-row justify-between md:space-x-4 py-3 relative px-4 mr-4 h-full ${
+          toggleMenu ? "bg-white" : ""
+        }`}
       >
         <div className="w-full px-8 h-screen bg-white">
           <div className="flex justify-between items-center mt-8">
@@ -184,7 +287,7 @@ const Page = () => {
 
           <div>
             <h1 className="text-xl font-bold mb-4">Indeed Jobs</h1>
-            <div>
+            <div className="overflow-x-auto">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -218,6 +321,7 @@ const Page = () => {
                 <tbody>{renderTableContent()}</tbody>
               </table>
             </div>
+            {renderPagination()}
           </div>
         </div>
       </div>

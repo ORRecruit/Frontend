@@ -39,12 +39,11 @@ export default function RootLayout({
     {
       iconUrl: "/adminSidebar5.svg",
       text: "ORR Search",
-      href: "/admin/dashboard/linkedin-scrap",
-    },
-    {
-      iconUrl: "/adminSidebar2.svg",
-      text: "Indeed Search",
-      href: "/admin/dashboard/indeed-scrap",
+      href: "",
+      options: [
+        { text: "Linkedin", href: "/admin/dashboard/linkedin-scrap" },
+        { text: "Indeed", href: "/admin/dashboard/indeed-scrap" },
+      ],
     },
     {
       iconUrl: "/setting-icon.svg",
