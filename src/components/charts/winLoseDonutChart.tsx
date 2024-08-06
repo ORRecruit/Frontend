@@ -25,10 +25,7 @@ const WinLoseDonutChart = () => {
   const COLORS = ["#FFA500", "#FFD700"];
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
-      <h2 className="text-2xl font-bold text-center mb-6">
-        Jobs Win/Lose Statistics
-      </h2>
+    <div className="bg-white p-6 rounded-lg max-w-2xl mx-auto">
       <div className="flex items-center justify-between">
         <div className="text-left">
           <p className="text-lg font-semibold">Completed Jobs</p>
