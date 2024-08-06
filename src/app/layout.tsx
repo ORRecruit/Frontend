@@ -19,6 +19,13 @@ const inter = Inter({ subsets: ["latin"] });
 
 const queryClient = new QueryClient();
 
+export const metadata = {
+  title: "Online Remote Recruiting",
+  verification: {
+    google: "3cgj6fLT8zsNQ9EbAU5zTZteKVBAHXSiZR3-VNgB7gk",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -102,12 +109,6 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <Head>
-        <meta
-          name="google-site-verification"
-          content="3cgj6fLT8zsNQ9EbAU5zTZteKVBAHXSiZR3-VNgB7gk"
-        />
-      </Head>
       <body className={inter.className}>
         <GoogleTagManager containerId="GTM-WQBFH7L6" />
 
