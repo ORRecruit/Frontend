@@ -8,6 +8,7 @@ import BarChart from "@/components/charts/barChart";
 import PieChart from "@/components/charts/pieChart";
 import TierChart from "@/components/charts/tierChart";
 import BarChartCreatedClients from "@/components/charts/barChartCreatedCandidates";
+import WinLoseDonutChart from "@/components/charts/winLoseDonutChart";
 
 interface OverviewInterface {
   details: {
@@ -79,6 +80,11 @@ const DashboardContent: React.FC<OverviewInterface> = ({ details }) => {
           <div className="w-[49%] mt-4">
             <GridItem title="Total Candidates Count">
               <BarChartCreatedClients />
+            </GridItem>
+          </div>
+          <div className="w-[49%] mt-4">
+            <GridItem title="Jobs Win/Lose Statistics">
+              <WinLoseDonutChart />
             </GridItem>
           </div>
         </div>
