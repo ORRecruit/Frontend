@@ -295,6 +295,7 @@ const jobList = () => {
       tier: item?.tier,
       client_id: item?.client_id,
       leadowner_id: item?.leadowner_id,
+      jobStages: item?.jobStages,
     });
     setSkills(item?.skillsRequired);
     setEditDialog(!editDialog);

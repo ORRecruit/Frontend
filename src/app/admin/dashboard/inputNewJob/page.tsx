@@ -33,6 +33,7 @@ const page = () => {
     tier: "",
     client_id: "",
     leadowner_id: "",
+    jobStages: "",
   });
 
   const [validationErrors, setValidationErrors] = useState<any>({});
@@ -331,6 +332,27 @@ const page = () => {
                 <option value="1">Tier 1</option>
                 <option value="2">Tier 2</option>
                 <option value="3">Tier 3</option>
+              </select>
+            </div>
+            <div className="w-[32%]">
+              <label className="block mb-1 mt-2 text-sm font-medium text-gray-500">
+                Job Stage *
+              </label>
+              <select
+                name="jobStages"
+                id="jobStages"
+                value={formData.jobStages}
+                onChange={handleChange}
+                className="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              >
+                <option>Select Option</option>
+                <option value="Job Posting">Job Posting</option>
+                <option value="Candidate Sourcing">Candidate Sourcing</option>
+                <option value="Screening & Shortlisting">
+                  Screening & Shortlisting
+                </option>
+                <option value="Client Interview">Client Interview</option>
+                <option value="Closed">Closed</option>
               </select>
             </div>
             <div className="w-[32%]">

@@ -94,6 +94,27 @@ const editJobModal: React.FC<any> = ({
               </div>
               <div className="w-[30%]">
                 <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
+                  Job Stage*
+                </label>
+                <select
+                  id="jobStages"
+                  name="jobStages"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  value={formData.jobStages}
+                  onChange={handleChange}
+                >
+                  <option>Select Option</option>
+                  <option value="Job Posting">Job Posting</option>
+                  <option value="Candidate Sourcing">Candidate Sourcing</option>
+                  <option value="Screening & Shortlisting">
+                    Screening & Shortlisting
+                  </option>
+                  <option value="Client Interview">Client Interview</option>
+                  <option value="Closed">Closed</option>
+                </select>
+              </div>
+              <div className="w-[30%]">
+                <label className="block mb-1 mt-2 text-sm font-medium text-gray-500 dark:text-white">
                   Lead Owner*
                 </label>
                 <select
