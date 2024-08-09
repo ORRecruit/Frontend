@@ -203,7 +203,11 @@ function Page() {
                         className="text-gray-500 text-sm"
                         htmlFor="first-name"
                       >
-                        First Name*
+                        First Name
+                        <span className="text-red-600 font-bold text-base">
+                          {" "}
+                          *
+                        </span>
                       </label>
                       <input
                         type="text"
@@ -243,7 +247,11 @@ function Page() {
                         className="text-gray-500 text-sm"
                         htmlFor="last-name"
                       >
-                        Last Name*
+                        Last Name
+                        <span className="text-red-600 font-bold text-base">
+                          {" "}
+                          *
+                        </span>
                       </label>
                       <input
                         type="text"
@@ -263,7 +271,11 @@ function Page() {
                     </div>
                     <div>
                       <label className="text-gray-500 text-sm" htmlFor="email">
-                        Email Address*
+                        Email Address
+                        <span className="text-red-600 font-bold text-base">
+                          {" "}
+                          *
+                        </span>
                       </label>
                       <input
                         type="email"
@@ -286,7 +298,11 @@ function Page() {
                         className="text-gray-500 text-sm"
                         htmlFor="address-country"
                       >
-                        Country*
+                        Country
+                        <span className="text-red-600 font-bold text-base">
+                          {" "}
+                          *
+                        </span>
                       </label>
                       <input
                         type="text"
@@ -309,7 +325,11 @@ function Page() {
                         className="text-gray-500 text-sm"
                         htmlFor="address-city"
                       >
-                        State*
+                        State
+                        <span className="text-red-600 font-bold text-base">
+                          {" "}
+                          *
+                        </span>
                       </label>
                       <input
                         type="text"
@@ -332,7 +352,11 @@ function Page() {
                         className="text-gray-500 text-sm"
                         htmlFor="address"
                       >
-                        City / Postal code*
+                        City / Postal code
+                        <span className="text-red-600 font-bold text-base">
+                          {" "}
+                          *
+                        </span>
                       </label>
                       <input
                         type="text"
@@ -355,7 +379,11 @@ function Page() {
                           className="text-gray-500 text-sm"
                           htmlFor="phone-country-code"
                         >
-                          Country Code*
+                          Country Code
+                          <span className="text-red-600 font-bold text-base">
+                            {" "}
+                            *
+                          </span>
                         </label>
                         <input
                           type="text"
@@ -396,7 +424,11 @@ function Page() {
                           className="text-gray-500 text-sm"
                           htmlFor="phone-number"
                         >
-                          Phone Number*
+                          Phone Number
+                          <span className="text-red-600 font-bold text-base">
+                            {" "}
+                            *
+                          </span>
                         </label>
                         <input
                           type="text"
@@ -497,7 +529,11 @@ function Page() {
                         htmlFor="education"
                         className="text-gray-500 text-sm"
                       >
-                        Highest Education*
+                        Highest Education
+                        <span className="text-red-600 font-bold text-base">
+                          {" "}
+                          *
+                        </span>
                       </label>
                       <select
                         id="highestEducation"
@@ -528,7 +564,11 @@ function Page() {
                         className="text-gray-500 text-sm"
                         htmlFor="experience"
                       >
-                        Work Experience (Years)*
+                        Work Experience (Years)
+                        <span className="text-red-600 font-bold text-base">
+                          {" "}
+                          *
+                        </span>
                       </label>
                       <input
                         type="number"
@@ -563,7 +603,11 @@ function Page() {
                     </div>
                     <div>
                       <label className="text-gray-500 text-sm" htmlFor="resume">
-                        Resume (PDF or Word)*
+                        Resume (PDF or Word)
+                        <span className="text-red-600 font-bold text-base">
+                          {" "}
+                          *
+                        </span>
                       </label>
                       <input
                         type="file"
