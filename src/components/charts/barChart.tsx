@@ -12,6 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { jobsPubClosThreeMonths } from "@/api/adminStats/jobsPubClosThreeMonths";
+import { useRouter } from "next/navigation";
 
 interface CustomTooltipProps {
   active?: boolean;
@@ -57,6 +58,8 @@ const BarChartComponent: React.FC = () => {
     queryFn: jobsPubClosThreeMonths,
   });
 
+  const router = useRouter();
+
   const salesData = useMemo(() => {
     if (!data || !data.data) {
       return [];
@@ -88,14 +91,15 @@ const BarChartComponent: React.FC = () => {
         margin={{
           right: 30,
         }}
+        onClick={() => router.push("/admin/dashboard/jobBoard")}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis tickFormatter={(tick) => (Number.isInteger(tick) ? tick : "")} />
         <Tooltip content={<CustomTooltip />} />
         <Legend />
-        <Bar dataKey="Published" fill="#87207D" />
-        <Bar dataKey="Completed" fill="#F97316" />
+        <Bar cursor="pointer" dataKey="Published" fill="#87207D" />
+        <Bar cursor="pointer" dataKey="Completed" fill="#F97316" />
       </BarChart>
     </ResponsiveContainer>
   );
